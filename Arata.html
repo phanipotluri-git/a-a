@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChronoShield Advanced — Clinical Reference | Arata Nutraceuticals</title>
+<meta name="description" content="India's most advanced single-capsule longevity formula. 10 precision-dosed actives across 17 medical specialties. For healthcare professionals.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Raleway:wght@200;300;400;500;600;700;800&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   DESIGN SYSTEM
+══════════════════════════════════════════════ */
+:root{
+  --ink:#070a10;--navy:#0d1f3c;--navy-2:#0f2648;--navy-3:#162e57;
+  --gold:#c9a84c;--gold-2:#e2be72;--gold-3:#f0d898;--gold-pale:#faf3e0;
+  --cream:#f5efe2;--white:#fff;
+  --muted:rgba(255,255,255,0.55);--dim:rgba(255,255,255,0.35);
+  --line:rgba(201,168,76,0.18);
+  --glass:rgba(255,255,255,0.04);--glass-2:rgba(255,255,255,0.07);
+  --r:6px;--r-lg:12px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--ink);color:var(--white);font-family:'Raleway',sans-serif;overflow-x:hidden;line-height:1.7}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(201,168,76,0.3);color:#fff}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* ── UTILITIES ── */
+.section{padding:100px 0}
+.container{max-width:1180px;margin:0 auto;padding:0 40px}
+.eyebrow{font-family:'Cinzel',serif;font-size:10px;font-weight:600;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:block}
+.gold{color:var(--gold-2)}
+.gold-bar{width:48px;height:2px;background:var(--gold);margin:16px 0 28px}
+.center{text-align:center}
+.center .gold-bar{margin-left:auto;margin-right:auto}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:1px solid var(--line);border-radius:20px;font-size:11px;font-weight:600;color:var(--gold-2);letter-spacing:0.5px}
+
+/* Reveal animations */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal-l{opacity:0;transform:translateX(-30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-l.in{opacity:1;transform:none}
+.reveal-r{opacity:0;transform:translateX(30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-r.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* ══════════════════════════════════════════════
+   CANVAS BACKGROUND
+══════════════════════════════════════════════ */
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
+
+/* ══════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  transition:background .4s var(--ease),border .4s var(--ease);
+  border-bottom:1px solid transparent;
+}
+#nav.scrolled{
+  background:rgba(7,10,16,0.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom-color:var(--line);
+}
+.nav-inner{
+  max-width:1180px;margin:0 auto;padding:0 40px;
+  height:68px;display:flex;align-items:center;gap:40px;
+}
+.nav-logo{
+  font-family:'Cinzel',serif;font-size:11px;font-weight:700;
+  letter-spacing:3px;color:var(--gold);text-transform:uppercase;
+  white-space:nowrap;flex-shrink:0;
+}
+.nav-links{
+  display:flex;align-items:center;gap:32px;margin-left:auto;
+  list-style:none;
+}
+.nav-links a{
+  font-size:11px;font-weight:600;letter-spacing:1.5px;
+  color:var(--muted);text-transform:uppercase;
+  transition:color .25s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1px;background:var(--gold);transform:scaleX(0);
+  transition:transform .25s var(--ease);transform-origin:right;
+}
+.nav-links a:hover{color:var(--gold-2)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-cta{
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  color:var(--ink)!important;font-weight:800!important;
+  padding:8px 20px;border-radius:30px;
+  letter-spacing:1px!important;
+  transition:opacity .25s!important;
+  box-shadow:0 0 20px rgba(201,168,76,0.2);
+}
+.nav-cta:hover{opacity:.85}
+.nav-cta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;margin-left:auto}
+.hamburger span{width:22px;height:1.5px;background:var(--gold);border-radius:2px;transition:.3s}
+
+/* ══════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;z-index:1;overflow:hidden;
+  padding:120px 0 80px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 60% 50%,rgba(201,168,76,0.08) 0%,transparent 55%),
+    radial-gradient(ellipse at 10% 90%,rgba(13,31,60,0.8) 0%,transparent 50%);
+}
+.hero-rings{position:absolute;top:50%;right:-100px;transform:translateY(-50%)}
+.hr{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,0.08);top:50%;left:50%;transform:translate(-50%,-50%)}
+.hr1{width:600px;height:600px}
+.hr2{width:450px;height:450px;border-color:rgba(201,168,76,0.12)}
+.hr3{width:300px;height:300px;border-color:rgba(201,168,76,0.07)}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-pre{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.hero-pre-line{width:30px;height:1px;background:var(--gold)}
+.hero-pre span{font-family:'Cinzel',serif;font-size:9px;font-weight:600;letter-spacing:4px;color:var(--gold);text-transform:uppercase}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(42px,5vw,68px);font-weight:900;line-height:1;margin-bottom:6px;letter-spacing:-1px}
+.hero-h1 span{display:block;font-style:italic;color:var(--gold-2);font-weight:400;font-size:0.55em;letter-spacing:4px;margin-top:6px}
+.hero-sub{font-size:15px;font-weight:300;color:var(--muted);line-height:1.75;max-width:480px;margin-bottom:32px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.hero-cta-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  color:var(--ink);font-family:'Cinzel',serif;font-size:11px;
+  font-weight:700;letter-spacing:2px;padding:14px 32px;
+  border-radius:40px;border:none;cursor:pointer;
+  box-shadow:0 0 30px rgba(201,168,76,0.25);
+  transition:transform .25s,box-shadow .25s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(201,168,76,0.35)}
+.btn-ghost{
+  color:var(--gold-2);font-family:'Cinzel',serif;font-size:11px;
+  font-weight:600;letter-spacing:2px;padding:14px 32px;
+  border-radius:40px;border:1px solid var(--line);
+  cursor:pointer;background:transparent;
+  transition:border-color .25s,color .25s;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-3)}
+
+/* Hero right — formula card */
+.hero-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--line);border-radius:16px;
+  padding:36px 32px;position:relative;
+  backdrop-filter:blur(10px);
+}
+.hero-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  border-radius:16px 16px 0 0;
+}
+.hc-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:20px}
+.hc-title span{color:var(--gold-2);font-style:italic}
+.ing-pills{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.ing-pill{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--glass);border:1px solid var(--line);border-radius:8px;transition:border-color .2s,background .2s}
+.ing-pill:hover{border-color:rgba(201,168,76,0.35);background:var(--glass-2)}
+.ip-num{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gold);width:18px;text-align:center;flex-shrink:0}
+.ip-name{font-size:12px;font-weight:600;color:var(--white);flex:1}
+.ip-role{font-size:10px;font-weight:300;color:var(--dim);flex:1;text-align:center}
+.ip-dose{font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--gold-2);flex-shrink:0}
+.hc-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}
+.hc-stat{text-align:center;padding:12px 8px;background:rgba(201,168,76,0.06);border:1px solid var(--line);border-radius:8px}
+.hcs-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold-2);display:block;line-height:1}
+.hcs-lbl{font-size:9px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;line-height:1.4}
+
+/* ══════════════════════════════════════════════
+   SECTION: INGREDIENT PROFILES
+══════════════════════════════════════════════ */
+#ingredients{background:linear-gradient(to bottom,var(--ink),var(--navy-2),var(--ink));position:relative;z-index:1}
+.section-header{margin-bottom:60px}
+.section-h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,46px);font-weight:800;line-height:1.15}
+.section-sub{font-size:15px;font-weight:300;color:var(--muted);max-width:600px;line-height:1.75;margin-top:12px}
+
+.ing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.ing-card{
+  background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:28px 26px;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s,box-shadow .3s;cursor:default;
+}
+.ing-card::before{
+  content:'';position:absolute;top:0;left:0;width:3px;bottom:0;
+  background:var(--gold);border-radius:3px 0 0 3px;
+}
+.ing-card:hover{border-color:rgba(201,168,76,0.35);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.ic-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.ic-num{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gold);opacity:.6}
+.ic-dose-badge{background:rgba(201,168,76,0.12);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--gold-2)}
+.ic-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:4px}
+.ic-class{font-family:'Cinzel',serif;font-size:8px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.ic-benefits{list-style:none;display:flex;flex-direction:column;gap:7px}
+.ic-benefits li{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;font-weight:300;color:rgba(255,255,255,0.72);line-height:1.55}
+.ic-benefits li::before{content:'▸';color:var(--gold);font-size:10px;flex-shrink:0;margin-top:2px}
+.ic-rct{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:5px 10px;background:rgba(26,107,74,0.15);border:1px solid rgba(26,107,74,0.3);border-radius:4px;font-size:10px;font-weight:600;color:#4ade80}
+.ic-rct::before{content:'✓';font-weight:800}
+
+/* ══════════════════════════════════════════════
+   SECTION: SYNERGY COMBINATIONS
+══════════════════════════════════════════════ */
+#synergy{position:relative;z-index:1}
+.synergy-intro{max-width:780px;margin:0 auto 60px;text-align:center}
+.synergy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.syn-card{
+  background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:24px 20px;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.syn-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);transition:transform .4s var(--ease);
+}
+.syn-card:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-4px)}
+.syn-card:hover::after{transform:scaleX(1)}
+.sc-icon{font-size:26px;margin-bottom:12px;display:block}
+.sc-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3}
+.sc-ings{font-size:10px;font-weight:600;color:rgba(201,168,76,0.7);font-style:italic;margin-bottom:10px;line-height:1.5;display:block}
+.sc-body{font-size:11.5px;font-weight:300;color:var(--muted);line-height:1.6}
+
+/* ══════════════════════════════════════════════
+   SECTION: CLINICAL EVIDENCE
+══════════════════════════════════════════════ */
+#evidence{background:linear-gradient(135deg,var(--navy-2) 0%,var(--ink) 60%);position:relative;z-index:1}
+.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:60px}
+.ev-card{
+  background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.2);
+  border-radius:var(--r-lg);padding:28px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.ev-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold)}
+.ev-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:800;color:var(--gold-2);line-height:1;display:block;margin-bottom:8px}
+.ev-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;margin-bottom:6px}
+.ev-source{font-size:10px;font-weight:600;color:var(--gold);font-style:italic;margin-bottom:10px;display:block;letter-spacing:0.5px}
+.ev-body{font-size:11.5px;font-weight:300;color:var(--muted);line-height:1.6}
+.hallmarks-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.hm-card{display:flex;align-items:flex-start;gap:14px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:20px 18px;transition:border-color .2s}
+.hm-card:hover{border-color:rgba(201,168,76,0.3)}
+.hm-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.hm-title{font-size:12.5px;font-weight:700;color:var(--gold-2);margin-bottom:4px}
+.hm-body{font-size:11px;font-weight:300;color:var(--muted);line-height:1.55}
+
+/* ══════════════════════════════════════════════
+   SECTION: 17 SPECIALTIES TABS
+══════════════════════════════════════════════ */
+#specialties{position:relative;z-index:1}
+.tabs-wrapper{margin-top:50px}
+.tab-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.tab-btn{
+  font-family:'Raleway',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:0.8px;padding:8px 16px;border-radius:30px;
+  border:1px solid var(--line);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .25s var(--ease);
+}
+.tab-btn:hover{border-color:rgba(201,168,76,0.3);color:var(--gold-2)}
+.tab-btn.active{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:800}
+.tab-panels{min-height:420px}
+.tab-panel{display:none;animation:fadeIn .4s var(--ease)}
+.tab-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tp-left .tp-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-bottom:8px}
+.tp-left .tp-sub{font-size:13px;font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:20px}
+.tp-inds{display:flex;flex-direction:column;gap:6px}
+.tp-ind{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);font-size:12px}
+.tp-ind-ev{font-family:'Cinzel',serif;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;flex-shrink:0}
+.ev-strong{background:rgba(26,107,74,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.3)}
+.ev-mod{background:rgba(122,79,0,0.2);color:#fbbf24;border:1px solid rgba(251,191,36,0.3)}
+.ev-emg{background:rgba(139,26,26,0.2);color:#f87171;border:1px solid rgba(248,113,113,0.3)}
+.tp-ind-name{font-size:12px;font-weight:500;color:var(--white);flex:1}
+.tp-right{display:flex;flex-direction:column;gap:12px}
+.tp-syn{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 18px;border-left:3px solid var(--gold)}
+.tp-syn-title{font-size:12px;font-weight:700;color:var(--gold-2);margin-bottom:4px}
+.tp-syn-ings{font-size:10px;font-weight:600;color:rgba(201,168,76,0.6);font-style:italic;margin-bottom:6px}
+.tp-syn-body{font-size:11.5px;font-weight:300;color:var(--muted);line-height:1.55}
+.tp-safety{background:rgba(122,79,0,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:var(--r);padding:16px 18px;margin-top:4px}
+.tp-safety-title{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.tp-safety-body{font-size:11px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.6}
+
+/* ══════════════════════════════════════════════
+   SECTION: DRUG INTERACTIONS
+══════════════════════════════════════════════ */
+#interactions{background:linear-gradient(135deg,#0f0500 0%,var(--ink) 100%);position:relative;z-index:1}
+.ixn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ixn-card{background:var(--glass);border-radius:var(--r-lg);padding:22px 20px;border:1px solid var(--line);position:relative;overflow:hidden}
+.ixn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ixn-critical::before{background:linear-gradient(90deg,#ef4444,#dc2626)}
+.ixn-caution::before{background:linear-gradient(90deg,var(--gold),var(--gold-2))}
+.ixn-note::before{background:linear-gradient(90deg,#3b82f6,#2563eb)}
+.ixn-level{display:inline-flex;align-items:center;gap:6px;font-family:'Cinzel',serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.level-critical{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3)}
+.level-caution{background:rgba(201,168,76,0.12);color:var(--gold-2);border:1px solid var(--line)}
+.level-note{background:rgba(59,130,246,0.12);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}
+.ixn-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px}
+.ixn-scope{font-size:9px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-style:italic}
+.ixn-body{font-size:11.5px;font-weight:300;color:var(--muted);line-height:1.6}
+
+/* ══════════════════════════════════════════════
+   SECTION: VALUE PROPOSITION
+══════════════════════════════════════════════ */
+#value{position:relative;z-index:1;overflow:hidden}
+.value-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,0.06) 0%,transparent 65%);pointer-events:none}
+.value-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.value-left .big-num{font-family:'Playfair Display',serif;font-size:100px;font-weight:900;color:var(--gold);line-height:1;opacity:.15;position:absolute;left:-10px;top:50%;transform:translateY(-50%);pointer-events:none;user-select:none}
+.value-left{position:relative}
+.value-list{list-style:none;margin-bottom:32px;display:flex;flex-direction:column;gap:14px}
+.value-list li{display:flex;align-items:flex-start;gap:14px;font-size:14px;font-weight:300;color:rgba(255,255,255,0.75);line-height:1.6}
+.vl-icon{font-size:18px;flex-shrink:0}
+.vs-compare{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 28px}
+.vs-compare-title{font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;text-align:center}
+.vs-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.vs-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.vs-item{text-align:center;flex:1}
+.vs-price{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:var(--white);display:block;line-height:1}
+.vs-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;line-height:1.5}
+.vs-vs{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gold);flex-shrink:0}
+.vs-note{font-size:12px;font-weight:300;color:var(--muted);text-align:center;margin-top:20px;line-height:1.7;font-style:italic;padding:16px;background:rgba(201,168,76,0.05);border-radius:var(--r);border:1px solid var(--line)}
+
+/* ══════════════════════════════════════════════
+   SECTION: INDIA'S BEST
+══════════════════════════════════════════════ */
+#best{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 50%,var(--navy) 100%);position:relative;z-index:1}
+.best-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.best-features{display:flex;flex-direction:column;gap:16px}
+.bf{display:flex;align-items:flex-start;gap:16px;padding:18px;background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+.bf:hover{border-color:rgba(201,168,76,0.3)}
+.bf-icon{font-size:22px;flex-shrink:0}
+.bf-title{font-size:13.5px;font-weight:700;color:var(--gold-2);margin-bottom:4px}
+.bf-body{font-size:12px;font-weight:300;color:var(--muted);line-height:1.6}
+.best-chart{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 28px}
+.bch-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:24px;text-align:center}
+.bch-title span{color:var(--gold-2);font-style:italic}
+.compare-table{width:100%}
+.ct-row{display:grid;grid-template-columns:1fr repeat(4,60px);gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.ct-row:last-child{border-bottom:none}
+.ct-header{font-family:'Cinzel',serif;font-size:8px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;padding:14px 0 6px}
+.ct-feature{font-size:11px;font-weight:400;color:rgba(255,255,255,0.65)}
+.ct-cell{text-align:center;font-size:12px;font-weight:700}
+.ct-yes{color:#4ade80}.ct-no{color:rgba(255,255,255,0.2)}.ct-part{color:#fbbf24}
+.ct-cs{color:var(--gold-2);font-family:'Cinzel',serif;font-size:9px;font-weight:700}
+.ct-cs-header{color:var(--gold);font-family:'Cinzel',serif;font-size:8px;font-weight:800;letter-spacing:1px}
+
+/* ══════════════════════════════════════════════
+   SECTION: DISCLAIMER / DOSING
+══════════════════════════════════════════════ */
+#dosing{position:relative;z-index:1}
+.dosing-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.dose-card{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 28px}
+.dose-card.highlight{background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.04));border-color:rgba(201,168,76,0.35)}
+.dose-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;margin-bottom:6px}
+.dose-sub{font-size:12px;font-weight:300;color:var(--muted);line-height:1.65;margin-bottom:20px}
+.dose-strip{background:var(--gold);border-radius:var(--r);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ds-main{font-family:'Cinzel',serif;font-size:13px;font-weight:800;color:var(--ink);letter-spacing:1.5px}
+.ds-sub{font-size:10px;color:rgba(6,10,16,0.65);font-weight:500;margin-top:2px}
+.ds-pill{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink);font-style:italic}
+.safety-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.safety-list li{display:flex;align-items:flex-start;gap:10px;font-size:12px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.55}
+.safety-list li::before{content:'⚠';font-size:10px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.disclaimer-box{background:rgba(122,79,0,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r);padding:18px 20px;margin-top:16px}
+.disclaimer-box p{font-size:11px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.7;font-style:italic}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+footer{
+  background:var(--ink);border-top:1px solid var(--line);
+  padding:60px 0 30px;position:relative;z-index:1;
+}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;margin-bottom:50px}
+.ft-brand{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.ft-desc{font-size:12px;font-weight:300;color:var(--muted);line-height:1.75;max-width:320px}
+.ft-col-title{font-family:'Cinzel',serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ft-links li{font-size:12px;font-weight:400;color:var(--muted);cursor:pointer;transition:color .2s}
+.ft-links li:hover{color:var(--gold-2)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--line)}
+.fb-left{font-size:11px;font-weight:300;color:var(--dim)}
+.fb-right{font-size:10px;font-weight:600;color:var(--gold);font-style:italic;font-family:'Playfair Display',serif}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .hero-inner,.value-inner,.best-inner,.dosing-inner,.footer-top{grid-template-columns:1fr}
+  .hero-rings{display:none}
+  .hero-card{display:none}
+  .ing-grid,.evidence-grid,.ixn-grid,.hallmarks-row{grid-template-columns:1fr}
+  .synergy-grid{grid-template-columns:1fr 1fr}
+  .tab-panel.active{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+@media(max-width:600px){
+  .synergy-grid{grid-template-columns:1fr}
+  .hc-stat-row{grid-template-columns:1fr 1fr}
+  .container{padding:0 24px}
+  .section{padding:70px 0}
+  .section-h2{font-size:28px}
+}
+
+/* Mobile menu */
+#mobile-menu{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(7,10,16,0.97);backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+#mobile-menu.open{opacity:1;pointer-events:all}
+#mobile-menu a{font-family:'Cinzel',serif;font-size:16px;font-weight:600;letter-spacing:3px;color:var(--white);text-transform:uppercase;transition:color .2s}
+#mobile-menu a:hover{color:var(--gold)}
+#mob-close{position:absolute;top:24px;right:24px;font-size:24px;color:var(--gold);cursor:pointer;background:none;border:none}
+</style>
+</head>
+<body>
+
+<!-- Starfield canvas -->
+<canvas id="starfield"></canvas>
+
+<!-- Mobile menu -->
+<div id="mobile-menu">
+  <button id="mob-close">✕</button>
+  <a href="#ingredients" onclick="closeMob()">Formula</a>
+  <a href="#synergy" onclick="closeMob()">Synergy</a>
+  <a href="#evidence" onclick="closeMob()">Evidence</a>
+  <a href="#specialties" onclick="closeMob()">Specialties</a>
+  <a href="#interactions" onclick="closeMob()">Interactions</a>
+  <a href="#value" onclick="closeMob()">Value</a>
+  <a href="#dosing" onclick="closeMob()">Dosing</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Arata Nutraceuticals</div>
+    <ul class="nav-links">
+      <li><a href="#ingredients">Formula</a></li>
+      <li><a href="#synergy">Synergy</a></li>
+      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#specialties">Specialties</a></li>
+      <li><a href="#interactions">Interactions</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#dosing" class="nav-cta">Prescribe</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="openMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rings">
+    <div class="hr hr1"></div><div class="hr hr2"></div><div class="hr hr3"></div>
+  </div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-pre reveal">
+          <span class="hero-pre-line"></span>
+          <span>For Healthcare Professionals</span>
+        </div>
+        <h1 class="hero-h1 reveal d1">
+          Chrono
+          <span>Shield Advanced</span>
+        </h1>
+        <p class="hero-sub reveal d2">India's most advanced single-capsule longevity formula. Ten precision-dosed actives. Clinically validated across 17 medical specialties. Engineered for patients who refuse to compromise.</p>
+        <div class="hero-badges reveal d3">
+          <span class="tag">🔬 10 Actives</span>
+          <span class="tag">🏥 17 Specialties</span>
+          <span class="tag">💊 1 Daily Capsule</span>
+          <span class="tag">⚗ Size 00 · 433mg</span>
+        </div>
+        <div class="hero-cta-row reveal d4">
+          <button class="btn-primary" onclick="document.getElementById('specialties').scrollIntoView({behavior:'smooth'})">View by Specialty</button>
+          <button class="btn-ghost" onclick="document.getElementById('ingredients').scrollIntoView({behavior:'smooth'})">Formula Profile</button>
+        </div>
+      </div>
+
+      <div class="hero-card reveal-r d2">
+        <div class="hc-title">Complete Formula — <span>Active Ingredients</span></div>
+        <div class="ing-pills">
+          <div class="ing-pill"><span class="ip-num">01</span><span class="ip-name">Astaxanthin</span><span class="ip-role">Antioxidant</span><span class="ip-dose">4 mg</span></div>
+          <div class="ing-pill"><span class="ip-num">02</span><span class="ip-name">Lycopene</span><span class="ip-role">Vascular</span><span class="ip-dose">4000 mcg</span></div>
+          <div class="ing-pill"><span class="ip-num">03</span><span class="ip-name">Trans-Resveratrol</span><span class="ip-role">Longevity</span><span class="ip-dose">100 mg</span></div>
+          <div class="ing-pill"><span class="ip-num">04</span><span class="ip-name">Tocotrienol</span><span class="ip-role">Neuroprotective</span><span class="ip-dose">20 mg</span></div>
+          <div class="ing-pill"><span class="ip-num">05</span><span class="ip-name">Alpha Lipoic Acid</span><span class="ip-role">Master Recycler</span><span class="ip-dose">50 mg</span></div>
+          <div class="ing-pill"><span class="ip-num">06</span><span class="ip-name">Co-enzyme Q10</span><span class="ip-role">Mitochondrial</span><span class="ip-dose">100 mg</span></div>
+          <div class="ing-pill"><span class="ip-num">07</span><span class="ip-name">Vitamin C</span><span class="ip-role">Collagen</span><span class="ip-dose">40 mg</span></div>
+          <div class="ing-pill"><span class="ip-num">08</span><span class="ip-name">Vitamin D3</span><span class="ip-role">Immune</span><span class="ip-dose">600 IU</span></div>
+          <div class="ing-pill"><span class="ip-num">09</span><span class="ip-name">Vitamin K2 MK-7</span><span class="ip-role">Cardiovascular</span><span class="ip-dose">45 mcg</span></div>
+          <div class="ing-pill"><span class="ip-num">10</span><span class="ip-name">Selenium</span><span class="ip-role">GPx Defence</span><span class="ip-dose">40 mcg</span></div>
+        </div>
+        <div class="hc-stat-row">
+          <div class="hc-stat"><span class="hcs-num">6/9</span><span class="hcs-lbl">Hallmarks of Ageing</span></div>
+          <div class="hc-stat"><span class="hcs-num">43%</span><span class="hcs-lbl">Cardiac Events ↓ (Q-SYMBIO)</span></div>
+          <div class="hc-stat"><span class="hcs-num">37%</span><span class="hcs-lbl">Cancer Incidence ↓ (NPC Trial)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ INGREDIENT PROFILES ══════════ -->
+<section id="ingredients" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Formula Deep Dive</span>
+      <h2 class="section-h2">10 Precision-Dosed Actives.<br>Every Dose. Every Reason.</h2>
+      <div class="gold-bar"></div>
+      <p class="section-sub">Each ingredient was selected for a specific, irreplaceable biological role and dosed at the threshold where published clinical evidence begins. Together, they form a self-reinforcing protective ecosystem.</p>
+    </div>
+    <div class="ing-grid">
+      <div class="ing-card reveal d1">
+        <div class="ic-header"><span class="ic-num">01</span><span class="ic-dose-badge">4 mg</span></div>
+        <div class="ic-name">Astaxanthin</div>
+        <div class="ic-class">Haematococcus pluvialis · Full-Spectrum Antioxidant</div>
+        <ul class="ic-benefits">
+          <li>Only carotenoid to cross both the blood-brain barrier AND the blood-retinal barrier — accumulates directly in RPE cells and retinal ganglion cells</li>
+          <li>40× more potent singlet oxygen quencher than beta-carotene · Full phospholipid bilayer membrane protection — covers both inner and outer leaflets simultaneously</li>
+          <li>Inhibits MMP-1 (collagenase) and MMP-12 (elastase) in skin dermis — the primary photoaging and pollution-driven collagen degradation enzymes</li>
+          <li>Reduces post-exercise lipid peroxidation, IL-6, and CK elevation — the inflammatory markers of DOMS</li>
+        </ul>
+        <span class="ic-rct">RCT: Improved 40km cycling VO2 max in trained athletes</span>
+      </div>
+
+      <div class="ing-card reveal d2">
+        <div class="ic-header"><span class="ic-num">02</span><span class="ic-dose-badge">4000 mcg</span></div>
+        <div class="ic-name">Lycopene</div>
+        <div class="ic-class">Natural Tomato Extract · Singlet O₂ Shield</div>
+        <ul class="ic-benefits">
+          <li>Most efficient singlet oxygen quencher among all dietary carotenoids — 10× more potent than beta-carotene in RPE and skin lipid membranes</li>
+          <li>Finnish cohort study (n=1,031): highest lycopene tertile associated with 55% reduced stroke risk over 12 years</li>
+          <li>Concentrates in LDL particles, liver, adrenal cortex, prostate, and ovarian follicular fluid — protecting the tissues with the highest oxidative metabolic demand</li>
+          <li>Inhibits IGF-1/Akt/mTOR signalling in prostate, colorectal, cervical, and hepatic cancer cell lines</li>
+        </ul>
+        <span class="ic-rct">RCT: Exercise-induced bronchoconstriction reduction</span>
+      </div>
+
+      <div class="ing-card reveal d1">
+        <div class="ic-header"><span class="ic-num">03</span><span class="ic-dose-badge">100 mg</span></div>
+        <div class="ic-name">Trans-Resveratrol</div>
+        <div class="ic-class">Polygonum cuspidatum 98% · SIRT1 Longevity Activator</div>
+        <ul class="ic-benefits">
+          <li>Activates SIRT1/PGC-1α — the master longevity pathway, identical to the molecular mechanism of caloric restriction and aerobic exercise adaptation</li>
+          <li>Phase II Alzheimer's RCT (Georgetown): reduced CSF Abeta-40 and stabilised cognitive scores vs placebo — only nutraceutical with this level of AD evidence</li>
+          <li>Inhibits NF-κB, TGF-β/Smad (anti-fibrotic), Wnt/β-catenin (anti-cancer), and CYP17A1 (androgen) — broadest mechanistic coverage of any single nutraceutical</li>
+          <li>PCOS RCT (2016): significantly reduced total testosterone, DHEAS, fasting insulin, and HOMA-IR simultaneously</li>
+        </ul>
+        <span class="ic-rct">⚠ CYP3A4/CYP2C9 inhibitor — drug level monitoring required</span>
+      </div>
+
+      <div class="ing-card reveal d2">
+        <div class="ic-header"><span class="ic-num">04</span><span class="ic-dose-badge">20 mg</span></div>
+        <div class="ic-name">Tocotrienol</div>
+        <div class="ic-class">Palm-Derived 50% · Superior Vitamin E</div>
+        <ul class="ic-benefits">
+          <li>40–60× greater neuroprotection vs tocopherols in equivalent studies — the only Vitamin E form to cross the blood-brain barrier efficiently</li>
+          <li>Only Vitamin E form with published MRI evidence for reduction of white matter lesion volume in neurological disease</li>
+          <li>NIAID and BARDA validated as a radioprotector of normal tissue — protects healthy cells from radiation without shielding cancer cells</li>
+          <li>Inhibits HMG-CoA reductase via post-transcriptional mechanism — reduces LDL without depleting CoQ10 (unlike statins)</li>
+        </ul>
+        <span class="ic-rct">NIAID validated radioprotection — no equivalent tocopherol data</span>
+      </div>
+
+      <div class="ing-card reveal d1">
+        <div class="ic-header"><span class="ic-num">05</span><span class="ic-dose-badge">50 mg</span></div>
+        <div class="ic-name">Alpha Lipoic Acid (R-ALA)</div>
+        <div class="ic-class">Pharmaceutical Grade ~99% · Antioxidant Network Recycler</div>
+        <ul class="ic-benefits">
+          <li>The only antioxidant that is both water-soluble AND fat-soluble — providing simultaneous protection in every cellular compartment (cytoplasm, membranes, mitochondria, nucleus)</li>
+          <li>Continuously recycles Vitamin C, Vitamin E (Tocotrienol), CoQ10, and Glutathione from their oxidised forms — making the entire ChronoShield formula self-renewing</li>
+          <li>SYDNEY-2 RCT: oral ALA significantly reduced Total Symptom Score in diabetic peripheral neuropathy — most evidence-backed nutraceutical for DPN</li>
+          <li>Blood-brain-barrier penetrating chelator of heavy metals (Pb, Hg, Cd) · Inhibits AChE (same mechanism as donepezil)</li>
+        </ul>
+        <span class="ic-rct">SYDNEY-2 RCT: DPN symptom reduction · ⚠ Potentiates antidiabetics</span>
+      </div>
+
+      <div class="ing-card reveal d2">
+        <div class="ic-header"><span class="ic-num">06</span><span class="ic-dose-badge">100 mg</span></div>
+        <div class="ic-name">Co-enzyme Q10</div>
+        <div class="ic-class">Ubiquinone Micronised ~98% · Mitochondrial Substrate</div>
+        <ul class="ic-benefits">
+          <li>Q-SYMBIO RCT (n=420 CHF patients): 100 mg TID reduced major cardiac events by 43% and all-cause mortality by 42% vs placebo — strongest nutraceutical RCT in heart failure</li>
+          <li>Rate-limiting electron carrier in mitochondrial Complex I–III — directly determines maximal ATP production capacity in every aerobic tissue</li>
+          <li>Declines 65% in human tissues from age 20 to 80 · Depleted 30–50% by all HMG-CoA reductase inhibitors (statins) — statin co-prescription is the standard of care</li>
+          <li>Most studied nutraceutical for cancer-related fatigue — restores immune cell mitochondrial energy for exhausted T-cells and NK cells</li>
+        </ul>
+        <span class="ic-rct">Q-SYMBIO RCT: 43% cardiac event reduction (n=420)</span>
+      </div>
+
+      <div class="ing-card reveal d1">
+        <div class="ic-header"><span class="ic-num">07</span><span class="ic-dose-badge">40 mg</span></div>
+        <div class="ic-name">Vitamin C (Coated)</div>
+        <div class="ic-class">Ascorbic Acid ~90% · Collagen Architect</div>
+        <ul class="ic-benefits">
+          <li>Irreplaceable cofactor for collagen prolyl and lysyl hydroxylation — without adequate Vitamin C, ALL collagen (skin, bone, tendon, vascular wall) is structurally defective</li>
+          <li>Aqueous humor contains Vitamin C at 50× plasma concentration — the highest in any body tissue; deficiency directly impairs the primary lens and trabecular antioxidant system</li>
+          <li>Meta-analysis of 29 RCTs: Vitamin C supplementation reduces systolic BP ~5 mmHg via eNOS upregulation and NO preservation</li>
+          <li>Promotes histamine degradation via histaminase activation — natural antihistamine effect; uricosuric activity reduces serum uric acid 0.5–1.5 mg/dL</li>
+        </ul>
+        <span class="ic-rct">Meta-analysis (29 RCTs): ~5 mmHg SBP reduction</span>
+      </div>
+
+      <div class="ing-card reveal d2">
+        <div class="ic-header"><span class="ic-num">08</span><span class="ic-dose-badge">600 IU</span></div>
+        <div class="ic-name">Vitamin D3</div>
+        <div class="ic-class">Cholecalciferol 100,000 IU/g · Immune Regulator</div>
+        <ul class="ic-benefits">
+          <li>VDR is expressed on every immune cell type (T-cells, B-cells, NK cells, macrophages, dendritic cells) and in virtually every organ — the single most pleiotropic vitamin in human physiology</li>
+          <li>BMJ meta-analysis (n=11,321 individual participants): D3 reduces acute respiratory tract infections by 12–42% in deficient individuals (NNT = 33)</li>
+          <li>D3 deficiency is the most consistently replicated modifiable risk factor for depression, dementia, T2DM, autoimmune disease, and multiple cancers in prospective cohort data</li>
+          <li>VITAL trial (n=25,871): D3 supplementation significantly reduced cancer mortality (HR 0.83) — largest D3 cancer prevention trial to date</li>
+        </ul>
+        <span class="ic-rct">BMJ meta-analysis (n=11,321): 12–42% reduced respiratory infections</span>
+      </div>
+
+      <div class="ing-card reveal d1">
+        <div class="ic-header"><span class="ic-num">09</span><span class="ic-dose-badge">45 mcg</span></div>
+        <div class="ic-name">Vitamin K2 MK-7</div>
+        <div class="ic-class">Menaquinone-7 1% Premix · Calcification Preventer</div>
+        <ul class="ic-benefits">
+          <li>Rotterdam Study (n=4,807, 10-year follow-up): highest K2 tertile associated with 57% reduced coronary heart disease mortality and 52% reduced aortic calcification score</li>
+          <li>Activates Matrix Gla Protein (MGP) — the most potent known inhibitor of vascular and soft tissue calcification · MGP carboxylation requires K2; cannot be substituted</li>
+          <li>Japanese RCTs using MK-4 (K2 analogue): significant reduction in HCC recurrence after curative resection — PIVKA-II is the validated HCC tumour marker for K2 deficiency</li>
+          <li>Gas6/Axl/Tyro3 receptor activation: promotes apoptotic cell clearance (efferocytosis), immune tolerance, and satellite cell muscle repair signalling</li>
+        </ul>
+        <span class="ic-rct">Rotterdam Study (n=4,807): 57% CVD mortality reduction · ⚠ Warfarin</span>
+      </div>
+
+      <div class="ing-card reveal d2">
+        <div class="ic-header"><span class="ic-num">10</span><span class="ic-dose-badge">40 mcg</span></div>
+        <div class="ic-name">Selenium</div>
+        <div class="ic-class">Selenium Dioxide 1% Premix · Enzymatic Defence</div>
+        <ul class="ic-benefits">
+          <li>NPC Trial (RCT, n=1,312): selenium supplementation reduced total cancer incidence by 37%, cancer mortality by 50%, and prostate cancer by 63% vs placebo — landmark cancer prevention RCT</li>
+          <li>Only nutrient with RCT evidence for reducing TPO and TG antibodies (40–60% reduction) in Hashimoto's thyroiditis — published in multiple peer-reviewed RCTs</li>
+          <li>Essential cofactor for GPx1 (cytoplasmic H₂O₂), GPx2 (intestinal epithelium), and GPx4 (phospholipid hydroperoxides/ferroptosis prevention) — the three irreplaceable enzymatic antioxidant systems</li>
+          <li>Deiodinase selenoenzymes are irreplaceable for T4→T3 conversion — selenium deficiency impairs levothyroxine efficacy even at correct TSH</li>
+        </ul>
+        <span class="ic-rct">NPC Trial (RCT): 37% cancer incidence reduction · 50% cancer mortality reduction</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SYNERGY ══════════ -->
+<section id="synergy" class="section" style="background:linear-gradient(to bottom,var(--ink),#0a1428,var(--ink))">
+  <div class="container">
+    <div class="synergy-intro reveal">
+      <span class="eyebrow center">The Synergy System</span>
+      <h2 class="section-h2 center">One Formula. Eight Synergistic Pathways.</h2>
+      <div class="gold-bar center"></div>
+      <p class="section-sub center" style="margin:0 auto">The clinical value of ChronoShield Advanced lies not in any single ingredient, but in the self-reinforcing system. Alpha Lipoic Acid continuously recycles Vitamin C, Vitamin E, CoQ10, and Glutathione — making the entire formula self-renewing. No collection of individual supplements can replicate this.</p>
+    </div>
+    <div class="synergy-grid">
+      <div class="syn-card reveal d1">
+        <span class="sc-icon">⚡</span>
+        <div class="sc-title">Mitochondrial Restoration Engine</div>
+        <span class="sc-ings">CoQ10 + ALA + Resveratrol + Tocotrienol</span>
+        <div class="sc-body">CoQ10 restores Complex I–III electron transport. ALA regenerates mitochondrial antioxidants continuously. Resveratrol activates PGC-1α mitochondrial biogenesis. Tocotrienol protects mitochondrial membranes. Four independent mitochondrial mechanisms — synergistic, not additive.</div>
+      </div>
+      <div class="syn-card reveal d2">
+        <span class="sc-icon">✨</span>
+        <div class="sc-title">Skin, Glow & Anti-Ageing Triad</div>
+        <span class="sc-ings">Astaxanthin + Lycopene + Vitamin C</span>
+        <div class="sc-body">MMP-1/MMP-12 collagen enzyme inhibition (Astaxanthin) + UV singlet O₂ quenching in dermis (Lycopene) + collagen prolyl hydroxylase substrate (Vit C). Three clinically distinct mechanisms covering every photoaging and pollution-driven skin damage pathway.</div>
+      </div>
+      <div class="syn-card reveal d3">
+        <span class="sc-icon">🎗️</span>
+        <div class="sc-title">Anti-Cancer Triple Shield</div>
+        <span class="sc-ings">Selenium + Lycopene + Resveratrol</span>
+        <div class="sc-body">NPC Trial (Selenium): 37% incidence, 63% prostate. Lycopene IGF-1/Akt/mTOR inhibition. Resveratrol Wnt/β-catenin + p53 activation. Three independent cancer prevention mechanisms covering initiation, promotion, and progression.</div>
+      </div>
+      <div class="syn-card reveal d4">
+        <span class="sc-icon">❤️</span>
+        <div class="sc-title">Cardiac Mitochondrial-Calcification-Antioxidant</div>
+        <span class="sc-ings">CoQ10 + K2 MK-7 + Selenium</span>
+        <div class="sc-body">Q-SYMBIO: CoQ10 43% cardiac event reduction. Rotterdam: K2 57% CVD mortality reduction. Selenium GPx1 cardiomyocyte protection. Three pillars: cardiac energy (CoQ10) + calcification prevention (K2) + oxidative defence (Selenium).</div>
+      </div>
+      <div class="syn-card reveal d1">
+        <span class="sc-icon">🧠</span>
+        <div class="sc-title">Neurological BBB-Penetrating Triad</div>
+        <span class="sc-ings">Astaxanthin + ALA + Resveratrol</span>
+        <div class="sc-body">All three cross the blood-brain barrier. Astaxanthin NLRP3 microglial inhibition. ALA AChE inhibition + brain GSH recycling. Resveratrol SIRT1/BDNF hippocampal neurogenesis (Phase II AD RCT data). Together: the most evidence-backed nutraceutical neuroprotection stack available.</div>
+      </div>
+      <div class="syn-card reveal d2">
+        <span class="sc-icon">🛡️</span>
+        <div class="sc-title">Anti-Pollution Full-Spectrum Shield</div>
+        <span class="sc-ings">Astaxanthin + Lycopene + Selenium</span>
+        <div class="sc-body">PM2.5 generates ROS that damage skin, lung endothelium, and coronary arteries simultaneously. Astaxanthin full-bilayer membrane protection. Lycopene singlet O₂ quenching. Selenium GPx1 H₂O₂ enzymatic neutralisation. Covers all three PM2.5 damage pathways.</div>
+      </div>
+      <div class="syn-card reveal d3">
+        <span class="sc-icon">🔄</span>
+        <div class="sc-title">ALA Self-Renewing Antioxidant Cycle</div>
+        <span class="sc-ings">ALA → GSH → Vit C → Tocotrienol → CoQ10</span>
+        <div class="sc-body">Alpha Lipoic Acid is uniquely positioned to regenerate all other antioxidants from their oxidised forms: GSSG→GSH, dehydroascorbate→Vit C, oxidised Tocotrienol→reduced, and CoQ9→CoQ10. This self-renewal cycle makes the entire formula continuously active — impossible to replicate with separate supplements.</div>
+      </div>
+      <div class="syn-card reveal d4">
+        <span class="sc-icon">🦴</span>
+        <div class="sc-title">D3+K2 Gold-Standard Bone-Calcification</div>
+        <span class="sc-ings">Vitamin D3 + Vitamin K2 MK-7</span>
+        <div class="sc-body">D3 promotes calcium absorption and osteoblast function. K2 (osteocalcin carboxylation) directs absorbed calcium into bone matrix, not arteries. Without K2, D3-enhanced calcium absorption may accelerate arterial calcification. Together they represent the clinical gold standard for bone health AND cardiovascular calcification prevention.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CLINICAL EVIDENCE ══════════ -->
+<section id="evidence" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Clinical Validation</span>
+      <h2 class="section-h2">The Evidence Is<br class="br"> Unambiguous.</h2>
+      <div class="gold-bar"></div>
+    </div>
+    <div class="evidence-grid">
+      <div class="ev-card reveal d1">
+        <span class="ev-num">43%</span>
+        <div class="ev-title">Cardiac Event Reduction</div>
+        <span class="ev-source">Q-SYMBIO RCT · n=420 CHF patients · CoQ10 300mg/day</span>
+        <div class="ev-body">Largest CoQ10 RCT in heart failure. Reduced major cardiac events AND all-cause mortality by 43% and 42% respectively vs placebo. Published in JACC Heart Failure.</div>
+      </div>
+      <div class="ev-card reveal d2">
+        <span class="ev-num">57%</span>
+        <div class="ev-title">CVD Mortality Reduction</div>
+        <span class="ev-source">Rotterdam Study · n=4,807 · K2 MK-7 · 10-year follow-up</span>
+        <div class="ev-body">Highest dietary K2 tertile associated with 57% reduced coronary heart disease mortality and 52% reduced aortic calcification score. The most cited nutraceutical cardiovascular cohort study.</div>
+      </div>
+      <div class="ev-card reveal d3">
+        <span class="ev-num">37%</span>
+        <div class="ev-title">Cancer Incidence Reduction</div>
+        <span class="ev-source">NPC Trial RCT · n=1,312 · Selenium 200mcg/day</span>
+        <div class="ev-body">Randomised, double-blind, placebo-controlled trial. Selenium reduced total cancer incidence 37%, total cancer mortality 50%, prostate cancer 63%. Published in JAMA.</div>
+      </div>
+      <div class="ev-card reveal d1">
+        <span class="ev-num">42%</span>
+        <div class="ev-title">Respiratory Infection Reduction</div>
+        <span class="ev-source">BMJ Meta-analysis · n=11,321 individuals · D3</span>
+        <div class="ev-body">Individual participant data meta-analysis from 25 RCTs. D3 supplementation reduced acute respiratory tract infection risk by 12–42% depending on baseline deficiency level.</div>
+      </div>
+      <div class="ev-card reveal d2">
+        <span class="ev-num">55%</span>
+        <div class="ev-title">Stroke Risk Reduction</div>
+        <span class="ev-source">Finnish Cohort · n=1,031 men · Lycopene · 12-year follow-up</span>
+        <div class="ev-body">Men in the highest lycopene tertile had 55% lower risk of stroke vs lowest tertile over 12 years of follow-up. Lycopene measurement was serum-based — the most objective dietary biomarker.</div>
+      </div>
+      <div class="ev-card reveal d3">
+        <span class="ev-num">26%</span>
+        <div class="ev-title">Fall Risk Reduction in Elderly</div>
+        <span class="ev-source">Meta-analysis · >90,000 subjects · Vitamin D3 supplementation</span>
+        <div class="ev-body">D3 supplementation reduces fall risk by 19–26% in elderly — one of the most replicated meta-analysis findings in geriatrics. Mechanism: VDR in skeletal muscle regulates Type II fibre synthesis.</div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:60px">
+      <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:30px;text-align:center">Addresses <span class="gold">6 of 9 Hallmarks of Ageing</span></h3>
+      <div class="hallmarks-row">
+        <div class="hm-card reveal d1"><span class="hm-icon">🔥</span><div><div class="hm-title">Mitochondrial Dysfunction</div><div class="hm-body">CoQ10 + ALA + Resveratrol restore Complex I–III and activate PGC-1α mitochondrial biogenesis</div></div></div>
+        <div class="hm-card reveal d2"><span class="hm-icon">🧬</span><div><div class="hm-title">Epigenetic Alterations</div><div class="hm-body">Resveratrol SIRT1 deacetylates histones and transcription factors — the primary epigenetic longevity mechanism</div></div></div>
+        <div class="hm-card reveal d3"><span class="hm-icon">🛡️</span><div><div class="hm-title">Altered Intercellular Communication</div><div class="hm-body">NF-κB inhibition (Resveratrol + ALA + Tocotrienol) reduces SASP inflammatory cytokine cascade</div></div></div>
+        <div class="hm-card reveal d1"><span class="hm-icon">⚡</span><div><div class="hm-title">Deregulated Nutrient Sensing</div><div class="hm-body">SIRT1/AMPK activation (Resveratrol + ALA) mimics the caloric restriction pathway — FOXO longevity gene upregulation</div></div></div>
+        <div class="hm-card reveal d2"><span class="hm-icon">🔬</span><div><div class="hm-title">Cellular Senescence</div><div class="hm-body">Selenium GPx4 prevents ferroptosis. Astaxanthin + Tocotrienol reduce oxidative senescence triggers</div></div></div>
+        <div class="hm-card reveal d3"><span class="hm-icon">🧪</span><div><div class="hm-title">Oxidative Stress (Core Driver)</div><div class="hm-body">5-layer antioxidant defence: enzymatic (Selenium GPx), water (Vit C + ALA), fat-soluble (Tocotrienol), membrane (Astaxanthin), and recycling (ALA) — comprehensive coverage</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 17 SPECIALTIES ══════════ -->
+<section id="specialties" class="section" style="background:linear-gradient(to bottom,var(--ink),var(--navy-2),var(--ink))">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Clinical Applications</span>
+      <h2 class="section-h2">Validated Across<br class="br"> 17 Medical Specialties</h2>
+      <div class="gold-bar"></div>
+      <p class="section-sub">ChronoShield Advanced has documented clinical relevance across the full breadth of internal medicine. Select your specialty below.</p>
+    </div>
+    <div class="tabs-wrapper">
+      <div class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="cardio">❤ Cardiology</button>
+        <button class="tab-btn" data-tab="neuro">🧠 Neurology</button>
+        <button class="tab-btn" data-tab="endo">⚗ Endocrinology</button>
+        <button class="tab-btn" data-tab="gastro">🫁 Gastroenterology</button>
+        <button class="tab-btn" data-tab="nephro">🫘 Nephrology</button>
+        <button class="tab-btn" data-tab="rheum">🦴 Rheumatology</button>
+        <button class="tab-btn" data-tab="opht">👁 Ophthalmology</button>
+        <button class="tab-btn" data-tab="pulmo">💨 Pulmonology</button>
+        <button class="tab-btn" data-tab="derm">🌿 Dermatology</button>
+        <button class="tab-btn" data-tab="onco">⚕ Oncology</button>
+        <button class="tab-btn" data-tab="immu">🛡 Immunology</button>
+        <button class="tab-btn" data-tab="repro">🌸 Reproductive</button>
+        <button class="tab-btn" data-tab="psyc">💭 Psychiatry</button>
+        <button class="tab-btn" data-tab="sport">🏃 Sports Med</button>
+        <button class="tab-btn" data-tab="hepa">🫀 Hepatology</button>
+        <button class="tab-btn" data-tab="surg">🔬 Post-Surgery</button>
+        <button class="tab-btn" data-tab="geri">🏥 Geriatrics</button>
+      </div>
+      <div class="tab-panels" id="tabPanels">
+
+        <!-- CARDIOLOGY -->
+        <div class="tab-panel active" data-panel="cardio">
+          <div class="tp-left">
+            <div class="tp-title">Cardiology</div>
+            <div class="tp-sub">Q-SYMBIO RCT: CoQ10 reduced CHF major events 43%. Rotterdam Study: K2 reduced CVD mortality 57%. Statin CoQ10 depletion is the standard co-prescription indication.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Heart Failure (HFrEF and HFpEF)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Atherosclerosis and CAD Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Dyslipidaemia and Statin Therapy Support</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Hypertension — adjunct to pharmacotherapy</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Atrial Fibrillation — rhythm control adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Post-MI Cardiac Rehabilitation</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Pulmonary Hypertension — RV support</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Cardiac Mitochondrial-Calcification-Antioxidant Triad</div><div class="tp-syn-ings">CoQ10 100mg + K2 MK-7 45mcg + Selenium 40mcg</div><div class="tp-syn-body">Q-SYMBIO cardiac energy restoration (CoQ10) + Rotterdam vascular calcification prevention via MGP (K2) + cardiomyocyte GPx1 protection (Selenium). Heart failure, statin patients, aortic valve stenosis.</div></div>
+            <div class="tp-syn"><div class="tp-syn-title">Endothelial Anti-Atherosclerosis Stack</div><div class="tp-syn-ings">Lycopene + Resveratrol + Vitamin C</div><div class="tp-syn-body">LDL oxidation prevention (Lycopene) + eNOS upregulation (Resveratrol) + NO preservation via superoxide scavenging (Vit C). Covers all three atherogenesis initiation steps.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Safety</div><div class="tp-safety-body">K2 MK-7 × warfarin — mandatory INR monitoring. Resveratrol CYP3A4 may elevate statin and amiodarone levels. ALA × antidiabetics in diabetic cardiac patients. NOAC use: K2 is safe with apixaban, rivaroxaban, dabigatran.</div></div>
+          </div>
+        </div>
+
+        <!-- NEUROLOGY -->
+        <div class="tab-panel" data-panel="neuro">
+          <div class="tp-left">
+            <div class="tp-title">Neurology</div>
+            <div class="tp-sub">Three ingredients cross the BBB: Astaxanthin (only BBB carotenoid), ALA (AChE inhibitor), and Resveratrol (Phase II Alzheimer's RCT). CoQ10 is EHF guideline-level migraine prophylaxis.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Parkinson's Disease — mitochondrial neuroprotection</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Alzheimer's / MCI — SIRT1/BDNF prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Migraine Prophylaxis (CoQ10 guideline-level)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Multiple Sclerosis — adjunct to DMT</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Diabetic and Toxic Peripheral Neuropathy</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Sleep Disorders / Circadian Dysfunction</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">ALS — supportive care</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">BBB-Penetrating Neuroprotective Triad</div><div class="tp-syn-ings">Resveratrol 100mg + Astaxanthin 4mg + ALA 50mg</div><div class="tp-syn-body">SIRT1/BDNF neurogenesis (Resveratrol Phase II AD RCT) + NLRP3 microglial inhibition (Astaxanthin) + AChE inhibition + brain GSH recycling (ALA). Alzheimer's prevention, MCI, cognitive ageing.</div></div>
+            <div class="tp-syn"><div class="tp-syn-title">Mitochondrial Optic and RGC Protection</div><div class="tp-syn-ings">CoQ10 100mg + ALA 50mg + D3 600IU</div><div class="tp-syn-body">RGC Complex I–III ATP restoration (CoQ10) + glutamate excitotoxicity protection + optic nerve GSH (ALA) + VDR neuroprotection (D3). Glaucoma, LHON, ischaemic optic neuropathy.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">Resveratrol CYP2C9 inhibition may affect antiepileptic drug levels — monitor in epilepsy. ALA at very high doses may lower seizure threshold; at 50 mg this risk is minimal but disclose to neurologist in epilepsy patients.</div></div>
+          </div>
+        </div>
+
+        <!-- ENDOCRINOLOGY -->
+        <div class="tab-panel" data-panel="endo">
+          <div class="tp-left">
+            <div class="tp-title">Endocrinology</div>
+            <div class="tp-sub">Selenium is the ONLY nutrient with RCT evidence for TPO antibody reduction in Hashimoto's (40–60%). D3 deficiency impairs insulin secretion — causal T2DM relationship confirmed by Mendelian randomisation.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Type 2 Diabetes Mellitus</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Hypothyroidism and Hashimoto's Thyroiditis</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Metabolic Syndrome — all five criteria</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">PCOS — hormonal and metabolic</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Pre-diabetes and Insulin Resistance Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Adrenal Insufficiency — recovery support</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">T2DM Three-Site Insulin Sensitisation</div><div class="tp-syn-ings">ALA 50mg + Resveratrol 100mg + CoQ10 100mg</div><div class="tp-syn-body">AMPK-GLUT4 peripheral sensitisation (ALA) + SIRT1-AMPK hepatic gluconeogenesis reduction (Resveratrol) + beta cell mitochondrial insulin secretion restoration (CoQ10). ⚠ Blood glucose monitoring mandatory.</div></div>
+            <div class="tp-syn"><div class="tp-syn-title">Hashimoto's Thyroiditis Triad</div><div class="tp-syn-ings">Selenium 40mcg + D3 600IU + ALA 50mg</div><div class="tp-syn-body">TPO/TG antibody reduction 40–60% (Selenium RCTs) + Th1→Treg immune shift (D3) + NF-κB thyroid inflammation reduction (ALA). Addresses autoimmune, immune, and oxidative mechanisms simultaneously.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Safety</div><div class="tp-safety-body">ALA potentiates ALL insulin and oral antidiabetics — mandatory blood glucose monitoring at initiation. K2 × warfarin. Resveratrol CYP3A4 may affect medication metabolism. Selenium: do not exceed 400 mcg/day total.</div></div>
+          </div>
+        </div>
+
+        <!-- GASTROENTEROLOGY -->
+        <div class="tab-panel" data-panel="gastro">
+          <div class="tp-left">
+            <div class="tp-title">Gastroenterology</div>
+            <div class="tp-sub">Selenium GPx2 is the gut-specific intestinal epithelium selenoenzyme. Resveratrol reaches the colon largely intact — Phase I RCT confirmed direct colonic Wnt/β-catenin suppression. Lycopene is the most concentrated carotenoid in liver tissue.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">NAFLD / Non-Alcoholic Steatohepatitis</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">IBD (Crohn's Disease and Ulcerative Colitis)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Colorectal Cancer Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Chronic Liver Disease / Hepatic Fibrosis</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">H. pylori and Peptic Ulcer Disease</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">IBS and Gut Permeability (Leaky Gut)</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Anti-CRC Chemoprevention Triad</div><div class="tp-syn-ings">Selenium + Lycopene + Resveratrol</div><div class="tp-syn-body">GPx2 DNA protection (Selenium NPC trial) + IGF-1/mTOR inhibition (Lycopene) + Wnt/β-catenin + p53 activation (Resveratrol). Three independent CRC prevention pathways covering 80% of CRC molecular drivers.</div></div>
+            <div class="tp-syn"><div class="tp-syn-title">NAFLD Mitochondrial Restoration</div><div class="tp-syn-ings">ALA + CoQ10 + Lycopene + Resveratrol</div><div class="tp-syn-body">AMPK/Nrf2 lipogenesis inhibition (ALA) + Complex I–III hepatic mitochondria (CoQ10) + Nrf2 hepatic activation (Lycopene) + SIRT1/SREBP-1c (Resveratrol). All four NAFLD molecular targets addressed.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">Resveratrol CYP3A4 in IBD patients on immunosuppressants. K2 × warfarin in cirrhotic patients on anticoagulation. ALA × antidiabetics. Vitamin C: limit in concurrent advanced CKD.</div></div>
+          </div>
+        </div>
+
+        <!-- NEPHROLOGY -->
+        <div class="tab-panel" data-panel="nephro">
+          <div class="tp-left">
+            <div class="tp-title">Nephrology</div>
+            <div class="tp-sub">dp-ucMGP (K2 deficiency marker) is the most validated CKD vascular calcification biomarker. Both HD and PD remove CoQ10 and Selenium with each session. Resveratrol MUST be avoided in transplant patients on calcineurin inhibitors.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Diabetic Nephropathy</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">CKD-Mineral Bone Disorder (CKD-MBD)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">CKD Stages 1–3 — Preservation</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Contrast-Induced Nephropathy Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Haemodialysis — Depletion Replenishment</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">IgA Nephropathy — adjunct</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Renal Tubular Protection Triad</div><div class="tp-syn-ings">ALA 50mg + CoQ10 100mg + Selenium 40mcg</div><div class="tp-syn-body">Tubular mitochondrial ATP (CoQ10) + GSH/antioxidant network recycling (ALA) + GPx1 H₂O₂ elimination (Selenium). CIN prophylaxis, aminoglycoside protection, ATN prevention.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Safety</div><div class="tp-safety-body">Vitamin C limit ≤100 mg/day in CKD 3b–5 (40 mg in this formula is safe for CKD 1–3a). K2 × warfarin critical in dialysis patients. Resveratrol: ABSOLUTELY AVOID in transplant patients on calcineurin inhibitors. ALA × antidiabetics.</div></div>
+          </div>
+        </div>
+
+        <!-- RHEUMATOLOGY -->
+        <div class="tab-panel" data-panel="rheum">
+          <div class="tp-left">
+            <div class="tp-title">Rheumatology</div>
+            <div class="tp-sub">GIOP affects 30–50% of long-term steroid users — D3+K2 MK-7 is the gold-standard nutraceutical prevention. Resveratrol and ALA provide independent NF-κB inhibition in RA synoviocytes via distinct mechanisms (SIRT1 vs IKK).</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">GIOP — Glucocorticoid-Induced Osteoporosis</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Rheumatoid Arthritis — adjunct to DMARDs</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Osteoarthritis — chondrocyte protection</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Gout and Hyperuricaemia</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Fibromyalgia and Chronic Widespread Pain</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">SLE and Ankylosing Spondylitis — adjunct</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">RA Autoimmune Anti-Inflammatory Triad</div><div class="tp-syn-ings">Resveratrol + ALA + D3</div><div class="tp-syn-body">NF-κB via SIRT1 p65 deacetylation in synoviocytes (Resveratrol) + NF-κB via IKK inhibition (ALA) + Th17→Treg shift (D3). Three independent, non-overlapping anti-inflammatory mechanisms.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">K2 × warfarin critical in APS (common SLE comorbidity). Resveratrol CYP2C9 may increase MTX levels — drug level monitoring required in RA patients on methotrexate. ALA × antidiabetics.</div></div>
+          </div>
+        </div>
+
+        <!-- OPHTHALMOLOGY -->
+        <div class="tab-panel" data-panel="opht">
+          <div class="tp-left">
+            <div class="tp-title">Ophthalmology</div>
+            <div class="tp-sub">Astaxanthin is the ONLY carotenoid that crosses the blood-retinal barrier. Aqueous humor contains Vitamin C at 50× plasma concentration. 40% of glaucoma progression occurs despite controlled IOP — driven by RGC mitochondrial dysfunction.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">AMD — Age-Related Macular Degeneration</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Cataract Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Glaucoma — Neuroprotection Adjunct to IOP</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Diabetic Retinopathy</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Dry Eye Disease — Systemic Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">LHON (Mitochondrial Optic Neuropathy)</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Complete Retinal Antioxidant Shield</div><div class="tp-syn-ings">Astaxanthin + Lycopene + Tocotrienol</div><div class="tp-syn-body">Blood-retinal barrier penetration into RPE cells (Astaxanthin) + most efficient singlet O₂ quencher in RPE lipid domains (Lycopene) + photoreceptor outer segment membrane protection 40–60× (Tocotrienol).</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">ALA × antidiabetics in DR patients. K2 × warfarin. All fat-soluble ingredients must be taken with a fat-containing meal for optimal ocular tissue bioavailability — critical for retinal accumulation.</div></div>
+          </div>
+        </div>
+
+        <!-- PULMONOLOGY -->
+        <div class="tab-panel" data-panel="pulmo">
+          <div class="tp-left">
+            <div class="tp-title">Pulmonology</div>
+            <div class="tp-sub">Lycopene is the ONLY dietary carotenoid with RCT evidence for exercise-induced bronchoconstriction reduction. D3 reduces asthma exacerbations 30–50% in deficient patients (multiple RCTs).</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">COPD — Oxidative Anti-inflammatory Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Asthma — Th2 and Eosinophil Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Post-COVID Respiratory Reconditioning</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">IPF / Interstitial Lung Disease</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Pulmonary Arterial Hypertension — RV Support</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Bronchiectasis and TB — Vitamin D adjunct</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Asthma Immune Regulation Triad</div><div class="tp-syn-ings">D3 + Lycopene + Resveratrol</div><div class="tp-syn-body">Th17→Treg immune shift (D3 multiple RCTs) + exercise bronchoconstriction reduction (Lycopene RCT) + Th2/NF-κB mucosal suppression (Resveratrol). Adjunct to ICS/LABA controller therapy.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">D3 in granulomatous lung disease (sarcoidosis, hypersensitivity pneumonitis) — monitor serum calcium before initiating. Resveratrol CYP3A4 may affect antifungal drug levels in immunosuppressed respiratory patients.</div></div>
+          </div>
+        </div>
+
+        <!-- DERMATOLOGY -->
+        <div class="tab-panel" data-panel="derm">
+          <div class="tp-left">
+            <div class="tp-title">Dermatology</div>
+            <div class="tp-sub">Astaxanthin inhibits MMP-1 and MMP-12 — the collagenase and elastase enzymes driving photoaging. D3 induces filaggrin (atopic barrier protein) and cathelicidin (anti-S. aureus). Lycopene absorbs UV-B, reducing erythema in RCTs.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Photoaging and Skin Aging</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Melasma and Hyperpigmentation</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Atopic Dermatitis</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Psoriasis — adjunct to phototherapy/biologics</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Vitiligo — Melanocyte Oxidative Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Skin Cancer Prevention (SCC, BCC, Melanoma)</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Complete Photoprotection Triad</div><div class="tp-syn-ings">Astaxanthin + Lycopene + Vitamin C</div><div class="tp-syn-body">MMP-1/MMP-12 inhibition preventing collagen/elastin degradation (Astaxanthin) + UV-B singlet O₂ absorption in dermis (Lycopene) + collagen prolyl hydroxylase substrate (Vit C). Three complementary mechanisms covering every photoaging pathway.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">D3 in granulomatous skin disease (cutaneous sarcoidosis) — monitor calcium. Vitamin C: avoid high-dose supplementation in haemochromatosis patients (enhances iron absorption).</div></div>
+          </div>
+        </div>
+
+        <!-- ONCOLOGY -->
+        <div class="tab-panel" data-panel="onco">
+          <div class="tp-left">
+            <div class="tp-title">Oncology</div>
+            <div class="tp-sub">CRITICAL TIMING: Avoid antioxidants 24–48h around chemotherapy infusion. NPC Trial: Selenium reduced total cancer mortality 50%. Tocotrienol is NIAID/BARDA validated radioprotector of normal tissue WITHOUT protecting cancer cells.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Cancer Prevention — High-Risk Individuals</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Cancer Survivors — Secondary Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Anthracycline Cardiotoxicity — CoQ10 adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Cancer-Related Fatigue (CRF)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Platinum Neuropathy Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Prostate Cancer Active Surveillance</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Pan-Cancer Chemoprevention Triad</div><div class="tp-syn-ings">Selenium + Lycopene + Resveratrol</div><div class="tp-syn-body">GPx-mediated DNA protection (Selenium NPC trial: 37% incidence, 63% prostate) + IGF-1/Akt/mTOR inhibition (Lycopene) + Wnt/β-catenin + p53 activation (Resveratrol). Covers initiation, promotion, and progression.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Oncology Safety</div><div class="tp-safety-body">CRITICAL: Avoid all antioxidants 24–48h around chemotherapy unless cleared by oncologist. K2 × warfarin in anticoagulated cancer patients. Resveratrol CYP3A4 may alter sorafenib and tamoxifen levels.</div></div>
+          </div>
+        </div>
+
+        <!-- IMMUNOLOGY -->
+        <div class="tab-panel" data-panel="immu">
+          <div class="tp-left">
+            <div class="tp-title">Immunology / Allergy</div>
+            <div class="tp-sub">D3 VDR is expressed on EVERY immune cell type — it is the most pleiotropic immune vitamin. BMJ meta-analysis (n=11,321): D3 reduces respiratory infections 12–42%. Selenium SelP maintains NK and T-cell cytotoxicity.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Recurrent Infections and Immune Support</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Asthma — Th2 Immune Modulation</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Atopic Dermatitis / Atopic March</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Allergic Rhinitis and Seasonal Allergies</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Chronic Urticaria and Histamine Intolerance</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Post-Viral / Long COVID Immune Reconstitution</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Immune Tolerance Triad</div><div class="tp-syn-ings">D3 + Resveratrol + ALA</div><div class="tp-syn-body">FoxP3+ Treg induction (D3) + SIRT1 Treg stability preventing Th17 conversion (Resveratrol) + intracellular GSH redox environment for Treg differentiation (ALA). The fundamental immune tolerance restoration stack.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">D3 in granulomatous disease (sarcoidosis) — monitor for hypercalcaemia. K2 × warfarin in APS-comorbid autoimmune patients. ALA × antidiabetics.</div></div>
+          </div>
+        </div>
+
+        <!-- REPRODUCTIVE -->
+        <div class="tab-panel" data-panel="repro">
+          <div class="tp-left">
+            <div class="tp-title">Reproductive Health</div>
+            <div class="tp-sub">CRITICAL: NOT recommended during pregnancy. CoQ10 is the most evidence-backed nutraceutical for female fertility — multiple RCTs confirm oocyte quality improvement. Start 3 months before IVF cycle.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Female Infertility and IVF Pre-Treatment</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">PCOS — Hormonal and Metabolic</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Menopause — Post-Menopausal Health</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Endometriosis — Anti-Inflammatory Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Recurrent Implantation Failure</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Cervical Cancer Prevention / CIN Surveillance</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Oocyte Mitochondrial Quality Stack</div><div class="tp-syn-ings">CoQ10 100mg + ALA 50mg + Astaxanthin 4mg</div><div class="tp-syn-body">Rate-limiting mitochondrial electron transport for oocyte ATP (CoQ10, multiple RCTs confirm IVF improvement) + mitochondrial antioxidant recycling (ALA) + follicular fluid direct oocyte protection (Astaxanthin). Start 3 months before IVF.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Safety</div><div class="tp-safety-body">NOT for use during pregnancy or breastfeeding. Stop at least 1 month before planned conception. Immediately replace with dedicated prenatal supplement (folate 5mg, iron, iodine, calcium). K2 × warfarin. ALA × metformin in PCOS.</div></div>
+          </div>
+        </div>
+
+        <!-- PSYCHIATRY -->
+        <div class="tab-panel" data-panel="psyc">
+          <div class="tp-left">
+            <div class="tp-title">Psychiatry</div>
+            <div class="tp-sub">D3 deficiency is the most replicated nutritional risk factor for depression. Resveratrol activates hippocampal BDNF — the shared final target of all antidepressants. Vitamin C is a cofactor for dopamine β-hydroxylase and tryptophan hydroxylase (CSF concentration 10× plasma).</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Major Depressive Disorder — adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Anxiety Disorders (GAD, Social, Panic)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Cognitive Impairment in Psychiatric Disease</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Sleep Disorders — Circadian Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Schizophrenia — Antipsychotic Adjunct</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Bipolar Disorder — Mood Stabilisation Support</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Neuroinflammatory Depression Triad</div><div class="tp-syn-ings">Resveratrol + D3 + ALA</div><div class="tp-syn-body">Hippocampal BDNF/neurogenesis via SIRT1 (Resveratrol) + tryptophan hydroxylase-2 serotonin pathway regulation (D3) + microglial NF-κB + brain GSH restoration (ALA). Adjunct to antidepressant therapy — never replace prescribed medications.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Safety</div><div class="tp-safety-body">NEVER advise discontinuation of psychiatric medications. Resveratrol CYP3A4/CYP2C9 may affect antidepressant, antipsychotic, and mood stabiliser metabolism — drug level monitoring for narrow-window drugs. Valproate × K2 — bone health monitoring.</div></div>
+          </div>
+        </div>
+
+        <!-- SPORTS MEDICINE -->
+        <div class="tab-panel" data-panel="sport">
+          <div class="tp-left">
+            <div class="tp-title">Sports Medicine</div>
+            <div class="tp-sub">Astaxanthin is the ONLY carotenoid with direct RCT evidence for endurance performance improvement — 40km cycling VO2 max in trained cyclists. CoQ10 is the rate-limiting mitochondrial electron carrier determining VO2 max.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Endurance Performance and VO2 Max</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Muscle Recovery and DOMS Reduction</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Injury Prevention — Stress Fracture and Tendinopathy</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Masters Athletes (40+) — Performance Longevity</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Overtraining Syndrome Recovery</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Sports Anaemia and Iron Deficiency</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Elite Performance and Recovery Stack</div><div class="tp-syn-ings">Astaxanthin + CoQ10 + ALA</div><div class="tp-syn-body">VO2 max improvement (Astaxanthin RCT) + rate-limiting Complex I–III electron transport (CoQ10) + post-exercise full antioxidant network regeneration (ALA). The three most mechanistically justified sports performance actives in ChronoShield.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">Not a WADA prohibited substance. Resveratrol at 100 mg: training adaptation blunting noted at 1g+ doses is less established at 100 mg — consider taking away from training sessions. ALA × antidiabetics in diabetic athletes.</div></div>
+          </div>
+        </div>
+
+        <!-- HEPATOLOGY -->
+        <div class="tab-panel" data-panel="hepa">
+          <div class="tp-left">
+            <div class="tp-title">Hepatology</div>
+            <div class="tp-sub">CRITICAL: Resveratrol inhibits CYP3A4, CYP2C9, and CYP1A2 — mandatory drug interaction screen in ALL hepatology patients. In HCV patients on DAA therapy: consider omitting Resveratrol until SVR achieved.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">NAFLD / Non-Alcoholic Steatohepatitis</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Cirrhosis (Compensated) — Nutritional Deficiencies</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Hepatic Fibrosis — Adjunct to Aetiology Treatment</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Chronic Viral Hepatitis (HBV and HCV)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">HCC Prevention and Post-Resection Surveillance</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Drug-Induced Liver Injury (DILI) Prevention</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Hepatic Mitochondrial and Antioxidant Core</div><div class="tp-syn-ings">ALA + CoQ10 + Astaxanthin</div><div class="tp-syn-body">Hepatic GSH restoration + antioxidant network recycling (ALA) + Complex I–III NASH mitochondrial restoration (CoQ10) + CYP450-generated ROS + I/R membrane protection (Astaxanthin). NAFLD/NASH, post-hepatectomy, statin hepatotoxicity.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Critical Hepatology Safety</div><div class="tp-safety-body">Resveratrol CYP3A4/CYP2C9/CYP1A2 — mandatory drug interaction screen in ALL hepatology patients (immunosuppressants, antivirals, statins, warfarin). K2 × warfarin in portal hypertension. Fat-soluble vitamins may accumulate in Child-Pugh B/C.</div></div>
+          </div>
+        </div>
+
+        <!-- POST-SURGERY -->
+        <div class="tab-panel" data-panel="surg">
+          <div class="tp-left">
+            <div class="tp-title">Post-Surgery</div>
+            <div class="tp-sub">STOP 7–14 days pre-op: Resveratrol, Tocotrienol, CoQ10. STOP 24–48 hours: ALA (fasted hypoglycaemia risk — disclose to anaesthesiologist). SAFE peri-operatively: Vitamin C, Selenium, D3, K2 (if not on warfarin).</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Cardiac Surgery (CABG, Valve Replacement)</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Orthopaedic Surgery — Fracture and Joint</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Post-Surgical Wound Healing</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Major Abdominal Surgery</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-mod">●●○</span><span class="tp-ind-name">Post-Thyroidectomy and Cardiac Rehabilitation</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Post-Surgical Neuropathy Recovery</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Wound Healing Energy and Collagen Triad</div><div class="tp-syn-ings">Vitamin C + CoQ10 + ALA</div><div class="tp-syn-body">Collagen prolyl hydroxylase substrate for wound matrix (Vit C) + keratinocyte mitochondrial ATP for proliferation (CoQ10) + antioxidant recycling in wound bed (ALA). Safe from Day 1 post-op.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Perioperative Protocol</div><div class="tp-safety-body">Stop Resveratrol/Tocotrienol/CoQ10: 7–14 days pre-op. Stop ALA: 24–48 hrs pre-op (fasted hypoglycaemia). RESUME: D3/Selenium/Vit C Day 1; ALA Day 2–3; CoQ10/Resveratrol/Tocotrienol Day 5–7 once haemostasis confirmed.</div></div>
+          </div>
+        </div>
+
+        <!-- GERIATRICS -->
+        <div class="tab-panel" data-panel="geri">
+          <div class="tp-left">
+            <div class="tp-title">Geriatrics</div>
+            <div class="tp-sub">D3 deficiency affects 70–80% of Indian elderly. CoQ10 declines 65% from age 20 to 80. D3 reduces falls 19–26% in meta-analyses (>90,000 subjects) — the most cost-effective single geriatric intervention in evidence-based medicine.</div>
+            <div class="tp-inds">
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Osteoporosis and Fracture Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Cardiovascular Disease in Elderly</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Alzheimer's / Cognitive Decline Prevention</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">Sarcopenia and Frailty Syndrome</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-strong">●●●</span><span class="tp-ind-name">General Geriatric Health / Polypharmacy</span></div>
+              <div class="tp-ind"><span class="tp-ind-ev ev-emg">●○○</span><span class="tp-ind-name">Presbycusis (Age-Related Hearing Loss)</span></div>
+            </div>
+          </div>
+          <div class="tp-right">
+            <div class="tp-syn"><div class="tp-syn-title">Sarcopenia and Frailty Reversal Stack</div><div class="tp-syn-ings">CoQ10 + Resveratrol + D3</div><div class="tp-syn-body">Skeletal muscle mitochondrial ATP restoration (CoQ10) + SIRT1/PGC-1α satellite cell activation (Resveratrol) + VDR Type II fast-twitch fibre synthesis and fall prevention (D3). Addresses the three core mechanisms of sarcopenia simultaneously.</div></div>
+            <div class="tp-safety"><div class="tp-safety-title">⚠ Safety Notes</div><div class="tp-safety-body">K2 × warfarin (very prevalent in elderly). ALA × antidiabetics (25–30% of elderly have T2DM). Resveratrol CYP3A4 — monitor narrow-therapeutic-window drugs in polypharmacy patients. Capsule can be opened into soft food for dysphagia patients.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ DRUG INTERACTIONS ══════════ -->
+<section id="interactions" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Prescribing Safety</span>
+      <h2 class="section-h2">Drug Interactions &<br class="br"> Clinical Cautions</h2>
+      <div class="gold-bar"></div>
+      <p class="section-sub">Review these interactions for all patients before prescribing ChronoShield Advanced. Critical interactions are non-negotiable; caution interactions require case-by-case assessment.</p>
+    </div>
+    <div class="ixn-grid">
+      <div class="ixn-card ixn-critical reveal d1">
+        <span class="ixn-level level-critical">⚠ Critical</span>
+        <div class="ixn-title">K2 MK-7 × Warfarin / VKAs</div>
+        <div class="ixn-scope">All Specialties</div>
+        <div class="ixn-body">K2 MK-7 DIRECTLY interacts with warfarin and all vitamin K antagonists — INR will be affected. Mandatory disclosure to anticoagulation team, INR monitoring, and dose adjustment required. Safe with all NOACs (apixaban, rivaroxaban, dabigatran, edoxaban).</div>
+      </div>
+      <div class="ixn-card ixn-critical reveal d2">
+        <span class="ixn-level level-critical">⚠ Critical</span>
+        <div class="ixn-title">ALA × Insulin / All Antidiabetics</div>
+        <div class="ixn-scope">Endocrinology · Cardiology · Nephrology</div>
+        <div class="ixn-body">ALA potentiates ALL insulin and oral antidiabetics via AMPK/GLUT4. Mandatory blood glucose monitoring at initiation. Highest risk in fasted insulin-dependent patients. Never initiate without patient education on hypoglycaemia symptoms.</div>
+      </div>
+      <div class="ixn-card ixn-critical reveal d3">
+        <span class="ixn-level level-critical">⚠ Critical</span>
+        <div class="ixn-title">Resveratrol × CYP3A4 / CYP2C9 / CYP1A2</div>
+        <div class="ixn-scope">All Specialties — Mandatory Screen</div>
+        <div class="ixn-body">Resveratrol inhibits CYP3A4 (>50%), CYP2C9, and CYP1A2. Affected drugs: immunosuppressants (tacrolimus, cyclosporin), antivirals (DAAs), statins, warfarin (CYP2C9), amiodarone, antiepileptics (phenytoin), some antidepressants. Drug level monitoring for narrow-window drugs.</div>
+      </div>
+      <div class="ixn-card ixn-critical reveal d1">
+        <span class="ixn-level level-critical">⚠ Critical</span>
+        <div class="ixn-title">Resveratrol × Pregnancy</div>
+        <div class="ixn-scope">Reproductive Health — Absolute Contraindication</div>
+        <div class="ixn-body">NOT recommended during pregnancy or breastfeeding. Insufficient human safety data; animal studies show potential developmental effects. Stop at least 1 month before planned conception and immediately upon confirmed pregnancy. Replace with dedicated prenatal supplement.</div>
+      </div>
+      <div class="ixn-card ixn-critical reveal d2">
+        <span class="ixn-level level-critical">⚠ Critical</span>
+        <div class="ixn-title">Resveratrol × Transplant Patients</div>
+        <div class="ixn-scope">Nephrology · Hepatology · Oncology</div>
+        <div class="ixn-body">AVOID in transplant patients on calcineurin inhibitors (tacrolimus, cyclosporin). CYP3A4 inhibition may dangerously elevate immunosuppressant levels — risk of rejection if dose reduced without monitoring, or nephrotoxicity/CNS toxicity if levels rise. If prescribed, specialist drug level monitoring is mandatory.</div>
+      </div>
+      <div class="ixn-card ixn-critical reveal d3">
+        <span class="ixn-level level-critical">⚠ Critical</span>
+        <div class="ixn-title">Perioperative Safety Protocol</div>
+        <div class="ixn-scope">Post-Surgery — All Surgical Patients</div>
+        <div class="ixn-body">STOP 7–14 days pre-op: Resveratrol, Tocotrienol, CoQ10 (antiplatelet risk). STOP 24–48 hrs: ALA (fasted hypoglycaemia — disclose to anaesthesiologist). SAFE pre/post-op: Vitamin C, Selenium, D3, K2 (if not on warfarin). RESUME Day 5–7 post-op once haemostasis confirmed.</div>
+      </div>
+      <div class="ixn-card ixn-caution reveal d1">
+        <span class="ixn-level level-caution">⚡ Caution</span>
+        <div class="ixn-title">Vitamin C × Advanced CKD</div>
+        <div class="ixn-scope">Nephrology — CKD 3b+</div>
+        <div class="ixn-body">40 mg dose in this formula is safe for CKD stages 1–3a. In CKD 3b–5 and dialysis: Vitamin C metabolises to oxalate — accumulates in renal failure. Limit total Vitamin C ≤100 mg/day. Review with nephrologist in advanced CKD before continuing supplementation.</div>
+      </div>
+      <div class="ixn-card ixn-caution reveal d2">
+        <span class="ixn-level level-caution">⚡ Caution</span>
+        <div class="ixn-title">D3 × Granulomatous Disease</div>
+        <div class="ixn-scope">Immunology · Pulmonology · Dermatology</div>
+        <div class="ixn-body">In sarcoidosis, TB, and granulomatous diseases, activated macrophages produce unregulated 1,25-OH D3 causing hypercalcaemia. Exogenous D3 can worsen this. Monitor serum calcium and 25-OH D3 before supplementing in patients with known or suspected granulomatous disease.</div>
+      </div>
+      <div class="ixn-card ixn-caution reveal d3">
+        <span class="ixn-level level-caution">⚡ Caution</span>
+        <div class="ixn-title">Fat-Soluble Vitamins × Advanced Cirrhosis</div>
+        <div class="ixn-scope">Hepatology — Child-Pugh B/C</div>
+        <div class="ixn-body">Astaxanthin, Lycopene, Tocotrienol, CoQ10, D3, and K2 are fat-soluble and require hepatic metabolism for clearance. In Child-Pugh B/C cirrhosis, accumulation risk increases. Monitor levels and consider dose reduction in advanced cirrhosis. Discuss with hepatologist.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ VALUE ══════════ -->
+<section id="value" class="section">
+  <div class="container">
+    <div class="value-bg"></div>
+    <div class="value-inner">
+      <div class="value-left reveal-l">
+        <span class="eyebrow">The Investment Case</span>
+        <h2 class="section-h2">Why ₹120 Is the Most<br>Efficient Investment<br>Your Patient Can Make</h2>
+        <div class="gold-bar"></div>
+        <ul class="value-list">
+          <li><span class="vl-icon">⚡</span><span>One capsule replaces 10 separate premium supplements — purchased individually, these actives cost ₹3,500–₹8,000+ per month with uncertain drug interactions between them</span></li>
+          <li><span class="vl-icon">🔬</span><span>Every ingredient is dosed at the clinical evidence threshold — not at the "proprietary blend" trace amounts used by competitors to list ingredients on their label</span></li>
+          <li><span class="vl-icon">🛡️</span><span>Addresses 6 of the 9 Hallmarks of Ageing simultaneously — no single pharmaceutical drug, at any price, achieves this breadth of biological protection</span></li>
+          <li><span class="vl-icon">🧬</span><span>The ALA self-renewal cycle means the formula is continuously active and self-reinforcing — the protection compounds over time, like a long-term investment rather than a one-time purchase</span></li>
+          <li><span class="vl-icon">💊</span><span>One capsule. One daily habit. Zero missed doses from supplement fatigue. The simplicity of the protocol is a therapeutic advantage, not a compromise</span></li>
+        </ul>
+      </div>
+      <div class="vs-compare reveal-r">
+        <div class="vs-compare-title">The Value Reality</div>
+        <div class="vs-row">
+          <div class="vs-item">
+            <span class="vs-price">₹120</span>
+            <span class="vs-label">ChronoShield Advanced<br>Per Day (1 Capsule)</span>
+          </div>
+          <span class="vs-vs">VS</span>
+          <div class="vs-item">
+            <span class="vs-price" style="color:var(--dim)">₹3,500+</span>
+            <span class="vs-label">10 Separate Premium<br>Supplements Per Day</span>
+          </div>
+        </div>
+        <div class="vs-row">
+          <div class="vs-item">
+            <span class="vs-price">₹120</span>
+            <span class="vs-label">ChronoShield Advanced<br>Per Day</span>
+          </div>
+          <span class="vs-vs">VS</span>
+          <div class="vs-item">
+            <span class="vs-price" style="color:var(--dim)">₹1,200</span>
+            <span class="vs-label">One Whisky at the Taj<br>Mahal Hotel</span>
+          </div>
+        </div>
+        <div class="vs-row">
+          <div class="vs-item">
+            <span class="vs-price">₹120</span>
+            <span class="vs-label">ChronoShield Advanced<br>Per Day</span>
+          </div>
+          <span class="vs-vs">VS</span>
+          <div class="vs-item">
+            <span class="vs-price" style="color:var(--dim)">₹8,000</span>
+            <span class="vs-label">One IV Micronutrient<br>Drip at a Wellness Clinic</span>
+          </div>
+        </div>
+        <div class="vs-note">
+          <strong style="color:var(--gold-2)">The most sophisticated cellular protection formula in the Indian market.</strong> Your patients spend this much on a single round of golf, a premium coffee subscription, or a monthly wellness session. At ₹120/day, ChronoShield Advanced is not a luxury purchase — it is the most rational health investment available.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ INDIA'S BEST ══════════ -->
+<section id="best" class="section">
+  <div class="container">
+    <div class="section-header reveal center">
+      <span class="eyebrow center">Market Leadership</span>
+      <h2 class="section-h2 center">India's Most Advanced<br>Single-Capsule Formulation</h2>
+      <div class="gold-bar center"></div>
+    </div>
+    <div class="best-inner">
+      <div class="best-features reveal-l">
+        <div class="bf"><span class="bf-icon">🔬</span><div><div class="bf-title">Evidence-Dosed, Not Label-Dosed</div><div class="bf-body">Every active ingredient is dosed at the minimum threshold where peer-reviewed clinical evidence begins — not at trace "proprietary blend" quantities designed only to justify label claims.</div></div></div>
+        <div class="bf"><span class="bf-icon">⚗</span><div><div class="bf-title">Pharmaceutical-Grade Specifications</div><div class="bf-body">Trans-Resveratrol 98% purity (Polygonum cuspidatum). R-ALA pharmaceutical grade ~99%. Ubiquinone micronised ~98%. CoQ10 bioavailability-optimised micronised form. K2 MK-7 1% premix for precise dosing.</div></div></div>
+        <div class="bf"><span class="bf-icon">🔄</span><div><div class="bf-title">The Self-Renewing Antioxidant System</div><div class="bf-body">No comparable Indian product includes both ALA (the antioxidant recycler) AND all four antioxidants it recycles (GSH precursor, Vitamin C, Tocotrienol, CoQ10) — creating a continuously self-renewing protective network.</div></div></div>
+        <div class="bf"><span class="bf-icon">🏥</span><div><div class="bf-title">17-Specialty Clinical Evidence Base</div><div class="bf-body">Documented clinical indications across all major medical specialties — supported by individual clinical reference reports. No single competitor product in the Indian market has this breadth of peer-reviewed clinical validation.</div></div></div>
+        <div class="bf"><span class="bf-icon">💊</span><div><div class="bf-title">Size 00 Hard Capsule Engineering</div><div class="bf-body">433 mg total active fill in a single Size 00 HPMC capsule. Precision-engineered to be the maximum therapeutic load possible in one once-daily capsule — the result of careful fill-weight optimisation across all 10 actives.</div></div></div>
+      </div>
+      <div class="best-chart reveal-r">
+        <div class="bch-title">How ChronoShield <span>Compares</span></div>
+        <div class="compare-table">
+          <div class="ct-row">
+            <div class="ct-feature ct-header">Feature</div>
+            <div class="ct-cell ct-cs-header">CS</div>
+            <div class="ct-cell ct-header" style="font-size:7px">Comp A</div>
+            <div class="ct-cell ct-header" style="font-size:7px">Comp B</div>
+            <div class="ct-cell ct-header" style="font-size:7px">Comp C</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">CoQ10 at clinical dose (100mg)</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-part">◑</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">Trans-Resveratrol (98% purity)</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-part">◑</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">Tocotrienol (not tocopherol)</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">ALA as antioxidant recycler</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-part">◑</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">K2 MK-7 (not K2 MK-4)</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-part">◑</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">Astaxanthin (BBB-penetrating)</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">All 10 actives in one capsule</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+          <div class="ct-row">
+            <div class="ct-feature">17-specialty clinical evidence</div>
+            <div class="ct-cell ct-cs ct-yes">✓</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+            <div class="ct-cell ct-no">✗</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ DOSING & SAFETY ══════════ -->
+<section id="dosing" class="section" style="background:linear-gradient(to bottom,var(--ink),var(--navy-2))">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Prescribing Information</span>
+      <h2 class="section-h2">Dosing Protocol &<br class="br"> Clinical Guidance</h2>
+      <div class="gold-bar"></div>
+    </div>
+    <div class="dosing-inner">
+      <div class="dose-card highlight reveal-l">
+        <div class="dose-title">Standard Dosing</div>
+        <div class="dose-sub">ChronoShield Advanced is a once-daily supplement designed for simple, sustainable adherence. The single-capsule format eliminates the supplement compliance problem.</div>
+        <div class="dose-strip">
+          <div>
+            <div class="ds-main">1 CAPSULE DAILY</div>
+            <div class="ds-sub">With morning meal containing fat · Size 00 HPMC capsule</div>
+          </div>
+          <span class="ds-pill">That's it.</span>
+        </div>
+        <p style="font-size:12px;font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:16px">Fat-containing meal enhances absorption of all fat-soluble actives (Astaxanthin, Lycopene, Tocotrienol, CoQ10, D3, K2). Morning dosing aligns with SIRT1 circadian clock gene regulation (Resveratrol). Capsule can be opened into food for patients with dysphagia.</p>
+        <p style="font-size:12px;font-weight:300;color:var(--muted);line-height:1.7">For enhanced performance athletes and individuals with high oxidative burden (urban pollution, high-stress environments, heavy exercise), a second capsule with dinner may be considered after physician assessment.</p>
+      </div>
+      <div class="dose-card reveal-r">
+        <div class="dose-title">Universal Safety Checklist</div>
+        <div class="dose-sub">Screen every patient for these interactions before initiating ChronoShield Advanced.</div>
+        <ul class="safety-list">
+          <li>Is the patient on warfarin or any VKA anticoagulant? → K2 interaction — must disclose, monitor INR</li>
+          <li>Is the patient on insulin or any oral antidiabetic? → ALA interaction — blood glucose monitoring mandatory at initiation</li>
+          <li>Is the patient on any drug metabolised by CYP3A4, CYP2C9, or CYP1A2? → Resveratrol inhibition — drug level monitoring for narrow-window drugs</li>
+          <li>Is the patient pregnant, breastfeeding, or planning conception? → Resveratrol contraindicated — do not prescribe</li>
+          <li>Is the patient a solid organ transplant recipient? → Resveratrol × calcineurin inhibitors — avoid or use only with specialist monitoring</li>
+          <li>Does the patient have granulomatous disease (sarcoidosis, active TB)? → D3 caution — monitor serum calcium</li>
+          <li>Does the patient have advanced CKD (stage 3b+)? → Vitamin C oxalate risk — review with nephrologist</li>
+          <li>Is the patient scheduled for surgery within 2 weeks? → Perioperative protocol — stop Resveratrol/T3/CoQ10, manage ALA</li>
+          <li>Is the patient on active chemotherapy? → Antioxidant timing caution — coordinate with oncologist</li>
+        </ul>
+        <div class="disclaimer-box">
+          <p>ChronoShield Advanced is a nutraceutical supplement — not a pharmaceutical drug or medical treatment. All indications are adjunctive to standard-of-care pharmacological therapy. Clinical decisions should be based on the individual patient's full medical history, current medications, and specialist assessment. This reference is intended for qualified healthcare professionals only and is not for patient distribution.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="ft-brand">Arata Nutraceuticals</div>
+        <p class="ft-desc">ChronoShield Advanced is India's most clinically comprehensive single-capsule longevity formula — 10 precision-dosed actives, engineered for patients who demand the best from their biology. For healthcare professional use.</p>
+      </div>
+      <div>
+        <div class="ft-col-title">Clinical Reference</div>
+        <ul class="ft-links">
+          <li onclick="document.getElementById('ingredients').scrollIntoView({behavior:'smooth'})">Formula Profile</li>
+          <li onclick="document.getElementById('synergy').scrollIntoView({behavior:'smooth'})">Synergy System</li>
+          <li onclick="document.getElementById('evidence').scrollIntoView({behavior:'smooth'})">Clinical Evidence</li>
+          <li onclick="document.getElementById('specialties').scrollIntoView({behavior:'smooth'})">17 Specialties</li>
+          <li onclick="document.getElementById('interactions').scrollIntoView({behavior:'smooth'})">Drug Interactions</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-title">Prescribing</div>
+        <ul class="ft-links">
+          <li onclick="document.getElementById('dosing').scrollIntoView({behavior:'smooth'})">Dosing Protocol</li>
+          <li onclick="document.getElementById('value').scrollIntoView({behavior:'smooth'})">Value Proposition</li>
+          <li onclick="document.getElementById('best').scrollIntoView({behavior:'smooth'})">India's Best</li>
+          <li>Contact Medical Affairs</li>
+          <li>Request Samples</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="fb-left">© 2025 Arata Nutraceuticals · For Healthcare Professional Use Only · Not for Patient Distribution</span>
+      <span class="fb-right">Complete Antioxidant Synergy — Engineered for Longevity</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── STARFIELD ──────────────────────────────
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 120; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2,
+      o: Math.random() * 0.5 + 0.1,
+      speed: Math.random() * 0.3 + 0.05
+    });
+  }
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(201,168,76,${s.o})`;
+    ctx.fill();
+    s.o += (Math.random() - 0.5) * 0.02;
+    s.o = Math.max(0.05, Math.min(0.7, s.o));
+  });
+  requestAnimationFrame(drawStars);
+}
+
+resizeCanvas();
+initStars();
+drawStars();
+window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+
+// ── NAVBAR SCROLL ──────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── REVEAL ON SCROLL ──────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => observer.observe(el));
+
+// ── TABS ──────────────────────────────────
+document.getElementById('tabNav').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  const tab = btn.dataset.tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelector(`[data-panel="${tab}"]`).classList.add('active');
+  btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+});
+
+// ── MOBILE MENU ───────────────────────────
+function openMob() { document.getElementById('mobile-menu').classList.add('open'); }
+function closeMob() { document.getElementById('mobile-menu').classList.remove('open'); }
+document.getElementById('mob-close').addEventListener('click', closeMob);
+
+// ── SMOOTH ACTIVE NAV ─────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--gold-2)' : '';
+  });
+});
+</script>
+</body>
+</html>
