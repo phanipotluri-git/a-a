@@ -7,15 +7,12 @@
 <title>Microl Remedies — Your Partner in Aquaculture</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   BASE & VARIABLES
-═══════════════════════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --navy:#050d1e; --deep:#071226; --card:#0b1930;
-  --blue:#0e8ec4; --blue2:#1ab8e8; --teal:#00d4aa;
-  --white:#eef3ff; --muted:rgba(238,243,255,.52);
-  --border:rgba(14,142,196,.22); --border2:rgba(14,142,196,.1);
+  --navy:#050d1e;--deep:#071226;--card:#0b1930;
+  --blue:#0e8ec4;--blue2:#1ab8e8;--teal:#00d4aa;
+  --white:#eef3ff;--muted:rgba(238,243,255,.52);
+  --border:rgba(14,142,196,.22);--border2:rgba(14,142,196,.1);
   --glass:rgba(14,142,196,.07);
 }
 html{scroll-behavior:smooth}
@@ -23,25 +20,21 @@ body{background:var(--navy);color:var(--white);font-family:'Outfit',sans-serif;f
 h1,h2,h3,h4,h5{font-family:'Cormorant Garamond',serif}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:'Outfit',sans-serif}
-img{display:block;max-width:100%}
+img{display:block;max-width:100%;width:100%;height:100%;object-fit:cover}
 
-/* ═══════════════════════════════════════════════
-CANVAS BG
-═══════════════════════════════════════════════ */
+/* BG */
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.35;
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.3;
 background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.05’/%3E%3C/svg%3E”);
 background-size:200px}
 
-/* ═══════════════════════════════════════════════
-NAVBAR
-═══════════════════════════════════════════════ */
+/* NAVBAR */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:900;padding:14px 5%;display:flex;justify-content:space-between;align-items:center;transition:background .4s}
-.navbar.scrolled,.navbar.solid{background:rgba(5,13,30,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(–border2)}
-.nav-logo{display:flex;align-items:center;gap:11px;cursor:pointer}
-.nav-logo svg{width:44px;height:44px;flex-shrink:0}
+.navbar.scrolled,.navbar.solid{background:rgba(5,13,30,.93);backdrop-filter:blur(22px);border-bottom:1px solid var(–border2)}
+.nav-logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.nav-logo-svg{width:52px;height:52px;flex-shrink:0}
 .nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
-.nav-logo-text .n1{font-family:‘Cormorant Garamond’,serif;font-size:1.25rem;font-weight:700;letter-spacing:.04em}
+.nav-logo-text .n1{font-family:‘Cormorant Garamond’,serif;font-size:1.3rem;font-weight:700;letter-spacing:.04em}
 .nav-logo-text .n2{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(–blue2)}
 .nav-links{display:flex;align-items:center;gap:28px}
 .nav-links a{color:rgba(238,243,255,.6);font-size:.8rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;transition:color .3s;position:relative}
@@ -53,17 +46,12 @@ NAVBAR
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;z-index:999}
 .burger span{width:22px;height:2px;background:var(–white);border-radius:2px;transition:.3s;display:block}
 
-/* ═══════════════════════════════════════════════
-PAGE SYSTEM
-═══════════════════════════════════════════════ */
+/* PAGE SYSTEM */
 .page{display:none;position:relative;z-index:2;min-height:100vh}
 .page.active{display:block}
-.page-enter{animation:pageIn .45s cubic-bezier(.22,1,.36,1) forwards}
-@keyframes pageIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.page-enter{animation:pgIn .45s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes pgIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
-/* ═══════════════════════════════════════════════
-PAGE 1 — HOME
-═══════════════════════════════════════════════ */
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:110px 5% 80px;gap:60px;flex-wrap:wrap}
 .hero-l{flex:1;min-width:280px;max-width:580px}
@@ -82,20 +70,21 @@ PAGE 1 — HOME
 .stat-num b{color:var(–blue2)}
 .stat-lbl{font-size:.7rem;color:var(–muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
 
-/* HERO RIGHT — ORBITAL */
+/* HERO ORBITAL */
 .hero-r{flex:1;min-width:280px;display:flex;justify-content:center;align-items:center;position:relative}
 .orb-wrap{width:400px;height:400px;position:relative;flex-shrink:0}
 .orb-ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(–border);animation:ospin 22s linear infinite}
 .orb-ring2{position:absolute;inset:50px;border-radius:50%;border:1px dashed rgba(26,184,232,.14);animation:ospin 16s linear infinite reverse}
 .orb-dot{position:absolute;width:9px;height:9px;background:var(–blue2);border-radius:50%;box-shadow:0 0 10px var(–blue2)}
-.orb-core{position:absolute;inset:72px;border-radius:50%;background:var(–card);border:1px solid var(–border);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.orb-core{position:absolute;inset:68px;border-radius:50%;background:var(–card);border:1px solid var(–border);overflow:hidden;display:flex;align-items:center;justify-content:center}
 @keyframes ospin{to{transform:rotate(360deg)}}
-.orb-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;opacity:0;transform:scale(.88);transition:opacity .8s,transform .8s}
+.orb-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;opacity:0;transform:scale(.88);transition:opacity .8s,transform .8s}
 .orb-slide.on{opacity:1;transform:scale(1)}
-.orb-slide-cat{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(–blue2);margin-bottom:8px}
-.orb-slide-icon{font-size:2.2rem;margin-bottom:10px;filter:drop-shadow(0 0 10px rgba(14,142,196,.65))}
-.orb-slide-name{font-family:‘Cormorant Garamond’,serif;font-size:1.15rem;font-weight:700;margin-bottom:5px}
-.orb-slide-tag{font-size:.7rem;color:var(–muted)}
+.orb-slide-img{width:100%;height:100%;position:absolute;inset:0}
+.orb-slide-img img,.orb-slide-img svg{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.orb-slide-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,13,30,.85) 0%,transparent 50%);border-radius:50%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:22px;text-align:center}
+.orb-slide-cat{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(–blue2);margin-bottom:4px}
+.orb-slide-name{font-family:‘Cormorant Garamond’,serif;font-size:1.1rem;font-weight:700}
 .hero-badge{position:absolute;background:rgba(7,18,38,.9);border:1px solid var(–border);backdrop-filter:blur(12px);border-radius:14px;padding:10px 18px;font-size:.72rem;white-space:nowrap;animation:hbfloat 4s ease-in-out infinite}
 .hero-badge b{color:var(–blue2)}
 .hb1{top:10%;left:0;animation-delay:0s}.hb2{bottom:15%;left:-10px;animation-delay:1.6s}.hb3{top:20%;right:0;animation-delay:.9s}
@@ -108,9 +97,8 @@ PAGE 1 — HOME
 .ticker-inner span::after{content:‘◆’;color:var(–blue2);font-size:.42rem}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* SECTION COMMONS */
-.sec{padding:96px 5%}
-.sec-bg{background:var(–deep)}
+/* SECTIONS */
+section{position:relative;z-index:2}.sec{padding:96px 5%}.sec-bg{background:var(–deep)}
 .sec-tag{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(–blue2);margin-bottom:14px;font-weight:500}
 .sec-tag::before{content:’’;width:22px;height:1.5px;background:var(–blue2)}
 .sec h2{font-size:clamp(1.9rem,3.5vw,2.8rem);line-height:1.22;margin-bottom:14px}
@@ -119,146 +107,150 @@ PAGE 1 — HOME
 
 /* ABOUT */
 .about-grid{display:flex;gap:70px;align-items:center;flex-wrap:wrap}
-.about-left{flex:1;min-width:280px}
-.about-right{flex:1;min-width:280px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.about-left{flex:1;min-width:280px}.about-right{flex:1;min-width:280px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .about-card{background:var(–glass);border:1px solid var(–border2);border-radius:16px;padding:26px 22px;transition:.3s}
 .about-card:hover{transform:translateY(-5px);border-color:rgba(14,142,196,.4);background:rgba(14,142,196,.06)}
 .about-card:first-child{grid-column:1/-1}
 .about-card-icon{font-size:1.6rem;margin-bottom:12px}
-.about-card h4{font-size:1rem;margin-bottom:8px}
-.about-card p{font-size:.82rem;color:var(–muted);line-height:1.65}
+.about-card h4{font-size:1rem;margin-bottom:8px}.about-card p{font-size:.82rem;color:var(–muted);line-height:1.65}
 
-/* CERTS BAR */
+/* CERTS */
 .certs-bar{position:relative;z-index:2;padding:40px 5%;display:flex;align-items:center;justify-content:center;gap:50px;flex-wrap:wrap;border-bottom:1px solid var(–border2)}
 .cert-item{display:flex;flex-direction:column;align-items:center;gap:9px}
 .cert-icon{width:50px;height:50px;border-radius:50%;border:1.5px solid var(–border);background:var(–glass);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:.3s}
 .cert-item:hover .cert-icon{transform:scale(1.1);border-color:var(–blue2)}
 .cert-item span{font-size:.64rem;color:var(–muted);letter-spacing:.08em;text-transform:uppercase}
 
-/* WHY US GRID */
+/* WHY */
 .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
 .why-card{background:var(–glass);border:1px solid var(–border2);border-radius:16px;padding:30px 22px;text-align:center;transition:.3s}
 .why-card:hover{transform:translateY(-5px);border-color:rgba(14,142,196,.4)}
 .why-icon{font-size:1.9rem;margin-bottom:14px}
-.why-card h4{font-size:1.05rem;margin-bottom:10px}
-.why-card p{font-size:.8rem;color:var(–muted);line-height:1.65}
+.why-card h4{font-size:1.05rem;margin-bottom:10px}.why-card p{font-size:.8rem;color:var(–muted);line-height:1.65}
 
 /* CONTACT */
 .contact-grid{display:flex;gap:60px;flex-wrap:wrap}
-.contact-info{flex:1;min-width:280px}
-.contact-info h3{font-size:1.7rem;margin-bottom:26px}
+.contact-info{flex:1;min-width:280px}.contact-info h3{font-size:1.7rem;margin-bottom:26px}
 .contact-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
-.contact-icon{width:42px;height:42px;border-radius:11px;background:var(–glass);border:1px solid var(–border2);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.contact-icon-box{width:42px;height:42px;border-radius:11px;background:var(–glass);border:1px solid var(–border2);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
 .contact-detail small{font-size:.64rem;color:var(–muted);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px}
-.contact-detail a,.contact-detail p{font-size:.86rem;transition:color .3s}
-.contact-detail a:hover{color:var(–blue2)}
+.contact-detail a,.contact-detail p{font-size:.86rem;transition:color .3s}.contact-detail a:hover{color:var(–blue2)}
 .contact-form{flex:1;min-width:280px}
-.form-group{margin-bottom:15px}
-.form-group label{display:block;font-size:.68rem;color:var(–muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
-.form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(–border2);border-radius:9px;padding:11px 15px;color:var(–white);font-family:‘Outfit’,sans-serif;font-size:.86rem;outline:none;transition:.3s;-webkit-appearance:none}
-.form-group select option{background:var(–deep)}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(14,142,196,.5)}
-.form-group textarea{resize:vertical;min-height:110px}
-.form-row{display:flex;gap:14px}.form-row .form-group{flex:1}
+.fg{margin-bottom:15px}.fg label{display:block;font-size:.68rem;color:var(–muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.fg input,.fg textarea,.fg select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(–border2);border-radius:9px;padding:11px 15px;color:var(–white);font-family:‘Outfit’,sans-serif;font-size:.86rem;outline:none;transition:.3s;-webkit-appearance:none}
+.fg select option{background:var(–deep)}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(14,142,196,.5)}
+.fg textarea{resize:vertical;min-height:110px}
+.fg-row{display:flex;gap:14px}.fg-row .fg{flex:1}
 .submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(–blue),var(–blue2));color:var(–navy);border:none;border-radius:9px;font-family:‘Outfit’,sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:.3s}
 .submit-btn:hover{opacity:.88;transform:translateY(-2px)}
 
-/* ═══════════════════════════════════════════════
-PAGE 2 — PRODUCTS HUB
-═══════════════════════════════════════════════ */
-.products-hero{padding:120px 5% 60px;text-align:center}
+/* ── PRODUCT IMAGE PLACEHOLDERS ─────────────────
+Each placeholder is a styled SVG embedded inline.
+To swap in a real photo: replace the <div class="prod-img-wrap">…</div>
+contents with: <img src="your-photo.jpg" alt="Product Name">
+─────────────────────────────────────────────── */
+.prod-img-wrap{width:100%;border-radius:16px;overflow:hidden;position:relative;flex-shrink:0}
+.prod-img-wrap svg,.prod-img-wrap img{width:100%;height:100%;display:block}
+
+/* ── PRODUCTS HUB ──────────────────────────────── */
+.products-hero{padding:120px 5% 56px;text-align:center}
 .products-hero h1{font-size:clamp(2.5rem,5vw,3.8rem);margin-bottom:16px}
 .products-hero p{font-size:.95rem;color:var(–muted);max-width:520px;margin:0 auto 48px;line-height:1.82}
-.category-grid{padding:0 5% 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
-.cat-card{background:var(–card);border:1px solid var(–border2);border-radius:20px;padding:36px 30px;cursor:pointer;transition:.35s;position:relative;overflow:hidden;text-align:left}
-.cat-card::before{content:’’;position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(14,142,196,.12) 0%,transparent 70%);border-radius:50%;transition:.5s}
-.cat-card:hover{transform:translateY(-8px);border-color:rgba(14,142,196,.45);background:rgba(11,25,48,.95)}
-.cat-card:hover::before{transform:scale(1.4)}
-.cat-card-icon{font-size:2.8rem;margin-bottom:20px;filter:drop-shadow(0 0 12px rgba(14,142,196,.6))}
-.cat-card-count{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:10px;font-weight:500}
-.cat-card h3{font-size:1.5rem;margin-bottom:10px}
-.cat-card p{font-size:.83rem;color:var(–muted);line-height:1.65;margin-bottom:24px}
-.cat-card-examples{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
-.cat-tag{padding:4px 12px;background:rgba(14,142,196,.1);border:1px solid var(–border2);border-radius:20px;font-size:.68rem;color:var(–blue2);letter-spacing:.04em}
-.cat-card-arrow{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(–blue2);letter-spacing:.08em;text-transform:uppercase;font-weight:500;transition:gap .3s}
-.cat-card:hover .cat-card-arrow{gap:14px}
-.cat-card-arrow::after{content:‘→’;font-size:1rem}
+.category-grid{padding:0 5% 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
 
-/* ═══════════════════════════════════════════════
-PAGE 3 — CATEGORY PAGE
-═══════════════════════════════════════════════ */
-.cat-page-header{padding:110px 5% 56px}
+/* Category card with image */
+.cat-card{background:var(–card);border:1px solid var(–border2);border-radius:20px;overflow:hidden;cursor:pointer;transition:.35s;position:relative}
+.cat-card:hover{transform:translateY(-8px);border-color:rgba(14,142,196,.45)}
+.cat-card-img{height:180px;overflow:hidden;position:relative}
+.cat-card-img svg,.cat-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.cat-card:hover .cat-card-img svg,.cat-card:hover .cat-card-img img{transform:scale(1.06)}
+.cat-card-body{padding:26px}
+.cat-card-count{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:8px;font-weight:500}
+.cat-card h3{font-size:1.4rem;margin-bottom:8px}
+.cat-card p{font-size:.82rem;color:var(–muted);line-height:1.6;margin-bottom:18px}
+.cat-card-examples{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.cat-tag{padding:4px 12px;background:rgba(14,142,196,.1);border:1px solid var(–border2);border-radius:20px;font-size:.66rem;color:var(–blue2);letter-spacing:.04em}
+.cat-card-arrow{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(–blue2);letter-spacing:.08em;text-transform:uppercase;font-weight:500;transition:gap .3s}
+.cat-card:hover .cat-card-arrow{gap:14px}
+.cat-card-arrow::after{content:‘→’;font-size:.9rem}
+
+/* ── CATEGORY PAGE ─────────────────────────────── */
+.cat-page-header{padding:110px 5% 48px}
 .back-btn{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;color:var(–muted);letter-spacing:.08em;text-transform:uppercase;background:none;border:none;margin-bottom:32px;transition:color .3s;padding:0}
-.back-btn:hover{color:var(–blue2)}
-.back-btn::before{content:‘←’;font-size:.9rem}
+.back-btn:hover{color:var(–blue2)}.back-btn::before{content:‘←’;font-size:.9rem}
 .cat-page-header h1{font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:14px}
 .cat-page-header .cat-desc{font-size:.95rem;color:var(–muted);max-width:560px;line-height:1.82}
 .products-list{padding:0 5% 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
-.prod-card{background:var(–card);border:1px solid var(–border2);border-radius:18px;padding:30px 26px;cursor:pointer;transition:.35s;position:relative;overflow:hidden}
+
+/* Product card with thumbnail */
+.prod-card{background:var(–card);border:1px solid var(–border2);border-radius:18px;overflow:hidden;cursor:pointer;transition:.35s;position:relative}
 .prod-card::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(–blue),var(–blue2));transform:scaleX(0);transform-origin:left;transition:transform .35s}
 .prod-card:hover{transform:translateY(-7px);border-color:rgba(14,142,196,.45)}
 .prod-card:hover::after{transform:scaleX(1)}
-.pc-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:14px;font-weight:500}
-.pc-name{font-family:‘Cormorant Garamond’,serif;font-size:1.5rem;font-weight:700;margin-bottom:4px}
-.pc-tagline{font-size:.74rem;color:rgba(26,184,232,.8);letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px}
-.pc-short{font-size:.83rem;color:var(–muted);line-height:1.68;margin-bottom:18px}
-.pc-bullets{list-style:none;margin-bottom:20px}
-.pc-bullets li{font-size:.79rem;color:var(–muted);display:flex;align-items:flex-start;gap:8px;margin-bottom:7px}
-.pc-bullets li::before{content:‘✓’;color:var(–blue2);font-weight:700;flex-shrink:0;margin-top:1px}
-.pc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(–border2)}
-.pc-dosage{font-size:.69rem;color:var(–muted)}.pc-dosage span{color:var(–white)}
-.pc-avail{font-size:.69rem;color:var(–blue2)}
-.pc-view{margin-top:18px;display:flex;align-items:center;gap:7px;font-size:.76rem;color:var(–blue2);letter-spacing:.08em;text-transform:uppercase;font-weight:500;transition:gap .3s}
+.prod-thumb{height:160px;overflow:hidden;position:relative}
+.prod-thumb svg,.prod-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.prod-card:hover .prod-thumb svg,.prod-card:hover .prod-thumb img{transform:scale(1.06)}
+.prod-card-body{padding:24px}
+.pc-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:12px;font-weight:500}
+.pc-name{font-family:‘Cormorant Garamond’,serif;font-size:1.45rem;font-weight:700;margin-bottom:4px}
+.pc-tagline{font-size:.72rem;color:rgba(26,184,232,.8);letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.pc-short{font-size:.82rem;color:var(–muted);line-height:1.65;margin-bottom:16px}
+.pc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(–border2)}
+.pc-dosage{font-size:.68rem;color:var(–muted)}.pc-dosage span{color:var(–white)}
+.pc-avail{font-size:.68rem;color:var(–blue2)}
+.pc-view{margin-top:16px;display:flex;align-items:center;gap:7px;font-size:.74rem;color:var(–blue2);letter-spacing:.08em;text-transform:uppercase;font-weight:500;transition:gap .3s}
 .prod-card:hover .pc-view{gap:14px}.pc-view::after{content:‘→’}
 
-/* ═══════════════════════════════════════════════
-PAGE 4 — PRODUCT DETAIL
-═══════════════════════════════════════════════ */
-.product-detail{padding:110px 5% 80px}
-.breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;font-size:.74rem;color:var(–muted)}
+/* ── PRODUCT DETAIL ────────────────────────────── */
+.product-detail{padding:110px 5% 60px}
+.breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;font-size:.74rem;color:var(–muted);flex-wrap:wrap}
 .breadcrumb span{color:var(–blue2);cursor:pointer;transition:opacity .3s}.breadcrumb span:hover{opacity:.75}
 .breadcrumb-sep{color:var(–border);margin:0 2px}
-.detail-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:70px;align-items:start}
+.detail-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
 .detail-left{}
-.detail-visual{background:var(–card);border:1px solid var(–border);border-radius:24px;padding:60px 40px;text-align:center;margin-bottom:32px;position:relative;overflow:hidden}
-.detail-visual::before{content:’’;position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(14,142,196,.1) 0%,transparent 65%)}
-.detail-icon{font-size:5rem;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(14,142,196,.7));position:relative;z-index:1}
-.detail-visual-name{font-family:‘Cormorant Garamond’,serif;font-size:2rem;font-weight:700;position:relative;z-index:1}
-.detail-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;justify-content:center;position:relative;z-index:1}
-.detail-tag{padding:5px 14px;background:rgba(14,142,196,.12);border:1px solid var(–border2);border-radius:20px;font-size:.68rem;color:var(–blue2);letter-spacing:.05em}
+
+/* Product detail image — large */
+.detail-img-box{border-radius:20px;overflow:hidden;margin-bottom:24px;border:1px solid var(–border2);height:340px;position:relative}
+.detail-img-box svg,.detail-img-box img{width:100%;height:100%;object-fit:cover}
+.detail-img-swap{position:absolute;bottom:12px;right:12px;background:rgba(5,13,30,.8);border:1px solid var(–border);border-radius:8px;padding:6px 12px;font-size:.64rem;color:var(–muted);letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px)}
+
 .detail-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .meta-box{background:var(–card);border:1px solid var(–border2);border-radius:14px;padding:20px}
-.meta-box-label{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(–muted);margin-bottom:8px}
-.meta-box-value{font-size:.88rem;color:var(–white);line-height:1.5}
+.meta-box-label{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(–muted);margin-bottom:8px}
+.meta-box-value{font-size:.86rem;color:var(–white);line-height:1.5}
 .meta-box-value b{color:var(–blue2)}
 .detail-right{}
 .detail-cat-pill{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(–blue2);margin-bottom:16px;font-weight:500}
 .detail-cat-pill::before{content:’’;width:20px;height:1.5px;background:var(–blue2)}
 .detail-name{font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;margin-bottom:8px;line-height:1.1}
-.detail-tagline{font-size:.85rem;color:var(–blue2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px}
-.detail-desc{font-size:.92rem;color:var(–muted);line-height:1.82;margin-bottom:32px}
-.detail-section{margin-bottom:32px}
-.detail-section-title{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:16px;font-weight:500;display:flex;align-items:center;gap:10px}
-.detail-section-title::before{content:’’;flex:1;height:1px;background:var(–border2);max-width:30px}
-.benefit-list{list-style:none;display:grid;gap:10px}
+.detail-tagline{font-size:.83rem;color:var(–blue2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:22px}
+.detail-desc{font-size:.9rem;color:var(–muted);line-height:1.82;margin-bottom:30px}
+.detail-sec-title{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:14px;font-weight:500;display:flex;align-items:center;gap:10px}
+.detail-sec-title::before{content:’’;flex:1;height:1px;background:var(–border2);max-width:30px}
+.benefit-list{list-style:none;display:grid;gap:10px;margin-bottom:28px}
 .benefit-item{display:flex;align-items:flex-start;gap:12px;background:var(–glass);border:1px solid var(–border2);border-radius:12px;padding:14px 16px}
-.benefit-check{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(–blue),var(–blue2));display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;margin-top:1px}
-.benefit-item p{font-size:.84rem;color:var(–muted);line-height:1.55}
-.composition-box{background:var(–card);border:1px solid var(–border2);border-radius:14px;padding:20px 22px}
-.composition-box p{font-size:.83rem;color:var(–muted);line-height:1.7;font-style:italic}
-.detail-actions{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
-.detail-related{padding:60px 5% 80px;border-top:1px solid var(–border2)}
-.detail-related h3{font-size:1.8rem;margin-bottom:28px}
-.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-.related-card{background:var(–card);border:1px solid var(–border2);border-radius:16px;padding:24px;cursor:pointer;transition:.3s}
+.benefit-check{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(–blue),var(–blue2));display:flex;align-items:center;justify-content:center;font-size:.68rem;flex-shrink:0;margin-top:1px}
+.benefit-item p{font-size:.83rem;color:var(–muted);line-height:1.55}
+.composition-box{background:var(–card);border:1px solid var(–border2);border-radius:14px;padding:20px 22px;margin-bottom:28px}
+.composition-box p{font-size:.82rem;color:var(–muted);line-height:1.7;font-style:italic}
+.detail-tags-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.dtag{padding:5px 14px;background:rgba(14,142,196,.1);border:1px solid var(–border2);border-radius:20px;font-size:.66rem;color:var(–blue2);letter-spacing:.05em}
+.detail-actions{display:flex;gap:14px;flex-wrap:wrap}
+.detail-related{padding:50px 5% 80px;border-top:1px solid var(–border2)}
+.detail-related h3{font-size:1.8rem;margin-bottom:24px}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.related-card{background:var(–card);border:1px solid var(–border2);border-radius:16px;overflow:hidden;cursor:pointer;transition:.3s}
 .related-card:hover{transform:translateY(-5px);border-color:rgba(14,142,196,.4)}
-.related-card-cat{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:8px}
+.related-thumb{height:120px;overflow:hidden}
+.related-thumb svg,.related-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.related-card:hover .related-thumb svg,.related-card:hover .related-thumb img{transform:scale(1.06)}
+.related-card-body{padding:18px}
+.related-cat{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(–blue2);margin-bottom:6px}
 .related-card h4{font-size:1.1rem;margin-bottom:6px}
-.related-card p{font-size:.78rem;color:var(–muted)}
+.related-card p{font-size:.76rem;color:var(–muted)}
 
-/* ═══════════════════════════════════════════════
-FOOTER
-═══════════════════════════════════════════════ */
+/* FOOTER */
 .footer{position:relative;z-index:2;background:#030a18;border-top:1px solid var(–border2);padding:50px 5% 24px}
 .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:36px;margin-bottom:40px}
 .footer-brand p{font-size:.8rem;color:var(–muted);max-width:230px;line-height:1.7;margin-top:12px}
@@ -271,13 +263,13 @@ FOOTER
 .social-btn{width:32px;height:32px;border-radius:50%;background:var(–glass);border:1px solid var(–border2);display:flex;align-items:center;justify-content:center;font-size:.82rem;transition:.3s;color:var(–white)}
 .social-btn:hover{border-color:var(–blue2);background:rgba(14,142,196,.12)}
 
-/* WA BUTTON */
+/* WA */
 .wa-fab{position:fixed;bottom:26px;right:26px;z-index:999;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 22px rgba(37,211,102,.45);transition:.3s;text-decoration:none}
-.wa-fab:hover{transform:scale(1.1);box-shadow:0 8px 30px rgba(37,211,102,.6)}
-.wa-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid #25D366;animation:wapulse 2s ease-out infinite}
-@keyframes wapulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.65);opacity:0}}
+.wa-fab:hover{transform:scale(1.1)}
+.wa-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid #25D366;animation:wap 2s ease-out infinite}
+@keyframes wap{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.65);opacity:0}}
 
-/* REVEAL ANIMATIONS */
+/* REVEAL */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .65s,transform .65s}
 .reveal.v{opacity:1;transform:none}
 .reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
@@ -287,11 +279,9 @@ FOOTER
 .detail-grid{grid-template-columns:1fr}
 .hero{flex-direction:column;text-align:center;padding-top:100px}
 .hero-l{max-width:100%}.hero-desc{max-width:100%}.hero-btns{justify-content:center}.hero-stats{justify-content:center}
-.hero-r{display:none}
-.about-grid{flex-direction:column}.contact-grid{flex-direction:column}
+.hero-r{display:none}.about-grid{flex-direction:column}.contact-grid{flex-direction:column}
 .nav-links{display:none;position:fixed;inset:0;background:var(–navy);flex-direction:column;justify-content:center;align-items:center;gap:36px;z-index:950}
-.nav-links.open{display:flex}.nav-links a{font-size:1.2rem}
-.burger{display:flex}
+.nav-links.open{display:flex}.nav-links a{font-size:1.2rem}.burger{display:flex}
 }
 @media(max-width:600px){
 .detail-meta{grid-template-columns:1fr}
@@ -304,42 +294,70 @@ FOOTER
 <canvas id="bg-canvas"></canvas>
 <div class="grain"></div>
 
-<!-- NAVBAR -->
+<!-- ══ NAVBAR ════════════════════════════════════ -->
 
 <nav class="navbar" id="navbar">
   <div class="nav-logo" onclick="navigate('home')">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="47" fill="none" stroke="#0e8ec4" stroke-width="2.5"/>
-      <circle cx="50" cy="50" r="42" fill="#071226"/>
-      <path id="tca" d="M 20,50 A 30,30 0 0,1 80,50" fill="none"/>
-      <text font-family="Arial" font-weight="800" font-size="10" fill="#0e8ec4" letter-spacing="3"><textPath href="#tca" startOffset="4%">MICROL</textPath></text>
-      <path id="bca" d="M 15,55 A 35,35 0 0,0 85,55" fill="none"/>
-      <text font-family="Arial" font-size="5" fill="#1ab8e8" letter-spacing=".7"><textPath href="#bca" startOffset="1%">YOUR PARTNER IN AQUACULTURE</textPath></text>
-      <path d="M31,42 L37,57 L43,46 L49,57 L55,42" fill="none" stroke="#0e8ec4" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M30,63 Q38,57 45,63 Q52,69 59,63 Q66,57 71,63" fill="none" stroke="#0e8ec4" stroke-width="2.2" stroke-linecap="round"/>
-      <text x="50" y="37" font-family="Arial" font-size="6.2" fill="#1ab8e8" text-anchor="middle" font-weight="700">Since 1989</text>
+    <!-- Enhanced Microl Logo SVG -->
+    <svg class="nav-logo-svg" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lgb" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0e8ec4"/>
+          <stop offset="100%" style="stop-color:#1ab8e8"/>
+        </linearGradient>
+        <linearGradient id="lgs" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#071c3f"/>
+          <stop offset="100%" style="stop-color:#050d1e"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Outer ring with gradient stroke -->
+      <circle cx="55" cy="55" r="51" fill="url(#lgs)" stroke="url(#lgb)" stroke-width="2.5"/>
+      <!-- Inner decorative ring -->
+      <circle cx="55" cy="55" r="44" fill="none" stroke="rgba(14,142,196,.3)" stroke-width="0.8" stroke-dasharray="4 3"/>
+      <!-- Top arc "MICROL" -->
+      <path id="ta2" d="M 20,55 A 35,35 0 0,1 90,55" fill="none"/>
+      <text font-family="Georgia,serif" font-weight="700" font-size="11" fill="url(#lgb)" letter-spacing="4" filter="url(#glow)">
+        <textPath href="#ta2" startOffset="8%">MICROL</textPath>
+      </text>
+      <!-- Bottom arc tagline -->
+      <path id="ba2" d="M 14,60 A 41,41 0 0,0 96,60" fill="none"/>
+      <text font-family="Arial" font-size="5.2" fill="#1ab8e8" letter-spacing="0.9" opacity=".85">
+        <textPath href="#ba2" startOffset="2%">YOUR PARTNER IN AQUACULTURE</textPath>
+      </text>
+      <!-- Stylized M mark -->
+      <path d="M34,46 L40,62 L47,50 L54,62 L60,46" fill="none" stroke="url(#lgb)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+      <!-- Wave lines -->
+      <path d="M28,70 Q35,65 42,70 Q49,75 56,70 Q63,65 70,70 Q77,75 82,70" fill="none" stroke="url(#lgb)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M33,77 Q40,72 47,77 Q54,82 61,77 Q68,72 75,77" fill="none" stroke="#1ab8e8" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+      <!-- Since text -->
+      <text x="55" y="40" font-family="Georgia,serif" font-size="7" fill="#1ab8e8" text-anchor="middle" font-weight="600" opacity=".9">Since 1989</text>
+      <!-- Decorative dots -->
+      <circle cx="20" cy="55" r="2" fill="var(--blue2)" opacity=".6"/>
+      <circle cx="90" cy="55" r="2" fill="var(--blue2)" opacity=".6"/>
     </svg>
-    <div class="nav-logo-text"><span class="n1">Microl Remedies</span><span class="n2">Your Partner in Aquaculture</span></div>
+    <div class="nav-logo-text">
+      <span class="n1">Microl Remedies</span>
+      <span class="n2">Your Partner in Aquaculture</span>
+    </div>
   </div>
   <div class="nav-links" id="nav-links">
     <a href="#" onclick="navigate('home');return false" data-page="home">Home</a>
     <a href="#" onclick="navigate('products');return false" data-page="products">Products</a>
-    <a href="#" onclick="navigate('home');setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),100);return false">About</a>
-    <button class="nav-cta-btn" onclick="navigate('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Contact</button>
+    <a href="#" onclick="navigate('home');setTimeout(()=>document.getElementById('about-sec').scrollIntoView({behavior:'smooth'}),120);return false">About</a>
+    <button class="nav-cta-btn" onclick="navigate('home');setTimeout(()=>document.getElementById('contact-sec').scrollIntoView({behavior:'smooth'}),120)">Contact</button>
   </div>
   <button class="burger" id="burger" onclick="document.getElementById('nav-links').classList.toggle('open')">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- ════════════════════════════════════════
-   PAGE: HOME
-════════════════════════════════════════ -->
+<!-- ══ PAGE: HOME ════════════════════════════════ -->
 
 <div class="page" id="page-home">
-
-  <!-- HERO -->
-
   <section class="hero">
     <div class="hero-l">
       <div class="hero-pill">India's First Aquaculture Probiotic Manufacturer</div>
@@ -347,7 +365,7 @@ FOOTER
       <p class="hero-desc">CAA Approved · ISO Certified · Since 1989. Delivering science-backed, antibiotic-free solutions for sustainable shrimp and fish farming across India.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="navigate('products')">Explore Products</button>
-        <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+        <button class="btn-ghost" onclick="document.getElementById('contact-sec').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
       </div>
       <div class="hero-stats">
         <div><div class="stat-num">35<b>+</b></div><div class="stat-lbl">Years of Trust</div></div>
@@ -359,13 +377,7 @@ FOOTER
       <div class="orb-wrap">
         <div class="orb-ring"><div class="orb-dot" style="top:-4px;left:50%;transform:translateX(-50%)"></div><div class="orb-dot" style="bottom:-4px;left:50%;transform:translateX(-50%)"></div></div>
         <div class="orb-ring2"></div>
-        <div class="orb-core" id="orb-core">
-          <div class="orb-slide on"><div class="orb-slide-cat">Sanitiser</div><div class="orb-slide-icon">🧪</div><div class="orb-slide-name">Steridol-20</div><div class="orb-slide-tag">Patent Iodine 20%</div></div>
-          <div class="orb-slide"><div class="orb-slide-cat">Probiotic</div><div class="orb-slide-icon">🦠</div><div class="orb-slide-name">Pond Life</div><div class="orb-slide-tag">Total Protection</div></div>
-          <div class="orb-slide"><div class="orb-slide-cat">Treatment</div><div class="orb-slide-icon">⚡</div><div class="orb-slide-name">HP-Boost</div><div class="orb-slide-tag">Hepatopancreas Health</div></div>
-          <div class="orb-slide"><div class="orb-slide-cat">Pond Mgmt</div><div class="orb-slide-icon">💧</div><div class="orb-slide-name">Aqua Floc</div><div class="orb-slide-tag">Toxic Remover</div></div>
-          <div class="orb-slide"><div class="orb-slide-cat">Minerals</div><div class="orb-slide-icon">🌿</div><div class="orb-slide-name">Aqua-Forte DS</div><div class="orb-slide-tag">Complete Mineral Support</div></div>
-        </div>
+        <div class="orb-core" id="orb-core"><!-- slides inserted by JS --></div>
       </div>
       <div class="hero-badge hb1"><b>CAA</b> Approved Range</div>
       <div class="hero-badge hb2"><b>ISO</b> Certified</div>
@@ -373,16 +385,12 @@ FOOTER
     </div>
   </section>
 
-  <!-- TICKER -->
-
   <div class="ticker"><div class="ticker-inner">
     <span>Sanitisers</span><span>Probiotics</span><span>Treatment Products</span><span>Pond Management</span><span>Ammonia Controllers</span><span>Minerals &amp; Vitamins</span><span>Feed Binders</span><span>Liquid Probiotics</span><span>CAA Approved</span><span>Antibiotic Free</span><span>ISO Certified</span><span>In-House R&amp;D</span>
     <span>Sanitisers</span><span>Probiotics</span><span>Treatment Products</span><span>Pond Management</span><span>Ammonia Controllers</span><span>Minerals &amp; Vitamins</span><span>Feed Binders</span><span>Liquid Probiotics</span><span>CAA Approved</span><span>Antibiotic Free</span><span>ISO Certified</span><span>In-House R&amp;D</span>
   </div></div>
 
-  <!-- ABOUT -->
-
-  <section class="sec sec-bg" id="about">
+  <section class="sec sec-bg" id="about-sec">
     <div class="about-grid">
       <div class="about-left reveal">
         <div class="sec-tag">Who We Are</div>
@@ -398,11 +406,7 @@ FOOTER
       </div>
     </div>
   </section>
-
   <div class="hr-divider"></div>
-
-  <!-- CERTS -->
-
   <div class="certs-bar">
     <div class="cert-item"><div class="cert-icon">🏅</div><span>CAA Approved</span></div>
     <div class="cert-item"><div class="cert-icon">📋</div><span>ISO Certified</span></div>
@@ -411,50 +415,46 @@ FOOTER
     <div class="cert-item"><div class="cert-icon">🌿</div><span>Eco Friendly</span></div>
     <div class="cert-item"><div class="cert-icon">🧬</div><span>GMP Standards</span></div>
   </div>
-
-  <!-- WHY US -->
-
   <section class="sec">
     <div class="reveal"><div class="sec-tag">Why Choose Us</div><h2>35 Years of Proven Excellence</h2><p class="sub">We don't just supply products — we partner with every farmer for sustainable, profitable aquaculture.</p></div>
     <div class="why-grid">
       <div class="why-card reveal d1"><div class="why-icon">🏆</div><h4>Full CAA Approved Range</h4><p>Every product legally certified for aquaculture use in India — the only company with a complete approved range.</p></div>
       <div class="why-card reveal d2"><div class="why-icon">🔬</div><h4>India's First Probiotic Maker</h4><p>Pioneered indigenous aquaculture probiotics since 1992, setting benchmarks the industry still follows.</p></div>
       <div class="why-card reveal d3"><div class="why-icon">🚫</div><h4>100% Antibiotic Free</h4><p>All 40+ products free from antibiotics — supporting responsible, export-quality aquaculture.</p></div>
-      <div class="why-card reveal d4"><div class="why-icon">🌍</div><h4>International Imports</h4><p>Italy, France, Germany &amp; Slovenia formulations combined with 35+ years of Indian aquaculture expertise.</p></div>
+      <div class="why-card reveal d4"><div class="why-icon">🌍</div><h4>International Imports</h4><p>Italy, France, Germany &amp; Slovenia formulations combined with 35+ years of Indian expertise.</p></div>
       <div class="why-card reveal"><div class="why-icon">📍</div><h4>12+ Locations Pan-India</h4><p>Pan-India presence with dedicated field support teams for farmers across major aquaculture states.</p></div>
       <div class="why-card reveal d1"><div class="why-icon">🧪</div><h4>360° Research</h4><p>Full-fledged in-house laboratory, R&amp;D farm and production facility continuously developing new products.</p></div>
     </div>
   </section>
-
-  <!-- CONTACT -->
-
-  <section class="sec sec-bg" id="contact">
+  <section class="sec sec-bg" id="contact-sec">
     <div class="reveal"><div class="sec-tag">Get in Touch</div><h2>Let's Grow Together</h2><p class="sub">Whether you're a farmer, distributor, or researcher — our expert team is ready to help.</p></div>
     <div class="contact-grid">
       <div class="contact-info reveal">
         <h3>Microl Remedies®</h3>
-        <div class="contact-row"><div class="contact-icon">📍</div><div class="contact-detail"><small>Address</small><p>5-35/304/1/A, Mythri Nagar,<br>Kukatpally, Hyderabad – 500072, India</p></div></div>
-        <div class="contact-row"><div class="contact-icon">📞</div><div class="contact-detail"><small>Phone</small><a href="tel:04023720502">040-23720502</a></div></div>
-        <div class="contact-row"><div class="contact-icon">📱</div><div class="contact-detail"><small>WhatsApp</small><a href="https://wa.me/919121333357">+91 91213 33357</a></div></div>
-        <div class="contact-row"><div class="contact-icon">✉️</div><div class="contact-detail"><small>Email</small><a href="mailto:info@microlremedies.com">info@microlremedies.com</a></div></div>
+        <div class="contact-row"><div class="contact-icon-box">📍</div><div class="contact-detail"><small>Address</small><p>5-35/304/1/A, Mythri Nagar,<br>Kukatpally, Hyderabad – 500072, India</p></div></div>
+        <div class="contact-row"><div class="contact-icon-box">📞</div><div class="contact-detail"><small>Phone</small><a href="tel:04023720502">040-23720502</a></div></div>
+        <div class="contact-row"><div class="contact-icon-box">📱</div><div class="contact-detail"><small>WhatsApp</small><a href="https://wa.me/919121333357">+91 91213 33357</a></div></div>
+        <div class="contact-row"><div class="contact-icon-box">✉️</div><div class="contact-detail"><small>Email</small><a href="mailto:info@microlremedies.com">info@microlremedies.com</a></div></div>
       </div>
       <div class="contact-form reveal d2">
-        <div class="form-row"><div class="form-group"><label>Name</label><input type="text" placeholder="Your full name"></div><div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div></div>
-        <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
-        <div class="form-group"><label>I am a</label><select><option>— Select role —</option><option>Shrimp / Fish Farmer</option><option>Distributor / Dealer</option><option>Aquaculture Consultant</option><option>Hatchery Owner</option><option>Researcher</option></select></div>
-        <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your farm, challenges, or product enquiry..."></textarea></div>
+        <div class="fg-row"><div class="fg"><label>Name</label><input type="text" placeholder="Your full name"></div><div class="fg"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+        <div class="fg"><label>I am a</label><select><option>— Select role —</option><option>Shrimp / Fish Farmer</option><option>Distributor / Dealer</option><option>Aquaculture Consultant</option><option>Hatchery Owner</option><option>Researcher</option></select></div>
+        <div class="fg"><label>Message</label><textarea placeholder="Tell us about your farm, challenges, or product enquiry..."></textarea></div>
         <button class="submit-btn" id="contact-submit">Send Enquiry →</button>
       </div>
     </div>
   </section>
-
-  <!-- FOOTER -->
-
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="nav-logo" style="cursor:default">
-          <svg width="36" height="36" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" fill="none" stroke="#0e8ec4" stroke-width="2.5"/><circle cx="50" cy="50" r="42" fill="#071226"/><path d="M31,42 L37,57 L43,46 L49,57 L55,42" fill="none" stroke="#0e8ec4" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M30,63 Q38,57 45,63 Q52,69 59,63 Q66,57 71,63" fill="none" stroke="#0e8ec4" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <svg width="46" height="46" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="flg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0e8ec4"/><stop offset="100%" style="stop-color:#1ab8e8"/></linearGradient></defs>
+            <circle cx="55" cy="55" r="51" fill="#071226" stroke="url(#flg)" stroke-width="2.5"/>
+            <path d="M34,46 L40,62 L47,50 L54,62 L60,46" fill="none" stroke="url(#flg)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M28,70 Q35,65 42,70 Q49,75 56,70 Q63,65 70,70 Q77,75 82,70" fill="none" stroke="url(#flg)" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
           <div class="nav-logo-text"><span class="n1">Microl Remedies</span><span class="n2">Since 1989</span></div>
         </div>
         <p>Your Partner in Aquaculture. Science-backed, antibiotic-free solutions for 35+ years.</p>
@@ -467,9 +467,7 @@ FOOTER
   </footer>
 </div>
 
-<!-- ════════════════════════════════════════
-   PAGE: PRODUCTS HUB
-════════════════════════════════════════ -->
+<!-- ══ PAGE: PRODUCTS HUB ════════════════════════ -->
 
 <div class="page" id="page-products">
   <div class="products-hero">
@@ -478,15 +476,11 @@ FOOTER
     <p>CAA approved, antibiotic-free solutions for every stage of aquaculture — from pond preparation to harvest.</p>
     <button class="btn-ghost" onclick="navigate('home')" style="display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase">← Back to Home</button>
   </div>
-  <div class="category-grid" id="category-grid"><!-- filled by JS --></div>
-  <footer class="footer">
-    <div class="footer-bottom" style="border-top:none;padding-top:0"><p>© 2026 Microl Remedies Pvt. Ltd.</p><div class="socials"><a class="social-btn" href="https://wa.me/919121333357">💬</a><a class="social-btn" href="#">🐦</a></div></div>
-  </footer>
+  <div class="category-grid" id="category-grid"></div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none;padding-top:0"><p>© 2026 Microl Remedies Pvt. Ltd.</p><div class="socials"><a class="social-btn" href="https://wa.me/919121333357">💬</a></div></div></footer>
 </div>
 
-<!-- ════════════════════════════════════════
-   PAGE: CATEGORY
-════════════════════════════════════════ -->
+<!-- ══ PAGE: CATEGORY ════════════════════════════ -->
 
 <div class="page" id="page-category">
   <div class="cat-page-header">
@@ -495,360 +489,281 @@ FOOTER
     <h1 id="cat-page-title"></h1>
     <p class="cat-desc" id="cat-page-desc"></p>
   </div>
-  <div class="products-list" id="products-list"><!-- filled by JS --></div>
-  <footer class="footer">
-    <div class="footer-bottom" style="border-top:none;padding-top:0"><p>© 2026 Microl Remedies Pvt. Ltd.</p><div class="socials"><a class="social-btn" href="https://wa.me/919121333357">💬</a></div></div>
-  </footer>
+  <div class="products-list" id="products-list"></div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none;padding-top:0"><p>© 2026 Microl Remedies Pvt. Ltd.</p><div class="socials"><a class="social-btn" href="https://wa.me/919121333357">💬</a></div></div></footer>
 </div>
 
-<!-- ════════════════════════════════════════
-   PAGE: PRODUCT DETAIL
-════════════════════════════════════════ -->
+<!-- ══ PAGE: PRODUCT DETAIL ══════════════════════ -->
 
 <div class="page" id="page-product">
   <div class="product-detail">
     <div class="breadcrumb" id="breadcrumb"></div>
-    <div class="detail-grid" id="detail-grid"><!-- filled by JS --></div>
+    <div class="detail-grid" id="detail-grid"></div>
   </div>
-  <div class="detail-related" id="detail-related"><!-- filled by JS --></div>
-  <footer class="footer">
-    <div class="footer-bottom" style="border-top:none;padding-top:0"><p>© 2026 Microl Remedies Pvt. Ltd.</p><div class="socials"><a class="social-btn" href="https://wa.me/919121333357">💬</a></div></div>
-  </footer>
+  <div class="detail-related" id="detail-related"></div>
+  <footer class="footer"><div class="footer-bottom" style="border-top:none;padding-top:0"><p>© 2026 Microl Remedies Pvt. Ltd.</p><div class="socials"><a class="social-btn" href="https://wa.me/919121333357">💬</a></div></div></footer>
 </div>
-
-<!-- WA FAB -->
 
 <a class="wa-fab" href="https://wa.me/919121333357" target="_blank"><div class="wa-pulse"></div>💬</a>
 
-<!-- ════════════════════════════════════════
-   DATA & LOGIC
-════════════════════════════════════════ -->
+<!-- ══ SCRIPT ════════════════════════════════════ -->
 
 <script>
-/* ─── DATA ─────────────────────────────────── */
+/* ═══════════════════════════════════════
+   PLACEHOLDER IMAGE GENERATOR
+   Each product gets a unique styled SVG.
+   Replace with: img src="photo.jpg"
+   when real photos are available.
+═══════════════════════════════════════ */
+const CAT_THEMES = {
+  sanitiser:{ bg:['#1a0a0a','#2d0f0f'], accent:'#e05252', accent2:'#ff8080', label:'SANITISER', shape:'bottle' },
+  probiotic:{ bg:['#0a1a0e','#0f2d18'], accent:'#52c98a', accent2:'#80ffb8', label:'PROBIOTIC', shape:'box' },
+  liquid:   { bg:['#1a1500','#2d2400'], accent:'#e0c052', accent2:'#ffe080', label:'LIQUID PROBIOTIC', shape:'jerrycan' },
+  treatment:{ bg:['#0a0f1a','#0f1a2d'], accent:'#5286e0', accent2:'#80aaff', label:'TREATMENT', shape:'tub' },
+  pond:     { bg:['#001a1a','#002d2d'], accent:'#00c4c4', accent2:'#80ffff', label:'POND MGMT', shape:'bag' },
+  mineral:  { bg:['#1a0f00','#2d1e00'], accent:'#e09020', accent2:'#ffcc80', label:'MINERAL', shape:'bag' },
+  ammonia:  { bg:['#0a1a00','#142800'], accent:'#88d800', accent2:'#ccff80', label:'AMMONIA CTRL', shape:'bottle' },
+  binder:   { bg:['#0f0a1a','#1c0f2d'], accent:'#9060e0', accent2:'#c4a0ff', label:'FEED BINDER', shape:'bottle' },
+};
+
+function makePlaceholder(name, catId, size='full') {
+  const t = CAT_THEMES[catId] || CAT_THEMES.sanitiser;
+  const id = 'ph_' + Math.random().toString(36).slice(2,8);
+  const w = 400, h = size==='thumb'?200:size==='sm'?160:320;
+  const cx=w/2, cy=h/2;
+
+  // wave path
+  const waveY = h*0.72;
+  const wave = `M0,${waveY} Q${w*0.15},${waveY-18} ${w*0.3},${waveY} Q${w*0.45},${waveY+18} ${w*0.6},${waveY} Q${w*0.75},${waveY-18} ${w*0.9},${waveY} Q${w*0.96},${waveY+10} ${w},${waveY} L${w},${h} L0,${h} Z`;
+  const wave2 = `M0,${waveY+14} Q${w*0.15},${waveY+14-14} ${w*0.3},${waveY+14} Q${w*0.45},${waveY+14+14} ${w*0.6},${waveY+14} Q${w*0.75},${waveY+14-14} ${w},${waveY+14} L${w},${h} L0,${h} Z`;
+
+  // shape drawing
+  let shape='';
+  const sh = t.shape;
+  if(sh==='bottle'){
+    const bx=cx-22, btop=cy-h*0.32, bh=h*0.58;
+    shape=`
+      <rect x="${bx}" y="${btop}" width="44" height="${bh}" rx="10" fill="${t.accent}" opacity=".22"/>
+      <rect x="${bx+5}" y="${btop-14}" width="34" height="18" rx="6" fill="${t.accent}" opacity=".3"/>
+      <rect x="${bx+8}" y="${btop-8}" width="28" height="12" rx="4" fill="${t.accent2}" opacity=".4"/>
+      <rect x="${bx+4}" y="${btop+6}" width="36" height="${bh-20}" rx="8" fill="${t.accent}" opacity=".35"/>
+      <!-- label band -->
+      <rect x="${bx}" y="${btop+bh*0.25}" width="44" height="${bh*0.38}" rx="0" fill="${t.accent}" opacity=".18"/>
+      <!-- shine -->
+      <rect x="${bx+6}" y="${btop+4}" width="8" height="${bh*0.5}" rx="4" fill="white" opacity=".12"/>
+    `;
+  } else if(sh==='box'||sh==='tub'){
+    const bx=cx-36, btop=cy-h*0.28, bh=h*0.5, bw=72;
+    shape=`
+      <rect x="${bx}" y="${btop}" width="${bw}" height="${bh}" rx="10" fill="${t.accent}" opacity=".22"/>
+      <rect x="${bx+4}" y="${btop+4}" width="${bw-8}" height="${bh-8}" rx="7" fill="${t.accent}" opacity=".15"/>
+      <!-- handle -->
+      <path d="M${bx+18},${btop} Q${cx},${btop-22} ${bx+bw-18},${btop}" fill="none" stroke="${t.accent}" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+      <!-- label -->
+      <rect x="${bx+6}" y="${btop+bh*0.28}" width="${bw-12}" height="${bh*0.36}" rx="4" fill="${t.accent}" opacity=".2"/>
+      <rect x="${bx+6}" y="${btop+4}" width="${bw-12}" height="${bh*0.22}" rx="4" fill="${t.accent2}" opacity=".18"/>
+    `;
+  } else if(sh==='jerrycan'){
+    const bx=cx-32, btop=cy-h*0.3, bh=h*0.55, bw=64;
+    shape=`
+      <rect x="${bx}" y="${btop}" width="${bw}" height="${bh}" rx="12" fill="${t.accent}" opacity=".22"/>
+      <rect x="${bx+bw-14}" y="${btop-18}" width="14" height="24" rx="5" fill="${t.accent}" opacity=".3"/>
+      <path d="M${bx+8},${btop-14} L${bx+bw-14},${btop-14}" stroke="${t.accent}" stroke-width="8" stroke-linecap="round" opacity=".3"/>
+      <rect x="${bx+6}" y="${btop+bh*0.28}" width="${bw-12}" height="${bh*0.36}" rx="4" fill="${t.accent}" opacity=".2"/>
+      <rect x="${bx+6}" y="${btop+4}" width="${bw-12}" height="${bh*0.2}" rx="4" fill="${t.accent2}" opacity=".18"/>
+      <!-- shine -->
+      <rect x="${bx+8}" y="${btop+6}" width="9" height="${bh*0.5}" rx="4" fill="white" opacity=".1"/>
+    `;
+  } else { // bag
+    const bx=cx-38, btop=cy-h*0.3, bh=h*0.56, bw=76;
+    shape=`
+      <path d="M${bx+10},${btop} L${bx+bw-10},${btop} Q${bx+bw},${btop} ${bx+bw},${btop+10} L${bx+bw},${btop+bh-10} Q${bx+bw},${btop+bh} ${bx+bw-10},${btop+bh} L${bx+10},${btop+bh} Q${bx},${btop+bh} ${bx},${btop+bh-10} L${bx},${btop+10} Q${bx},${btop} ${bx+10},${btop} Z" fill="${t.accent}" opacity=".2"/>
+      <!-- clip seals top/bottom -->
+      <rect x="${bx}" y="${btop}" width="${bw}" height="10" rx="4" fill="${t.accent}" opacity=".35"/>
+      <rect x="${bx}" y="${btop+bh-10}" width="${bw}" height="10" rx="4" fill="${t.accent}" opacity=".35"/>
+      <!-- label -->
+      <rect x="${bx+6}" y="${btop+bh*0.28}" width="${bw-12}" height="${bh*0.36}" rx="4" fill="${t.accent}" opacity=".2"/>
+      <rect x="${bx+6}" y="${btop+14}" width="${bw-12}" height="${bh*0.2}" rx="4" fill="${t.accent2}" opacity=".18"/>
+    `;
+  }
+
+  // name font size
+  const nameFontSize = name.length > 12 ? (size==='sm'||size==='thumb'?11:14) : (size==='sm'||size==='thumb'?13:17);
+
+  return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
+  <defs>
+    <linearGradient id="${id}bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${t.bg[0]}"/>
+      <stop offset="100%" stop-color="${t.bg[1]}"/>
+    </linearGradient>
+    <linearGradient id="${id}ac" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${t.accent}"/>
+      <stop offset="100%" stop-color="${t.accent2}"/>
+    </linearGradient>
+    <radialGradient id="${id}glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="${t.accent}" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="${w}" height="${h}" fill="url(#${id}bg)"/>
+  <!-- Glow -->
+  <rect width="${w}" height="${h}" fill="url(#${id}glow)"/>
+  <!-- Hex pattern -->
+  ${[...Array(8)].map((_,i)=>{
+    const hx=60+i*52, hy=20+((i%2)*28);
+    return `<polygon points="${hx},${hy-16} ${hx+14},${hy-8} ${hx+14},${hy+8} ${hx},${hy+16} ${hx-14},${hy+8} ${hx-14},${hy-8}" fill="none" stroke="${t.accent}" stroke-width=".7" opacity=".12"/>`;
+  }).join('')}
+  <!-- Wave fill bottom -->
+  <path d="${wave}" fill="${t.accent}" opacity=".1"/>
+  <path d="${wave2}" fill="${t.accent2}" opacity=".06"/>
+  <!-- Product shape -->
+  ${shape}
+  <!-- Microl M watermark -->
+  <text x="${w-16}" y="${h-10}" font-family="Georgia,serif" font-size="${size==='sm'||size==='thumb'?9:11}" fill="${t.accent2}" text-anchor="end" opacity=".3" font-weight="700">MICROL</text>
+  <!-- Category label top-left -->
+  <rect x="10" y="10" width="${t.label.length*5.8+12}" height="18" rx="9" fill="${t.accent}" opacity=".2"/>
+  <text x="16" y="22.5" font-family="Arial" font-size="7" fill="${t.accent2}" letter-spacing="1" font-weight="600" opacity=".9">${t.label}</text>
+  <!-- Product name bottom -->
+  <rect x="0" y="${h-42}" width="${w}" height="42" fill="${t.bg[1]}" opacity=".75"/>
+  <text x="${cx}" y="${h-14}" font-family="Georgia,serif" font-size="${nameFontSize}" fill="${t.accent2}" text-anchor="middle" font-weight="700">${name}</text>
+  <!-- Swap hint -->
+  <text x="${cx}" y="${h-4}" font-family="Arial" font-size="6.5" fill="${t.accent}" text-anchor="middle" opacity=".45">Tap to view · Photo coming soon</text>
+</svg>`;
+}
+
+/* ═══════════════════════════════════════
+   DATA
+═══════════════════════════════════════ */
 const CATEGORIES = [
-  {id:'sanitiser',icon:'🧪',name:'Sanitisers',count:4,desc:'Broad-spectrum disinfectants and sanitisers for pond water, equipment, and biosecurity management.',examples:['Steridol-20','Micro Pearl 80','Clorax','Protex']},
+  {id:'sanitiser',icon:'🧪',name:'Sanitisers',count:4,desc:'Broad-spectrum disinfectants and sanitisers for pond biosecurity and pathogen control.',examples:['Steridol-20','Micro Pearl 80','Clorax','Protex']},
   {id:'probiotic',icon:'🦠',name:'Probiotics',count:3,desc:'Multi-strain beneficial bacteria for water quality, soil management, and vibrio control.',examples:['Pond Life','Eco Tech','H₂S Clear']},
   {id:'liquid',icon:'💧',name:'Liquid Probiotics',count:2,desc:'Liquid bacterial preparations for ammonia control, H₂S elimination, and plankton management.',examples:['Micro Bacter','Micro-PS']},
-  {id:'treatment',icon:'⚡',name:'Treatment Products',count:4,desc:'Targeted therapeutic solutions for running mortality, gut health, hepatopancreas care, and immunity.',examples:['Survivor','HP-Boost','Micro Pro-F','Aquatan Shrimp']},
-  {id:'pond',icon:'🌊',name:'Pond Management',count:4,desc:'Water quality improvers, algaecides, flocculants, and pond conditioners for optimal pond ecology.',examples:['Aqua Floc','Micro Blue','Power DS','Green Plus']},
-  {id:'mineral',icon:'🌿',name:'Minerals & Vitamins',count:4,desc:'Complete mineral, vitamin, and amino acid supplements for exoskeleton, growth, and immunity support.',examples:['Aqua-Forte DS','Rich Min','Moult+','Infusion']},
-  {id:'ammonia',icon:'⚗️',name:'Ammonia Controllers',count:2,desc:'Instant and sustained ammonia reduction solutions superior to conventional yucca-based products.',examples:['Sapotan P & L','Ammo-Nil+']},
+  {id:'treatment',icon:'⚡',name:'Treatment Products',count:4,desc:'Targeted therapeutic solutions for gut health, hepatopancreas care, and immunity.',examples:['Survivor','HP-Boost','Micro Pro-F','Aquatan Shrimp']},
+  {id:'pond',icon:'🌊',name:'Pond Management',count:4,desc:'Water quality improvers, algaecides, flocculants, and pond conditioners.',examples:['Aqua Floc','Micro Blue','Power DS','Green Plus']},
+  {id:'mineral',icon:'🌿',name:'Minerals & Vitamins',count:4,desc:'Complete mineral, vitamin, and amino acid supplements for exoskeleton and growth.',examples:['Aqua-Forte DS','Rich Min','Moult+','Infusion']},
+  {id:'ammonia',icon:'⚗️',name:'Ammonia Controllers',count:2,desc:'Instant and sustained ammonia reduction solutions, superior to yucca-based products.',examples:['Sapotan P & L','Ammo-Nil+']},
   {id:'binder',icon:'🔗',name:'Feed Binding',count:2,desc:'Stable, bio-available feed binders with immune-boosting and mineral-supplementing properties.',examples:['Micro Bind+','Micro-Gel']},
 ];
 
 const PRODUCTS = [
-  // SANITISERS
-  {id:'steridol-20',cat:'sanitiser',icon:'🧪',name:'Steridol-20',tagline:'Patent Iodine Formula — 20% Available Iodine',
-    short:'The only patent iodine preparation providing 20% available iodine. Periodical application keeps pathogens under control across all infection types.',
-    desc:'Steridol-20 is Microl Remedies\' flagship sanitiser and the only patent iodine preparation in India that provides 20% available iodine. It works by oxidizing the cellular components of pathogens, making it highly effective for routine pond sanitation and disease prevention. Its periodic application creates a long-term biosecure environment in the pond.',
-    composition:'Nonyl Alkyl Phenoxypoly Ethylene Oxide Iodine complex providing 20% available iodine respectively.',
-    benefits:['Prevents Antenna Rot, Gill Rot, Black Gill and Red Gill','Controls Red discoloration, Black Spot and Gas Bubble disease','Prevents Tail Rot and maintains overall shrimp health','Suitable for routine periodic application throughout crop cycle'],
-    dosage:'500 ml per Acre', available:'500ml · 1 Litre · 5 Litre',tags:['Viral Control','Bacterial Control','Biosecurity','Routine Use']},
-
-  {id:'micro-pearl-80',cat:'sanitiser',icon:'🛡️',name:'Micro Pearl 80',tagline:'Unique QAC — 80% Concentration',
-    short:'Unique Quaternary Ammonium Compound with very strong antibactericidal activity. Economical and reliable for all sanitation requirements.',
-    desc:'Micro Pearl 80 contains Alky Dimethyl Benzyl Ammonium chloride solution at 80% concentration — a highly potent QAC that provides comprehensive pond sanitation. It is particularly effective for controlling excess algal blooms and deodorizing pond water while simultaneously stimulating the moulting process in shrimp.',
-    composition:'Alky Dimethyl Benzyl Ammonium chloride solution 80%.',
-    benefits:['Controls excess algal blooms effectively and safely','Deodorizes pond water and removes foul odors','Stimulates and supports moulting in shrimp','Highly economical — 100x dilution for application'],
-    dosage:'150 ml per Feet of water',available:'500ml · 1 Litre · 5 Litre',tags:['Algal Control','Moulting','Deodorizer','Economical']},
-
-  {id:'clorax',cat:'sanitiser',icon:'🔵',name:'Clorax',tagline:'Broad Spectrum Disinfectant — Excellence in Infection Control',
-    short:'Isocyanuric Acid & Tris-Nitro based broad spectrum microbicide for use in all emergency situations. Controls viral, bacterial & fungal infections.',
-    desc:'Clorax is a broad spectrum disinfectant formulated with Isocyanuric Acid and Tris-Nitro. It is effective against a wide range of aquatic pathogens including viruses, bacteria, and fungi. The mechanism of action involves disruption of the microbial cell membrane, leading to rapid cell death. It is particularly valuable in emergency disease situations.',
-    composition:'Isocyanuric Acid & Tris-Nitro.',
-    benefits:['Controls Viral, Bacterial and Fungal Infections','Effective against both gram positive and negative organisms','Destroys micro-organisms by disrupting cell membrane','For use in all emergency disease situations'],
-    dosage:'1.5 – 2L per Acre',available:'1 Litre · 5 Litre',tags:['Broad Spectrum','Emergency Use','Viral','Bacterial','Fungal']},
-
-  {id:'protex',cat:'sanitiser',icon:'🟡',name:'Protex',tagline:'Powerful Broad Spectrum Anti-bacterial & Virucidal Disinfectant',
-    short:'Potassium Monopersulfate Triple Salt (50% W/W). Effective against wide range of pathogens. Does not affect D.O levels, water quality or phytoplankton.',
-    desc:'Protex contains Potassium Monopersulfate Triple Salt compound at 50% W/W — a powerful oxidizing disinfectant that provides total biosecurity to the pond. Its unique formulation is effective against both viruses (WSSV, MBV) and bacteria (Vibrio species) while maintaining pond water quality, dissolved oxygen levels, and phytoplankton populations.',
-    composition:'Potassium Monopersulfate Triple Salt compound — 50% W/W.',
-    benefits:['Controls Vibrio species and WSSV and MBV viruses','Total bio-security to the pond environment','Does not affect D.O levels or water quality','Safe for phytoplankton — pond ecosystem maintained'],
-    dosage:'500g – 1Kg per Acre',available:'500g · 5 Kg',tags:['Vibrio Control','WSSV','MBV','Eco-Safe','Biosecurity']},
-
-  // PROBIOTICS
-  {id:'pond-life',cat:'probiotic',icon:'🌊',name:'Pond Life',tagline:'Water & Soil Probiotic — For Total Protection',
-    short:'Multi-strain Bacillus and Lactobacillus blend for total pond protection. Controls Vibrio while optimizing phytoplankton for peak performance.',
-    desc:'Pond Life is Microl Remedies\' flagship probiotic — a multi-strain consortium of beneficial bacteria including Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, B. pumilis, Cellulomanas cartae, Pseudomonas, Lactobacillus plantarum, L. rhamnosus, Rhodococcus, Rhodobacter, and Thiobacillus species. It provides comprehensive pond protection across all critical parameters.',
-    composition:'Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, B. pumilis, Cellulomanas cartae, P. Pantotrophus, P. Acidilactici, Pseidomonas denitricans, L. Plantarum, L. Rhamnosus, Rhodococcus, Rhodobacter, Thiobacillus iooxidans & Thiobacillus ferroxidans.',
-    benefits:['Eliminates H₂S, Ammonia, Nitrite and Nitrate from pond','Decreases F.C.R and improves shrimp survival rate','Controls Vibrio species preventing bacterial disease','Reduces organic waste and degrades accumulated sludge','Optimizes phytoplankton for balanced pond ecology'],
-    dosage:'1 Kg per Hectare',available:'1 Kg',tags:['Ammonia Control','Vibrio','FCR','Sludge','Phytoplankton']},
-
-  {id:'eco-tech',cat:'probiotic',icon:'♻️',name:'Eco Tech',tagline:'Water & Soil Probiotic',
-    short:'10-strain Bacillus blend including Nitrobacter & Nitrosomonas. Eliminates harmful gases and improves pond bottom quality comprehensively.',
-    desc:'Eco Tech is a scientifically formulated 10-strain probiotic blend specifically designed to target nitrogenous waste compounds in pond water and soil. Containing specialized strains like Nitrobacter and Nitrosomonas alongside multiple Bacillus species, it efficiently converts toxic ammonia and hydrogen sulfide into harmless compounds, dramatically improving pond bottom and water quality.',
-    composition:'Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, Rhodococcus, Rhodobacter, Thiobacillus iooxidans, B. Circulans, Nitrobacter & Nitrosomonas & B. Carboniphilus.',
-    benefits:['Eliminates harmful Ammonia, Hydrogen Sulphide and Nitrites','Improves Pond bottom quality and water clarity','Promotes probiotic multiplication in pond environment','Reduces organic load and improves overall pond health'],
-    dosage:'500g per Acre',available:'1 Kg',tags:['Ammonia','H₂S','Nitrites','Pond Bottom','Water Quality']},
-
-  {id:'h2s-clear',cat:'probiotic',icon:'🟤',name:'H₂S Clear',tagline:'Soil Probiotic — For H₂S Free Bottom',
-    short:'Soil probiotic specially formulated for H₂S control. Microbes work efficiently in varying temperatures, salinity, pH & D.O levels.',
-    desc:'H₂S Clear is a specialized soil probiotic formulated to address one of aquaculture\'s most persistent challenges — hydrogen sulfide (H₂S) accumulation in pond bottoms. Its carefully selected microbial strains can function efficiently across a wide range of environmental conditions including varying temperatures, salinity levels, pH, and dissolved oxygen levels, making it uniquely versatile.',
-    composition:'Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, B. pumilis, Cellulomanas cartae, P. Pantotrophus, P. Acidilactici, Pseidomonas denitricans, L. Plantarum, L. Rhamnosus, Rhodococcus, Rhodobacter, Thiobacillus iooxidans & Thiobacillus ferroxidans.',
-    benefits:['Enhances decomposition of organic waste and degrades sludge','Regulates pH fluctuations and maintains good algae blooms','Reduces bad pond odor and improves water transparency','Eliminates H₂S, Ammonia, Nitrate and Nitrite','Improves soil quality for better shrimp health'],
-    dosage:'1 Kg per Hectare',available:'1 Kg',tags:['H₂S Control','pH Balance','Soil Quality','Algae Management']},
-
-  // LIQUID PROBIOTICS
-  {id:'micro-bacter',cat:'liquid',icon:'🔴',name:'Micro Bacter',tagline:"India's First Aquaculture Probiotic — Since 1992",
-    short:"India's original indigenous aquaculture probiotic. Aerobic, anaerobic & photosynthetic bacteria consortium. Ferment & apply in sunny conditions.",
-    desc:"Micro Bacter holds a special place in Indian aquaculture history — it was the first indigenous probiotic ever developed for aquaculture use in India, created by Microl Remedies in 1992. This liquid consortium blend of aerobic, anaerobic, and photosynthetic bacteria works synergistically to maintain ammonia-free pond conditions. It is fermented before application using organic carbon sources for maximum effectiveness.",
-    composition:'A consortium blend of aerobic, anaerobic & photosynthetic bacteria.',
-    benefits:['Controls NH₃, NO₂ and H₂S for ammonia-free ponds','Reduces suspended solids, faecal matter and feed particles','Stabilizes plankton bloom for balanced pond ecology','Note: Ferment and apply only in sunny conditions'],
-    dosage:'2.5L/Acre with 1–2Kg organic carbon (glucose/sugar/jaggery)',available:'500g',tags:["India's First",'Ammonia Control','Plankton','Historic']},
-
-  {id:'micro-ps',cat:'liquid',icon:'⚪',name:'Micro-PS',tagline:'Bacterial Preparation — Free Ammonia Free Pond',
-    short:'Rhodobacter sp, Rhodococcus sp & Pseudomonas sp blend. Reduces nitrites, eliminates H₂S, oxidizes organic compounds for plankton nutrition.',
-    desc:'Micro-PS is a specialized liquid probiotic containing photosynthetic and aerobic bacteria — Rhodobacter sp, Rhodococcus sp, and Pseudomonas sp. These organisms are particularly effective at reducing nitrite levels and eliminating hydrogen sulfide. They also oxidize organic compounds in the pond water, converting them into nutrients that support phytoplankton growth. Dosage increases progressively with crop age.',
-    composition:'A consortium blend of aerobic, Rhodobacter sp, Rhodococcus sp & Pseudomonas sp, anaerobic & photosynthetic bacteria.',
-    benefits:['Reduces Nitrite levels effectively throughout the crop','Eliminates H₂S from pond bottom and water column','Oxidizes organic compounds and provides plankton nutrients','Helps maintain algal population at optimum levels'],
-    dosage:'Up to 45 DOC: 5L/Hec/Week · 45–90 DOC: 10L/Hec/Week · After 90 DOC: 15L/Hec/Week',available:'5 Litre · 20 Litre',tags:['Nitrite Reduction','H₂S','Plankton Nutrition','Progressive Dosing']},
-
-  // TREATMENT
-  {id:'survivor',cat:'treatment',icon:'🇮🇹',name:'Survivor',tagline:'Solution for Running Mortality Syndrome — Imported from Italy',
-    short:'Imported from Italy (SILO), manufactured under GMP+ conditions. Short & medium chain monoglycerides for RMS management.',
-    desc:'Survivor is an imported product from SILO, Italy — a world leader in animal nutrition — manufactured under strict GMP+ conditions. It contains a unique mixture of short and medium chain monoglycerides and organic acids including monocaprin, monocaprylin, monolaurin, monobutyrin, and monopropionin. These compounds have antiviral and antibacterial properties that protect shrimp from viral diseases while addressing running mortality.',
-    composition:'Mixture of short & medium chain monoglycerides and organic acids: monocaprin, monocaprylin, monolaurin, monobutyrin & monopropionin.',
-    benefits:['Reduces Running Mortality Syndrome (RMS) significantly','Prevents viral diseases by enhancing innate immune response','Prevents and treats White Gut and Yellow Gut syndrome','Improves overall survival rate from Day 1 to harvest'],
-    dosage:'Mix 7g/kg feed in minimum 2 meals per day from DOC 1 to harvest',available:'1 Kg · 5 Kg',tags:['Imported Italy','RMS','Viral Protection','White Gut','Immunity']},
-
-  {id:'hp-boost',cat:'treatment',icon:'⚡',name:'HP-Boost',tagline:'For a Healthy Hepatopancreas',
-    short:'Precursor of deoxycholic acid with antioxidants and gut pro-biotics. Essential treatment and preventive for hepatopancreas health.',
-    desc:'HP-Boost is a specialized treatment product designed to maintain and restore hepatopancreas health in shrimp. The hepatopancreas is the central digestive and immune organ in shrimp, and its dysfunction leads to significant mortality and FCR deterioration. HP-Boost provides the precursors needed for bile acid synthesis, combined with antioxidants and gut probiotics to maintain healthy hepatopancreas function.',
-    composition:'Precursor of deoxycholic acid and anti-oxidants along with gut pro-biotics.',
-    benefits:['Maintains healthy hepatopancreas function and structure','Overcomes soft shell mortalities effectively','Prevention of White Feces Syndrome (WFS)','Supports overall gut health and feed digestion'],
-    dosage:'2g/Kg Feed — in 2 Feeds Daily',available:'500g',tags:['Hepatopancreas','WFS Prevention','Soft Shell','Gut Health']},
-
-  {id:'micro-pro-f',cat:'treatment',icon:'🧬',name:'Micro Pro-F',tagline:'Essential Probiotics Fortified with Stabilized Enzymes',
-    short:'5 proprietary Bacillus strains with Lactobacillus, Saccharomyces, and multiple stabilized enzymes for comprehensive gut health.',
-    desc:'Micro Pro-F is a comprehensive gut health product combining 5 proprietary probiotic strains with a powerful enzyme complex. The probiotics provide competitive exclusion of pathogens while producing enzymes that facilitate digestion. The added stabilized enzymes (amylose, cellulose, protease, Betaglucanase) further enhance nutrient breakdown and absorption, leading to better FCR and disease resistance.',
-    composition:'5 proprietary strains of Bacillus species, Lactobacillus species, Saccharomyces species, Amylose, Cellulose, Protease, Betaglucanase.',
-    benefits:['Produces enzymes facilitating growth of beneficial microflora','Increases survival by stimulating natural defense mechanisms','Competitive exclusion of pathogens reduces disease exposure','Improves nutrient digestion and metabolic function for better FCR','Helps shrimp recover faster from gut-related diseases'],
-    dosage:'2–3g/Kg Feed',available:'500g',tags:['Gut Health','FCR','Disease Resistance','Enzymes','Probiotics']},
-
-  {id:'aquatan-shrimp',cat:'treatment',icon:'🦐',name:'Aquatan Shrimp',tagline:'Potent Immunostimulant',
-    short:'Chestnut extract with protein, vegetable oil & crude fibers. Potent immunostimulant supporting beneficial microflora regulation.',
-    desc:'Aquatan Shrimp is an imported immunostimulant product based on chestnut extract (Castanea sativa), which is rich in tannins and polyphenols with proven immunomodulatory properties. These natural compounds support the regulation of beneficial gut microflora, enhance the shrimp\'s innate immune response, and optimize feed utilization. It represents a natural, antibiotic-free approach to immunity management.',
-    composition:'Chestnut Extract, Protein, Vegetable Oil and Fat & Crude Fibers.',
-    benefits:['Supports regulation of beneficial microflora in gut','Enhances survival rate through boosted health status','Optimizes feed utilization and nutrient digestibility','Natural immunostimulant — completely antibiotic free'],
-    dosage:'2g–4g/Kg Feed — in 2 Feeds Daily',available:'500g',tags:['Immunostimulant','Microflora','Feed Utilization','Natural']},
-
-  // POND MANAGEMENT
-  {id:'aqua-floc',cat:'pond',icon:'💧',name:'Aqua Floc',tagline:'Specially Formulated Aquaculture Toxic Remover & Softener',
-    short:'High Grade Aluminum Hydrated Silicate, Edetic Acid & unique flocculators. Aquaculture toxic remover and water softener.',
-    desc:'Aqua Floc is a specialized flocculant and water conditioner containing High Grade Aluminum Hydrated Silicate, Edetic Acid, and a unique combination of flocculators. It works by binding suspended particles and toxins in the water column and bringing them to the pond bottom where probiotics can break them down. Its water-softening action also facilitates the moulting process in shrimp.',
-    composition:'High Grade Aluminum Hydrated Silicate, Edetic Acid & Unique Combination of Flocculators.',
-    benefits:['Reduces water turbidity for better light penetration','Reduces water hardness to facilitate moulting','Neutralizes toxins in the pond water safely','Assists in free moulting cycle of shrimp'],
-    dosage:'1–2 Kg per Acre',available:'1 Kg · 5 Kg',tags:['Turbidity','Water Softener','Moulting','Toxin Removal']},
-
-  {id:'micro-blue',cat:'pond',icon:'🔵',name:'Micro Blue',tagline:'Revolutionary Algaecide',
-    short:'Elemental Copper (12.5%) with Ethylene Diamine (32%). Revolutionary algaecide for complete pond algae management.',
-    desc:'Micro Blue is a revolutionary chelated copper algaecide containing Elemental Copper at 12.5% combined with Ethylene Diamine at 32%. The chelation of copper with ethylene diamine makes it more bioavailable to algae while reducing its toxicity to shrimp and fish. It is highly effective against both free-floating and filamentous algae and also helps control bacterial and fungal episodes in the pond.',
-    composition:'Elemental Copper — 12.5%, Ethylene Diamine — 32.0%, Inert Ingredients — 55.5%.',
-    benefits:['Controls various free floating algae and filamentous algae','Limits bacterial, fungal and parasitic episodes','Controls off-flavor caused by algae in ponds','Chelated formula — safer for shrimp than conventional copper'],
-    dosage:'1.5 Litre per Feet of water depth',available:'1 Litre · 5 Litre',tags:['Algaecide','Chelated Copper','Fungal','Parasitic','Off-flavor']},
-
-  {id:'power-ds',cat:'pond',icon:'⚫',name:'Power DS',tagline:'Superior Water Quality Improver',
-    short:'Enriched with saponins, neem, probiotics & organic minerals. Superior water quality improver with highest CEC and porosity.',
-    desc:'Power DS is a unique water quality improving product enriched with saponins, neem extract, probiotics, and organic minerals. Its high Cation Exchange Capacity (CEC) and increased porosity allow it to act as a multifunctional soil and water conditioner. The integrated probiotics actively suppress pathogenic organisms while the saponins and organic minerals maintain optimal water chemistry.',
-    composition:'Enriched with saponins, neem, probiotics and organic minerals.',
-    benefits:['Increased porosity traps maximum ammonia from water','Improved CEC acts as buffer to maintain stable pH','Saponins absorb Ammonia and Nitrites effectively','Micro Nutrients promote zoo and phytoplankton growth','Pro-biotics suppress pathogens and degrade sludge'],
-    dosage:'10–15 Kg per Acre',available:'20 Kg',tags:['CEC','pH Buffer','Saponins','Probiotics','Phytoplankton']},
-
-  {id:'green-plus',cat:'pond',icon:'🟢',name:'Green Plus',tagline:'Eco-Friendly Aquaculture Synergist',
-    short:'Eco-friendly synergist to bring the best from your pond. Stabilizes pH, supports protein-rich plankton growth and promotes probiotic multiplication.',
-    desc:'Green Plus is an eco-friendly aquaculture synergist that works across multiple dimensions of pond management simultaneously. It maintains water quality and pond bottom integrity, stabilizes water pH, supports the growth of protein-rich phytoplankton, and promotes probiotic multiplication. Its unique mechanism chelates essential minerals making them more bioavailable to shrimp.',
-    composition:'Proprietary blend of eco-friendly aquaculture synergists, minerals, and biological catalysts.',
-    benefits:['Maintains water quality and pond bottom integrity','Stabilizes water pH and reduces fluctuations','Supports growth of protein-rich phytoplankton','Absorbs toxic gases — Ammonia, Nitrites and Sulfides','Chelates minerals for better bioavailability to shrimp','Improves disease resistance and reduces animal stress'],
-    dosage:'As per Aqua Consultant Recommendation',available:'10 Kg',tags:['Eco-Friendly','pH Stability','Plankton','Mineral Chelation','Synergist']},
-
-  // MINERALS
-  {id:'aqua-forte-ds',cat:'mineral',icon:'🔵',name:'Aqua-Forte DS',tagline:'Complete Mineral Supplement (Aqua-Colostrum)',
-    short:'Effective blend of Minerals, Vitamins & Amino Acids. Complete solution for all shell and muscle related problems in shrimp.',
-    desc:'Aqua-Forte DS, also known as Aqua-Colostrum, is the most comprehensive mineral supplement in the Microl Remedies range. It contains an effective blend of all essential minerals, vitamins, and amino acids that shrimp require for exoskeleton formation, moulting, immune function, and overall growth. It can be applied both to pond water and as a feed supplement.',
-    composition:'An effective blend of Minerals, Vitamins and Amino Acids.',
-    benefits:['Helps in regular formation of exoskeleton and moulting','Improves survival rate and increases growth performance','Sustainable plankton growth and probiotic multiplication','Enhances disease resistance and defense mechanism','Prevents imbalance of mineral ions in pond water','Solution for all shell and muscle related problems'],
-    dosage:'10 Kg/Acre for water application · 3–4g/Kg feed for feed application',available:'20 Kg',tags:['Complete Mineral','Exoskeleton','Moulting','Disease Resistance','Shell Problems']},
-
-  {id:'rich-min',cat:'mineral',icon:'🟠',name:'Rich Min',tagline:'Essential Micro & Macro Minerals + Vitamins + Amino Acids + Pro-Biotics',
-    short:'A unique blend of essential micro & macro minerals, vitamins, amino acids & probiotics for comprehensive nutritional supplementation.',
-    desc:'Rich Min is a comprehensive nutritional supplement providing essential micro and macro minerals, vitamins, amino acids, and probiotics in a single product. Its multifactorial approach addresses mineral deficiencies, immune enhancement, metabolic improvement, and plankton development simultaneously. The integrated probiotics make it unique among mineral supplements in the market.',
-    composition:'A unique blend of essential micro and macro minerals, vitamins, amino acids & pro-biotics.',
-    benefits:['Improves F.C.R and promotes plankton development','Protection from Loose Shell Syndrome (LSS)','Pro-Biotics and Vitamins increase disease resistance','Improves Metabolism and body functions','Protects from shell and muscle related problems','Helps in moulting process and Exoskeletal formation'],
-    dosage:'2.5 Kg/Acre — water application · 5–10g/Kg feed — feed application',available:'1 Kg · 5 Kg',tags:['Minerals','Vitamins','Amino Acids','FCR','LSS Prevention']},
-
-  {id:'moult-plus',cat:'mineral',icon:'🟡',name:'Moult+',tagline:'Unique Solution for Stress-Free Moulting',
-    short:'Amino acid chelated Micro, Macro & Trace Minerals with essential amino acids & enzymes. Formulated for stress-free moulting cycles.',
-    desc:'Moult+ is a scientifically engineered product addressing one of the most critical phases in shrimp culture — the moulting cycle. It uses amino acid chelated micro, macro, and trace minerals — a form that provides superior bioavailability compared to conventional mineral salts. The combination with essential amino acids and enzymes ensures that shrimp have all necessary resources for successful, stress-free moulting.',
-    composition:'Unique formulation of Amino acid chelated Micro, Macro and Trace Minerals along with required quantity of essential Amino acids and Enzymes.',
-    benefits:['Prevents Body Cramps, LSS and all muscle and shell disorders','Provides proper ratio of mineral supplements for exoskeletal development','Improves Growth by inducing periodic stress-free moulting','Regulates osmoregulation for better moulting frequency'],
-    dosage:'10g/Kg feed under normal conditions · 15–20g/Kg feed 3 days before and after moulting',available:'1 Kg · 5 Kg',tags:['Moulting','LSS','Chelated Minerals','Osmoregulation']},
-
-  {id:'infusion',cat:'mineral',icon:'🟢',name:'Infusion',tagline:'Solution for Soft Shell — Adds Value to Your Investment',
-    short:'Organic mineral feed supplement with special Bacillus subtilis strains. 100% water soluble for instant mineral replenishment.',
-    desc:'Infusion is a unique 100% water-soluble organic mineral supplement containing special strains of Bacillus subtilis. Its complete water solubility ensures instant and complete mineral replenishment — particularly important in high-density culture systems where mineral depletion can occur rapidly. It also supports biofloc development, making it especially valuable in biofloc culture systems.',
-    composition:'Organic mineral feed supplements with special strains of Bacillus subtilis.',
-    benefits:['100% water soluble minerals for instant replenishment','For instant mineral replenishment in emergency situations','For good quality and quantity floc development in biofloc systems','Addresses all shell and muscle related mineral deficiencies'],
-    dosage:'2.5 Kg/1000 sqm for water application · 10g/Kg feed for feed application',available:'2 Kg',tags:['Water Soluble','Instant Action','Biofloc','Shell Health']},
-
-  // AMMONIA
-  {id:'sapotan',cat:'ammonia',icon:'🌱',name:'Sapotan (P & L)',tagline:'Reduces Ammonia Better Than Yucca — Available in Powder & Liquid',
-    short:'Natural plant material from Castanea sativa & Quercus robur with Triterpenoid saponins. Available in Powder (P) and Liquid (L) forms.',
-    desc:'Sapotan is derived from natural plant materials — Castanea sativa (chestnut) and Quercus robur (oak) — which contain Triterpenoid saponins. These saponins are proven to be more effective at reducing ammonia levels in aquaculture ponds than conventional yucca-based products. They work through multiple mechanisms including direct ammonia binding, increased intestinal permeability for better nutrient absorption, and antimicrobial activity.',
-    composition:'Natural plant material from Castanea sativa and Quercus robur, which contain Triterpenoid saponins.',
-    benefits:['For ammonia reduction in pond water — better than Yucca','Increases intestinal permeability for better nutrient absorption','Antimicrobial activity in the intestine against pathogens','Available in both powder (P) and liquid (L) formulations'],
-    dosage:'250g per Acre for Pond Water · 2–4g per Kg feed',available:'500g · 500mL',tags:['Natural Saponins','Ammonia Control','Better Than Yucca','Antimicrobial']},
-
-  {id:'ammo-nil-plus',cat:'ammonia',icon:'⬜',name:'Ammo-Nil+',tagline:'Instant Ammonia Free — Simple Solution',
-    short:'Salts of alkyl sulfonic acids with saponins. Reduces ammonia level instantly under all pH conditions without disturbing pond ecology.',
-    desc:'Ammo-Nil+ is a fast-acting ammonia controller that works instantly under all pH conditions — a significant advantage over pH-dependent products. It contains salts of alkyl sulfonic acids combined with saponins that simultaneously absorb both NH₃ (free ammonia) and NH₄⁺ (ammonium ion) from the water. The product also serves as a substrate that enhances the growth and activity of beneficial probiotic bacteria.',
-    composition:'Salts of alkyl sulfonic acids with saponins.',
-    benefits:['Reduces ammonia level instantly under all pH conditions','Consumes both NH₃ and NH₄ from ammonia by simple absorption','Works equally effectively at acidic, neutral, and alkaline pH','Serves as substrate for probiotic multiplication'],
-    dosage:'500g per Acre',available:'500g · 500mL',tags:['Instant Action','All pH','NH₃','NH₄','Probiotic Substrate']},
-
-  // FEED BINDING
-  {id:'micro-bind-plus',cat:'binder',icon:'🔗',name:'Micro Bind+',tagline:'Most Stable, Most Bio-Available Feed Binder',
-    short:'The most stable and bio-available feed binder for aquaculture. Convenient to handle, more attractive to fish and shrimp, reduces feed wastage.',
-    desc:'Micro Bind+ is the most stable and bio-available feed binder available for aquaculture use. Its unique formulation provides excellent water stability, maintaining feed pellet integrity for extended periods after application. The attractive taste and palatability formula increases feed intake and reduces wastage. Importantly, it does not disturb pond bottom conditions or water quality after entering the water.',
-    composition:'Proprietary bio-available binding complex with palatability enhancers.',
-    benefits:['Excellent water stability maintains feed integrity','Reduces feed wastage and ensures efficient consumption','Unique formulation with attractive taste and good palatability','Does not disturb pond bottom or water quality','Provides secured binding for all forms of feed supplements'],
-    dosage:'As per Aqua Consultant Recommendation',available:'Available on enquiry',tags:['Feed Stability','Palatability','Water Stability','Feed Efficiency']},
-
-  {id:'micro-gel',cat:'binder',icon:'🟣',name:'Micro-Gel',tagline:'Immune Boosters + Mineral Supplements + Binder',
-    short:'Micro nutrients (Ca, P, K, Mg, Cu, Fe, Zn, Mn) + IgG Antibodies + Nucleosides + Antioxidants + Binders for complete feed fortification.',
-    desc:'Micro-Gel is a multifunctional product combining the practical benefits of a feed binder with the therapeutic benefits of an immunobooster and mineral supplement. It contains a complete array of micro nutrients including Calcium, Phosphorus, Potassium, Magnesium, Copper, Iron, Zinc, and Manganese — along with IgG Antibodies, Nucleosides, Antioxidants, and BCFA for comprehensive health support.',
-    composition:'Micro Nutrients (Ca, P, K, Mg, Cu, Fe, Zn, Mn), IgG Antibodies, Nucleosides, BCFA, Antioxidants, Binders.',
-    benefits:['Promotes aquaculture disease resistance through IgG antibodies','Supplements essential micro-nutrients through every feed','Improves feed intake and absorption efficiency','Provides antioxidant protection against oxidative stress'],
-    dosage:'15–50ml per Kg Feed',available:'Available on enquiry',tags:['Immunobooster','IgG Antibodies','Micro Nutrients','Antioxidant','Multifunctional']},
+  {id:'steridol-20',cat:'sanitiser',name:'Steridol-20',tagline:'Patent Iodine Formula — 20% Available Iodine',short:'The only patent iodine preparation providing 20% available iodine. Controls all major shrimp infections.',desc:'Steridol-20 is Microl Remedies\' flagship sanitiser and the only patent iodine preparation in India that provides 20% available iodine. It works by oxidizing the cellular components of pathogens, making it highly effective for routine pond sanitation and disease prevention.',composition:'Nonyl Alkyl Phenoxypoly Ethylene Oxide Iodine complex providing 20% available iodine.',benefits:['Prevents Antenna Rot, Gill Rot, Black Gill and Red Gill','Controls Red discoloration, Black Spot and Gas Bubble disease','Prevents Tail Rot and maintains overall shrimp health','Suitable for routine periodic application throughout crop cycle'],dosage:'500 ml per Acre',available:'500ml · 1 Litre · 5 Litre',tags:['Viral Control','Bacterial Control','Biosecurity','Routine Use']},
+  {id:'micro-pearl-80',cat:'sanitiser',name:'Micro Pearl 80',tagline:'Unique QAC — 80% Concentration',short:'Unique Quaternary Ammonium Compound with very strong antibactericidal activity. Controls algae, deodorizes, stimulates moulting.',desc:'Micro Pearl 80 contains Alky Dimethyl Benzyl Ammonium chloride solution at 80% concentration — a highly potent QAC that provides comprehensive pond sanitation. It is particularly effective for controlling excess algal blooms and deodorizing pond water while stimulating the moulting process.',composition:'Alky Dimethyl Benzyl Ammonium chloride solution 80%.',benefits:['Controls excess algal blooms effectively and safely','Deodorizes pond water and removes foul odors','Stimulates and supports moulting in shrimp','Highly economical — 100x dilution for application'],dosage:'150 ml per Feet of water',available:'500ml · 1 Litre · 5 Litre',tags:['Algal Control','Moulting','Deodorizer','Economical']},
+  {id:'clorax',cat:'sanitiser',name:'Clorax',tagline:'Broad Spectrum Disinfectant',short:'Isocyanuric Acid & Tris-Nitro based broad spectrum microbicide for all emergency situations.',desc:'Clorax is a broad spectrum disinfectant formulated with Isocyanuric Acid and Tris-Nitro. Effective against a wide range of aquatic pathogens including viruses, bacteria, and fungi. The mechanism of action involves disruption of the microbial cell membrane.',composition:'Isocyanuric Acid & Tris-Nitro.',benefits:['Controls Viral, Bacterial and Fungal Infections','Effective against both gram positive and negative organisms','Destroys micro-organisms by disrupting cell membrane','For use in all emergency disease situations'],dosage:'1.5 – 2L per Acre',available:'1 Litre · 5 Litre',tags:['Broad Spectrum','Emergency Use','Viral','Bacterial','Fungal']},
+  {id:'protex',cat:'sanitiser',name:'Protex',tagline:'Powerful Broad Spectrum Virucidal Disinfectant',short:'Potassium Monopersulfate Triple Salt (50% W/W). Does not affect D.O levels, water quality or phytoplankton.',desc:'Protex contains Potassium Monopersulfate Triple Salt compound at 50% W/W — a powerful oxidizing disinfectant providing total biosecurity. Effective against both viruses (WSSV, MBV) and bacteria (Vibrio species) while maintaining pond ecology.',composition:'Potassium Monopersulfate Triple Salt compound — 50% W/W.',benefits:['Controls Vibrio species, WSSV and MBV viruses','Total bio-security to the pond environment','Does not affect D.O levels or water quality','Safe for phytoplankton — pond ecosystem maintained'],dosage:'500g – 1Kg per Acre',available:'500g · 5 Kg',tags:['Vibrio Control','WSSV','MBV','Eco-Safe','Biosecurity']},
+  {id:'pond-life',cat:'probiotic',name:'Pond Life',tagline:'Water & Soil Probiotic — For Total Protection',short:'Multi-strain Bacillus and Lactobacillus blend for total pond protection. Controls Vibrio while optimizing phytoplankton.',desc:'Pond Life is Microl Remedies\' flagship probiotic — a multi-strain consortium of beneficial bacteria providing comprehensive pond protection across all critical water quality parameters.',composition:'Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, B. pumilis, Cellulomanas cartae, P. Pantotrophus, P. Acidilactici, Pseidomonas denitricans, L. Plantarum, L. Rhamnosus, Rhodococcus, Rhodobacter, Thiobacillus iooxidans & Thiobacillus ferroxidans.',benefits:['Eliminates H₂S, Ammonia, Nitrite and Nitrate from pond','Decreases F.C.R and improves shrimp survival rate','Controls Vibrio species preventing bacterial disease','Reduces organic waste and degrades accumulated sludge','Optimizes phytoplankton for balanced pond ecology'],dosage:'1 Kg per Hectare',available:'1 Kg',tags:['Ammonia Control','Vibrio','FCR','Sludge','Phytoplankton']},
+  {id:'eco-tech',cat:'probiotic',name:'Eco Tech',tagline:'Water & Soil Probiotic',short:'10-strain Bacillus blend including Nitrobacter & Nitrosomonas. Eliminates harmful gases and improves pond bottom.',desc:'Eco Tech is a scientifically formulated 10-strain probiotic blend specifically designed to target nitrogenous waste compounds in pond water and soil. Containing specialized strains like Nitrobacter and Nitrosomonas alongside multiple Bacillus species.',composition:'Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, Rhodococcus, Rhodobacter, Thiobacillus iooxidans, B. Circulans, Nitrobacter & Nitrosomonas & B. Carboniphilus.',benefits:['Eliminates harmful Ammonia, Hydrogen Sulphide and Nitrites','Improves Pond bottom quality and water clarity','Promotes probiotic multiplication in pond environment','Reduces organic load and improves overall pond health'],dosage:'500g per Acre',available:'1 Kg',tags:['Ammonia','H₂S','Nitrites','Pond Bottom','Water Quality']},
+  {id:'h2s-clear',cat:'probiotic',name:'H₂S Clear',tagline:'Soil Probiotic — For H₂S Free Bottom',short:'Soil probiotic for H₂S control. Microbes work efficiently across varying temperatures, salinity, pH & D.O levels.',desc:'H₂S Clear is a specialized soil probiotic formulated to address hydrogen sulfide accumulation in pond bottoms. Its carefully selected microbial strains function efficiently across a wide range of environmental conditions.',composition:'Bacillus subtilis, B. megaterium, B. licheniformis, B. polymyxa, B. pumilis, Cellulomanas cartae, P. Pantotrophus, P. Acidilactici, Pseidomonas denitricans, L. Plantarum, L. Rhamnosus, Rhodococcus, Rhodobacter, Thiobacillus iooxidans & Thiobacillus ferroxidans.',benefits:['Enhances decomposition of organic waste and degrades sludge','Regulates pH fluctuations and maintains good algae blooms','Reduces bad pond odor and improves water transparency','Eliminates H₂S, Ammonia, Nitrate and Nitrite','Improves soil quality for better shrimp health'],dosage:'1 Kg per Hectare',available:'1 Kg',tags:['H₂S Control','pH Balance','Soil Quality','Algae Management']},
+  {id:'micro-bacter',cat:'liquid',name:'Micro Bacter',tagline:"India's First Aquaculture Probiotic — Since 1992",short:"India's original indigenous probiotic (1992). Aerobic, anaerobic & photosynthetic bacteria consortium for ammonia control.",desc:"Micro Bacter was the first indigenous probiotic ever developed for aquaculture use in India, created by Microl Remedies in 1992. This liquid consortium blend of aerobic, anaerobic, and photosynthetic bacteria works synergistically to maintain ammonia-free pond conditions.",composition:'A consortium blend of aerobic, anaerobic & photosynthetic bacteria.',benefits:['Controls NH₃, NO₂ and H₂S for ammonia-free ponds','Reduces suspended solids, faecal matter and feed particles','Stabilizes plankton bloom for balanced pond ecology','Note: Ferment and apply only in sunny conditions'],dosage:'2.5L/Acre with 1–2Kg organic carbon',available:'500g',tags:["India's First",'Ammonia Control','Plankton','Since 1992']},
+  {id:'micro-ps',cat:'liquid',name:'Micro-PS',tagline:'Bacterial Preparation — Free Ammonia Free Pond',short:'Rhodobacter sp, Rhodococcus sp & Pseudomonas sp blend. Reduces nitrites, eliminates H₂S and feeds plankton.',desc:'Micro-PS is a specialized liquid probiotic containing photosynthetic and aerobic bacteria. These organisms are particularly effective at reducing nitrite levels and eliminating hydrogen sulfide while providing nutrients to support phytoplankton growth.',composition:'A consortium blend of aerobic, Rhodobacter sp, Rhodococcus sp & Pseudomonas sp, anaerobic & photosynthetic bacteria.',benefits:['Reduces Nitrite levels effectively throughout the crop','Eliminates H₂S from pond bottom and water column','Oxidizes organic compounds and provides plankton nutrients','Helps maintain algal population at optimum levels'],dosage:'5–15L/Hec/Week (increases with crop age)',available:'5 Litre · 20 Litre',tags:['Nitrite Reduction','H₂S','Plankton Nutrition','Progressive Dosing']},
+  {id:'survivor',cat:'treatment',name:'Survivor',tagline:'Solution for Running Mortality Syndrome — Imported from Italy',short:'Imported from Italy (SILO), manufactured under GMP+ conditions. Short & medium chain monoglycerides for RMS management.',desc:'Survivor is an imported product from SILO, Italy — a world leader in animal nutrition — manufactured under strict GMP+ conditions. Contains short and medium chain monoglycerides with antiviral and antibacterial properties.',composition:'Mixture of short & medium chain monoglycerides and organic acids: monocaprin, monocaprylin, monolaurin, monobutyrin & monopropionin.',benefits:['Reduces Running Mortality Syndrome (RMS) significantly','Prevents viral diseases by enhancing innate immune response','Prevents and treats White Gut and Yellow Gut syndrome','Improves overall survival rate from Day 1 to harvest'],dosage:'Mix 7g/kg feed in minimum 2 meals per day from DOC 1 to harvest',available:'1 Kg · 5 Kg',tags:['Imported Italy','RMS','Viral Protection','White Gut','Immunity']},
+  {id:'hp-boost',cat:'treatment',name:'HP-Boost',tagline:'For a Healthy Hepatopancreas',short:'Precursor of deoxycholic acid with antioxidants and gut pro-biotics. Essential for hepatopancreas health.',desc:'HP-Boost is a specialized treatment product designed to maintain and restore hepatopancreas health in shrimp. Provides precursors needed for bile acid synthesis, combined with antioxidants and gut probiotics.',composition:'Precursor of deoxycholic acid and anti-oxidants along with gut pro-biotics.',benefits:['Maintains healthy hepatopancreas function and structure','Overcomes soft shell mortalities effectively','Prevention of White Feces Syndrome (WFS)','Supports overall gut health and feed digestion'],dosage:'2g/Kg Feed — in 2 Feeds Daily',available:'500g',tags:['Hepatopancreas','WFS Prevention','Soft Shell','Gut Health']},
+  {id:'micro-pro-f',cat:'treatment',name:'Micro Pro-F',tagline:'Essential Probiotics Fortified with Stabilized Enzymes',short:'5 proprietary Bacillus strains with Lactobacillus, Saccharomyces, and stabilized enzymes for gut health.',desc:'Micro Pro-F combines 5 proprietary probiotic strains with a powerful enzyme complex (amylose, cellulose, protease, Betaglucanase) for comprehensive gut health. Provides competitive exclusion of pathogens while enhancing nutrient breakdown.',composition:'5 proprietary strains of Bacillus species, Lactobacillus species, Saccharomyces species, Amylose, Cellulose, Protease, Betaglucanase.',benefits:['Produces enzymes facilitating growth of beneficial microflora','Increases survival by stimulating natural defense mechanisms','Competitive exclusion of pathogens reduces disease exposure','Improves nutrient digestion and metabolic function for better FCR'],dosage:'2–3g/Kg Feed',available:'500g',tags:['Gut Health','FCR','Disease Resistance','Enzymes','Probiotics']},
+  {id:'aquatan-shrimp',cat:'treatment',name:'Aquatan Shrimp',tagline:'Potent Immunostimulant',short:'Chestnut extract with protein, vegetable oil & crude fibers. Supports beneficial microflora and boosts immunity.',desc:'Aquatan Shrimp is an immunostimulant based on chestnut extract (Castanea sativa), rich in tannins and polyphenols with proven immunomodulatory properties. A natural, antibiotic-free approach to immunity management.',composition:'Chestnut Extract, Protein, Vegetable Oil and Fat & Crude Fibers.',benefits:['Supports regulation of beneficial microflora in gut','Enhances survival rate through boosted health status','Optimizes feed utilization and nutrient digestibility','Natural immunostimulant — completely antibiotic free'],dosage:'2g–4g/Kg Feed — in 2 Feeds Daily',available:'500g',tags:['Immunostimulant','Microflora','Feed Utilization','Natural']},
+  {id:'aqua-floc',cat:'pond',name:'Aqua Floc',tagline:'Aquaculture Toxic Remover & Softener',short:'High Grade Aluminum Hydrated Silicate, Edetic Acid & unique flocculators. Reduces turbidity and assists moulting.',desc:'Aqua Floc is a specialized flocculant and water conditioner. Works by binding suspended particles and toxins, reducing turbidity and hardness while facilitating the moulting process in shrimp.',composition:'High Grade Aluminum Hydrated Silicate, Edetic Acid & Unique Combination of Flocculators.',benefits:['Reduces water turbidity for better light penetration','Reduces water hardness to facilitate moulting','Neutralizes toxins in the pond water safely','Assists in free moulting cycle of shrimp'],dosage:'1–2 Kg per Acre',available:'1 Kg · 5 Kg',tags:['Turbidity','Water Softener','Moulting','Toxin Removal']},
+  {id:'micro-blue',cat:'pond',name:'Micro Blue',tagline:'Revolutionary Algaecide',short:'Chelated Elemental Copper (12.5%) with Ethylene Diamine (32%). Controls floating, filamentous algae and more.',desc:'Micro Blue is a revolutionary chelated copper algaecide. The chelation of copper with ethylene diamine makes it more bioavailable to algae while reducing toxicity to shrimp and fish. Effective against floating, filamentous algae and also controls bacterial and fungal episodes.',composition:'Elemental Copper — 12.5%, Ethylene Diamine — 32.0%, Inert Ingredients — 55.5%.',benefits:['Controls various free floating algae and filamentous algae','Limits bacterial, fungal and parasitic episodes','Controls off-flavor caused by algae in ponds','Chelated formula — safer for shrimp than conventional copper'],dosage:'1.5 Litre per Feet of water depth',available:'1 Litre · 5 Litre',tags:['Algaecide','Chelated Copper','Fungal','Off-flavor']},
+  {id:'power-ds',cat:'pond',name:'Power DS',tagline:'Superior Water Quality Improver',short:'Saponins, neem, probiotics & organic minerals. Highest CEC and porosity for ammonia trapping and pH buffering.',desc:'Power DS is a unique water quality improver enriched with saponins, neem extract, probiotics, and organic minerals. Its high Cation Exchange Capacity (CEC) and increased porosity allow it to act as a multifunctional soil and water conditioner.',composition:'Enriched with saponins, neem, probiotics and organic minerals.',benefits:['Increased porosity traps maximum ammonia from water','Improved CEC acts as buffer to maintain stable pH','Saponins absorb Ammonia and Nitrites effectively','Micro Nutrients promote zoo and phytoplankton growth','Pro-biotics suppress pathogens and degrade sludge'],dosage:'10–15 Kg per Acre',available:'20 Kg',tags:['CEC','pH Buffer','Saponins','Probiotics','Phytoplankton']},
+  {id:'green-plus',cat:'pond',name:'Green Plus',tagline:'Eco-Friendly Aquaculture Synergist',short:'Eco-friendly synergist that stabilizes pH, supports protein-rich plankton growth and promotes probiotic multiplication.',desc:'Green Plus is an eco-friendly aquaculture synergist that works across multiple dimensions of pond management simultaneously — maintaining water quality, stabilizing pH, and supporting protein-rich phytoplankton growth.',composition:'Proprietary blend of eco-friendly aquaculture synergists, minerals, and biological catalysts.',benefits:['Maintains water quality and pond bottom integrity','Stabilizes water pH and reduces fluctuations','Supports growth of protein-rich phytoplankton','Absorbs toxic gases — Ammonia, Nitrites and Sulfides','Chelates minerals for better bioavailability to shrimp'],dosage:'As per Aqua Consultant Recommendation',available:'10 Kg',tags:['Eco-Friendly','pH Stability','Plankton','Mineral Chelation']},
+  {id:'aqua-forte-ds',cat:'mineral',name:'Aqua-Forte DS',tagline:'Complete Mineral Supplement (Aqua-Colostrum)',short:'Blend of Minerals, Vitamins & Amino Acids. Complete solution for all shell and muscle related problems.',desc:'Aqua-Forte DS, also known as Aqua-Colostrum, is the most comprehensive mineral supplement in the Microl Remedies range. Contains all essential minerals, vitamins, and amino acids for exoskeleton formation, moulting, and growth.',composition:'An effective blend of Minerals, Vitamins and Amino Acids.',benefits:['Helps in regular formation of exoskeleton and moulting','Improves survival rate and increases growth performance','Sustainable plankton growth and probiotic multiplication','Enhances disease resistance and defense mechanism','Solution for all shell and muscle related problems'],dosage:'10 Kg/Acre (water) · 3–4g/Kg feed',available:'20 Kg',tags:['Complete Mineral','Exoskeleton','Moulting','Disease Resistance']},
+  {id:'rich-min',cat:'mineral',name:'Rich Min',tagline:'Micro & Macro Minerals + Vitamins + Amino Acids + Pro-Biotics',short:'Unique blend of essential micro & macro minerals, vitamins, amino acids & probiotics for comprehensive nutrition.',desc:'Rich Min provides essential micro and macro minerals, vitamins, amino acids, and probiotics in a single product. Its multifactorial approach addresses mineral deficiencies, immune enhancement, and metabolic improvement simultaneously.',composition:'A unique blend of essential micro and macro minerals, vitamins, amino acids & pro-biotics.',benefits:['Improves F.C.R and promotes plankton development','Protection from Loose Shell Syndrome (LSS)','Pro-Biotics and Vitamins increase disease resistance and immunity','Improves Metabolism and overall body functions'],dosage:'2.5 Kg/Acre (water) · 5–10g/Kg feed',available:'1 Kg · 5 Kg',tags:['Minerals','Vitamins','Amino Acids','FCR','LSS Prevention']},
+  {id:'moult-plus',cat:'mineral',name:'Moult+',tagline:'Unique Solution for Stress-Free Moulting',short:'Amino acid chelated Micro, Macro & Trace Minerals with amino acids & enzymes for stress-free moulting.',desc:'Moult+ uses amino acid chelated micro, macro, and trace minerals — providing superior bioavailability. The combination with essential amino acids and enzymes ensures shrimp have all resources needed for successful, stress-free moulting.',composition:'Unique formulation of Amino acid chelated Micro, Macro and Trace Minerals along with required quantity of essential Amino acids and Enzymes.',benefits:['Prevents Body Cramps, LSS and all muscle and shell disorders','Provides proper ratio of mineral supplements for exoskeletal development','Improves Growth by inducing periodic stress-free moulting','Regulates osmoregulation for better moulting frequency'],dosage:'10g/Kg feed (normal) · 15–20g/Kg near moulting',available:'1 Kg · 5 Kg',tags:['Moulting','LSS','Chelated Minerals','Osmoregulation']},
+  {id:'infusion',cat:'mineral',name:'Infusion',tagline:'Solution for Soft Shell — Adds Value to Your Investment',short:'Organic mineral supplement with special Bacillus subtilis strains. 100% water soluble for instant replenishment.',desc:'Infusion is a 100% water-soluble organic mineral supplement with special strains of Bacillus subtilis. Its complete water solubility ensures instant mineral replenishment — particularly important in high-density culture systems.',composition:'Organic mineral feed supplements with special strains of Bacillus subtilis.',benefits:['100% water soluble minerals for instant replenishment','For good quality and quantity floc development','Addresses all shell and muscle related mineral deficiencies'],dosage:'2.5 Kg/1000 sqm (water) · 10g/Kg feed',available:'2 Kg',tags:['Water Soluble','Instant Action','Biofloc','Shell Health']},
+  {id:'sapotan',cat:'ammonia',name:'Sapotan P & L',tagline:'Reduces Ammonia Better Than Yucca — Powder & Liquid',short:'Natural plant Triterpenoid saponins from chestnut & oak. Reduces ammonia better than yucca in both forms.',desc:'Sapotan is derived from Castanea sativa and Quercus robur containing Triterpenoid saponins — proven more effective at reducing ammonia than conventional yucca-based products. Available in Powder and Liquid forms.',composition:'Natural plant material from Castanea sativa and Quercus robur, which contain Triterpenoid saponins.',benefits:['For ammonia reduction in pond water — better than Yucca','Increases intestinal permeability for better nutrient absorption','Antimicrobial activity in the intestine against pathogens','Available in both powder (P) and liquid (L) formulations'],dosage:'250g per Acre (water) · 2–4g per Kg feed',available:'500g · 500mL',tags:['Natural Saponins','Ammonia Control','Better Than Yucca','Antimicrobial']},
+  {id:'ammo-nil-plus',cat:'ammonia',name:'Ammo-Nil+',tagline:'Instant Ammonia Free — Simple Solution',short:'Alkyl sulfonic acid salts with saponins. Instantly reduces ammonia under all pH conditions.',desc:'Ammo-Nil+ is a fast-acting ammonia controller that works instantly under all pH conditions — a significant advantage over pH-dependent products. Simultaneously absorbs both NH₃ and NH₄⁺ from the water.',composition:'Salts of alkyl sulfonic acids with saponins.',benefits:['Reduces ammonia level instantly under all pH conditions','Consumes both NH₃ and NH₄ from ammonia by absorption','Works equally effectively at acidic, neutral, and alkaline pH','Serves as substrate for probiotic multiplication'],dosage:'500g per Acre',available:'500g · 500mL',tags:['Instant Action','All pH','NH₃','NH₄','Probiotic Substrate']},
+  {id:'micro-bind-plus',cat:'binder',name:'Micro Bind+',tagline:'Most Stable, Most Bio-Available Feed Binder',short:'The most stable and bio-available feed binder. Reduces wastage, does not disturb pond water quality.',desc:'Micro Bind+ is the most stable and bio-available feed binder for aquaculture. Provides excellent water stability, maintaining feed pellet integrity for extended periods. Does not disturb pond bottom conditions or water quality.',composition:'Proprietary bio-available binding complex with palatability enhancers.',benefits:['Excellent water stability maintains feed integrity','Reduces feed wastage and ensures efficient consumption','Unique formulation with attractive taste and good palatability','Does not disturb pond bottom or water quality'],dosage:'As per Aqua Consultant Recommendation',available:'Available on enquiry',tags:['Feed Stability','Palatability','Water Stability','Feed Efficiency']},
+  {id:'micro-gel',cat:'binder',name:'Micro-Gel',tagline:'Immune Boosters + Mineral Supplements + Binder',short:'Micro nutrients (Ca, P, K, Mg, Cu, Fe, Zn, Mn) + IgG Antibodies + Nucleosides + Antioxidants + Binders.',desc:'Micro-Gel combines a feed binder with immunobooster and mineral supplement properties. Contains a complete array of micro nutrients along with IgG Antibodies, Nucleosides, Antioxidants, and BCFA.',composition:'Micro Nutrients (Ca, P, K, Mg, Cu, Fe, Zn, Mn), IgG Antibodies, Nucleosides, BCFA, Antioxidants, Binders.',benefits:['Promotes aquaculture disease resistance through IgG antibodies','Supplements essential micro-nutrients through every feed','Improves feed intake and absorption efficiency','Provides antioxidant protection against oxidative stress'],dosage:'15–50ml per Kg Feed',available:'Available on enquiry',tags:['Immunobooster','IgG Antibodies','Micro Nutrients','Antioxidant']},
 ];
 
-/* ─── NAVIGATION STATE ───────────────────────── */
-let currentPage = 'home';
-let currentCat = null;
-let currentProduct = null;
-let prevCat = null;
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+let currentPage='home';
 
 function navigate(page, param) {
-  // hide all pages
-  document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); });
-  // close mobile nav
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('nav-links').classList.remove('open');
-  currentPage = page;
-
-  if (page === 'home') {
-    const el = document.getElementById('page-home');
+  currentPage=page;
+  const show = id => {
+    const el=document.getElementById(id);
     el.classList.add('active','page-enter');
-    setTimeout(() => el.classList.remove('page-enter'), 500);
-    document.getElementById('navbar').className = 'navbar';
-    window.scrollTo(0, 0);
-    updateNavActive('home');
-
-  } else if (page === 'products') {
-    renderProductsHub();
-    const el = document.getElementById('page-products');
-    el.classList.add('active','page-enter');
-    setTimeout(() => el.classList.remove('page-enter'), 500);
-    document.getElementById('navbar').className = 'navbar solid';
-    window.scrollTo(0, 0);
-    updateNavActive('products');
-
-  } else if (page === 'category') {
-    currentCat = param;
-    renderCategory(param);
-    const el = document.getElementById('page-category');
-    el.classList.add('active','page-enter');
-    setTimeout(() => el.classList.remove('page-enter'), 500);
-    document.getElementById('navbar').className = 'navbar solid';
-    window.scrollTo(0, 0);
-
-  } else if (page === 'product') {
-    currentProduct = param;
-    renderProductDetail(param);
-    const el = document.getElementById('page-product');
-    el.classList.add('active','page-enter');
-    setTimeout(() => el.classList.remove('page-enter'), 500);
-    document.getElementById('navbar').className = 'navbar solid';
-    window.scrollTo(0, 0);
-  }
+    setTimeout(()=>el.classList.remove('page-enter'),500);
+    window.scrollTo(0,0);
+  };
+  if(page==='home'){show('page-home');document.getElementById('navbar').className='navbar';updateNavActive('home');}
+  else if(page==='products'){renderProductsHub();show('page-products');document.getElementById('navbar').className='navbar solid';updateNavActive('products');}
+  else if(page==='category'){renderCategory(param);show('page-category');document.getElementById('navbar').className='navbar solid';}
+  else if(page==='product'){renderProductDetail(param);show('page-product');document.getElementById('navbar').className='navbar solid';}
 }
 
-function updateNavActive(page) {
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.classList.toggle('active', a.dataset.page === page);
-  });
+function updateNavActive(p){
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===p));
 }
 
-/* ─── RENDER: PRODUCTS HUB ─────────────────── */
-function renderProductsHub() {
-  const grid = document.getElementById('category-grid');
-  grid.innerHTML = CATEGORIES.map(cat => `
+/* ═══════════════════════════════════════
+   RENDER: PRODUCTS HUB
+═══════════════════════════════════════ */
+function renderProductsHub(){
+  document.getElementById('category-grid').innerHTML = CATEGORIES.map(cat=>`
     <div class="cat-card" onclick="navigate('category','${cat.id}')">
-      <div class="cat-card-icon">${cat.icon}</div>
-      <div class="cat-card-count">${cat.count} Products</div>
-      <h3>${cat.name}</h3>
-      <p>${cat.desc}</p>
-      <div class="cat-card-examples">
-        ${cat.examples.map(e => `<span class="cat-tag">${e}</span>`).join('')}
+      <div class="cat-card-img">${makePlaceholder(cat.name,cat.id,'thumb')}</div>
+      <div class="cat-card-body">
+        <div class="cat-card-count">${cat.count} Products</div>
+        <h3>${cat.icon} ${cat.name}</h3>
+        <p>${cat.desc}</p>
+        <div class="cat-card-examples">${cat.examples.map(e=>`<span class="cat-tag">${e}</span>`).join('')}</div>
+        <div class="cat-card-arrow">Explore Range</div>
       </div>
-      <div class="cat-card-arrow">Explore Range</div>
     </div>
   `).join('');
 }
 
-/* ─── RENDER: CATEGORY ──────────────────────── */
-function renderCategory(catId) {
-  const cat = CATEGORIES.find(c => c.id === catId);
-  const prods = PRODUCTS.filter(p => p.cat === catId);
-
-  document.getElementById('cat-back-btn').onclick = () => navigate('products');
-  document.getElementById('cat-page-tag').textContent = `${prods.length} Products`;
-  document.getElementById('cat-page-title').textContent = cat.name;
-  document.getElementById('cat-page-desc').textContent = cat.desc;
-
-  document.getElementById('products-list').innerHTML = prods.map(p => `
+/* ═══════════════════════════════════════
+   RENDER: CATEGORY
+═══════════════════════════════════════ */
+function renderCategory(catId){
+  const cat=CATEGORIES.find(c=>c.id===catId);
+  const prods=PRODUCTS.filter(p=>p.cat===catId);
+  document.getElementById('cat-back-btn').onclick=()=>navigate('products');
+  document.getElementById('cat-page-tag').textContent=`${prods.length} Products`;
+  document.getElementById('cat-page-title').textContent=`${cat.icon} ${cat.name}`;
+  document.getElementById('cat-page-desc').textContent=cat.desc;
+  document.getElementById('products-list').innerHTML=prods.map(p=>`
     <div class="prod-card" onclick="navigate('product','${p.id}')">
-      <div class="pc-label">${cat.name}</div>
-      <div class="pc-name">${p.icon} ${p.name}</div>
-      <div class="pc-tagline">${p.tagline}</div>
-      <p class="pc-short">${p.short}</p>
-      <ul class="pc-bullets">
-        ${p.benefits.slice(0,3).map(b => `<li>${b}</li>`).join('')}
-      </ul>
-      <div class="pc-footer">
-        <div class="pc-dosage">Dosage: <span>${p.dosage.split('·')[0].trim()}</span></div>
-        <div class="pc-avail">${p.available}</div>
+      <div class="prod-thumb">${makePlaceholder(p.name,p.cat,'sm')}</div>
+      <div class="prod-card-body">
+        <div class="pc-label">${cat.name}</div>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-tagline">${p.tagline}</div>
+        <p class="pc-short">${p.short}</p>
+        <div class="pc-footer">
+          <div class="pc-dosage">Dosage: <span>${p.dosage.split('·')[0].trim()}</span></div>
+          <div class="pc-avail">${p.available}</div>
+        </div>
+        <div class="pc-view">View Full Details</div>
       </div>
-      <div class="pc-view">View Full Details</div>
     </div>
   `).join('');
 }
 
-/* ─── RENDER: PRODUCT DETAIL ─────────────────── */
-function renderProductDetail(prodId) {
-  const p = PRODUCTS.find(x => x.id === prodId);
-  const cat = CATEGORIES.find(c => c.id === p.cat);
-  prevCat = p.cat;
+/* ═══════════════════════════════════════
+   RENDER: PRODUCT DETAIL
+═══════════════════════════════════════ */
+function renderProductDetail(prodId){
+  const p=PRODUCTS.find(x=>x.id===prodId);
+  const cat=CATEGORIES.find(c=>c.id===p.cat);
 
-  // Breadcrumb
-  document.getElementById('breadcrumb').innerHTML = `
-    <span onclick="navigate('home')">Home</span>
-    <span class="breadcrumb-sep">›</span>
-    <span onclick="navigate('products')">Products</span>
-    <span class="breadcrumb-sep">›</span>
-    <span onclick="navigate('category','${p.cat}')">${cat.name}</span>
-    <span class="breadcrumb-sep">›</span>
+  document.getElementById('breadcrumb').innerHTML=`
+    <span onclick="navigate('home')">Home</span><span class="breadcrumb-sep">›</span>
+    <span onclick="navigate('products')">Products</span><span class="breadcrumb-sep">›</span>
+    <span onclick="navigate('category','${p.cat}')">${cat.name}</span><span class="breadcrumb-sep">›</span>
     <span style="color:var(--muted);cursor:default">${p.name}</span>
   `;
 
-  // Detail grid
-  document.getElementById('detail-grid').innerHTML = `
+  document.getElementById('detail-grid').innerHTML=`
     <div class="detail-left">
-      <div class="detail-visual">
-        <div class="detail-icon">${p.icon}</div>
-        <div class="detail-visual-name">${p.name}</div>
-        <div class="detail-tags">
-          ${p.tags.map(t => `<span class="detail-tag">${t}</span>`).join('')}
-        </div>
+      <div class="detail-img-box">
+        ${makePlaceholder(p.name,p.cat,'full')}
+        <div class="detail-img-swap">📷 Add photo: replace SVG with &lt;img src="photo.jpg"&gt;</div>
       </div>
       <div class="detail-meta">
         <div class="meta-box"><div class="meta-box-label">Dosage</div><div class="meta-box-value">${p.dosage}</div></div>
@@ -861,101 +776,85 @@ function renderProductDetail(prodId) {
       <h1 class="detail-name">${p.name}</h1>
       <div class="detail-tagline">${p.tagline}</div>
       <p class="detail-desc">${p.desc}</p>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Key Benefits</div>
-        <ul class="benefit-list">
-          ${p.benefits.map(b => `<li class="benefit-item"><div class="benefit-check">✓</div><p>${b}</p></li>`).join('')}
-        </ul>
-      </div>
-
-      <div class="detail-section">
-        <div class="detail-section-title">Composition</div>
-        <div class="composition-box"><p>${p.composition}</p></div>
-      </div>
-
+      <div class="detail-sec-title">Key Benefits</div>
+      <ul class="benefit-list">${p.benefits.map(b=>`<li class="benefit-item"><div class="benefit-check">✓</div><p>${b}</p></li>`).join('')}</ul>
+      <div class="detail-sec-title">Composition</div>
+      <div class="composition-box"><p>${p.composition}</p></div>
+      <div class="detail-sec-title">Product Tags</div>
+      <div class="detail-tags-row">${p.tags.map(t=>`<span class="dtag">${t}</span>`).join('')}</div>
       <div class="detail-actions">
-        <button class="btn-primary" onclick="document.getElementById('page-home').querySelector('#contact').scrollIntoView();navigate('home')">Enquire About This Product</button>
-        <a class="btn-ghost" href="https://wa.me/919121333357?text=Hi, I'm interested in ${encodeURIComponent(p.name)}" target="_blank" style="display:flex;align-items:center;gap:8px;">💬 WhatsApp Us</a>
+        <button class="btn-primary" onclick="navigate('home');setTimeout(()=>document.getElementById('contact-sec').scrollIntoView({behavior:'smooth'}),120)">Enquire About This Product</button>
+        <a class="btn-ghost" href="https://wa.me/919121333357?text=Hi%2C+I%27m+interested+in+${encodeURIComponent(p.name)}" target="_blank" style="display:flex;align-items:center;gap:8px;padding:13px 24px;border:1px solid rgba(238,243,255,.2);color:#fff;border-radius:40px;font-size:.88rem;transition:.3s">💬 WhatsApp Us</a>
       </div>
     </div>
   `;
 
-  // Related products (same category, excluding current)
-  const related = PRODUCTS.filter(x => x.cat === p.cat && x.id !== prodId).slice(0, 3);
-  const relatedEl = document.getElementById('detail-related');
-  if (related.length > 0) {
-    relatedEl.innerHTML = `
-      <h3>Related Products</h3>
-      <div class="related-grid">
-        ${related.map(r => `
-          <div class="related-card" onclick="navigate('product','${r.id}')">
-            <div class="related-card-cat">${cat.name}</div>
-            <h4>${r.icon} ${r.name}</h4>
-            <p>${r.short.substring(0,90)}...</p>
+  const related=PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==prodId).slice(0,3);
+  const relEl=document.getElementById('detail-related');
+  relEl.innerHTML = related.length ? `
+    <h3>Related Products</h3>
+    <div class="related-grid">
+      ${related.map(r=>`
+        <div class="related-card" onclick="navigate('product','${r.id}')">
+          <div class="related-thumb">${makePlaceholder(r.name,r.cat,'sm')}</div>
+          <div class="related-card-body">
+            <div class="related-cat">${cat.name}</div>
+            <h4>${r.name}</h4>
+            <p>${r.short.substring(0,80)}…</p>
           </div>
-        `).join('')}
+        </div>
+      `).join('')}
+    </div>` : '';
+}
+
+/* ═══════════════════════════════════════
+   HOME ORB SLIDER — with placeholders
+═══════════════════════════════════════ */
+const ORB_SLIDES = [
+  {prodId:'steridol-20',cat:'sanitiser',label:'Sanitiser'},
+  {prodId:'pond-life',cat:'probiotic',label:'Probiotic'},
+  {prodId:'hp-boost',cat:'treatment',label:'Treatment'},
+  {prodId:'aqua-floc',cat:'pond',label:'Pond Mgmt'},
+  {prodId:'aqua-forte-ds',cat:'mineral',label:'Minerals'},
+];
+function buildOrbSlides(){
+  const core=document.getElementById('orb-core');
+  core.innerHTML=ORB_SLIDES.map((s,i)=>{
+    const p=PRODUCTS.find(x=>x.id===s.prodId);
+    return `<div class="orb-slide${i===0?' on':''}">
+      <div class="orb-slide-img">${makePlaceholder(p.name,s.cat,'full')}</div>
+      <div class="orb-slide-overlay">
+        <div class="orb-slide-cat">${s.label}</div>
+        <div class="orb-slide-name">${p.name}</div>
       </div>
-    `;
-  } else {
-    relatedEl.innerHTML = '';
-  }
+    </div>`;
+  }).join('');
+  let si=0;
+  const slides=core.querySelectorAll('.orb-slide');
+  setInterval(()=>{slides[si].classList.remove('on');si=(si+1)%slides.length;slides[si].classList.add('on');},2800);
 }
 
-/* ─── CANVAS BUBBLES ─────────────────────────── */
-const cv = document.getElementById('bg-canvas');
-const cx = cv.getContext('2d');
-let W, H, bubs = [];
-function rsz() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
-rsz(); window.addEventListener('resize', rsz);
-class Bub {
-  constructor() { this.reset(true); }
-  reset(i) { this.x = Math.random() * W; this.y = i ? Math.random() * H : H + 20; this.r = Math.random() * 2.2 + .7; this.sp = Math.random() * .3 + .1; this.dr = (Math.random() - .5) * .2; this.a = Math.random() * .16 + .04; this.c = Math.random() > .5 ? '14,142,196' : '26,184,232'; }
-  update() { this.y -= this.sp; this.x += this.dr; if (this.y < -15) this.reset(false); }
-  draw() { cx.beginPath(); cx.arc(this.x, this.y, this.r, 0, Math.PI * 2); cx.fillStyle = `rgba(${this.c},${this.a})`; cx.fill(); }
-}
-for (let i = 0; i < 90; i++) bubs.push(new Bub());
-function drawBg() {
-  let g = cx.createRadialGradient(W * .2, H * .3, 0, W * .2, H * .3, W * .5);
-  g.addColorStop(0, 'rgba(0,50,100,.12)'); g.addColorStop(1, 'transparent');
-  cx.fillStyle = g; cx.fillRect(0, 0, W, H);
-  let g2 = cx.createRadialGradient(W * .75, H * .65, 0, W * .75, H * .65, W * .45);
-  g2.addColorStop(0, 'rgba(0,70,50,.1)'); g2.addColorStop(1, 'transparent');
-  cx.fillStyle = g2; cx.fillRect(0, 0, W, H);
-}
-(function loop() { cx.clearRect(0, 0, W, H); drawBg(); bubs.forEach(b => { b.update(); b.draw(); }); requestAnimationFrame(loop); })();
+/* ═══════════════════════════════════════
+   CANVAS
+═══════════════════════════════════════ */
+const cv=document.getElementById('bg-canvas'),cx=cv.getContext('2d');
+let W,H,bubs=[];
+function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight}rsz();window.addEventListener('resize',rsz);
+class Bub{constructor(){this.reset(true)}reset(i){this.x=Math.random()*W;this.y=i?Math.random()*H:H+20;this.r=Math.random()*2.2+.7;this.sp=Math.random()*.3+.1;this.dr=(Math.random()-.5)*.2;this.a=Math.random()*.16+.04;this.c=Math.random()>.5?'14,142,196':'26,184,232'}update(){this.y-=this.sp;this.x+=this.dr;if(this.y<-15)this.reset(false)}draw(){cx.beginPath();cx.arc(this.x,this.y,this.r,0,Math.PI*2);cx.fillStyle=`rgba(${this.c},${this.a})`;cx.fill()}}
+for(let i=0;i<90;i++)bubs.push(new Bub());
+function drawBg(){let g=cx.createRadialGradient(W*.2,H*.3,0,W*.2,H*.3,W*.5);g.addColorStop(0,'rgba(0,50,100,.12)');g.addColorStop(1,'transparent');cx.fillStyle=g;cx.fillRect(0,0,W,H);let g2=cx.createRadialGradient(W*.75,H*.65,0,W*.75,H*.65,W*.45);g2.addColorStop(0,'rgba(0,70,50,.1)');g2.addColorStop(1,'transparent');cx.fillStyle=g2;cx.fillRect(0,0,W,H)}
+(function loop(){cx.clearRect(0,0,W,H);drawBg();bubs.forEach(b=>{b.update();b.draw()});requestAnimationFrame(loop)})();
 
-/* ─── NAVBAR SCROLL ──────────────────────────── */
-window.addEventListener('scroll', () => {
-  const nb = document.getElementById('navbar');
-  if (currentPage === 'home') nb.classList.toggle('scrolled', scrollY > 50);
-});
+window.addEventListener('scroll',()=>{if(currentPage==='home')document.getElementById('navbar').classList.toggle('scrolled',scrollY>50)});
+document.querySelectorAll('#nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nav-links').classList.remove('open')));
 
-/* ─── ORB SLIDER ─────────────────────────────── */
-const slides = document.querySelectorAll('.orb-slide');
-let si = 0;
-setInterval(() => {
-  slides[si].classList.remove('on');
-  si = (si + 1) % slides.length;
-  slides[si].classList.add('on');
-}, 2800);
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-/* ─── SCROLL REVEAL ──────────────────────────── */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
-}, { threshold: .1 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+document.getElementById('contact-submit').addEventListener('click',function(){this.textContent='Sending…';this.disabled=true;setTimeout(()=>{this.textContent='✓ Enquiry Sent!';this.style.background='linear-gradient(135deg,#25D366,#1ab455)';setTimeout(()=>{this.textContent='Send Enquiry →';this.style.background='';this.disabled=false},3200)},1400)});
 
-/* ─── CONTACT FORM ───────────────────────────── */
-document.getElementById('contact-submit').addEventListener('click', function () {
-  this.textContent = 'Sending…'; this.disabled = true;
-  setTimeout(() => {
-    this.textContent = '✓ Enquiry Sent!'; this.style.background = 'linear-gradient(135deg,#25D366,#1ab455)';
-    setTimeout(() => { this.textContent = 'Send Enquiry →'; this.style.background = ''; this.disabled = false; }, 3200);
-  }, 1400);
-});
-
-/* ─── INIT ───────────────────────────────────── */
+/* INIT */
+buildOrbSlides();
 navigate('home');
 </script>
 
