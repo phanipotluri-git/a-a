@@ -42,8 +42,9 @@ border:1px solid var(–border);color:var(–muted);cursor:pointer;font-weight:7
 
 #params{background:var(–bg2);border-bottom:1px solid var(–border);padding:14px 16px;}
 .sym-row{display:flex;gap:8px;margin-bottom:10px;}
-#sym{flex:1;background:var(–bg3);border:1px solid var(–border);border-radius:8px;
-padding:10px 14px;color:#fff;font-size:15px;font-weight:800;outline:none;letter-spacing:.5px;}
+#sym{flex:1;background:var(–bg3) !important;border:1px solid var(–border);border-radius:8px;
+padding:10px 14px;color:#fff !important;font-size:15px;font-weight:800;outline:none;letter-spacing:.5px;
+-webkit-appearance:none;-webkit-text-fill-color:#fff !important;}
 #sym:focus{border-color:var(–accent);}
 #sym::placeholder{color:var(–muted);font-weight:400;font-size:13px;}
 .run-btn{background:linear-gradient(135deg,var(–daily),var(–weekly));
@@ -76,9 +77,24 @@ background:var(–bg3);cursor:pointer;text-align:center;transition:all .15s;}
 .pr{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
 .pr:last-child{margin-bottom:0;}
 .pr label{font-size:11px;color:var(–text);}
-.pr input,.pr select{background:var(–bg4);border:1px solid var(–border);border-radius:5px;
-padding:3px 7px;color:#fff;font-size:11px;font-weight:700;text-align:right;
-outline:none;width:78px;}
+.pr input,.pr select{
+background:var(–bg4) !important;border:1px solid var(–border);border-radius:5px;
+padding:3px 7px 3px 4px;color:#fff !important;font-size:11px;font-weight:700;text-align:right;
+outline:none;width:78px;
+-webkit-appearance:none;-moz-appearance:none;appearance:none;
+-webkit-text-fill-color:#fff !important;
+}
+.pr input[type=number]::-webkit-inner-spin-button,
+.pr input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+.pr input[type=number]{-moz-appearance:textfield;}
+/* Select: restore arrow indicator after killing system appearance */
+.pr select{
+background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘10’ height=‘6’%3E%3Cpath d=‘M0 0l5 6 5-6z’ fill=’%234a6080’/%3E%3C/svg%3E”);
+background-repeat:no-repeat;background-position:right 6px center;
+padding-right:20px;text-align:left;cursor:pointer;
+}
+/* Force correct colors on ALL form elements in iOS */
+input,select,textarea{color:#fff !important;-webkit-text-fill-color:#fff !important;}
 .pr input:focus{border-color:var(–accent);}
 .sl{font-size:9px;color:var(–muted);letter-spacing:.6px;margin:10px 0 6px;font-weight:800;}
 
@@ -296,7 +312,7 @@ opacity:0;transition:opacity .25s;pointer-events:none;max-width:300px;text-align
 
 <!-- Comparison banner — shown in Both mode -->
 
-<div id="compare-banner">
+<div id="compare-banner" style="display:none">
   <div style="font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-bottom:10px">
     SIDE-BY-SIDE COMPARISON
   </div>
@@ -422,13 +438,13 @@ function setMode(m){
 // ═══════════════════════════════════════════════════════
 function loadPreset(n){
   const P={
-    conservative:{ms:5,rsi:55,strict:'3',sl:2.5,tp1:3.0,tp2:5.0,ts:15,cem:3.5,risk:0.5,tf:'tp1',tp1p:50},
-    balanced:    {ms:4,rsi:50,strict:'2',sl:2.0,tp1:3.0,tp2:5.0,ts:20,cem:3.0,risk:1.0,tf:'tp1',tp1p:50},
-    aggressive:  {ms:3,rsi:45,strict:'2',sl:1.5,tp1:2.5,tp2:4.5,ts:25,cem:2.5,risk:2.0,tf:'entry',tp1p:33},
-    trend:       {ms:5,rsi:55,strict:'2',sl:3.0,tp1:4.0,tp2:8.0,ts:40,cem:4.0,risk:1.0,tf:'tp1',tp1p:0},
+    conservative:{ms:5,rsi:55,strict:'3',sl:2.5,tp1:3.0,tp2:5.0,ts:15,cel:22,ceal:22,cem:3.5,risk:0.5,cap:500000,tf:'tp1',tp1p:50,comm:0.05},
+    balanced:    {ms:4,rsi:50,strict:'2',sl:2.0,tp1:3.0,tp2:5.0,ts:20,cel:22,ceal:22,cem:3.0,risk:1.0,cap:500000,tf:'tp1',tp1p:50,comm:0.05},
+    aggressive:  {ms:3,rsi:45,strict:'2',sl:1.5,tp1:2.5,tp2:4.5,ts:25,cel:22,ceal:22,cem:2.5,risk:2.0,cap:500000,tf:'entry',tp1p:33,comm:0.05},
+    trend:       {ms:5,rsi:55,strict:'2',sl:3.0,tp1:4.0,tp2:8.0,ts:40,cel:22,ceal:22,cem:4.0,risk:1.0,cap:500000,tf:'tp1',tp1p:0,comm:0.05},
   };
   const p=P[n];if(!p)return;
-  ['ms','rsi','sl','tp1','tp2','ts','cem','risk','tp1p'].forEach(k=>V('p-'+k,p[k]));
+  ['ms','rsi','sl','tp1','tp2','ts','cel','ceal','cem','risk','cap','tp1p','comm'].forEach(k=>V('p-'+k,p[k]));
   V('p-strict',p.strict);V('p-tf',p.tf);
   toast('Preset: '+n.charAt(0).toUpperCase()+n.slice(1));
 }
