@@ -195,60 +195,98 @@ body{background:#fff!important;padding:0!important;margin:0!important;font-size:
 
 /* ── MAIN TABLE — portrait A4 ≈ 200mm printable width ── */
 table.main{table-layout:fixed!important;width:100%!important;}
+
+/* ENFORCE UNIFORM ROW HEIGHT — prevents rowspan cells from expanding rows */
+table.main tbody tr{height:12.5mm!important;max-height:12.5mm!important;}
 table.main th,table.main td{
 border:0.5px solid #90a4ae!important;
-padding:1px 2px!important;
+padding:0px 2px!important;
 font-size:6.5px!important;
 vertical-align:middle!important;
+overflow:hidden!important;
+max-height:12.5mm!important;
 }
-table.main th{font-size:6.5px!important;padding:1px 2px!important;font-weight:700!important;}
+table.main thead tr{height:auto!important;}
+table.main th{font-size:6.5px!important;padding:2px 2px!important;font-weight:700!important;}
 
-/* Portrait column widths — total must fit ~200mm */
-/* param(70)+4×s(26=104)+opt(72)+sep+cat(10)+pname(48)+4×chk(13=52)+sep+cat(10)+pname(48)+4×chk(13=52) = 470 → ok */
-.c-param{width:70px!important;min-width:70px!important;}
-.c-s    {width:26px!important;min-width:26px!important;}
-.c-opt  {width:72px!important;min-width:72px!important;}
+/* Portrait column widths
+param(68)+4×s(28=112)+opt(68)+cat(10)+pname(50)+4×chk(12=48)+cat(10)+pname(50)+4×chk(12=48) = 464px ≈ 200mm at 72dpi */
+.c-param{width:68px!important;min-width:68px!important;}
+.c-s    {width:28px!important;min-width:28px!important;}
+.c-opt  {width:68px!important;min-width:68px!important;}
 .c-cat  {width:10px!important;min-width:10px!important;}
-.c-pname{width:48px!important;min-width:48px!important;}
-.c-chk  {width:13px!important;min-width:13px!important;}
+.c-pname{width:50px!important;min-width:50px!important;}
+.c-chk  {width:12px!important;min-width:12px!important;}
 
-.td-param{font-size:6.5px!important;padding-left:3px!important;font-weight:700!important;}
-.td-opt{font-size:6px!important;padding:1px 2px!important;line-height:1.3!important;}
-.td-opt small{font-size:5.5px!important;}
-.td-cat{font-size:6px!important;padding:2px 1px!important;letter-spacing:0!important;}
-.td-pname{font-size:6.5px!important;padding-left:2px!important;}
+.td-param{
+font-size:6.5px!important;padding-left:3px!important;font-weight:700!important;
+white-space:normal!important;line-height:1.2!important;
+}
+.td-opt{
+font-size:6px!important;padding:0px 2px!important;line-height:1.25!important;
+white-space:normal!important;overflow:hidden!important;
+}
+.td-opt small{font-size:5.5px!important;line-height:1.2!important;}
 
-/* Data inputs */
+/* Category cells — clip text to prevent row height expansion */
+.td-cat{
+font-size:6px!important;padding:1px 0px!important;letter-spacing:0!important;
+overflow:hidden!important;
+/* Clip the vertical text so it doesn’t force row height */
+max-height:100%!important;
+}
+.td-pname{font-size:6.5px!important;padding-left:2px!important;overflow:hidden!important;}
+
+/* Data inputs — fixed height is key */
 .td-entry{padding:1px 2px!important;}
-.td-entry input{height:12px!important;font-size:7px!important;border:0.5px solid #90a4ae!important;border-radius:1px!important;}
+.td-entry input{
+height:14px!important;
+font-size:7.5px!important;
+border:0.5px solid #90a4ae!important;
+border-radius:1px!important;
+padding:0!important;
+line-height:14px!important;
+}
 .td-entry.safe   input{background:var(–safe)!important;color:var(–safe-t)!important;border-color:#66bb6a!important;}
 .td-entry.warn   input{background:var(–warn)!important;color:var(–warn-t)!important;border-color:#f9a825!important;}
 .td-entry.danger input{background:var(–dngr)!important;color:var(–dngr-t)!important;border-color:#ef5350!important;}
 
 /* Checkboxes */
-input[type=checkbox]{width:8px!important;height:8px!important;}
+input[type=checkbox]{width:9px!important;height:9px!important;}
 
-/* Vibrio embedded cells */
-.td-vibrio-title{font-size:6.5px!important;padding:2px 3px!important;}
-.td-vibrio-label{font-size:6.5px!important;}
+/* Vibrio embedded cells — same row height as data rows */
+.td-vibrio-title{
+font-size:7px!important;padding:2px 4px!important;
+font-weight:700!important;letter-spacing:.3px!important;
+}
+.td-vibrio-label{font-size:6.5px!important;padding-left:4px!important;white-space:nowrap!important;}
 .td-vibrio-inp{padding:1px 2px!important;}
-.td-vibrio-inp input{height:12px!important;font-size:6.5px!important;border:0.5px solid #aaa!important;}
+.td-vibrio-inp input{height:14px!important;font-size:7px!important;border:0.5px solid #aaa!important;padding:0!important;}
 
 /* Separators */
 .sep-l{border-left:1.5px solid #555!important;}
 
 /* ── SUGGESTIONS ── */
 .sug-bar{display:none!important;}
-.sug-box{padding:3px 10px!important;gap:5px!important;border-top:1.5px solid #555!important;}
-.sug-box strong{font-size:7px!important;min-width:60px!important;}
-#sug-out{min-height:30px!important;max-height:44px!important;height:44px!important;font-size:6px!important;line-height:1.4!important;padding:2px 4px!important;border:0.5px solid #999!important;resize:none!important;overflow:hidden!important;}
+.sug-box{
+padding:3px 10px!important;gap:5px!important;
+border-top:1.5px solid #555!important;
+}
+.sug-box strong{font-size:7px!important;min-width:60px!important;padding-top:2px!important;}
+#sug-out{
+min-height:24px!important;max-height:36px!important;height:36px!important;
+font-size:6px!important;line-height:1.35!important;
+padding:2px 4px!important;border:0.5px solid #999!important;
+resize:none!important;overflow:hidden!important;
+}
 
 /* ── FOOTER ── */
 .rpt-foot{padding:2px 10px!important;border-top:0.5px solid #aaa!important;}
-.rpt-foot .note,.rpt-foot .purp{font-size:6px!important;}
-.sign{font-size:7px!important;} .sign-line{margin:10px auto 2px!important;width:55px!important;}
+.rpt-foot .note,.rpt-foot .purp{font-size:6px!important;margin-top:0!important;}
+.sign{font-size:7px!important;}
+.sign-line{margin:8px auto 2px!important;width:55px!important;}
 
-/* Alternating rows preserve */
+/* Alternating rows */
 tbody tr:nth-child(even) .td-param{background:#f5f5f5!important;}
 tbody tr:nth-child(even) td.safe  {background:var(–safe)!important;}
 tbody tr:nth-child(even) td.warn  {background:var(–warn)!important;}
