@@ -175,6 +175,7 @@ table-layout:fixed;
 /* Fill the flex space */
 flex:1;
 }
+
 table.main th,table.main td{
 border:0.5px solid var(–bdr);
 text-align:center;
@@ -182,6 +183,7 @@ vertical-align:middle;
 font-size:7.5px;
 padding:1px 2px;
 overflow:hidden;
+max-height:inherit;
 }
 table.main th{
 font-family:‘Oswald’,sans-serif;
@@ -240,15 +242,23 @@ tbody tr:nth-child(even) .td-entry.warn   input{background:var(–warn);}
 tbody tr:nth-child(even) .td-entry.danger input{background:var(–dngr);}
 
 /* Plankton category */
-.td-cat{
-writing-mode:vertical-rl;transform:rotate(180deg);
-font-family:‘Oswald’,sans-serif;font-size:7px;font-weight:700;
-letter-spacing:.3px;white-space:nowrap;padding:2px 0;color:#fff;
-overflow:hidden;
+/* ── PLANKTON GROUP HEADER ROWS (horizontal text, no rowspan) ── */
+.tr-grp-hdr td{
+font-family:‘Oswald’,sans-serif;
+font-size:7px;font-weight:700;
+letter-spacing:.3px;color:#fff;
+padding:1px 3px!important;
+text-align:left!important;
+line-height:1;
 }
-.ga   {background:#2e7d32;} .bga_u{background:#1565c0;} .dia {background:#6d4c41;}
-.zoo  {background:#6a1b9a;} .cbga {background:#b71c1c;} .df  {background:#e65100;}
-.diah {background:#4e342e;} .pro  {background:#4a148c;}
+.tr-grp-hdr.ga    td{background:#2e7d32;}
+.tr-grp-hdr.bga_u td{background:#1565c0;}
+.tr-grp-hdr.dia   td{background:#6d4c41;}
+.tr-grp-hdr.zoo   td{background:#6a1b9a;}
+.tr-grp-hdr.cbga  td{background:#b71c1c;}
+.tr-grp-hdr.df    td{background:#e65100;}
+.tr-grp-hdr.diah  td{background:#4e342e;}
+.tr-grp-hdr.pro   td{background:#4a148c;}
 
 .td-pname{text-align:left!important;font-size:7.5px;font-style:italic;padding-left:3px!important;overflow:hidden;}
 input[type=checkbox]{width:10px;height:10px;cursor:pointer;accent-color:var(–teal);display:block;margin:auto;}
@@ -418,9 +428,9 @@ border-color:#90a4ae!important;
         <col class="c-param">
         <col class="c-s"><col class="c-s"><col class="c-s"><col class="c-s">
         <col class="c-opt">
-        <col class="c-cat"><col class="c-pname">
+        <col class="c-pname">
         <col class="c-chk"><col class="c-chk"><col class="c-chk"><col class="c-chk">
-        <col class="c-cat"><col class="c-pname">
+        <col class="c-pname">
         <col class="c-chk"><col class="c-chk"><col class="c-chk"><col class="c-chk">
       </colgroup>
       <thead>
@@ -428,18 +438,16 @@ border-color:#90a4ae!important;
           <th class="c-param h-main" rowspan="2" style="text-align:left;padding-left:5px;">PARTICULARS</th>
           <th colspan="4" class="h-main">SAMPLE No. &amp; CODE</th>
           <th class="c-opt h-main" rowspan="2" style="background:#e3f2fd;color:var(--van);font-size:7px;">OPTIMUM<br><em style="font-weight:400">L. vannamei</em></th>
-          <th colspan="6" class="h-green sep-l">USEFUL PLANKTON</th>
-          <th colspan="6" class="h-red sep-l">HARMFUL PLANKTON</th>
+          <th colspan="5" class="h-green sep-l">USEFUL PLANKTON</th>
+          <th colspan="5" class="h-red sep-l">HARMFUL PLANKTON</th>
         </tr>
         <tr>
           <th class="c-s h-main">1</th><th class="c-s h-main">2</th>
           <th class="c-s h-main">3</th><th class="c-s h-main">4</th>
-          <th class="c-cat h-green sep-l"></th>
-          <th class="c-pname h-green" style="text-align:left;padding-left:3px;">Name</th>
+          <th class="c-pname h-green sep-l" style="text-align:left;padding-left:3px;">Name</th>
           <th class="c-chk h-green">1</th><th class="c-chk h-green">2</th>
           <th class="c-chk h-green">3</th><th class="c-chk h-green">4</th>
-          <th class="c-cat h-red sep-l"></th>
-          <th class="c-pname h-red" style="text-align:left;padding-left:3px;">Name</th>
+          <th class="c-pname h-red sep-l" style="text-align:left;padding-left:3px;">Name</th>
           <th class="c-chk h-red">1</th><th class="c-chk h-red">2</th>
           <th class="c-chk h-red">3</th><th class="c-chk h-red">4</th>
         </tr>
@@ -549,9 +557,9 @@ function flatten(groups,pool){
 }
 const U_ROWS=flatten(USEFUL,'useful');
 const H_ROWS=flatten(HARMFUL,'harmful');
-// Vibrio at row indices 10, 11 (after 10 plankton rows)
-const VIB_TITLE=U_ROWS.length;
-const VIB_DATA =U_ROWS.length+1;
+// Vibrio appended after all data rows (built separately)
+const VIB_TITLE=999; // unused — vibrio built at end
+const VIB_DATA =999;
 
 const INP={};
 const VINP={y:{},g:{}};
@@ -604,74 +612,198 @@ function onSalChange(){
   reColourAll();
 }
 
-function buildPlanktonSide(tr,rowArr,row,pool,sepCls){
-  const pr=rowArr[row];
-  if(pr){
-    if(pr.firstInGroup){
-      const td=document.createElement('td');
-      td.className=`td-cat c-cat ${pr.cls} ${sepCls}`;
-      td.rowSpan=pr.groupRows;td.textContent=pr.cat;tr.appendChild(td);
-    }
-    const tn=document.createElement('td');tn.className='td-pname c-pname';tn.textContent=pr.name;tr.appendChild(tn);
-    for(let s=1;s<=4;s++){
-      const td=document.createElement('td');td.className='c-chk';
-      const cb=document.createElement('input');cb.type='checkbox';cb.dataset.pool=pool;cb.dataset.name=pr.name;
-      td.appendChild(cb);tr.appendChild(td);
-    }
-    return false;
-  } else if(row===VIB_TITLE){
-    // Vibrio title spans both sides
-    const td=document.createElement('td');
-    td.className=`td-vib-title ${sepCls}`;td.colSpan=12;
-    td.textContent='Microbiology : Total Count of Vibrio Bacteria (CFU / mL)';
-    tr.appendChild(td);return true; // skip harmful side
-  } else if(row===VIB_DATA){
-    // Yellow side
-    const tl=document.createElement('td');tl.className=`td-vib-lbl ${sepCls}`;tl.colSpan=2;
-    tl.innerHTML='<span style="color:#c8a000">●</span> Yellow Colonies';tr.appendChild(tl);
-    for(let s=1;s<=4;s++){
-      const td=document.createElement('td');td.className='td-vib-inp c-chk';
-      const inp=document.createElement('input');inp.type='text';inp.placeholder='—';
-      td.appendChild(inp);tr.appendChild(td);VINP.y[s]=inp;
-    }
-    // Green side
-    const tl2=document.createElement('td');tl2.className='td-vib-lbl sep-l';tl2.colSpan=2;
-    tl2.innerHTML='<span style="color:#2e7d32">●</span> Green Colonies <small style="color:#c62828">(V.harveyi)</small>';tr.appendChild(tl2);
-    for(let s=1;s<=4;s++){
-      const td=document.createElement('td');td.className='td-vib-inp c-chk';
-      const inp=document.createElement('input');inp.type='text';inp.placeholder='—';
-      td.appendChild(inp);tr.appendChild(td);VINP.g[s]=inp;
-    }
-    return true;
-  } else {
-    const tc=document.createElement('td');tc.className=`c-cat ${sepCls}`;tr.appendChild(tc);
-    const tn=document.createElement('td');tn.className='c-pname';tr.appendChild(tn);
-    for(let s=1;s<=4;s++){const td=document.createElement('td');td.className='c-chk';tr.appendChild(td);}
-    return false;
+/* Build one plankton cell-group for a data row (name + 4 checkboxes) */
+function buildPlanktonCells(tr, pr, pool, sepCls){
+  const tn=document.createElement('td');
+  tn.className='td-pname c-pname '+sepCls;
+  tn.textContent=pr.name;
+  tr.appendChild(tn);
+  for(let s=1;s<=4;s++){
+    const td=document.createElement('td');td.className='c-chk';
+    const cb=document.createElement('input');
+    cb.type='checkbox';cb.dataset.pool=pool;cb.dataset.name=pr.name;
+    td.appendChild(cb);tr.appendChild(td);
   }
+}
+
+/* Build a thin group-header row above each plankton group */
+function buildGroupHeaderRow(tbody, label, cls, colspan, isFirst){
+  const tr=document.createElement('tr');
+  tr.className='tr-grp-hdr '+cls;
+  // Empty cells for water-param side
+  const empParam=document.createElement('td');empParam.colSpan=7;empParam.style.border='none';tr.appendChild(empParam);
+  // Useful side label
+  if(isFirst==='useful'){
+    const td=document.createElement('td');
+    td.colSpan=5;td.className='sep-l';
+    td.textContent=label;tr.appendChild(td);
+    // Empty harmful side
+    const emp=document.createElement('td');emp.colSpan=5;emp.className='sep-l';emp.style.background='#f9f9f9';tr.appendChild(emp);
+  } else {
+    // Empty useful side
+    const emp=document.createElement('td');emp.colSpan=5;emp.className='sep-l';emp.style.background='#f9f9f9';tr.appendChild(emp);
+    // Harmful side label
+    const td=document.createElement('td');
+    td.colSpan=5;td.className='sep-l';
+    td.textContent=label;tr.appendChild(td);
+  }
+  tbody.appendChild(tr);
+}
+
+/* Build vibrio row spanning both plankton sections */
+function buildVibrioTitleRow(tbody){
+  const tr=document.createElement('tr');
+  const emp=document.createElement('td');emp.colSpan=7;emp.style.border='none';tr.appendChild(emp);
+  const td=document.createElement('td');td.colSpan=10;td.className='td-vib-title sep-l';
+  td.textContent='Microbiology : Total Count of Vibrio Bacteria (CFU / mL)';
+  tr.appendChild(td);
+  tbody.appendChild(tr);
+}
+
+function buildVibrioDataRow(tbody){
+  const tr=document.createElement('tr');
+  const emp=document.createElement('td');emp.colSpan=7;emp.style.border='none';tr.appendChild(emp);
+  // Yellow
+  const tly=document.createElement('td');tly.className='td-vib-lbl sep-l';tly.colSpan=2;
+  tly.innerHTML='<span style="color:#c8a000">●</span> Yellow';tr.appendChild(tly);
+  for(let s=1;s<=4;s++){
+    const td=document.createElement('td');td.className='td-vib-inp c-chk';
+    const inp=document.createElement('input');inp.type='text';inp.placeholder='—';
+    td.appendChild(inp);tr.appendChild(td);VINP.y[s]=inp;
+  }
+  // Green
+  const tlg=document.createElement('td');tlg.className='td-vib-lbl sep-l';tlg.colSpan=2;
+  tlg.innerHTML='<span style="color:#2e7d32">●</span> Green <small style="color:#c62828">(V.harveyi)</small>';tr.appendChild(tlg);
+  for(let s=1;s<=4;s++){
+    const td=document.createElement('td');td.className='td-vib-inp c-chk';
+    const inp=document.createElement('input');inp.type='text';inp.placeholder='—';
+    td.appendChild(inp);tr.appendChild(td);VINP.g[s]=inp;
+  }
+  tbody.appendChild(tr);
 }
 
 function buildTable(){
   const tbody=document.getElementById('main-body');
   tbody.innerHTML='';
-  for(let row=0;row<PARAMS.length;row++){
+
+  // Build parallel arrays: each param row gets useful+harmful plankton row data
+  // Group headers are inserted as separate rows BEFORE the first row of each group
+
+  // Flatten both plankton lists with group-start markers
+  const uFlat=[]; // {name, pool, isGroupStart, groupLabel, groupCls}
+  USEFUL.forEach(g=>g.rows.forEach((name,ri)=>uFlat.push({name,pool:'useful',isGroupStart:ri===0,groupLabel:g.cat,groupCls:g.cls})));
+  const hFlat=[];
+  HARMFUL.forEach(g=>g.rows.forEach((name,ri)=>hFlat.push({name,pool:'harmful',isGroupStart:ri===0,groupLabel:g.cat,groupCls:g.cls})));
+
+  // Max data rows = max of useful, harmful, params
+  const maxDataRows = Math.max(PARAMS.length, uFlat.length, hFlat.length);
+
+  // We need to interleave group-header rows into the tbody.
+  // Strategy: process useful and harmful in parallel, emit group-header rows
+  // for whichever side needs it, keeping both sides in sync.
+  // Simpler: build 3 separate "row" arrays and zip them together.
+
+  // Build a sequence of tbody rows:
+  // For each data row index 0..maxDataRows-1:
+  //   1. If useful[row] is a group start → insert a group-header row
+  //   2. If harmful[row] is a group start → the header goes in the SAME header row (dual side)
+  //   3. Insert the data row
+
+  // We track which group headers have been emitted
+  let uGroupsDone=new Set(), hGroupsDone=new Set();
+
+  for(let row=0;row<maxDataRows;row++){
+    const ur=uFlat[row]||null;
+    const hr=hFlat[row]||null;
+    const needUHdr = ur && ur.isGroupStart && !uGroupsDone.has(ur.groupLabel);
+    const needHHdr = hr && hr.isGroupStart && !hGroupsDone.has(hr.groupLabel);
+
+    // Emit combined group header row if either side needs one
+    if(needUHdr || needHHdr){
+      const htr=document.createElement('tr');
+      htr.className='tr-grp-hdr';
+
+      // Water param side — empty (7 cols: param + 4×s + opt)
+      const empW=document.createElement('td');empW.colSpan=7;
+      empW.style.cssText='border:none;background:transparent;padding:0;';
+      htr.appendChild(empW);
+
+      // Useful header cell
+      const uHdrTd=document.createElement('td');
+      uHdrTd.colSpan=5;uHdrTd.className='sep-l';
+      if(needUHdr){
+        uHdrTd.textContent=ur.groupLabel;
+        uHdrTd.style.cssText=`background:${getGroupColor(ur.groupCls)};color:#fff;font-family:'Oswald',sans-serif;font-size:7px;font-weight:700;text-align:left;padding:1px 3px;letter-spacing:.3px;`;
+        uGroupsDone.add(ur.groupLabel);
+      } else {
+        uHdrTd.style.cssText='background:#f0f0f0;border-color:#ccc;';
+      }
+      htr.appendChild(uHdrTd);
+
+      // Harmful header cell
+      const hHdrTd=document.createElement('td');
+      hHdrTd.colSpan=5;hHdrTd.className='sep-l';
+      if(needHHdr){
+        hHdrTd.textContent=hr.groupLabel;
+        hHdrTd.style.cssText=`background:${getGroupColor(hr.groupCls)};color:#fff;font-family:'Oswald',sans-serif;font-size:7px;font-weight:700;text-align:left;padding:1px 3px;letter-spacing:.3px;`;
+        hGroupsDone.add(hr.groupLabel);
+      } else {
+        hHdrTd.style.cssText='background:#f0f0f0;border-color:#ccc;';
+      }
+      htr.appendChild(hHdrTd);
+      tbody.appendChild(htr);
+    }
+
+    // Data row
     const tr=document.createElement('tr');
     INP[row]=INP[row]||{};
-    // Water param
-    const p=PARAMS[row];
-    const tn=document.createElement('td');tn.className='td-param c-param';tn.innerHTML=p.label;tr.appendChild(tn);
-    for(let s=1;s<=4;s++){
-      const td=document.createElement('td');td.className='td-entry c-s';
-      const inp=document.createElement('input');inp.type='text';inp.placeholder='—';
-      inp.dataset.pi=row;inp.dataset.s=s;inp.addEventListener('input',onInput);
-      td.appendChild(inp);tr.appendChild(td);INP[row][s]=inp;
+
+    // Water param cells
+    if(row<PARAMS.length){
+      const p=PARAMS[row];
+      const tn=document.createElement('td');tn.className='td-param c-param';tn.innerHTML=p.label;tr.appendChild(tn);
+      for(let s=1;s<=4;s++){
+        const td=document.createElement('td');td.className='td-entry c-s';
+        const inp=document.createElement('input');inp.type='text';inp.placeholder='—';
+        inp.dataset.pi=row;inp.dataset.s=s;inp.addEventListener('input',onInput);
+        td.appendChild(inp);tr.appendChild(td);INP[row][s]=inp;
+      }
+      const to=document.createElement('td');to.className='td-opt c-opt';to.innerHTML=p.opt;tr.appendChild(to);
+    } else {
+      const emp=document.createElement('td');emp.colSpan=7;emp.style.border='none';tr.appendChild(emp);
     }
-    const to=document.createElement('td');to.className='td-opt c-opt';to.innerHTML=p.opt;tr.appendChild(to);
-    // Plankton
-    const skip=buildPlanktonSide(tr,U_ROWS,row,'useful','sep-l');
-    if(!skip) buildPlanktonSide(tr,H_ROWS,row,'harmful','sep-l');
+
+    // Useful plankton cells
+    if(ur){
+      buildPlanktonCells(tr,ur,'useful','sep-l');
+    } else if(row===VIB_TITLE-USEFUL.length+uFlat.length){
+      // Vibrio title — spans both plankton sides
+      const tv=document.createElement('td');tv.colSpan=10;tv.className='td-vib-title sep-l';
+      tv.textContent='Microbiology : Total Count of Vibrio Bacteria (CFU / mL)';
+      tr.appendChild(tv);
+      tbody.appendChild(tr); continue;
+    } else {
+      const emp=document.createElement('td');emp.colSpan=5;emp.className='sep-l';emp.style.background='#fafafa';tr.appendChild(emp);
+    }
+
+    // Harmful plankton cells
+    if(hr){
+      buildPlanktonCells(tr,hr,'harmful','sep-l');
+    } else {
+      const emp=document.createElement('td');emp.colSpan=5;emp.className='sep-l';emp.style.background='#fafafa';tr.appendChild(emp);
+    }
+
     tbody.appendChild(tr);
   }
+
+  // Vibrio rows after all plankton
+  buildVibrioTitleRow(tbody);
+  buildVibrioDataRow(tbody);
+}
+
+function getGroupColor(cls){
+  const m={ga:'#2e7d32',bga_u:'#1565c0',dia:'#6d4c41',zoo:'#6a1b9a',cbga:'#b71c1c',df:'#e65100',diah:'#4e342e',pro:'#4a148c'};
+  return m[cls]||'#555';
 }
 
 /* ── SUGGESTIONS ENGINE ── */
@@ -758,6 +890,8 @@ function generateSuggestions(){
 
 buildTable();
 document.getElementById('f-date').valueAsDate=new Date();
+
+
 </script>
 
 </body>
