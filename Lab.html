@@ -139,7 +139,7 @@ table.main{height:auto!important;}
 #sug-out{display:none!important;}
 #sug-print{display:block!important;}
 .sug-section{overflow:visible!important;height:auto!important;}
-.page{width:210mm!important;height:auto!important;min-height:297mm!important;max-height:none!important;overflow:visible!important;height:297mm!important;padding:6mm!important;box-shadow:none!important;}
+.page{width:210mm!important;height:auto!important;min-height:297mm!important;max-height:none!important;overflow:visible!important;padding:6mm!important;box-shadow:none!important;}
 .td-entry input,.td-vib-inp input,.frow input{-webkit-print-color-adjust:exact!important;border-color:#90a4ae!important;}
 #sug-out{border-color:#90a4ae!important;}
 }
@@ -588,145 +588,168 @@ var VIB_TITLE_ROW = 10;
 var VIB_DATA_ROW  = 11;
 
 /* ---- SUGGESTIONS ENGINE ---- */
-function getWorst(pi){
-  var ord={danger:0,warn:1,safe:2,'':3};
-  var best={val:null,status:''};
-  var sal=getSal();
-  for(var s=1;s<=4;s++){
-    var v=INP[pi]&&INP[pi][s]?INP[pi][s].value.trim():null;
-    if(!v||v==='--')continue;
-    var st=PARAMS[pi].chk(v,sal);
-    if(ord[st]<ord[best.status])best={val:v,status:st};
+/* ================================================================
+   PER-SAMPLE SUGGESTION ENGINE
+   Each sample with data gets its own labelled block.
+   Plankton + Vibrio are shared pond-wide (appear once at end).
+   ================================================================ */
+
+function getSampleData(s,sal){
+  var d={};
+  for(var pi=0;pi<PARAMS.length;pi++){
+    var id=PARAMS[pi].id;
+    var inp=INP[pi]&&INP[pi][s]?INP[pi][s]:null;
+    var v=inp?inp.value.trim():'';
+    if(!v||v==='--'){d[id]={val:null,status:''};continue;}
+    d[id]={val:v,status:PARAMS[pi].chk(v,sal)};
   }
-  return best;
+  return d;
+}
+
+function buildSampleLines(d,sal,salOK){
+  var items=[];
+  function add(t){items.push(t);}
+
+  var ionicFlagged=['mg','ca','k'].some(function(id){
+    return d[id].val!==null&&d[id].status!==''&&d[id].status!=='safe';});
+  if(ionicFlagged&&!salOK)
+    add('Salinity not entered - Mg/Ca/K targets cannot be calculated. Enter ppt value in banner.');
+
+  if(d.h2s.status==='danger'||d.h2s.status==='warn')
+    add('H2S DETECTED ('+d.h2s.val+' ppm) - EMERGENCY. All aerators on. Apply CaO 10-15 kg/ha + zeolite 15-20 kg/ha. Stop feeding until zero.');
+  if(d.do.status==='danger')
+    add('D.O. CRITICALLY LOW ('+d.do.val+' ppm). All aerators on now. Stop feeding. 20-30% water exchange immediately.');
+  else if(d.do.status==='warn')
+    add('D.O. LOW ('+d.do.val+' ppm). Extra aeration midnight-6 AM. Reduce feed 30%.');
+  if(d.ph.status==='danger'){
+    if(+d.ph.val<7.0)add('pH CRITICALLY LOW ('+d.ph.val+'). Apply CaCO3 lime 30-50 kg/ha evening. Raise alkalinity to 100-150 ppm.');
+    else add('pH CRITICALLY HIGH ('+d.ph.val+'). Increase aeration. Reduce fertiliser. Partial exchange 20-30%.');
+  }else if(d.ph.status==='warn'){
+    if(+d.ph.val<7.8)add('pH LOW ('+d.ph.val+'). Apply lime 10-20 kg/ha. Monitor dawn and 2 PM.');
+    else add('pH HIGH ('+d.ph.val+'). Increase afternoon aeration. If above 9.0 do partial exchange.');
+  }
+  if(d.tan.status==='danger')
+    add('AMMONIA CRITICAL ('+d.tan.val+' ppm). Partial exchange 25-30%. Cut feed 50% for 48 h. Bacillus 1-2 ppm. Zeolite 10-15 kg/ha.');
+  else if(d.tan.status==='warn')
+    add('AMMONIA ELEVATED ('+d.tan.val+' ppm). Reduce feed 30%. Bacillus 1 ppm. 20% exchange if no improvement in 48 h.');
+  if(d.uia.status==='danger'||d.uia.status==='warn')
+    add('UN-IONIZED AMMONIA HIGH ('+d.uia.val+' ppm). Lower pH toward 7.8-8.0. Increase aeration. Partial exchange 20%.');
+  if(d.no2.status==='danger')
+    add('NITRITE CRITICAL ('+d.no2.val+' ppm). NaCl 10 kg/ha. Stop feeding 24 h. Partial exchange 25%.');
+  else if(d.no2.status==='warn')
+    add('NITRITE ELEVATED ('+d.no2.val+' ppm). NaCl 5 kg/ha. Reduce feed 20%.');
+  if(d.k.status==='danger'){var tkt=salOK?(sal*11.01).toFixed(0):'?';
+    add('K+ CRITICALLY LOW ('+d.k.val+' ppm, target '+tkt+' ppm). #1 cause of mass mortality. Apply KCl immediately. Dose: deficit x pond m3 = grams.');}
+  else if(d.k.status==='warn'){var tkt=salOK?(sal*11.01).toFixed(0):'?';
+    add('K+ LOW ('+d.k.val+' ppm, target '+tkt+' ppm). Apply KCl at calculated dose. Monitor weekly.');}
+  if(d.mg.status==='danger'||d.mg.status==='warn'){var tmt=salOK?(sal*39.1).toFixed(0):'>90';
+    add('Mg LOW ('+d.mg.val+' ppm, target '+tmt+' ppm). Apply MgSO4 or MgCl2. Dose: deficit x pond m3 = grams.');}
+  if(d.ca.status==='danger'||d.ca.status==='warn'){var tct=salOK?(sal*11.6).toFixed(0):'>27';
+    add('Ca LOW ('+d.ca.val+' ppm, target '+tct+' ppm). Apply CaCl2 or Gypsum (CaSO4).');}
+  if(d.tAlk.status!==''&&d.tAlk.status!=='safe'){
+    if(+d.tAlk.val<90)add('ALKALINITY LOW ('+d.tAlk.val+' ppm). Apply NaHCO3 5-10 kg/ha/day to reach 100-150 ppm.');
+    else add('ALKALINITY HIGH ('+d.tAlk.val+' ppm). Do NOT add lime. Partial exchange 15-20%.');}
+  if(d.hco3.status!==''&&d.hco3.status!=='safe'){
+    if(+d.hco3.val<90)add('HCO3 LOW ('+d.hco3.val+' ppm). Apply NaHCO3 3-5 kg/ha.');
+    else add('HCO3 HIGH ('+d.hco3.val+' ppm). Do not add lime. Monitor.');}
+  if(d.tHard.status==='danger'){
+    +d.tHard.val<180?add('TOTAL HARDNESS VERY LOW ('+d.tHard.val+' ppm). Apply dolomite lime 20-40 kg/ha.'):
+                     add('TOTAL HARDNESS VERY HIGH ('+d.tHard.val+' ppm). Dilute with 20-25% fresh water exchange.');}
+  else if(d.tHard.status==='warn'&&+d.tHard.val<180)
+    add('TOTAL HARDNESS LOW ('+d.tHard.val+' ppm). Apply CaCO3 lime 10-20 kg/ha.');
+  if(d.aHard.status==='danger')
+    add('Ca HARDNESS CRITICALLY LOW ('+d.aHard.val+' ppm). Apply CaCl2 or CaSO4 15-30 kg/ha.');
+  else if(d.aHard.status==='warn')
+    add('Ca HARDNESS LOW ('+d.aHard.val+' ppm). Apply CaCl2 at calculated dose.');
+  if(d.co2.status==='danger')
+    add('CO2 HIGH ('+d.co2.val+' ppm). Aerate vigorously 6-8 h. CO2 peaks at dawn 5-6 AM.');
+  else if(d.co2.status==='warn')
+    add('CO2 ELEVATED ('+d.co2.val+' ppm). Increase aeration. Target below 11 ppm.');
+  if(d.iron.status==='danger'||d.iron.status==='warn')
+    add('IRON ELEVATED ('+d.iron.val+' ppm). Aerate intake water. Raise pH above 7.5. Sand-filter intake.');
+  if(d.cl2.status==='danger'||d.cl2.status==='warn')
+    add('CHLORINE DETECTED ('+d.cl2.val+' ppm). Apply sodium thiosulphate. Do not stock until zero.');
+  if(d.redox.status==='danger')
+    add('REDOX CRITICALLY LOW ('+d.redox.val+' mV). Active H2S production. Apply Bacillus 2 ppm. Install bottom aeration.');
+  else if(d.redox.status==='warn')
+    add('REDOX LOW ('+d.redox.val+' mV). Apply Bacillus 1 ppm weekly. Increase bottom aeration.');
+  if(d.sal.status==='danger'||d.sal.status==='warn'){
+    if(+d.sal.val<9)add('SALINITY LOW ('+d.sal.val+' ppt). Ionic deficiency risk - check K/Mg/Ca at low salinity.');
+    else add('SALINITY HIGH ('+d.sal.val+' ppt). Monitor DO - high salinity holds less oxygen.');}
+  return items;
 }
 
 function generateSuggestions(){
   var sal=getSal(), salOK=sal>0;
-  var lines=[]; var n=1;
-  function add(t){lines.push(n+'. '+t);n++;}
-  var d={};
-  for(var pi=0;pi<PARAMS.length;pi++){d[PARAMS[pi].id]=getWorst(pi);}
-  var anyData=false;
-  for(var k in d){if(d[k].val!==null){anyData=true;break;}}
-  if(!anyData){document.getElementById('sug-out').value='Please enter sample values first.';return;}
+  var sections=[];
 
-  /* Salinity not entered warning when ionic params flagged */
-  var ionicFlagged=['mg','ca','k'].some(function(id){return d[id].val!==null&&d[id].status!==''&&d[id].status!=='safe';});
-  if(ionicFlagged&&!salOK)add('SALINITY NOT ENTERED - Mg/Ca/K targets need salinity. Enter ppt value to get accurate Boyd-formula targets (Mg x39.1, Ca x11.6, K x11.01 per ppt).');
-
-  /* Priority 1: Immediate dangers */
-  if(d.h2s.status==='danger'||d.h2s.status==='warn')
-    add('H2S DETECTED ('+d.h2s.val+' ppm) - EMERGENCY. Stop feeding. All aerators on immediately. Apply quicklime CaO at 10-15 kg/ha. Add zeolite 15-20 kg/ha. No feeding until H2S reads zero. Check pond bottom redox.');
-  if(d.do.status==='danger')
-    add('D.O. CRITICALLY LOW ('+d.do.val+' ppm). All aerators on now. Stop feeding. 20-30% water exchange. Run aerators all night - DO is lowest before sunrise.');
-  else if(d.do.status==='warn')
-    add('D.O. LOW ('+d.do.val+' ppm). Extra aeration midnight to 6 AM. Reduce feed by 30%.');
-  if(d.ph.status==='danger'){
-    var pn=+d.ph.val;
-    if(pn<7.0)add('pH CRITICALLY LOW ('+d.ph.val+'). Apply CaCO3 lime 30-50 kg/ha in evening. Rapid fix: Ca(OH)2 5-10 kg/ha at dawn only. Raise alkalinity to 100-150 ppm.');
-    else add('pH CRITICALLY HIGH ('+d.ph.val+'). Increase aeration. Reduce fertiliser. Partial exchange 20-30%.');
-  }else if(d.ph.status==='warn'){
-    var pn=+d.ph.val;
-    if(pn<7.8)add('pH LOW ('+d.ph.val+'). Apply lime 10-20 kg/ha. Monitor at dawn and 2 PM - swing must not exceed 0.5 units/day.');
-    else add('pH HIGH ('+d.ph.val+'). Increase afternoon aeration. If above 9.0 do partial exchange.');
+  var activeSamples=[];
+  for(var s=1;s<=4;s++){
+    for(var pi=0;pi<PARAMS.length;pi++){
+      var inp=INP[pi]&&INP[pi][s]?INP[pi][s]:null;
+      if(inp&&inp.value.trim()&&inp.value.trim()!=='--'){activeSamples.push(s);break;}
+    }
   }
-  if(d.tan.status==='danger')
-    add('AMMONIA CRITICAL ('+d.tan.val+' ppm). Partial exchange 25-30%. Cut feed 50% for 48 h. Apply Bacillus probiotic 1-2 ppm. Add zeolite 10-15 kg/ha.');
-  else if(d.tan.status==='warn')
-    add('AMMONIA ELEVATED ('+d.tan.val+' ppm). Reduce feed 30%. Apply Bacillus 1 ppm. Increase aeration. 20% exchange if no improvement in 48 h.');
-  if(d.uia.status==='danger'||d.uia.status==='warn')
-    add('UN-IONIZED AMMONIA HIGH ('+d.uia.val+' ppm). Safe limit < 0.022 ppm. Lower pH toward 7.8-8.0. Increase aeration. Partial exchange 20%.');
-  if(d.no2.status==='danger')
-    add('NITRITE CRITICAL ('+d.no2.val+' ppm). Apply NaCl 10 kg/ha. Stop feeding 24 h. Partial exchange 25%.');
-  else if(d.no2.status==='warn')
-    add('NITRITE ELEVATED ('+d.no2.val+' ppm). Add NaCl 5 kg/ha. Reduce feed 20%. Monitor daily.');
 
-  /* Priority 2: Ionic */
-  if(d.k.status==='danger'){var tgt=salOK?(sal*11.01).toFixed(0):'?';
-    add('K+ CRITICALLY LOW ('+d.k.val+' ppm, target '+tgt+' ppm). #1 cause of mass mortality in low-salinity vannamei. Apply KCl (Muriate of Potash) immediately. Dose: deficit x pond volume m3 = grams KCl.');}
-  else if(d.k.status==='warn'){var tgt=salOK?(sal*11.01).toFixed(0):'?';
-    add('K+ LOW ('+d.k.val+' ppm, target '+tgt+' ppm). Apply KCl at calculated dose. Monitor weekly.');}
-  if(d.mg.status==='danger'||d.mg.status==='warn'){var tgt=salOK?(sal*39.1).toFixed(0):'>90';
-    add('Mg LOW ('+d.mg.val+' ppm, target '+tgt+' ppm). Apply MgSO4 (Epsom salt) or MgCl2. Dose: deficit x pond m3 = grams.');}
-  if(d.ca.status==='danger'||d.ca.status==='warn'){var tgt=salOK?(sal*11.6).toFixed(0):'>27';
-    add('Ca LOW ('+d.ca.val+' ppm, target '+tgt+' ppm). Apply CaCl2 or Gypsum (CaSO4). Dose: deficit x pond m3 = grams.');}
-  if(d.tAlk.status!==''&&d.tAlk.status!=='safe'){var an=+d.tAlk.val;
-    if(an<90)add('ALKALINITY LOW ('+d.tAlk.val+' ppm). Apply NaHCO3 5-10 kg/ha/day to reach 100-150 ppm. Low alkalinity causes pH swings and poor molting.');
-    else add('ALKALINITY HIGH ('+d.tAlk.val+' ppm). Above 165 ppm is outside optimal range. Do NOT add lime. Partial exchange 15-20%.');}
-  if(d.hco3.status!==''&&d.hco3.status!=='safe'){var hn=+d.hco3.val;
-    if(hn<90)add('HCO3 LOW ('+d.hco3.val+' ppm). Apply NaHCO3 3-5 kg/ha. Common in low-salinity ponds during monsoon - test weekly.');
-    else add('HCO3 HIGH ('+d.hco3.val+' ppm). Do not add lime. Monitor - partial exchange if still rising.');}
-  if(d.tHard.status==='danger'){var hn=+d.tHard.val;
-    hn<180?add('TOTAL HARDNESS VERY LOW ('+d.tHard.val+' ppm). Apply dolomite lime CaMg(CO3)2 at 20-40 kg/ha.'):add('TOTAL HARDNESS VERY HIGH ('+d.tHard.val+' ppm). Dilute with 20-25% fresh water exchange.');}
-  else if(d.tHard.status==='warn'&&+d.tHard.val<180)
-    add('TOTAL HARDNESS LOW ('+d.tHard.val+' ppm). Apply CaCO3 lime 10-20 kg/ha.');
-  if(d.aHard.status==='danger')
-    add('Ca HARDNESS CRITICALLY LOW ('+d.aHard.val+' ppm). Must be >= Total Alkalinity. Apply CaCl2 or CaSO4 at 15-30 kg/ha.');
-  else if(d.aHard.status==='warn')
-    add('Ca HARDNESS LOW ('+d.aHard.val+' ppm). Target 150-300 ppm. Apply CaCl2 at calculated dose.');
-  if(d.co2.status==='danger')
-    add('CO2 HIGH ('+d.co2.val+' ppm). Stress > 22 ppm, toxic > 60 ppm. Aerate vigorously 6-8 h. Reduce fertiliser. CO2 peaks at dawn 5-6 AM.');
-  else if(d.co2.status==='warn')
-    add('CO2 ELEVATED ('+d.co2.val+' ppm). Increase aeration duration. Target below 11 ppm.');
-  if(d.iron.status==='danger'||d.iron.status==='warn')
-    add('IRON ELEVATED ('+d.iron.val+' ppm). Precipitates on gills causing respiratory distress. Aerate intake water thoroughly. Raise pH above 7.5. Sand-filter intake if possible.');
-  if(d.cl2.status==='danger'||d.cl2.status==='warn')
-    add('CHLORINE DETECTED ('+d.cl2.val+' ppm). Apply sodium thiosulphate 5-10 mg/L per 1 mg/L Cl2. Do not stock until confirmed zero.');
-  if(d.redox.status==='danger')
-    add('REDOX CRITICALLY LOW ('+d.redox.val+' mV). Active H2S production in sediment. Apply Bacillus 2 ppm. Install bottom aeration diffuser.');
-  else if(d.redox.status==='warn')
-    add('REDOX LOW ('+d.redox.val+' mV). Apply Bacillus 1 ppm weekly. Increase bottom aeration.');
-  if(d.sal.status==='danger'||d.sal.status==='warn'){var sn=+d.sal.val;
-    if(sn<9)add('SALINITY LOW ('+d.sal.val+' ppt). Vannamei optimal is 10-25 ppt. Ionic ratios (K/Mg/Ca) are critical at low salinity - check and supplement.');
-    else add('SALINITY HIGH ('+d.sal.val+' ppt). Above 35 ppt causes osmotic stress. Monitor DO - high salinity holds less dissolved oxygen.');}
+  if(activeSamples.length===0){
+    document.getElementById('sug-out').value='Please enter sample values first.';
+    syncSugPrint();return;
+  }
 
-  /* Priority 3: Plankton */
+  for(var si=0;si<activeSamples.length;si++){
+    var s=activeSamples[si];
+    var d=getSampleData(s,sal);
+    var items=buildSampleLines(d,sal,salOK);
+    var header='=== SAMPLE '+s+' ===';
+    if(items.length===0){
+      sections.push(header+'\nAll parameters in safe range. Continue current management.');
+    }else{
+      var numbered=items.map(function(t,i){return(i+1)+'. '+t;});
+      sections.push(header+'\n'+numbered.join('\n'));
+    }
+  }
+
   var harmful=[],useful=[];
-  document.querySelectorAll('input[data-pool="harmful"]:checked').forEach(function(cb){if(harmful.indexOf(cb.dataset.name)<0)harmful.push(cb.dataset.name);});
-  document.querySelectorAll('input[data-pool="useful"]:checked').forEach(function(cb){if(useful.indexOf(cb.dataset.name)<0)useful.push(cb.dataset.name);});
+  document.querySelectorAll('input[data-pool="harmful"]:checked').forEach(function(cb){
+    if(harmful.indexOf(cb.dataset.name)<0)harmful.push(cb.dataset.name);});
+  document.querySelectorAll('input[data-pool="useful"]:checked').forEach(function(cb){
+    if(useful.indexOf(cb.dataset.name)<0)useful.push(cb.dataset.name);});
+  var pondLines=[];var pn=1;
+  function padd(t){pondLines.push(pn+'. '+t);pn++;}
   var cyano=['Microcystis','Anabaena','Oscillatoria'].filter(function(x){return harmful.indexOf(x)>=0;});
-  if(cyano.length)add('BLUE-GREEN ALGAE ('+cyano.join(', ')+'). Do NOT use copper sulphate. Partial exchange 20-30% at dawn. Apply citric acid 1 ppm. Use Bacillus. Reduce N and P inputs immediately.');
-  if(harmful.indexOf('Noctiluca')>=0)add('NOCTILUCA BLOOM. No chemicals. Partial exchange at dawn. Run aerators all night. Reduce feed and fertiliser.');
+  if(cyano.length)padd('BLUE-GREEN ALGAE ('+cyano.join(', ')+'). No copper sulphate. Partial exchange 20-30% at dawn. Citric acid 1 ppm. Bacillus. Reduce N and P inputs.');
+  if(harmful.indexOf('Noctiluca')>=0)padd('NOCTILUCA. No chemicals. Partial exchange at dawn. Aerators all night. Reduce feed and fertiliser.');
   var proto=['Zoothamnium','Vorticella','Favella'].filter(function(x){return harmful.indexOf(x)>=0;});
-  if(proto.length)add('PROTOZOA ('+proto.join(', ')+'). Increase aeration. Reduce feed. Apply KMnO4 at 2-3 ppm.');
+  if(proto.length)padd('PROTOZOA ('+proto.join(', ')+'). Increase aeration. Apply KMnO4 2-3 ppm.');
   var others=harmful.filter(function(x){return cyano.indexOf(x)<0&&x!=='Noctiluca'&&proto.indexOf(x)<0;});
-  if(others.length)add('HARMFUL PLANKTON ('+others.join(', ')+'). Monitor daily with microscope. Reduce nutrient inputs. 15-20% partial exchange if bloom worsens.');
+  if(others.length)padd('HARMFUL PLANKTON ('+others.join(', ')+'). Monitor daily. Reduce nutrients. 15-20% exchange if worsens.');
   if((harmful.length>0||useful.length>0)&&useful.length===0)
-    add('NO USEFUL PLANKTON. Fertilise with Urea + TSP 2:1 ratio (2 kg urea + 1 kg TSP per 100 m2). Inoculate with Chlorella or diatom culture.');
-
-  /* Priority 4: Vibrio */
+    padd('NO USEFUL PLANKTON. Fertilise Urea+TSP 2:1 (2 kg urea + 1 kg TSP per 100 m2). Inoculate with Chlorella or diatom culture.');
   var gv=[],yv=[];
   for(var s=1;s<=4;s++){
-    var gi=VINP.g[s]?parseFloat(VINP.g[s].value):NaN; if(!isNaN(gi))gv.push(gi);
-    var yi=VINP.y[s]?parseFloat(VINP.y[s].value):NaN; if(!isNaN(yi))yv.push(yi);
+    var gi=VINP.g[s]?parseFloat(VINP.g[s].value):NaN;if(!isNaN(gi))gv.push(gi);
+    var yi=VINP.y[s]?parseFloat(VINP.y[s].value):NaN;if(!isNaN(yi))yv.push(yi);
   }
   var maxG=gv.length?Math.max.apply(null,gv):null;
   var maxY=yv.length?Math.max.apply(null,yv):null;
-  if(maxG!==null&&maxG>1000)add('VIBRIO GREEN (V.harveyi) HIGH - '+maxG.toLocaleString()+' CFU/mL. Bright Disease risk. Apply Bacillus 2 ppm. Partial exchange 25%. No antibiotics without antibiogram. If shrimp glow at night - emergency harvest.');
-  else if(maxG!==null&&maxG>100)add('VIBRIO GREEN ELEVATED ('+maxG.toLocaleString()+' CFU/mL). Apply Bacillus 1 ppm. Reduce feed 20%. Improve aeration.');
-  if(maxY!==null&&maxY>10000)add('VIBRIO YELLOW HIGH ('+maxY.toLocaleString()+' CFU/mL). Apply Bacillus 1-2 ppm. Reduce feed. Improve DO.');
+  if(maxG!==null&&maxG>1000)padd('VIBRIO GREEN HIGH - '+maxG.toLocaleString()+' CFU/mL. Bright Disease risk. Bacillus 2 ppm. Partial exchange 25%. No antibiotics without antibiogram.');
+  else if(maxG!==null&&maxG>100)padd('VIBRIO GREEN ELEVATED ('+maxG.toLocaleString()+' CFU/mL). Bacillus 1 ppm. Reduce feed 20%.');
+  if(maxY!==null&&maxY>10000)padd('VIBRIO YELLOW HIGH ('+maxY.toLocaleString()+' CFU/mL). Bacillus 1-2 ppm. Reduce feed.');
+  if(pondLines.length>0)sections.push('=== POND - ALL SAMPLES ===\n'+pondLines.join('\n'));
 
-  /* Always append tips */
-  if(lines.length===0)add('ALL PARAMETERS IN SAFE RANGE for L. vannamei. No corrective action required. Continue current pond management.');
-  add('DAILY: Measure D.O. before 6 AM and pH at dawn + 2 PM - these change fastest and give earliest warning.');
-  add('IONIC CHECK every 2 weeks'+(salOK?' - at '+sal.toFixed(1)+' ppt: K+ target '+(sal*11.01).toFixed(0)+' ppm, Mg target '+(sal*39.1).toFixed(0)+' ppm, Ca target '+(sal*11.6).toFixed(0)+' ppm':' - enter salinity to see K/Mg/Ca targets')+'. Apply KCl/MgSO4/CaCl2 if below 70% of target. Apply Bacillus 1 ppm weekly for pond bottom health.');
+  var ionicTip=salOK?' - at '+sal.toFixed(1)+' ppt: K+ target '+(sal*11.01).toFixed(0)+' ppm, Mg target '+(sal*39.1).toFixed(0)+' ppm, Ca target '+(sal*11.6).toFixed(0)+' ppm':' - enter salinity to see K/Mg/Ca targets';
+  sections.push('=== GENERAL ADVICE ===\n1. DAILY: Measure D.O. before 6 AM and pH at dawn + 2 PM.\n2. IONIC CHECK every 2 weeks'+ionicTip+'. Apply KCl/MgSO4/CaCl2 if below 70% of target.\n3. Apply Bacillus probiotic 1 ppm weekly for pond bottom health.');
 
   var out=document.getElementById('sug-out');
-  out.value=lines.join('\n\n');
+  out.value=sections.join('\n\n');
 }
 
 /* ---- INIT ---- */
 buildTable();
 document.getElementById('f-date').valueAsDate=new Date();
-function syncSugPrint(){
-  var ta=document.getElementById('sug-out');
-  var pd=document.getElementById('sug-print');
-  if(ta&&pd)pd.textContent=ta.value;
-}
+function syncSugPrint(){var ta=document.getElementById('sug-out');var pd=document.getElementById('sug-print');if(ta&&pd)pd.textContent=ta.value;}
 window.addEventListener('beforeprint',syncSugPrint);
-var _origGen=generateSuggestions;
-generateSuggestions=function(){_origGen();syncSugPrint();};
+var _origGen=generateSuggestions;generateSuggestions=function(){_origGen();syncSugPrint();};
 </script>
 
 </body>
