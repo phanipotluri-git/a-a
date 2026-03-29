@@ -610,7 +610,7 @@ function buildSampleLines(d,sal,salOK){
     add('Salinity not entered - Mg/Ca/K targets cannot be calculated. Enter ppt value in banner.');
 
   if(d.h2s.status==='danger'||d.h2s.status==='warn')
-    add('H2S DETECTED ('+d.h2s.val+' ppm) - EMERGENCY. All aerators on. Apply CaO 10-15 kg/ha + zeolite 15-20 kg/ha. Stop feeding until zero.');
+    add('H2S DETECTED ('+d.h2s.val+' ppm) - EMERGENCY. All aerators on. Apply CaO 10-15 kg/ha + Power DS 15-20 kg/ha. Stop feeding until zero.');
   if(d.do.status==='danger')
     add('D.O. CRITICALLY LOW ('+d.do.val+' ppm). All aerators on now. Stop feeding. 20-30% water exchange immediately.');
   else if(d.do.status==='warn')
@@ -623,34 +623,34 @@ function buildSampleLines(d,sal,salOK){
     else add('pH HIGH ('+d.ph.val+'). Increase afternoon aeration. If above 9.0 do partial exchange.');
   }
   if(d.tan.status==='danger')
-    add('AMMONIA CRITICAL ('+d.tan.val+' ppm). Partial exchange 25-30%. Cut feed 50% for 48 h. Bacillus 1-2 ppm. Zeolite 10-15 kg/ha.');
+    add('AMMONIA CRITICAL ('+d.tan.val+' ppm). Partial exchange 25-30%. Cut feed 50% for 48 h. Sapotan L 1-2 ppm. Power DS 10-15 kg/ha.');
   else if(d.tan.status==='warn')
-    add('AMMONIA ELEVATED ('+d.tan.val+' ppm). Reduce feed 30%. Bacillus 1 ppm. 20% exchange if no improvement in 48 h.');
+    add('AMMONIA ELEVATED ('+d.tan.val+' ppm). Reduce feed 30%. Sapotan L 1L/acre. 20% exchange if no improvement in 48 h.');
   if(d.uia.status==='danger'||d.uia.status==='warn')
     add('UN-IONIZED AMMONIA HIGH ('+d.uia.val+' ppm). Lower pH toward 7.8-8.0. Increase aeration. Partial exchange 20%.');
   if(d.no2.status==='danger')
-    add('NITRITE CRITICAL ('+d.no2.val+' ppm). NaCl 10 kg/ha. Stop feeding 24 h. Partial exchange 25%.');
+    add('NITRITE CRITICAL ('+d.no2.val+' ppm). Micro Bacter 1kg/acre,NaCl 10 kg/ha. Stop feeding 24 h. Partial exchange 25%.');
   else if(d.no2.status==='warn')
-    add('NITRITE ELEVATED ('+d.no2.val+' ppm). NaCl 5 kg/ha. Reduce feed 20%.');
+    add('NITRITE ELEVATED ('+d.no2.val+' ppm). Micro Bacter 500g/acre,NaCl 5 kg/ha. Reduce feed 20%.');
   if(d.k.status==='danger'){var tkt=salOK?(sal*11.01).toFixed(0):'?';
-    add('K+ CRITICALLY LOW ('+d.k.val+' ppm, target '+tkt+' ppm). #1 cause of mass mortality. Apply KCl immediately. Dose: deficit x pond m3 = grams.');}
+    add('K+ CRITICALLY LOW ('+d.k.val+' ppm, target '+tkt+' ppm). #1 cause of mass mortality. Apply Potassium Chloride (KCl) immediately. Dose: deficit x pond m3 = grams.');}
   else if(d.k.status==='warn'){var tkt=salOK?(sal*11.01).toFixed(0):'?';
-    add('K+ LOW ('+d.k.val+' ppm, target '+tkt+' ppm). Apply KCl at calculated dose. Monitor weekly.');}
+    add('K+ LOW ('+d.k.val+' ppm, target '+tkt+' ppm). Apply Potassium Chloride (KCl) at calculated dose. Monitor weekly.');}
   if(d.mg.status==='danger'||d.mg.status==='warn'){var tmt=salOK?(sal*39.1).toFixed(0):'>90';
-    add('Mg LOW ('+d.mg.val+' ppm, target '+tmt+' ppm). Apply MgSO4 or MgCl2. Dose: deficit x pond m3 = grams.');}
+    add('Mg LOW ('+d.mg.val+' ppm, target '+tmt+' ppm). Apply Magnesium Sulfate (MgSO4) or Magnesium Chloride (MgCl2). Dose: deficit x pond m3 = grams.');}
   if(d.ca.status==='danger'||d.ca.status==='warn'){var tct=salOK?(sal*11.6).toFixed(0):'>27';
-    add('Ca LOW ('+d.ca.val+' ppm, target '+tct+' ppm). Apply CaCl2 or Gypsum (CaSO4).');}
+    add('Ca LOW ('+d.ca.val+' ppm, target '+tct+' ppm). Apply Calcium Chloride (CaCl2) or Gypsum (CaSO4).');}
   if(d.tAlk.status!==''&&d.tAlk.status!=='safe'){
-    if(+d.tAlk.val<90)add('ALKALINITY LOW ('+d.tAlk.val+' ppm). Apply NaHCO3 5-10 kg/ha/day to reach 100-150 ppm.');
+    if(+d.tAlk.val<90)add('ALKALINITY LOW ('+d.tAlk.val+' ppm). Apply Sodium Bicarbonate (NaHCO3) 5-10 kg/ha/day to reach 100-150 ppm.');
     else add('ALKALINITY HIGH ('+d.tAlk.val+' ppm). Do NOT add lime. Partial exchange 15-20%.');}
   if(d.hco3.status!==''&&d.hco3.status!=='safe'){
-    if(+d.hco3.val<90)add('HCO3 LOW ('+d.hco3.val+' ppm). Apply NaHCO3 3-5 kg/ha.');
+    if(+d.hco3.val<90)add('HCO3 LOW ('+d.hco3.val+' ppm). Apply Sodium Bicarbonate (NaHCO3) 3-5 kg/ha.');
     else add('HCO3 HIGH ('+d.hco3.val+' ppm). Do not add lime. Monitor.');}
   if(d.tHard.status==='danger'){
     +d.tHard.val<180?add('TOTAL HARDNESS VERY LOW ('+d.tHard.val+' ppm). Apply dolomite lime 20-40 kg/ha.'):
                      add('TOTAL HARDNESS VERY HIGH ('+d.tHard.val+' ppm). Dilute with 20-25% fresh water exchange.');}
   else if(d.tHard.status==='warn'&&+d.tHard.val<180)
-    add('TOTAL HARDNESS LOW ('+d.tHard.val+' ppm). Apply CaCO3 lime 10-20 kg/ha.');
+    add('TOTAL HARDNESS LOW ('+d.tHard.val+' ppm). Apply Calcium Carbonate (CaCO3) lime 10-20 kg/ha.');
   if(d.aHard.status==='danger')
     add('Ca HARDNESS CRITICALLY LOW ('+d.aHard.val+' ppm). Apply CaCl2 or CaSO4 15-30 kg/ha.');
   else if(d.aHard.status==='warn')
@@ -664,9 +664,9 @@ function buildSampleLines(d,sal,salOK){
   if(d.cl2.status==='danger'||d.cl2.status==='warn')
     add('CHLORINE DETECTED ('+d.cl2.val+' ppm). Apply sodium thiosulphate. Do not stock until zero.');
   if(d.redox.status==='danger')
-    add('REDOX CRITICALLY LOW ('+d.redox.val+' mV). Active H2S production. Apply Bacillus 2 ppm. Install bottom aeration.');
+    add('REDOX CRITICALLY LOW ('+d.redox.val+' mV). Active H2S production. Apply H2S Clear 1Kg/Acre. Install bottom aeration.');
   else if(d.redox.status==='warn')
-    add('REDOX LOW ('+d.redox.val+' mV). Apply Bacillus 1 ppm weekly. Increase bottom aeration.');
+    add('REDOX LOW ('+d.redox.val+' mV). Apply Micro Bacter 1Kg/acre weekly. Increase bottom aeration.');
   if(d.sal.status==='danger'||d.sal.status==='warn'){
     if(+d.sal.val<9)add('SALINITY LOW ('+d.sal.val+' ppt). Ionic deficiency risk - check K/Mg/Ca at low salinity.');
     else add('SALINITY HIGH ('+d.sal.val+' ppt). Monitor DO - high salinity holds less oxygen.');}
@@ -711,7 +711,7 @@ function generateSuggestions(){
   var pondLines=[];var pn=1;
   function padd(t){pondLines.push(pn+'. '+t);pn++;}
   var cyano=['Microcystis','Anabaena','Oscillatoria'].filter(function(x){return harmful.indexOf(x)>=0;});
-  if(cyano.length)padd('BLUE-GREEN ALGAE ('+cyano.join(', ')+'). No copper sulphate. Partial exchange 20-30% at dawn. Citric acid 1 ppm. Bacillus. Reduce N and P inputs.');
+  if(cyano.length)padd('BLUE-GREEN ALGAE ('+cyano.join(', ')+'). No copper sulphate. Partial exchange 20-30% at dawn. Citric acid 1 ppm. Pondlife 1Kg/acre. Reduce N and P inputs.');
   if(harmful.indexOf('Noctiluca')>=0)padd('NOCTILUCA. No chemicals. Partial exchange at dawn. Aerators all night. Reduce feed and fertiliser.');
   var proto=['Zoothamnium','Vorticella','Favella'].filter(function(x){return harmful.indexOf(x)>=0;});
   if(proto.length)padd('PROTOZOA ('+proto.join(', ')+'). Increase aeration. Apply KMnO4 2-3 ppm.');
@@ -726,13 +726,13 @@ function generateSuggestions(){
   }
   var maxG=gv.length?Math.max.apply(null,gv):null;
   var maxY=yv.length?Math.max.apply(null,yv):null;
-  if(maxG!==null&&maxG>1000)padd('VIBRIO GREEN HIGH - '+maxG.toLocaleString()+' CFU/mL. Bright Disease risk. Bacillus 2 ppm. Partial exchange 25%. No antibiotics without antibiogram.');
-  else if(maxG!==null&&maxG>100)padd('VIBRIO GREEN ELEVATED ('+maxG.toLocaleString()+' CFU/mL). Bacillus 1 ppm. Reduce feed 20%.');
-  if(maxY!==null&&maxY>10000)padd('VIBRIO YELLOW HIGH ('+maxY.toLocaleString()+' CFU/mL). Bacillus 1-2 ppm. Reduce feed.');
+  if(maxG!==null&&maxG>1000)padd('VIBRIO GREEN HIGH - '+maxG.toLocaleString()+' CFU/mL. Bright Disease risk. Pondlife 1Kg/acre. Partial exchange 25%. No antibiotics without antibiogram.');
+  else if(maxG!==null&&maxG>100)padd('VIBRIO GREEN ELEVATED ('+maxG.toLocaleString()+' CFU/mL). Pondlife 1Kg/acre. Reduce feed 20%.');
+  if(maxY!==null&&maxY>10000)padd('VIBRIO YELLOW HIGH ('+maxY.toLocaleString()+' CFU/mL). Pondlife 1-2Kg/acre. Reduce feed.');
   if(pondLines.length>0)sections.push('=== POND - ALL SAMPLES ===\n'+pondLines.join('\n'));
 
   var ionicTip=salOK?' - at '+sal.toFixed(1)+' ppt: K+ target '+(sal*11.01).toFixed(0)+' ppm, Mg target '+(sal*39.1).toFixed(0)+' ppm, Ca target '+(sal*11.6).toFixed(0)+' ppm':' - enter salinity to see K/Mg/Ca targets';
-  sections.push('=== GENERAL ADVICE ===\n1. DAILY: Measure D.O. before 6 AM and pH at dawn + 2 PM.\n2. IONIC CHECK every 2 weeks'+ionicTip+'. Apply KCl/MgSO4/CaCl2 if below 70% of target.\n3. Apply Bacillus probiotic 1 ppm weekly for pond bottom health.');
+  sections.push('=== GENERAL ADVICE ===\n1. DAILY: Measure D.O. before 6 AM and pH at dawn + 2 PM.\n2. IONIC CHECK every 2 weeks'+ionicTip+'. Apply KCl/MgSO4/CaCl2 if below 70% of target.\n3. Apply PondLife 1kg/acre weekly for pond bottom health.');
 
   var out=document.getElementById('sug-out');
   out.value=sections.join('\n\n');
