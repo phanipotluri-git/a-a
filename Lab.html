@@ -326,7 +326,7 @@ var PARAMS = [
      if(t>0){if(n>=t*0.63)return'safe';if(n>=t*0.45)return'warn';return'danger';}
      return n>=27?'safe':n>=14?'warn':'danger';}},
   {id:'k', lbl:'Potassium K&#8314; (ppm)',
-   opt:'Sal x 11.01 ppm<br><small style="color:#c62828;font-weight:700">CRITICAL - #1 missed ion</small>',
+   opt:'Sal x 11.01 ppm<br>',
    chk:function(v,sal){var n=+v;if(isNaN(n))return'';
      var t=sal>0?sal*11.01:0;
      if(t>0){if(n>=t*0.63)return'safe';if(n>=t*0.36)return'warn';return'danger';}
