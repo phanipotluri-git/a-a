@@ -5,126 +5,200 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Shrimp Aqua Field Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+/* ═══ TOKENS ═══ */
 :root{
-  --bg:#050e1a;--panel:#0a1828;--panel2:#071230;
-  --border:#18305a;--blt:rgba(24,48,90,.4);
+  --bg:#050e1a;--panel:#0d1f36;--panel2:#071230;
+  --border:#18305a;
   --teal:#12c8d0;--gold:#e8b824;--red:#f06060;
   --orange:#f09040;--green:#44da88;--purple:#a070ff;
   --sky:#48ceff;--pink:#ff7ab0;--lime:#8ee030;
-  --text:#ddeeff;--mid:#88aacc;--dim:#3a6090;
+  --text:#ddeeff;--mid:#88aacc;--dim:#4a6890;
   --wb:#1c1000;--wbr:#a05010;--wt:#ffc840;
   --rb:#160000;--rbr:#901820;--rt:#ffb0b0;
-  --tb:rgba(18,200,208,.07);--tbr:rgba(18,200,208,.25);--tt:#60e0d8;
+  --tb:rgba(18,200,208,.08);--tbr:rgba(18,200,208,.28);--tt:#55ddd5;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
-  font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-@supports(height:100dvh){html,body{height:100dvh}}
 
-/* ── LANGUAGE — set entirely on <html data-lang> ── */
-.t-en,.t-bn,.t-te{display:none}
-html[data-lang=“en”] .t-en{display:block}
-html[data-lang=“bn”] .t-bn{display:block}
-html[data-lang=“te”] .t-te{display:block}
-.t-bn{font-family:‘Hind Siliguri’,sans-serif;font-size:13px;line-height:1.7}
-.t-te{font-family:‘Noto Sans Telugu’,sans-serif;font-size:13px;line-height:1.75}
+/* ═══ RESET ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+background:var(–bg);
+color:var(–text);
+font-family:‘IBM Plex Sans’,sans-serif;
+font-size:14px;
+line-height:1.5;
+-webkit-font-smoothing:antialiased;
+/* NO overflow:hidden on body — let the layout elements handle it */
+}
 
-/* ── LAYOUT ── */
-#app{display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative;-webkit-overflow-scrolling:touch}
+/* ═══ LANGUAGE — driven by html[data-lang] ═══ */
+.t-en,.t-bn,.t-te{display:none !important}
+html[data-lang=“en”] .t-en{display:block !important}
+html[data-lang=“bn”] .t-bn{display:block !important}
+html[data-lang=“te”] .t-te{display:block !important}
+.t-bn{font-family:‘Hind Siliguri’,sans-serif}
+.t-te{font-family:‘Noto Sans Telugu’,sans-serif}
 
-/* TOP BAR */
-#topbar{flex-shrink:0;background:var(–panel);border-bottom:1px solid var(–border);padding:10px 14px 8px;position:relative}
-#topbar::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;
-background:linear-gradient(90deg,transparent,var(–teal),var(–sky),var(–teal),transparent)}
-.tb-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.tb-logo{font-family:‘IBM Plex Mono’,monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(–teal)}
+/* ═══ FIXED TOPBAR ═══ */
+#topbar{
+position:fixed;
+top:0;left:0;right:0;
+z-index:100;
+background:var(–panel);
+border-bottom:2px solid var(–teal);
+padding:10px 14px 9px;
+}
+.tb-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.tb-logo{font-family:‘IBM Plex Mono’,monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:var(–teal);text-transform:uppercase}
 .tb-logo span{color:var(–dim);font-weight:400}
-.ls-pills{display:flex;background:var(–panel2);border:1px solid var(–border);border-radius:20px;padding:2px;gap:1px}
-.ls-btn{padding:4px 12px;border-radius:18px;border:none;background:transparent;
-cursor:pointer;font-size:12.5px;font-weight:600;color:var(–dim);transition:all .15s;line-height:1.4}
-.ls-btn.active{background:var(–teal);color:#fff}
-.ls-btn[data-l=“te”].active{background:var(–purple)}
-#search-wrap{margin-top:8px;position:relative}
-#search-input{width:100%;background:var(–panel2);border:1px solid var(–border);border-radius:8px;
-padding:7px 12px 7px 34px;color:var(–text);font-size:13px;font-family:inherit;outline:none;
--webkit-appearance:none}
-#search-input::placeholder{color:var(–dim)}
-#search-input:focus{border-color:var(–teal)}
+.ls-pills{display:flex;background:var(–panel2);border:1px solid var(–border);border-radius:20px;padding:2px;gap:2px}
+.ls-btn{
+padding:4px 13px;border-radius:18px;border:none;background:transparent;
+cursor:pointer;font-size:12.5px;font-weight:600;color:var(–dim);
+transition:all .15s;line-height:1.4;font-family:‘IBM Plex Sans’,sans-serif;
+}
+.ls-btn.active{background:var(–teal);color:#000}
+.ls-btn[data-l=“te”].active{background:var(–purple);color:#fff}
+#search-box{
+width:100%;background:var(–panel2);
+border:1px solid var(–border);border-radius:8px;
+padding:7px 12px 7px 34px;
+color:var(–text);font-size:13px;font-family:‘IBM Plex Sans’,sans-serif;
+outline:none;-webkit-appearance:none;
+}
+#search-box::placeholder{color:var(–dim)}
+#search-box:focus{border-color:var(–teal)}
+.s-wrap{position:relative}
 .s-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none}
 
-/* TABS */
-#tabs{flex-shrink:0;display:flex;background:var(–panel2);border-bottom:1px solid var(–border)}
-.tab-btn{flex:1;padding:10px 4px;border:none;background:transparent;color:var(–dim);
-font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;
-justify-content:center;gap:5px;letter-spacing:.4px;position:relative;transition:color .15s}
+/* ═══ FIXED TABS ═══ */
+#tabs{
+position:fixed;
+top:var(–topbar-h,108px);
+left:0;right:0;
+z-index:99;
+display:flex;
+background:var(–panel2);
+border-bottom:1px solid var(–border);
+}
+.tab-btn{
+flex:1;padding:10px 4px;border:none;background:transparent;
+color:var(–dim);font-size:12px;font-weight:600;cursor:pointer;
+display:flex;align-items:center;justify-content:center;gap:5px;
+letter-spacing:.3px;position:relative;
+font-family:‘IBM Plex Sans’,sans-serif;
+}
 .tab-btn.active{color:var(–teal)}
-.tab-btn.active::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:2px;background:var(–teal)}
+.tab-btn.active::after{content:’’;position:absolute;bottom:0;left:10%;right:10%;height:2px;background:var(–teal);border-radius:2px}
 .tab-btn.dis.active{color:var(–red)}
 .tab-btn.dis.active::after{background:var(–red)}
-.tc{font-family:‘IBM Plex Mono’,monospace;font-size:9px;background:var(–border);
-border-radius:8px;padding:1px 5px}
+.tc{font-family:‘IBM Plex Mono’,monospace;font-size:9px;background:rgba(255,255,255,.08);border-radius:8px;padding:1px 6px}
 .tab-btn.active .tc{background:rgba(18,200,208,.2);color:var(–teal)}
 .tab-btn.dis.active .tc{background:rgba(240,96,96,.2);color:var(–red)}
 
-/* LIST */
-#scroll-area{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:10px 12px 80px}
-.pcard{background:var(–panel);border:1px solid var(–border);border-left:3px solid;
-border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:10px;
-padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s}
-.pcard:active{background:rgba(255,255,255,.04)}
-.pc-icon{font-size:22px;flex-shrink:0;width:34px;text-align:center}
-.pc-body{flex:1;min-width:0}
-.pc-title{font-size:13px;font-weight:700;color:var(–text);line-height:1.3}
-.pc-sub{font-size:11px;color:var(–dim);margin-top:2px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pc-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
-.pc-tag{font-family:‘IBM Plex Mono’,monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;padding:1px 5px;border-radius:3px;font-weight:700}
-.pc-arr{color:var(–dim);font-size:18px;flex-shrink:0}
-.c-teal{border-left-color:var(–teal)}.c-gold{border-left-color:var(–gold)}
-.c-red{border-left-color:var(–red)}.c-orange{border-left-color:var(–orange)}
-.c-purple{border-left-color:var(–purple)}.c-sky{border-left-color:var(–sky)}
-.c-green{border-left-color:var(–green)}.c-pink{border-left-color:var(–pink)}
+/* ═══ SCROLLABLE CONTENT ═══ */
+#scroll-area{
+/* pushed down below fixed topbar + tabs */
+padding-top:152px; /* topbar ~108px + tabs ~44px */
+padding-left:12px;
+padding-right:12px;
+padding-bottom:80px;
+min-height:100vh;
+}
+
+/* ═══ CARD LIST ═══ */
+#card-list{
+display:block;
+width:100%;
+}
+
+.pcard{
+display:flex;
+align-items:center;
+gap:10px;
+width:100%;
+background:var(–panel);
+border:1px solid var(–border);
+border-left-width:3px;
+border-radius:10px;
+margin-bottom:9px;
+padding:11px 12px;
+cursor:pointer;
+text-align:left;
+-webkit-tap-highlight-color:transparent;
+}
+.pcard:active{opacity:.75}
+
+/* card accent colours — border-left-color */
+.c-teal{border-left-color:var(–teal)}
+.c-gold{border-left-color:var(–gold)}
+.c-red{border-left-color:var(–red)}
+.c-orange{border-left-color:var(–orange)}
+.c-purple{border-left-color:var(–purple)}
+.c-sky{border-left-color:var(–sky)}
+.c-green{border-left-color:var(–green)}
+.c-pink{border-left-color:var(–pink)}
 .c-lime{border-left-color:var(–lime)}
+
+.pc-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+.pc-body{flex:1;min-width:0;overflow:hidden}
+.pc-title{font-size:13px;font-weight:700;color:var(–text);line-height:1.3;margin-bottom:2px}
+.pc-sub{font-size:11px;color:var(–dim);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.pc-tags{display:flex;gap:3px;flex-wrap:wrap}
+.pc-tag{font-family:‘IBM Plex Mono’,monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;padding:1px 5px;border-radius:3px;font-weight:700}
+.pc-arr{color:var(–dim);font-size:18px;flex-shrink:0;line-height:1}
+
 .tag-viral{background:rgba(240,96,96,.15);color:#ff9090}
 .tag-bact{background:rgba(240,144,64,.15);color:#ffb070}
 .tag-para{background:rgba(160,112,255,.15);color:#c090ff}
 .tag-enviro{background:rgba(72,206,255,.15);color:#80d8ff}
 .tag-crit{background:rgba(240,96,96,.2);color:#ff8080}
 .tag-wq{background:rgba(18,200,208,.12);color:var(–teal)}
-#empty{display:none;text-align:center;padding:50px 20px;color:var(–dim);font-size:13px}
-#empty.show{display:block}
 
-/* DETAIL PANEL */
-#detail{position:fixed;inset:0;background:var(–bg);
-transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);
-display:flex;flex-direction:column;z-index:20;pointer-events:none}
-#detail.open{transform:translateX(0);pointer-events:all}
-#dhead{flex-shrink:0;background:var(–panel);border-bottom:1px solid var(–border);
-padding:12px 14px 10px;position:relative}
-#dhead::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;
-background:linear-gradient(90deg,transparent,var(–teal),transparent)}
-#back{display:flex;align-items:center;gap:6px;background:none;border:none;
-color:var(–teal);font-size:13px;font-weight:600;cursor:pointer;padding:0;
-margin-bottom:8px;font-family:inherit}
-#dicon{font-size:26px;margin-bottom:4px}
-#dtitle{font-size:16px;font-weight:700;line-height:1.3;color:var(–text)}
-#dsub{font-size:10px;color:var(–dim);margin-top:3px;font-family:‘IBM Plex Mono’,monospace;letter-spacing:.5px}
-#dbadges{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
-.dbadge{font-family:‘IBM Plex Mono’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;
-border-radius:4px;padding:2px 7px;font-weight:700}
-#dscroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 60px}
-#dswipe{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-background:rgba(18,200,208,.1);border:1px solid rgba(18,200,208,.2);border-radius:20px;
-padding:4px 14px;font-size:10px;color:var(–teal);font-family:‘IBM Plex Mono’,monospace;
-letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity .6s}
-#detail.open #dswipe{opacity:1}
+#empty-msg{display:none;text-align:center;padding:60px 20px;color:var(–dim);font-size:13px}
+#empty-msg.show{display:block}
 
-/* CONTENT ELEMENTS */
+/* ═══ DETAIL SLIDE PANEL ═══ */
+#detail{
+position:fixed;
+top:0;left:0;right:0;bottom:0;
+z-index:200;
+background:var(–bg);
+transform:translateX(100%);
+transition:transform .28s cubic-bezier(.4,0,.2,1);
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+#detail.open{transform:translateX(0)}
+
+#dhead{
+flex-shrink:0;
+background:var(–panel);
+border-bottom:2px solid var(–teal);
+padding:12px 14px 10px;
+}
+#back-btn{
+display:flex;align-items:center;gap:6px;
+background:none;border:none;
+color:var(–teal);font-size:13px;font-weight:600;
+cursor:pointer;padding:0;margin-bottom:8px;
+font-family:‘IBM Plex Sans’,sans-serif;
+}
+#d-icon{font-size:26px;margin-bottom:3px}
+#d-title{font-size:16px;font-weight:700;line-height:1.3;color:var(–text)}
+#d-sub{font-size:10px;color:var(–dim);margin-top:2px;font-family:‘IBM Plex Mono’,monospace;letter-spacing:.5px}
+#d-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.dbadge{font-family:‘IBM Plex Mono’,monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;border-radius:4px;padding:2px 7px;font-weight:700}
+
+#dscroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 80px}
+
+/* ═══ DETAIL CONTENT ═══ */
 .opt-row{display:flex;align-items:baseline;gap:6px;background:var(–panel2);border-radius:6px;padding:6px 9px;margin-bottom:8px;flex-wrap:wrap}
 .opt-key{font-family:‘IBM Plex Mono’,monospace;font-size:9px;color:var(–dim);text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap}
 .opt-val{font-family:‘IBM Plex Mono’,monospace;font-size:11px;font-weight:700;color:var(–green)}
-.elab-block{background:rgba(18,200,208,.05);border:1px solid rgba(18,200,208,.12);border-radius:6px;padding:9px 11px;margin-bottom:8px}
+.elab-block{background:rgba(18,200,208,.05);border:1px solid rgba(18,200,208,.14);border-radius:6px;padding:9px 11px;margin-bottom:8px}
 .elab-head{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:1.5px;color:var(–teal);text-transform:uppercase;margin-bottom:5px}
 .pr-block{border-left:2px solid;border-radius:0 6px 6px 0;padding:8px 10px;margin-bottom:8px}
 .pr-block.p-lo{border-color:#4080ff;background:rgba(64,128,255,.05)}
@@ -133,15 +207,18 @@ letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity .6s}
 .pr-block.p-wn{border-color:var(–gold);background:rgba(232,184,36,.05)}
 .pr-block.p-ti{border-color:var(–teal);background:var(–tb)}
 .pr-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
-.pr-block.p-lo .pr-label{color:#6090ff}.pr-block.p-hi .pr-label{color:var(–red)}
-.pr-block.p-sw .pr-label{color:var(–orange)}.pr-block.p-wn .pr-label{color:var(–gold)}.pr-block.p-ti .pr-label{color:var(–teal)}
+.pr-block.p-lo .pr-label{color:#6090ff}
+.pr-block.p-hi .pr-label{color:var(–red)}
+.pr-block.p-sw .pr-label{color:var(–orange)}
+.pr-block.p-wn .pr-label{color:var(–gold)}
+.pr-block.p-ti .pr-label{color:var(–teal)}
 .pr-symptoms{font-size:11.5px;color:var(–mid);margin-bottom:6px;font-style:italic;line-height:1.55}
 .rx{list-style:none;display:flex;flex-direction:column;gap:4px}
 .rx li{display:flex;align-items:baseline;gap:5px;font-size:12px;line-height:1.55}
 .rx li::before{content:“→”;color:var(–teal);font-family:monospace;font-size:11px;flex-shrink:0}
 .dose{font-family:‘IBM Plex Mono’,monospace;font-size:9px;color:var(–gold);background:rgba(232,184,36,.08);border-radius:4px;padding:1px 5px;margin-left:2px;white-space:nowrap}
 .nt{font-size:10px;color:var(–dim);display:block;margin-left:14px;font-style:italic;margin-top:1px}
-.step-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:2px;color:var(–teal);text-transform:uppercase;border-bottom:1px solid var(–blt);padding-bottom:3px;margin:10px 0 6px}
+.step-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:2px;color:var(–teal);text-transform:uppercase;border-bottom:1px solid rgba(24,48,90,.5);padding-bottom:3px;margin:10px 0 6px}
 .inl-w{background:var(–wb);border:1px solid var(–wbr);border-radius:6px;padding:7px 10px;font-size:12px;color:var(–wt);margin-bottom:8px}
 .inl-b{background:var(–rb);border:1px solid var(–rbr);border-radius:6px;padding:7px 10px;font-size:12px;color:var(–rt);margin-bottom:8px}
 .inl-t{background:var(–tb);border:1px solid var(–tbr);border-radius:6px;padding:7px 10px;font-size:12px;color:var(–tt);margin-bottom:8px}
@@ -156,241 +233,149 @@ letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity .6s}
 .econ-n{font-family:‘IBM Plex Mono’,monospace;font-size:16px;font-weight:700;color:var(–red)}
 .econ-l{font-size:10px;color:var(–mid)}
 .symp-h{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:2px;color:var(–dim);text-transform:uppercase;margin-bottom:4px;display:block}
-.symp-t{font-size:12px;color:var(–mid);line-height:1.6}
+.symp-t{font-size:12px;color:var(–mid);line-height:1.6;margin-bottom:8px}
 .cause{font-size:12px;color:var(–mid);line-height:1.6;margin-bottom:8px}
 .cause strong{color:var(–text)}
 </style>
 
 </head>
 <body>
-<div id="app">
 
-  <div id="topbar">
-    <div class="tb-row">
-      <div class="tb-logo">SHRIMP<span> / AQUA FIELD GUIDE</span></div>
-      <div class="ls-pills">
-        <button class="ls-btn active" data-l="en">EN</button>
-        <button class="ls-btn" data-l="bn">বাংলা</button>
-        <button class="ls-btn" data-l="te">తె</button>
-      </div>
-    </div>
-    <div id="search-wrap">
-      <span class="s-icon">🔍</span>
-      <input id="search-input" type="search" placeholder="Search problems…" autocomplete="off">
+<!-- TOPBAR -->
+
+<div id="topbar">
+  <div class="tb-row">
+    <div class="tb-logo">SHRIMP<span> / AQUA GUIDE</span></div>
+    <div class="ls-pills">
+      <button class="ls-btn active" data-l="en">EN</button>
+      <button class="ls-btn" data-l="bn">বাংলা</button>
+      <button class="ls-btn" data-l="te">తె</button>
     </div>
   </div>
-
-  <div id="tabs">
-    <button class="tab-btn active" data-tab="wq">💧 Water Quality <span class="tc">10</span></button>
-    <button class="tab-btn dis" data-tab="dis">🦠 Diseases <span class="tc">8</span></button>
+  <div class="s-wrap">
+    <span class="s-icon">🔍</span>
+    <input id="search-box" type="search" placeholder="Search problems…" autocomplete="off" autocorrect="off">
   </div>
-
-  <div id="scroll-area">
-    <div id="card-list"></div>
-    <div id="empty">🔎 No results found</div>
-  </div>
-
-  <div id="detail">
-    <div id="dhead">
-      <button id="back">← Back</button>
-      <div id="dicon"></div>
-      <div id="dtitle"></div>
-      <div id="dsub"></div>
-      <div id="dbadges"></div>
-    </div>
-    <div id="dscroll">
-      <div id="den" class="t-en"></div>
-      <div id="dbn" class="t-bn"></div>
-      <div id="dte" class="t-te"></div>
-    </div>
-    <div id="dswipe">← swipe right to go back</div>
-  </div>
-
 </div>
+
+<!-- TABS -->
+
+<div id="tabs">
+  <button class="tab-btn active" data-tab="wq">💧 Water Quality <span class="tc">10</span></button>
+  <button class="tab-btn dis" data-tab="dis">🦠 Diseases <span class="tc">8</span></button>
+</div>
+
+<!-- MAIN SCROLL AREA -->
+
+<div id="scroll-area">
+  <div id="card-list">
+    <!-- cards injected by JS -->
+  </div>
+  <div id="empty-msg">🔎 No results</div>
+</div>
+
+<!-- DETAIL PANEL -->
+
+<div id="detail">
+  <div id="dhead">
+    <button id="back-btn">← Back</button>
+    <div id="d-icon"></div>
+    <div id="d-title"></div>
+    <div id="d-sub"></div>
+    <div id="d-badges"></div>
+  </div>
+  <div id="dscroll">
+    <div id="den" class="t-en"></div>
+    <div id="dbn" class="t-bn"></div>
+    <div id="dte" class="t-te"></div>
+  </div>
+</div>
+
 <script>
-// ═══════════════════════════════════
-// CARD DATA (18 cards × EN/BN/TE)
-// ═══════════════════════════════════
+// ═══════════════════════════════════════════════
+// CARD DATA — 18 cards × EN / BN / TE
+// ═══════════════════════════════════════════════
 const C = {
 wq:[
 {id:"do",icon:"💨",color:"c-teal",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"Most Critical"}],
  title:{en:"Dissolved Oxygen (DO)",bn:"দ্রবীভূত অক্সিজেন (DO)",te:"కరిగిన ఆక్సిజన్ (DO)"},
  sub:{en:"Dawn 2–6 AM kill window · Bottom crisis first",bn:"ভোর ২–৬টা বিপদজনক · তলায় সংকট আগে",te:"తెల్లవారు 2–6 AM ప్రమాదం · నేల వద్ద ముందు సంక్షోభం"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">≥5 mg/L day · ≥4 mg/L dawn · &gt;3 mg/L min</span></div>
-<div class="elab-block"><div class="elab-head">Why Bottom Crisis Hits First</div>Shrimp live and feed at the pond floor — DO is always lowest there. Surface DO of 5 mg/L can mean only 2–3 mg/L at the bottom. At DO &lt;3, shrimp cannot extract O₂ across gill membranes — they surface-gasp. Within hours: irreversible gill damage, immune collapse, Vibrio invasion. DO crashes kill in hours, not days. At 30 ppt and 30°C, maximum DO solubility is 20% lower than freshwater at 25°C.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ Low DO (&lt;4 mg/L) — Emergency</div><div class="pr-symptoms">Shrimp crowd edges &amp; surface at 2–5 AM. Paddlewheel running but shrimp still struggling. Feed tray empty next morning. Onset after algae crash or overcast night.</div><ul class="rx"><li>Run ALL aerators immediately — do not wait for daylight<span class="nt">Dawn 2–6 AM is peak danger. Night watchman must check DO at 3 AM, not 6 AM.</span></li><li>Emergency water exchange from clean reservoir <span class="dose">20–30%</span><span class="nt">Monsoon canal water = low DO + pathogens. Never use untreated water during DO crisis.</span></li><li>Stop feeding until DO stable ≥5 mg/L for 2+ hours</li><li>CaO (quicklime) — suppress organic O₂ demand <span class="dose">8–12 kg/acre</span></li><li>Zeolite — absorb ammonia spike from decomposition <span class="dose">15–20 kg/acre</span></li><li>Remove dead shrimp immediately — 1 kg decomposing shrimp consumes ≈1 g O₂/hr</li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ Supersaturation (&gt;12 mg/L) — Gas Bubble Disease</div><div class="pr-symptoms">After dense algae bloom + intense afternoon sun. N₂ and O₂ gas emboli form in haemolymph. Shrimp float with gas pockets visible under carapace.</div><ul class="rx"><li>Partial water exchange — dilute algae density <span class="dose">15–20%</span></li><li>Stop fertiliser application. Reduce feeding 50%.</li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ DO–Algae Crash Cycle</span>Dense bloom photosynthesises → DO 12–15 mg/L by 2 PM → algae respire all night → crash to 1–2 mg/L by 4 AM. 72–89% of feed phosphorus drives this cycle. Monitor Secchi daily. &lt;25 cm = crash within 24–48 hrs.</div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">≥৫ মি.গ্রা/লি (দিনে) · ≥৪ (ভোরে) · ন্যূনতম &gt;৩</span></div>
-<div class="elab-block"><div class="elab-head">চিংড়ি কেন তলায় আগে কষ্ট পায়</div>চিংড়ি পুকুরের তলায় বাস ও খাবার করে — সেখানে DO সর্বদা কম। উপরে ৫ মি.গ্রা/লি মানে তলায় মাত্র ২–৩। DO &lt;৩-এ ফুলকা দিয়ে পর্যাপ্ত O₂ নেওয়া যায় না। ঘণ্টার মধ্যে ফুলকার ক্ষতি, রোগ প্রতিরোধ শক্তি ভেঙে পড়া, ভিব্রিও সংক্রমণ। DO সংকট ঘণ্টার মধ্যে মেরে ফেলে।</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ কম DO (&lt;৪) — জরুরি পদক্ষেপ</div><div class="pr-symptoms">চিংড়ি পুকুর পাড়ে ও উপরে ভোর ২–৫টায়। প্যাডেল হুইল চলছে তবু সংকট। খাবার পাত্র খালি।</div><ul class="rx"><li>সব এয়ারেটর তক্ষুনি চালু করুন<span class="nt">ভোর ২–৬টা সর্বাধিক বিপজ্জনক। রাতের পাহারাদার ভোর ৩টায় DO মাপবে।</span></li><li>পরিষ্কার ভান্ডার থেকে জরুরি পানি বদল <span class="dose">২০–৩০%</span></li><li>DO স্থিতিশীলভাবে ≥৫ না হওয়া পর্যন্ত খাওয়ানো বন্ধ</li><li>CaO (পোড়া চুন) <span class="dose">৮–১২ কেজি/একর</span></li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>মরা চিংড়ি দ্রুত সরান</li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ শেওলা-অক্সিজেন চক্র</span>ঘন শেওলা → বিকেলে DO ১২+ → ভোর ৪টায় DO ১–২-তে পড়ে। সেচি &lt;২৫ সেমি = ২৪–৪৮ ঘণ্টায় ক্র্যাশ।</div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">≥5 mg/L పగటి · ≥4 తెల్లవారు · కనిష్టం &gt;3</span></div>
-<div class="elab-block"><div class="elab-head">రొయ్యలు నేల వద్ద ఎందుకు ముందు కష్టపడతాయి</div>రొయ్యలు చెరువు నేలపై జీవిస్తాయి — DO అక్కడ ఎల్లప్పుడూ తక్కువ. DO &lt;3 వద్ద గిల్స్ O₂ తీసుకోలేవు. గంటల్లో గిల్స్ శాశ్వత నష్టం, రోగనిరోధకత పతనం, విబ్రియో సంక్రమణ.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ తక్కువ DO (&lt;4) — అత్యవసరం</div><div class="pr-symptoms">రొయ్యలు తెల్లవారు 2–5 AM అంచులకు వస్తాయి. ఆహారపు తట్ట ఖాళీ.</div><ul class="rx"><li>అన్ని ఏరేటర్లు వెంటనే ఆన్<span class="nt">తెల్లవారు 2–6 AM అత్యంత ప్రమాదకర. కాపలా 3 AM కి DO తనిఖీ చేయాలి.</span></li><li>నిల్వ నీటి నుండి అత్యవసర నీటి మార్పు <span class="dose">20–30%</span></li><li>DO ≥5 స్థిరంగా వచ్చేంత వరకు ఆహారం ఆపండి</li><li>CaO (కాచిన సున్నం) <span class="dose">8–12 కి.గ్రా/ఎకరా</span></li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>చనిపోయిన రొయ్యలు వెంటనే తీసివేయండి</li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ ఆల్గే-DO చక్రం</span>దట్టమైన ఆల్గే → మధ్యాహ్నం DO 12+ → తెల్లవారు 4 AM కి DO 1–2. సెక్కి &lt;25 సెం.మీ = 24–48 గంటల్లో క్రాష్.</div>`
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">≥5 mg/L day · ≥4 mg/L dawn · &gt;3 mg/L min</span></div><div class="elab-block"><div class="elab-head">Why Bottom Crisis Hits First</div>Shrimp live and feed at the pond floor — DO is always lowest there. Surface DO 5 mg/L can mean only 2–3 at the bottom. At DO&lt;3, shrimp cannot extract O₂ across gill membranes — they surface-gasp. Within hours: gill damage, immune collapse, Vibrio invasion. DO crashes kill in hours, not days.</div><div class="pr-block p-lo"><div class="pr-label">⬇ Low DO (&lt;4 mg/L) — Emergency</div><div class="pr-symptoms">Shrimp crowd edges &amp; surface at 2–5 AM. Feed tray empty next morning. Onset after algae crash or overcast night.</div><ul class="rx"><li>Run ALL aerators immediately — do not wait for daylight<span class="nt">Dawn 2–6 AM is peak danger. Night watchman must check DO at 3 AM, not 6 AM.</span></li><li>Emergency water exchange from clean reservoir <span class="dose">20–30%</span></li><li>Stop feeding until DO stable ≥5 mg/L for 2+ hours</li><li>CaO (quicklime) <span class="dose">8–12 kg/acre</span></li><li>Zeolite — absorb ammonia spike <span class="dose">15–20 kg/acre</span></li><li>Remove dead shrimp immediately</li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ Supersaturation (&gt;12 mg/L) — Gas Bubble</div><ul class="rx"><li>Partial water exchange <span class="dose">15–20%</span></li><li>Stop fertiliser. Cut feeding 50%.</li></ul></div><div class="inl-w"><span class="bxh">⚠ DO–Algae Crash Cycle</span>Dense bloom → DO 12+ at 2 PM → crash to 1–2 by 4 AM. Monitor Secchi daily. &lt;25 cm = crash within 24–48 hrs.</div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">≥৫ মি.গ্রা/লি (দিনে) · ≥৪ (ভোরে) · ন্যূনতম &gt;৩</span></div><div class="elab-block"><div class="elab-head">চিংড়ি কেন তলায় আগে কষ্ট পায়</div>চিংড়ি পুকুরের তলায় বাস করে — সেখানে DO সর্বদা কম। উপরে ৫ মানে তলায় ২–৩। DO &lt;৩-এ ফুলকা দিয়ে O₂ নেওয়া যায় না। ঘণ্টার মধ্যে ফুলকার ক্ষতি, ভিব্রিও সংক্রমণ।</div><div class="pr-block p-lo"><div class="pr-label">⬇ কম DO (&lt;৪) — জরুরি পদক্ষেপ</div><ul class="rx"><li>সব এয়ারেটর তক্ষুনি চালু করুন<span class="nt">ভোর ২–৬টা সর্বাধিক বিপজ্জনক। রাতের পাহারাদার ভোর ৩টায় DO মাপবে।</span></li><li>পরিষ্কার ভান্ডার থেকে জরুরি পানি বদল <span class="dose">২০–৩০%</span></li><li>DO ≥৫ না হওয়া পর্যন্ত খাওয়ানো বন্ধ</li><li>CaO (পোড়া চুন) <span class="dose">৮–১২ কেজি/একর</span></li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>মরা চিংড়ি দ্রুত সরান</li></ul></div><div class="inl-w"><span class="bxh">⚠ শেওলা-অক্সিজেন চক্র</span>ঘন শেওলা → বিকেলে DO ১২+ → ভোর ৪টায় DO ১–২। সেচি &lt;২৫ সেমি = ২৪–৪৮ ঘণ্টায় ক্র্যাশ।</div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">≥5 mg/L పగటి · ≥4 తెల్లవారు · కనిష్టం &gt;3</span></div><div class="elab-block"><div class="elab-head">రొయ్యలు నేల వద్ద ఎందుకు ముందు కష్టపడతాయి</div>రొయ్యలు చెరువు నేలపై జీవిస్తాయి — DO అక్కడ ఎల్లప్పుడూ తక్కువ. DO &lt;3 వద్ద గిల్స్ O₂ తీసుకోలేవు. గంటల్లో నష్టం, విబ్రియో సంక్రమణ.</div><div class="pr-block p-lo"><div class="pr-label">⬇ తక్కువ DO (&lt;4) — అత్యవసరం</div><ul class="rx"><li>అన్ని ఏరేటర్లు వెంటనే ఆన్<span class="nt">తెల్లవారు 2–6 AM అత్యంత ప్రమాదకర. కాపలా 3 AM కి DO తనిఖీ చేయాలి.</span></li><li>నిల్వ నీటి నుండి అత్యవసర నీటి మార్పు <span class="dose">20–30%</span></li><li>DO ≥5 స్థిరంగా వచ్చేంత వరకు ఆహారం ఆపండి</li><li>CaO (కాచిన సున్నం) <span class="dose">8–12 కి.గ్రా/ఎకరా</span></li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>చనిపోయిన రొయ్యలు వెంటనే తీసివేయండి</li></ul></div><div class="inl-w"><span class="bxh">⚠ ఆల్గే-DO చక్రం</span>దట్టమైన ఆల్గే → మధ్యాహ్నం DO 12+ → తెల్లవారు 4 AM కి DO 1–2. సెక్కి &lt;25 సెం.మీ = 24–48 గంటల్లో క్రాష్.</div>`
 },
 {id:"ph",icon:"⚖️",color:"c-gold",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-wq",t:"Ammonia Link"}],
  title:{en:"pH — Acid-Base Balance",bn:"pH — অম্ল-ক্ষার ভারসাম্য",te:"pH — ఆమ్ల-క్షార సమతుల్యత"},
- sub:{en:"NH₃ 10× more toxic at pH 9 · Swing ≤0.5/day",bn:"pH ৯-এ NH₃ ১০× বিষাক্ত · দৈনিক পরিবর্তন ≤০.৫",te:"pH 9 వద్ద NH₃ 10× విషపూరితం · వ్యత్యాసం ≤0.5/రోజు"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">7.5–8.5 · AM 7.8 · PM 8.3 · Swing ≤0.5/day</span></div>
-<div class="elab-block"><div class="elab-head">pH Management = Ammonia Management</div>At pH 7.5: only 0.3% of TAN is toxic NH₃. At pH 8.5 → 3%. At pH 9.0 → 15%. A pond with 0.5 mg/L TAN is safe at pH 7.5 but critically toxic at pH 9.0. Every algae bloom pushes pH up as CO₂ is consumed in photosynthesis — simultaneously amplifying ammonia toxicity tenfold. Acid sulfate soils in coastal AP and Bengal delta make low pH a constant management challenge.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ Low pH (&lt;7.5) — Acid Pond</div><div class="pr-symptoms">Common in acid sulfate soils, after heavy rain, or post algae crash. H₂S toxicity rises sharply below pH 7.0. Shell calcification impaired — moulting fails. Metal toxicity (Al³⁺, Fe²⁺) leaches from acidic soil.</div><ul class="rx"><li>Agricultural lime Ca(OH)₂ — fastest correction <span class="dose">100–200 kg/acre</span><span class="nt">Apply at dusk. Check pH next morning. Raises 0.5–1.0 per application.</span></li><li>Dolomite CaMg(CO₃)₂ — sustained buffering + Mg²⁺ <span class="dose">100–200 kg/ha fortnightly</span></li><li>CaO — dry pond inter-crop neutralisation <span class="dose">300–400 kg/acre</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ High pH (&gt;9.0) — Algae Bloom</div><div class="pr-symptoms">Dense phytoplankton consuming CO₂ → pH rises. NH₃ fraction jumps sharply. Water intensely green. Afternoon Secchi &lt;20 cm.</div><ul class="rx"><li>Alum Al₂(SO₄)₃ <span class="dose">5–10 kg/acre</span></li><li>Gypsum CaSO₄ <span class="dose">50–75 kg/acre</span></li><li>Partial water exchange <span class="dose">15–20%</span></li><li>Probiotic — stabilise bloom composition <span class="dose">1 kg/acre</span></li></ul></div>
-<div class="pr-block p-sw"><div class="pr-label">↕ Wide Diurnal Swing (&gt;0.5 units AM→PM)</div><ul class="rx"><li>Dolomite — raise buffering capacity to 150–180 ppm <span class="dose">100–200 kg/ha fortnightly</span></li><li>Partial water exchange to dilute algae density <span class="dose">10–15% daily × 3–5 days</span></li></ul></div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">৭.৫–৮.৫ · ভোরে ৭.৮ · বিকেলে ৮.৩</span></div>
-<div class="elab-block"><div class="elab-head">pH ব্যবস্থাপনা = অ্যামোনিয়া ব্যবস্থাপনা</div>pH ৭.৫-এ TAN-এর মাত্র ০.৩% বিষাক্ত NH₃। pH ৮.৫-এ → ৩%। pH ৯.০-এ → ১৫%। শেওলার ব্লুম CO₂ গ্রহণ করে pH বাড়ায় — একই সাথে অ্যামোনিয়া বিষাক্ততা দশগুণ বাড়ে।</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ কম pH (&lt;৭.৫)</div><ul class="rx"><li>কৃষি চুন Ca(OH)₂ <span class="dose">১০০–২০০ কেজি/একর</span><span class="nt">সন্ধ্যায় দিন। পরের দিন pH মাপুন।</span></li><li>ডলোমাইট CaMg(CO₃)₂ <span class="dose">১০০–২০০ কেজি/হেক্টর পক্ষকালে</span></li><li>CaO — শুকনো পুকুরে <span class="dose">৩০০–৪০০ কেজি/একর</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ বেশি pH (&gt;৯.০)</div><ul class="rx"><li>ফিটকিরি Al₂(SO₄)₃ <span class="dose">৫–১০ কেজি/একর</span></li><li>জিপসাম CaSO₄ <span class="dose">৫০–৭৫ কেজি/একর</span></li><li>আংশিক পানি বদল <span class="dose">১৫–২০%</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li></ul></div>
-<div class="pr-block p-sw"><div class="pr-label">↕ বড় দৈনিক ওঠানামা</div><ul class="rx"><li>ডলোমাইট <span class="dose">১০০–২০০ কেজি/হেক্টর পক্ষকালে</span></li><li>পানি বদল <span class="dose">১০–১৫% × ৩–৫ দিন</span></li></ul></div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">7.5–8.5 · తెల్లవారు 7.8 · మధ్యాహ్నం 8.3</span></div>
-<div class="elab-block"><div class="elab-head">pH నిర్వహణ = అమోనియా నిర్వహణ</div>pH 7.5 వద్ద TAN లో 0.3% మాత్రమే విషపూరిత NH₃. pH 8.5 వద్ద → 3%. pH 9.0 వద్ద → 15%. ఆల్గే బ్లూమ్ CO₂ వినియోగిస్తూ pH పెంచుతుంది — అమోనియా విషపూరితత పదిరెట్లు పెరుగుతుంది.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ తక్కువ pH (&lt;7.5)</div><ul class="rx"><li>వ్యవసాయ సున్నం Ca(OH)₂ <span class="dose">100–200 కి.గ్రా/ఎకరా</span><span class="nt">సాయంత్రం వేయండి. మరుసటి రోజు pH తనిఖీ చేయండి.</span></li><li>డోలమైట్ <span class="dose">100–200 కి.గ్రా/హెక్టార్ పక్షానికోసారి</span></li><li>CaO — శుష్క చెరువు <span class="dose">300–400 కి.గ్రా/ఎకరా</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ అధిక pH (&gt;9.0)</div><ul class="rx"><li>అలం Al₂(SO₄)₃ <span class="dose">5–10 కి.గ్రా/ఎకరా</span></li><li>జిప్సం CaSO₄ <span class="dose">50–75 కి.గ్రా/ఎకరా</span></li><li>పాక్షిక నీటి మార్పు <span class="dose">15–20%</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li></ul></div>
-<div class="pr-block p-sw"><div class="pr-label">↕ విస్తృత రోజువారీ వ్యత్యాసం</div><ul class="rx"><li>డోలమైట్ <span class="dose">100–200 కి.గ్రా/హెక్టార్ పక్షానికోసారి</span></li><li>నీటి మార్పు <span class="dose">10–15% × 3–5 రోజులు</span></li></ul></div>`
+ sub:{en:"NH₃ 10× more toxic at pH 9 · Swing ≤0.5/day",bn:"pH ৯-এ NH₃ ১০× বিষাক্ত",te:"pH 9 వద్ద NH₃ 10× విషపూరితం"},
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">7.5–8.5 · AM 7.8 · PM 8.3 · Swing ≤0.5/day</span></div><div class="elab-block"><div class="elab-head">pH Management = Ammonia Management</div>At pH 7.5: only 0.3% of TAN is toxic NH₃. At pH 8.5 → 3%. At pH 9.0 → 15%. Every algae bloom pushes pH up as CO₂ is consumed — simultaneously amplifying ammonia toxicity tenfold. Acid sulfate soils in coastal AP and Bengal delta make low pH a constant challenge.</div><div class="pr-block p-lo"><div class="pr-label">⬇ Low pH (&lt;7.5) — Acid Pond</div><ul class="rx"><li>Agricultural lime Ca(OH)₂ — fastest <span class="dose">100–200 kg/acre</span><span class="nt">Apply at dusk. Check pH next morning. Raises 0.5–1.0 per application.</span></li><li>Dolomite CaMg(CO₃)₂ — sustained buffering <span class="dose">100–200 kg/ha fortnightly</span></li><li>CaO — dry pond inter-crop treatment <span class="dose">300–400 kg/acre</span></li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ High pH (&gt;9.0) — Algae Bloom</div><ul class="rx"><li>Alum Al₂(SO₄)₃ <span class="dose">5–10 kg/acre</span></li><li>Gypsum CaSO₄ <span class="dose">50–75 kg/acre</span></li><li>Partial water exchange <span class="dose">15–20%</span></li><li>Probiotic <span class="dose">1 kg/acre</span></li></ul></div><div class="pr-block p-sw"><div class="pr-label">↕ Wide Diurnal Swing (&gt;0.5 units)</div><ul class="rx"><li>Dolomite — raise buffering to 150–180 ppm <span class="dose">100–200 kg/ha fortnightly</span></li><li>Water exchange <span class="dose">10–15% daily × 3–5 days</span></li></ul></div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">৭.৫–৮.৫ · ভোরে ৭.৮ · বিকেলে ৮.৩</span></div><div class="elab-block"><div class="elab-head">pH ব্যবস্থাপনা = অ্যামোনিয়া ব্যবস্থাপনা</div>pH ৭.৫-এ TAN-এর মাত্র ০.৩% বিষাক্ত NH₃। pH ৮.৫-এ → ৩%। pH ৯.০-এ → ১৫%। শেওলার ব্লুম CO₂ গ্রহণ করে pH বাড়ায় — অ্যামোনিয়া বিষাক্ততা দশগুণ বাড়ে।</div><div class="pr-block p-lo"><div class="pr-label">⬇ কম pH (&lt;৭.৫)</div><ul class="rx"><li>কৃষি চুন Ca(OH)₂ <span class="dose">১০০–২০০ কেজি/একর</span><span class="nt">সন্ধ্যায় দিন। পরের দিন pH মাপুন।</span></li><li>ডলোমাইট <span class="dose">১০০–২০০ কেজি/হেক্টর পক্ষকালে</span></li><li>CaO — শুকনো পুকুরে <span class="dose">৩০০–৪০০ কেজি/একর</span></li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ বেশি pH (&gt;৯.০)</div><ul class="rx"><li>ফিটকিরি Al₂(SO₄)₃ <span class="dose">৫–১০ কেজি/একর</span></li><li>জিপসাম CaSO₄ <span class="dose">৫০–৭৫ কেজি/একর</span></li><li>আংশিক পানি বদল <span class="dose">১৫–২০%</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li></ul></div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">7.5–8.5 · తెల్లవారు 7.8 · మధ్యాహ్నం 8.3</span></div><div class="elab-block"><div class="elab-head">pH నిర్వహణ = అమోనియా నిర్వహణ</div>pH 7.5 వద్ద TAN లో 0.3% మాత్రమే NH₃. pH 8.5 వద్ద → 3%. pH 9.0 వద్ద → 15%. ఆల్గే బ్లూమ్ CO₂ వినియోగిస్తూ pH పెంచుతుంది — అమోనియా విషపూరితత పదిరెట్లు పెరుగుతుంది.</div><div class="pr-block p-lo"><div class="pr-label">⬇ తక్కువ pH (&lt;7.5)</div><ul class="rx"><li>వ్యవసాయ సున్నం Ca(OH)₂ <span class="dose">100–200 కి.గ్రా/ఎకరా</span><span class="nt">సాయంత్రం వేయండి. మరుసటి రోజు pH తనిఖీ చేయండి.</span></li><li>డోలమైట్ <span class="dose">100–200 కి.గ్రా/హెక్టార్ పక్షానికోసారి</span></li><li>CaO — శుష్క చెరువు <span class="dose">300–400 కి.గ్రా/ఎకరా</span></li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ అధిక pH (&gt;9.0)</div><ul class="rx"><li>అలం Al₂(SO₄)₃ <span class="dose">5–10 కి.గ్రా/ఎకరా</span></li><li>జిప్సం CaSO₄ <span class="dose">50–75 కి.గ్రా/ఎకరా</span></li><li>పాక్షిక నీటి మార్పు <span class="dose">15–20%</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li></ul></div>`
 },
 {id:"ammonia",icon:"☠️",color:"c-red",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"pH Amplified"}],
  title:{en:"Ammonia (TAN / NH₃)",bn:"অ্যামোনিয়া (TAN / NH₃)",te:"అమోనియా (TAN / NH₃)"},
- sub:{en:"10× more toxic at pH 9 · Gill damage gateway",bn:"pH ৯-এ ১০× বিষাক্ত · ফুলকা ক্ষতি",te:"pH 9 వద్ద 10× విషపూరితం · గిల్ దెబ్బ"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">TAN ≤0.1 mg/L · UN-ionised NH₃ &lt;0.01 mg/L</span></div>
-<div class="elab-block"><div class="elab-head">Two Forms — One Harmless, One Lethal</div>Ammonia exists as NH₄⁺ (harmless) and NH₃ (toxic). As pH and temperature rise, more shifts to toxic NH₃. At pH 9.0 and 32°C, up to 20% of TAN is NH₃. NH₃ passes freely through gill membranes causing necrosis, O₂ carrying reduction, and immune collapse — the entry point for Vibrio septicaemia.</div>
-<div class="pr-block p-hi"><div class="pr-label">Elevated TAN (&gt;0.1 mg/L)</div><div class="pr-symptoms">Reduced feeding (first sign). Gill reddening. Sluggish movement at edges. Increased susceptibility to bacterial infection.</div><ul class="rx"><li>Stop feeding — cut primary nitrogen input immediately</li><li>Water exchange <span class="dose">15–25%</span><span class="nt">Clean reservoir only. Canal water may carry equal ammonia from agricultural runoff.</span></li><li>Zeolite (clinoptilolite) <span class="dose">15–20 kg/acre</span><span class="nt">Most effective at &lt;5 ppt. Effectiveness drops above 15 ppt due to Na⁺ competition.</span></li><li>Molasses — C:N for heterotrophic bacteria to assimilate NH₄⁺ <span class="dose">5–10 kg/acre dissolved</span></li><li>Probiotics (Bacillus) <span class="dose">1 kg/acre</span></li><li>Maintain pH 7.5–8.0 — keeps toxic NH₃ fraction low even at elevated TAN</li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ pH Multiplier</span>At pH 8.5 &amp; 30°C → ~5% TAN is NH₃. At pH 9.0 → ~15%. Any algae bloom pH spike converts moderate TAN into an immediate lethal crisis. pH control is as critical as reducing TAN itself.</div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">TAN ≤০.১ মি.গ্রা/লি · NH₃ &lt;০.০১</span></div>
-<div class="elab-block"><div class="elab-head">দুই রূপ — একটি নিরীহ, একটি মারণ</div>NH₄⁺ (নিরীহ) ও NH₃ (বিষাক্ত)। pH ও তাপমাত্রা বাড়লে বেশি NH₃ হয়। pH ৯.০ ও ৩২°C-এ TAN-এর ২০% পর্যন্ত NH₃। NH₃ ফুলকা দিয়ে ক্ষতি করে ও ভিব্রিও সেপটিসেমিয়ার পথ খোলে।</div>
-<div class="pr-block p-hi"><div class="pr-label">উচ্চ TAN (&gt;০.১)</div><ul class="rx"><li>খাওয়ানো বন্ধ করুন</li><li>পানি বদল <span class="dose">১৫–২৫%</span></li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>গুড় <span class="dose">৫–১০ কেজি/একর গুলিয়ে</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li><li>pH ৭.৫–৮.০ বজায় রাখুন</li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ pH গুণক</span>pH ৮.৫ ও ৩০°C-এ ~৫% TAN NH₃। pH ৯.০-এ ~১৫%। শেওলার ব্লুমে pH বাড়লে মাঝারি TAN তাৎক্ষণিক মারণ সংকট।</div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">TAN ≤0.1 mg/L · NH₃ &lt;0.01 mg/L</span></div>
-<div class="elab-block"><div class="elab-head">రెండు రూపాలు — ఒకటి హానిరహితం, ఒకటి మారణం</div>NH₄⁺ (హానిరహితం) &amp; NH₃ (విషపూరితం). pH &amp; ఉష్ణోగ్రత పెరిగే కొద్దీ ఎక్కువ NH₃ అవుతుంది. pH 9.0 &amp; 32°C వద్ద TAN లో 20% వరకు NH₃. NH₃ గిల్స్ ద్వారా నష్టం కలిగిస్తుంది, విబ్రియో సెప్టిసెమియా ప్రవేశ ద్వారం తెరుస్తుంది.</div>
-<div class="pr-block p-hi"><div class="pr-label">అధిక TAN (&gt;0.1)</div><ul class="rx"><li>ఆహారం ఆపండి</li><li>నీటి మార్పు <span class="dose">15–25%</span></li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>మొలాసెస్ <span class="dose">5–10 కి.గ్రా/ఎకరా కరిగించి</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li><li>pH 7.5–8.0 నిర్వహించండి</li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ pH గుణకం</span>pH 8.5 &amp; 30°C వద్ద ~5% TAN NH₃. pH 9.0 వద్ద ~15%. ఆల్గే బ్లూమ్ pH స్పైక్ మితమైన TAN ను తక్షణ మారణ సంక్షోభంగా మారుస్తుంది.</div>`
+ sub:{en:"10× more toxic at pH 9 · Gill damage → Vibrio gateway",bn:"pH ৯-এ ১০× বিষাক্ত",te:"pH 9 వద్ద 10× విషపూరితం"},
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">TAN ≤0.1 mg/L · UN-ionised NH₃ &lt;0.01 mg/L</span></div><div class="elab-block"><div class="elab-head">Two Forms — One Harmless, One Lethal</div>Ammonia exists as NH₄⁺ (harmless) and NH₃ (toxic). As pH and temperature rise, more shifts to toxic NH₃. At pH 9.0 and 32°C, up to 20% of TAN is NH₃. NH₃ passes freely through gill membranes causing necrosis, O₂ carrying reduction, immune collapse — opening the door to Vibrio septicaemia.</div><div class="pr-block p-hi"><div class="pr-label">Elevated TAN (&gt;0.1 mg/L)</div><div class="pr-symptoms">Reduced feeding (first sign). Gill reddening. Sluggish at edges. Increased bacterial infection.</div><ul class="rx"><li>Stop feeding — cut primary nitrogen input immediately</li><li>Water exchange <span class="dose">15–25%</span></li><li>Zeolite (clinoptilolite) <span class="dose">15–20 kg/acre</span><span class="nt">Most effective at &lt;5 ppt. Drops above 15 ppt due to Na⁺ competition.</span></li><li>Molasses — C:N for heterotrophic bacteria <span class="dose">5–10 kg/acre dissolved</span></li><li>Probiotics (Bacillus) <span class="dose">1 kg/acre</span></li><li>Maintain pH 7.5–8.0 — keeps toxic NH₃ fraction low</li></ul></div><div class="inl-w"><span class="bxh">⚠ pH Multiplier</span>At pH 8.5 &amp; 30°C → ~5% TAN is NH₃. At pH 9.0 → ~15%. Any algae bloom pH spike converts moderate TAN into an immediate lethal crisis.</div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">TAN ≤০.১ মি.গ্রা/লি · NH₃ &lt;০.০১</span></div><div class="elab-block"><div class="elab-head">দুই রূপ — একটি নিরীহ, একটি মারণ</div>NH₄⁺ (নিরীহ) ও NH₃ (বিষাক্ত)। pH ও তাপমাত্রা বাড়লে বেশি NH₃ হয়। pH ৯.০ ও ৩২°C-এ TAN-এর ২০% পর্যন্ত NH₃। NH₃ ফুলকা দিয়ে ক্ষতি করে ও ভিব্রিও সেপটিসেমিয়ার পথ খোলে।</div><div class="pr-block p-hi"><div class="pr-label">উচ্চ TAN (&gt;০.১)</div><ul class="rx"><li>খাওয়ানো বন্ধ করুন</li><li>পানি বদল <span class="dose">১৫–২৫%</span></li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>গুড় <span class="dose">৫–১০ কেজি/একর গুলিয়ে</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li><li>pH ৭.৫–৮.০ বজায় রাখুন</li></ul></div><div class="inl-w"><span class="bxh">⚠ pH গুণক</span>pH ৮.৫ ও ৩০°C-এ ~৫% TAN NH₃। pH ৯.০-এ ~১৫%। শেওলার ব্লুমে pH বাড়লে মাঝারি TAN তাৎক্ষণিক মারণ।</div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">TAN ≤0.1 mg/L · NH₃ &lt;0.01 mg/L</span></div><div class="elab-block"><div class="elab-head">రెండు రూపాలు — ఒకటి హానిరహితం, ఒకటి మారణం</div>NH₄⁺ (హానిరహితం) &amp; NH₃ (విషపూరితం). pH &amp; ఉష్ణోగ్రత పెరిగే కొద్దీ ఎక్కువ NH₃ అవుతుంది. pH 9.0 &amp; 32°C వద్ద TAN లో 20% వరకు NH₃. NH₃ గిల్స్ ద్వారా నష్టం కలిగిస్తుంది.</div><div class="pr-block p-hi"><div class="pr-label">అధిక TAN (&gt;0.1)</div><ul class="rx"><li>ఆహారం ఆపండి</li><li>నీటి మార్పు <span class="dose">15–25%</span></li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>మొలాసెస్ <span class="dose">5–10 కి.గ్రా/ఎకరా కరిగించి</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li><li>pH 7.5–8.0 నిర్వహించండి</li></ul></div><div class="inl-w"><span class="bxh">⚠ pH గుణకం</span>pH 8.5 &amp; 30°C వద్ద ~5% TAN NH₃. pH 9.0 వద్ద ~15%. ఆల్గే బ్లూమ్ pH స్పైక్ మితమైన TAN ను తక్షణ మారణ సంక్షోభంగా మారుస్తుంది.</div>`
 },
 {id:"nitrite",icon:"🔶",color:"c-orange",tab:"wq",
- tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"Inland Ponds Risk"}],
+ tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"Inland Risk"}],
  title:{en:"Nitrite (NO₂⁻) — Brown Blood",bn:"নাইট্রাইট (NO₂⁻) — বাদামী রক্ত",te:"నైట్రైట్ (NO₂⁻) — గోధుమ రక్తం"},
- sub:{en:"Cl:NO₂ ≥20:1 · Inland &lt;8 ppt = extreme risk",bn:"৪–৮ ppt পুকুরে চরম ঝুঁকি",te:"4–8 ppt చెరువులలో తీవ్ర ముప్పు"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">&lt;0.1 mg/L · Cl:NO₂ ≥20:1 (inland critical)</span></div>
-<div class="elab-block"><div class="elab-head">Why Inland Low-Salinity Ponds Face Extreme Danger</div>Nitrite competes with chloride ions (Cl⁻) for gill membrane uptake. At 20–30 ppt, high Cl⁻ blocks most NO₂ absorption. At 4–8 ppt inland ponds, Cl⁻ is scarce — even 0.3 mg/L NO₂ causes methaemoglobinaemia (blood loses O₂-carrying capacity). Spikes occur at DOC 20–40 as nitrifying bacteria establish.</div>
-<div class="sal-callout"><div class="zh">Salinity-Specific Nitrite Risk</div><div class="sal-row"><span class="sal-zone">4–8 ppt</span>Cl:NO₂ may fall below 10:1 — extreme risk. Even 0.3 mg/L = crisis. Add NaCl/KCl immediately.</div><div class="sal-row"><span class="sal-zone">8–15 ppt</span>High risk — monitor closely. Supplement chloride if NO₂ &gt;0.3.</div><div class="sal-row"><span class="sal-zone">15–30 ppt</span>Natural Cl⁻ provides buffer. NO₂ &lt;0.5 usually manageable.</div></div>
-<div class="pr-block p-hi"><div class="pr-label">Nitrite Spike — Emergency Response</div><div class="pr-symptoms">Pale/brown gills on dissection. Shrimp appear blue-grey (methaemoglobin). Feeding reduction. Peak risk: DOC 20–40.</div><ul class="rx"><li>Emergency NaCl — raises Cl⁻ to outcompete NO₂ at gill <span class="dose">20–50 kg/acre</span><span class="nt">Inland low-salinity ponds ONLY. Dissolve in water, broadcast evenly.</span></li><li>KCl — where K⁺ also deficient <span class="dose">10–20 kg/acre</span></li><li>Water exchange <span class="dose">20–30%</span></li><li>Zeolite <span class="dose">15 kg/acre</span></li><li>Probiotics — complete nitrification cycle faster <span class="dose">1 kg/acre</span></li><li>Stop overfeeding — reduce nitrogen input until spike resolved</li></ul></div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">&lt;০.১ মি.গ্রা/লি · Cl:NO₂ ≥২০:১</span></div>
-<div class="elab-block"><div class="elab-head">কম লবণাক্ত পুকুরে বিপদ বেশি কেন</div>নাইট্রাইট ও Cl⁻ ফুলকায় একই পথে প্রতিযোগিতা করে। ২০–৩০ ppt-এ Cl⁻ বেশি, NO₂ শোষণ আটকায়। ৪–৮ ppt-এ Cl⁻ কম — ০.৩ মি.গ্রা/লি NO₂-তেই মেথেমোগ্লোবিনেমিয়া।</div>
-<div class="sal-callout"><div class="zh">লবণাক্ততা অনুযায়ী ঝুঁকি</div><div class="sal-row"><span class="sal-zone">৪–৮ ppt</span>চরম ঝুঁকি। ০.৩ মি.গ্রা/লি-তেও সংকট। NaCl/KCl অবিলম্বে।</div><div class="sal-row"><span class="sal-zone">৮–১৫ ppt</span>উচ্চ ঝুঁকি। নিবিড় পর্যবেক্ষণ।</div><div class="sal-row"><span class="sal-zone">১৫–৩০ ppt</span>প্রাকৃতিক Cl⁻ সুরক্ষা দেয়।</div></div>
-<div class="pr-block p-hi"><div class="pr-label">নাইট্রাইট স্পাইক — জরুরি পদক্ষেপ</div><ul class="rx"><li>NaCl জরুরি <span class="dose">২০–৫০ কেজি/একর</span></li><li>KCl <span class="dose">১০–২০ কেজি/একর</span></li><li>পানি বদল <span class="dose">২০–৩০%</span></li><li>জিওলাইট <span class="dose">১৫ কেজি/একর</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li></ul></div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">&lt;0.1 mg/L · Cl:NO₂ ≥20:1</span></div>
-<div class="elab-block"><div class="elab-head">తక్కువ లవణీయత చెరువులలో ఎందుకు అత్యధిక ముప్పు</div>నైట్రైట్ &amp; Cl⁻ గిల్ పొర ద్వారా పోటీ పడతాయి. 20–30 ppt వద్ద Cl⁻ అధికం — NO₂ అవరోధిస్తుంది. 4–8 ppt లో Cl⁻ కొద్దిగా — 0.3 mg/L NO₂ తో మెత్‌హీమోగ్లోబినీమియా.</div>
-<div class="sal-callout"><div class="zh">లవణీయత ప్రకారం ముప్పు</div><div class="sal-row"><span class="sal-zone">4–8 ppt</span>తీవ్ర ముప్పు. 0.3 mg/L తో సంక్షోభం. NaCl/KCl వెంటనే.</div><div class="sal-row"><span class="sal-zone">8–15 ppt</span>అధిక ముప్పు. నిఘా పెంచండి.</div><div class="sal-row"><span class="sal-zone">15–30 ppt</span>సహజ Cl⁻ రక్షణ కలిగిస్తుంది.</div></div>
-<div class="pr-block p-hi"><div class="pr-label">నైట్రైట్ స్పైక్ — అత్యవసర స్పందన</div><ul class="rx"><li>NaCl అత్యవసర <span class="dose">20–50 కి.గ్రా/ఎకరా</span></li><li>KCl <span class="dose">10–20 కి.గ్రా/ఎకరా</span></li><li>నీటి మార్పు <span class="dose">20–30%</span></li><li>జియోలైట్ <span class="dose">15 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li></ul></div>`
+ sub:{en:"Cl:NO₂ ≥20:1 · Inland &lt;8 ppt = extreme danger",bn:"৪–৮ ppt পুকুরে চরম ঝুঁকি",te:"4–8 ppt లో తీవ్ర ముప్పు"},
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">&lt;0.1 mg/L · Cl:NO₂ ≥20:1 (inland critical)</span></div><div class="elab-block"><div class="elab-head">Why Inland Ponds Face Extreme Danger</div>Nitrite competes with chloride (Cl⁻) for gill membrane uptake. At 20–30 ppt, high Cl⁻ blocks most NO₂ uptake. At 4–8 ppt inland ponds, Cl⁻ is scarce — even 0.3 mg/L NO₂ causes methaemoglobinaemia (blood loses O₂-carrying capacity).</div><div class="sal-callout"><div class="zh">Salinity-Specific Nitrite Risk</div><div class="sal-row"><span class="sal-zone">4–8 ppt</span>Extreme risk. 0.3 mg/L = crisis. Add NaCl/KCl immediately.</div><div class="sal-row"><span class="sal-zone">8–15 ppt</span>High risk — monitor closely.</div><div class="sal-row"><span class="sal-zone">15–30 ppt</span>Natural Cl⁻ buffer. Usually manageable.</div></div><div class="pr-block p-hi"><div class="pr-label">Nitrite Spike — Emergency</div><ul class="rx"><li>Emergency NaCl — raises Cl⁻ to outcompete NO₂ at gill <span class="dose">20–50 kg/acre</span></li><li>KCl — where K⁺ also deficient <span class="dose">10–20 kg/acre</span></li><li>Water exchange <span class="dose">20–30%</span></li><li>Zeolite <span class="dose">15 kg/acre</span></li><li>Probiotic — complete N-cycle faster <span class="dose">1 kg/acre</span></li></ul></div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">&lt;০.১ মি.গ্রা/লি · Cl:NO₂ ≥২০:১</span></div><div class="elab-block"><div class="elab-head">কম লবণাক্ত পুকুরে বিপদ বেশি কেন</div>নাইট্রাইট ও Cl⁻ ফুলকায় একই পথে প্রতিযোগিতা করে। ২০–৩০ ppt-এ Cl⁻ বেশি, NO₂ শোষণ আটকায়। ৪–৮ ppt-এ Cl⁻ কম — ০.৩ মি.গ্রা/লি NO₂-তেই মেথেমোগ্লোবিনেমিয়া।</div><div class="sal-callout"><div class="zh">লবণাক্ততা অনুযায়ী ঝুঁকি</div><div class="sal-row"><span class="sal-zone">৪–৮ ppt</span>চরম ঝুঁকি। NaCl/KCl অবিলম্বে।</div><div class="sal-row"><span class="sal-zone">৮–১৫ ppt</span>উচ্চ ঝুঁকি। নিবিড় পর্যবেক্ষণ।</div><div class="sal-row"><span class="sal-zone">১৫–৩০ ppt</span>প্রাকৃতিক Cl⁻ সুরক্ষা দেয়।</div></div><div class="pr-block p-hi"><div class="pr-label">নাইট্রাইট স্পাইক — জরুরি</div><ul class="rx"><li>NaCl জরুরি <span class="dose">২০–৫০ কেজি/একর</span></li><li>KCl <span class="dose">১০–২০ কেজি/একর</span></li><li>পানি বদল <span class="dose">২০–৩০%</span></li><li>জিওলাইট <span class="dose">১৫ কেজি/একর</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li></ul></div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">&lt;0.1 mg/L · Cl:NO₂ ≥20:1</span></div><div class="elab-block"><div class="elab-head">తక్కువ లవణీయత చెరువులలో ఎందుకు అత్యధిక ముప్పు</div>నైట్రైట్ &amp; Cl⁻ గిల్ పొర ద్వారా పోటీ పడతాయి. 20–30 ppt వద్ద Cl⁻ అధికం — NO₂ అవరోధిస్తుంది. 4–8 ppt లో Cl⁻ కొద్దిగా — 0.3 mg/L NO₂ తో మెత్‌హీమోగ్లోబినీమియా.</div><div class="sal-callout"><div class="zh">లవణీయత ప్రకారం ముప్పు</div><div class="sal-row"><span class="sal-zone">4–8 ppt</span>తీవ్ర ముప్పు. NaCl/KCl వెంటనే.</div><div class="sal-row"><span class="sal-zone">8–15 ppt</span>అధిక ముప్పు. నిఘా పెంచండి.</div><div class="sal-row"><span class="sal-zone">15–30 ppt</span>సహజ Cl⁻ రక్షణ.</div></div><div class="pr-block p-hi"><div class="pr-label">నైట్రైట్ స్పైక్ — అత్యవసరం</div><ul class="rx"><li>NaCl అత్యవసర <span class="dose">20–50 కి.గ్రా/ఎకరా</span></li><li>KCl <span class="dose">10–20 కి.గ్రా/ఎకరా</span></li><li>నీటి మార్పు <span class="dose">20–30%</span></li><li>జియోలైట్ <span class="dose">15 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li></ul></div>`
 },
 {id:"h2s",icon:"🖤",color:"c-purple",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"Silent Killer"}],
  title:{en:"H₂S — Hydrogen Sulfide",bn:"H₂S — হাইড্রোজেন সালফাইড",te:"H₂S — హైడ్రోజన్ సల్ఫైడ్"},
  sub:{en:"0 = safe · 0.1 ppm = loss of equilibrium · 4 ppm = instant death",bn:"পচা ডিমের গন্ধ · মোনোডন সর্বাধিক ঝুঁকিতে",te:"కుళ్ళిన గుడ్ల వాసన · మోనోడన్ అత్యధిక ముప్పు"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">0 — undetectable · &lt;0.01 mg/L absolute maximum</span></div>
-<div class="elab-block"><div class="elab-head">How H₂S Forms — The Black Bottom Cycle</div>Sulphate-reducing bacteria (Desulfovibrio) thrive in anaerobic conditions — dense organic sediment + low O₂ at pond bottom. They reduce SO₄²⁻ to H₂S gas. Lower pH = more dissolved toxic H₂S. Black pond bottom + rotten egg smell = active H₂S production. P. monodon burrows into bottom sediment — directly exposed to highest H₂S concentrations. P. vannamei stays in water column — less affected. At 0.1 ppm: loss of equilibrium. At 4 ppm: instant death.</div>
-<div class="pr-block p-hi"><div class="pr-label">H₂S Buildup — Emergency Response</div><div class="pr-symptoms">Pond bottom black and malodorous when disturbed. Feed trays empty — first warning. Shrimp at surface early morning. Monodon shows stress/mortality first.</div><ul class="rx"><li>Increase water exchange daily from DOC 30+ <span class="dose">10–30%</span></li><li>Bottom aeration — re-oxygenate sediment interface<span class="nt">NEVER violently disturb H₂S-active bottom — sudden gas pulse release kills entire pond in 30–60 minutes.</span></li><li>CaO on pond bottom between crops <span class="dose">200–300 kg/ha dry</span></li><li>Zeolite — detoxification <span class="dose">15–20 kg/acre</span></li><li>Probiotics (B. subtilis) — sludge breakdown <span class="dose">1–2 kg/acre biweekly</span></li><li>Siphon bottom sludge — slow and targeted only</li></ul></div>
-<div class="inl-b"><span class="bxh">✖ Critical Warning</span>NEVER drag nets violently through H₂S-active pond bottom. Sudden pulse kills entire pond in 30–60 minutes. Siphoning must be slow, targeted — never sudden agitation.</div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">০ — শনাক্তযোগ্য নয় · সর্বোচ্চ &lt;০.০১ মি.গ্রা/লি</span></div>
-<div class="elab-block"><div class="elab-head">H₂S তৈরি হয় কীভাবে</div>সালফেট-বিজারক ব্যাকটেরিয়া অ্যানারোবিক অবস্থায় SO₄²⁻ থেকে H₂S তৈরি করে। কম pH-এ বেশি দ্রবীভূত H₂S। কালো পুকুরের তল + পচা ডিমের গন্ধ = সক্রিয় H₂S। মোনোডন তলায় গর্ত করে — সর্বাধিক H₂S-এ থাকে। ০.১ পিপিএমে ভারসাম্য হারানো, ৪ পিপিএমে তাৎক্ষণিক মৃত্যু।</div>
-<div class="pr-block p-hi"><div class="pr-label">H₂S জমা — জরুরি পদক্ষেপ</div><ul class="rx"><li>DOC ৩০+ থেকে পানি বদল বাড়ান <span class="dose">১০–৩০% প্রতিদিন</span></li><li>তলায় বায়ু সঞ্চালন<span class="nt">সক্রিয় H₂S পুকুরে তল হঠাৎ নাড়াবেন না — পুরো পুকুর মারা যেতে পারে।</span></li><li>ফসলের মাঝে তলায় CaO <span class="dose">২০০–৩০০ কেজি/হেক্টর</span></li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>প্রোবায়োটিক <span class="dose">১–২ কেজি/একর পক্ষকালে</span></li></ul></div>
-<div class="inl-b"><span class="bxh">✖ সতর্কতা</span>H₂S সক্রিয় পুকুরে জাল টেনে নাড়াবেন না। হঠাৎ নির্গমনে ৩০–৬০ মিনিটে পুরো পুকুর শেষ।</div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">0 — శనాక్తించలేనిది · గరిష్టం &lt;0.01 mg/L</span></div>
-<div class="elab-block"><div class="elab-head">H₂S ఎలా ఏర్పడుతుంది</div>సల్ఫేట్-తగ్గించే బాక్టీరియా వాయురహిత పరిస్థితులలో SO₄²⁻ ను H₂S కి మారుస్తాయి. నల్ల చెరువు అడుగు + కుళ్ళిన వాసన = చురుకైన H₂S. మోనోడన్ అడుగున తవ్వుతుంది — నేరుగా అత్యధిక H₂S కి గురవుతుంది. 0.1 ppm: సమతుల్యత కోల్పోవడం. 4 ppm: తక్షణ మరణం.</div>
-<div class="pr-block p-hi"><div class="pr-label">H₂S పేరుకుపోవడం — అత్యవసరం</div><ul class="rx"><li>DOC 30+ నుండి నీటి మార్పు పెంచండి <span class="dose">10–30% రోజూ</span></li><li>నేల వద్ద గాలి సంచలనం<span class="nt">చురుకైన H₂S చెరువు అడుగు హఠాత్తుగా కదలించకండి — 30–60 నిమిషాల్లో మొత్తం నష్టం.</span></li><li>పంటల మధ్య CaO <span class="dose">200–300 కి.గ్రా/హెక్టార్</span></li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ <span class="dose">1–2 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li></ul></div>
-<div class="inl-b"><span class="bxh">✖ క్లిష్ట హెచ్చరిక</span>H₂S చురుకైన చెరువు అడుగులో వలలు లాగవద్దు. హఠాత్తుగా వెలువడితే 30–60 నిమిషాల్లో మొత్తం చెరువు నష్టపోతుంది.</div>`
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">0 — undetectable · &lt;0.01 mg/L absolute maximum</span></div><div class="elab-block"><div class="elab-head">How H₂S Forms — The Black Bottom Cycle</div>Sulphate-reducing bacteria (Desulfovibrio) thrive in anaerobic bottom conditions — dense organic sediment + low O₂. They reduce SO₄²⁻ to H₂S gas. Lower pH = more dissolved toxic H₂S. Black pond bottom + rotten egg smell = active production. P. monodon burrows into sediment — directly exposed. 0.1 ppm: loss of equilibrium. 4 ppm: instant death.</div><div class="pr-block p-hi"><div class="pr-label">H₂S Buildup — Emergency Response</div><div class="pr-symptoms">Pond bottom black &amp; malodorous when disturbed. Feed trays empty — first warning. Shrimp at surface early morning. Monodon shows stress first.</div><ul class="rx"><li>Increase water exchange daily from DOC 30+ <span class="dose">10–30%</span></li><li>Bottom aeration — re-oxygenate sediment<span class="nt">NEVER violently disturb H₂S-active bottom — gas pulse kills entire pond in 30–60 minutes.</span></li><li>CaO on pond bottom between crops <span class="dose">200–300 kg/ha</span></li><li>Zeolite <span class="dose">15–20 kg/acre</span></li><li>Probiotics (B. subtilis) — sludge breakdown <span class="dose">1–2 kg/acre biweekly</span></li></ul></div><div class="inl-b"><span class="bxh">✖ Critical Warning</span>NEVER drag nets through H₂S-active pond bottom. Sudden pulse kills entire pond in 30–60 minutes.</div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">০ — শনাক্তযোগ্য নয় · সর্বোচ্চ &lt;০.০১ মি.গ্রা/লি</span></div><div class="elab-block"><div class="elab-head">H₂S তৈরি হয় কীভাবে</div>সালফেট-বিজারক ব্যাকটেরিয়া অ্যানারোবিক তলায় SO₄²⁻ থেকে H₂S তৈরি করে। কম pH-এ বেশি দ্রবীভূত H₂S। কালো পুকুরের তল + পচা ডিমের গন্ধ = সক্রিয় H₂S। মোনোডন তলায় গর্ত করে — সর্বাধিক H₂S-এ থাকে। ০.১ পিপিএমে ভারসাম্য হারানো, ৪ পিপিএমে তাৎক্ষণিক মৃত্যু।</div><div class="pr-block p-hi"><div class="pr-label">H₂S জমা — জরুরি পদক্ষেপ</div><ul class="rx"><li>DOC ৩০+ থেকে পানি বদল বাড়ান <span class="dose">১০–৩০% প্রতিদিন</span></li><li>তলায় বায়ু সঞ্চালন<span class="nt">সক্রিয় H₂S পুকুরে তল হঠাৎ নাড়াবেন না — পুরো পুকুর মারা যেতে পারে।</span></li><li>ফসলের মাঝে তলায় CaO <span class="dose">২০০–৩০০ কেজি/হেক্টর</span></li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>প্রোবায়োটিক <span class="dose">১–২ কেজি/একর পক্ষকালে</span></li></ul></div><div class="inl-b"><span class="bxh">✖ সতর্কতা</span>H₂S সক্রিয় পুকুরে জাল টেনে নাড়াবেন না। ৩০–৬০ মিনিটে পুরো পুকুর শেষ।</div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">0 — శనాక్తించలేనిది · గరిష్టం &lt;0.01 mg/L</span></div><div class="elab-block"><div class="elab-head">H₂S ఎలా ఏర్పడుతుంది</div>సల్ఫేట్-తగ్గించే బాక్టీరియా వాయురహిత నేల వద్ద SO₄²⁻ ను H₂S కి మారుస్తాయి. నల్ల చెరువు అడుగు + కుళ్ళిన వాసన = చురుకైన H₂S. మోనోడన్ అడుగున తవ్వుతుంది — నేరుగా H₂S కి గురవుతుంది. 0.1 ppm: సమతుల్యత కోల్పోవడం. 4 ppm: తక్షణ మరణం.</div><div class="pr-block p-hi"><div class="pr-label">H₂S పేరుకుపోవడం — అత్యవసరం</div><ul class="rx"><li>DOC 30+ నుండి నీటి మార్పు పెంచండి <span class="dose">10–30% రోజూ</span></li><li>నేల వద్ద గాలి సంచలనం<span class="nt">H₂S చురుకైన చెరువు అడుగు హఠాత్తుగా కదలించకండి.</span></li><li>పంటల మధ్య CaO <span class="dose">200–300 కి.గ్రా/హెక్టార్</span></li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ <span class="dose">1–2 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li></ul></div><div class="inl-b"><span class="bxh">✖ క్లిష్ట హెచ్చరిక</span>H₂S చురుకైన చెరువు అడుగులో వలలు లాగవద్దు. 30–60 నిమిషాల్లో మొత్తం నష్టపోతుంది.</div>`
 },
 {id:"salinity",icon:"🌊",color:"c-sky",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-enviro",t:"Ionic Balance"}],
  title:{en:"Salinity &amp; Osmotic Shock",bn:"লবণাক্ততা ও অসমোটিক শক",te:"లవణీయత &amp; ఆస్మోటిక్ షాక్"},
  sub:{en:"Never change &gt;3 ppt/day · K⁺ Mg²⁺ critical at &lt;10 ppt",bn:"প্রতিদিন &gt;৩ ppt পরিবর্তন করবেন না",te:"రోజుకు &gt;3 ppt మార్చవద్దు"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Targets</span><span class="opt-val">vannamei 15–25 ppt · monodon 15–30 · rosenbergii 0–5</span></div>
-<div class="elab-block"><div class="elab-head">Isosmotic Point &amp; Ionic Deficiency at Low Salinity</div>P. vannamei's isosmotic point ≈ 25 ppt — minimal osmotic energy cost, best growth. Below 15 ppt shrimp actively exclude water; above 30 ppt they actively retain water — both energy costly. At 4–10 ppt inland ponds, ionic deficiency (K⁺, Mg²⁺) is as critical as salinity itself — many inland mortalities are ionic crises, not salinity crises per se.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ Sudden Salinity Drop — Monsoon / Freshwater Influx</div><div class="pr-symptoms">Cells swell, soft shells, immunity crash, Vibrio surge. Monodon collapses at &lt;5 ppt. Vannamei growth severely impacted below 5 ppt.</div><ul class="rx"><li>Never add large freshwater volumes at once — max 3 ppt/day change</li><li>Sea salt or brine to restore gradually <span class="dose">≤3 ppt per 24 hrs</span></li><li>KCl + MgSO₄ — restore ionic balance <span class="dose">5–10 kg/acre each</span><span class="nt">Critical for inland ponds. K⁺ and Mg²⁺ are proportionally even lower than NaCl at low salinity.</span></li><li>Reduce feeding 50% during acclimation window</li><li>β-Glucan in feed — immune support <span class="dose">0.1–0.2% feed</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ High Salinity (&gt;30 ppt — Summer Evaporation)</div><ul class="rx"><li>Gradual freshwater addition — max 3 ppt reduction per day</li><li>Increase water depth to reduce evaporative concentration</li></ul></div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">ভ্যানামেই ১৫–২৫ · মোনোডন ১৫–৩০ · রোসেনবার্গি ০–৫ ppt</span></div>
-<div class="elab-block"><div class="elab-head">আইসোঅসমোটিক পয়েন্ট ও কম লবণাক্ততায় আয়নিক ঘাটতি</div>ভ্যানামেইয়ের আইসোঅসমোটিক পয়েন্ট ≈২৫ ppt — এতে সর্বোত্তম বৃদ্ধি। ৪–১০ ppt স্থলভাগের পুকুরে K⁺ ও Mg²⁺ ঘাটতি লবণাক্ততার মতোই গুরুত্বপূর্ণ।</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ হঠাৎ লবণাক্ততা কমা</div><ul class="rx"><li>একসাথে বেশি মিঠা পানি দেবেন না — সর্বোচ্চ ৩ ppt/দিন</li><li>সমুদ্রের লবণ বা ব্রাইন <span class="dose">≤৩ ppt প্রতি ২৪ ঘণ্টা</span></li><li>KCl + MgSO₄ <span class="dose">৫–১০ কেজি/একর প্রতিটি</span></li><li>খাওয়ানো ৫০% কমান</li><li>β-গ্লুকান খাবারে <span class="dose">০.১–০.২%</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ বেশি লবণাক্ততা (&gt;৩০ ppt)</div><ul class="rx"><li>ধীরে মিঠা পানি যোগ — সর্বোচ্চ ৩ ppt/দিন কমান</li><li>বাষ্পীভবন কমাতে পানি গভীর করুন</li></ul></div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యాలు</span><span class="opt-val">వనమే 15–25 · మోనోడన్ 15–30 · రోసెన్‌బర్గి 0–5 ppt</span></div>
-<div class="elab-block"><div class="elab-head">ఐసోఆస్మోటిక్ పాయింట్ &amp; తక్కువ లవణీయతలో అయానిక లోపం</div>వనమేయి ఐసోఆస్మోటిక్ పాయింట్ ≈25 ppt — అత్యుత్తమ వృద్ధి. 4–10 ppt అంతర్గత చెరువులలో K⁺ &amp; Mg²⁺ లోపం లవణీయతంతో సమానంగా ముఖ్యమైనది.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ అకస్మాత్తు లవణీయత తగ్గుదల</div><ul class="rx"><li>ఒకేసారి చాలా మంచినీరు వేయవద్దు — గరిష్టం 3 ppt/రోజు</li><li>సముద్రపు ఉప్పు లేదా బ్రైన్ <span class="dose">≤3 ppt 24 గంటలకు</span></li><li>KCl + MgSO₄ <span class="dose">5–10 కి.గ్రా/ఎకరా చొప్పున</span></li><li>ఆహారం 50% తగ్గించండి</li><li>β-గ్లూకాన్ ఆహారంలో <span class="dose">0.1–0.2%</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ అధిక లవణీయత (&gt;30 ppt)</div><ul class="rx"><li>నెమ్మదిగా మంచినీరు — గరిష్టం 3 ppt/రోజు తగ్గుదల</li><li>బాష్పీభవన తగ్గించడానికి నీటి లోతు పెంచండి</li></ul></div>`
+ en:`<div class="opt-row"><span class="opt-key">Targets</span><span class="opt-val">vannamei 15–25 ppt · monodon 15–30 · rosenbergii 0–5</span></div><div class="elab-block"><div class="elab-head">Isosmotic Point &amp; Ionic Deficiency</div>P. vannamei isosmotic point ≈ 25 ppt — minimal osmotic energy cost, best growth. At 4–10 ppt inland ponds, ionic deficiency (K⁺, Mg²⁺) is as critical as salinity itself — many inland mortalities are ionic crises, not salinity crises per se.</div><div class="pr-block p-lo"><div class="pr-label">⬇ Sudden Salinity Drop — Monsoon / Freshwater</div><ul class="rx"><li>Never add large freshwater volumes at once — max 3 ppt/day</li><li>Sea salt or brine to restore gradually <span class="dose">≤3 ppt per 24 hrs</span></li><li>KCl + MgSO₄ — restore ionic balance <span class="dose">5–10 kg/acre each</span></li><li>Reduce feeding 50% during acclimation</li><li>β-Glucan in feed — immune support <span class="dose">0.1–0.2% feed</span></li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ High Salinity (&gt;30 ppt — Summer)</div><ul class="rx"><li>Gradual freshwater addition — max 3 ppt reduction per day</li><li>Increase water depth to reduce evaporative concentration</li></ul></div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">ভ্যানামেই ১৫–২৫ · মোনোডন ১৫–৩০ · রোসেনবার্গি ০–৫ ppt</span></div><div class="elab-block"><div class="elab-head">আইসোঅসমোটিক পয়েন্ট ও আয়নিক ঘাটতি</div>ভ্যানামেইয়ের আইসোঅসমোটিক পয়েন্ট ≈২৫ ppt — এতে সর্বোত্তম বৃদ্ধি। ৪–১০ ppt স্থলভাগের পুকুরে K⁺ ও Mg²⁺ ঘাটতি লবণাক্ততার মতোই গুরুত্বপূর্ণ।</div><div class="pr-block p-lo"><div class="pr-label">⬇ হঠাৎ লবণাক্ততা কমা</div><ul class="rx"><li>একসাথে বেশি মিঠা পানি দেবেন না — সর্বোচ্চ ৩ ppt/দিন</li><li>সমুদ্রের লবণ বা ব্রাইন <span class="dose">≤৩ ppt প্রতি ২৪ ঘণ্টা</span></li><li>KCl + MgSO₄ <span class="dose">৫–১০ কেজি/একর প্রতিটি</span></li><li>খাওয়ানো ৫০% কমান</li><li>β-গ্লুকান খাবারে <span class="dose">০.১–০.২%</span></li></ul></div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యాలు</span><span class="opt-val">వనమే 15–25 · మోనోడన్ 15–30 · రోసెన్‌బర్గి 0–5 ppt</span></div><div class="elab-block"><div class="elab-head">ఐసోఆస్మోటిక్ పాయింట్ &amp; అయానిక లోపం</div>వనమేయి ఐసోఆస్మోటిక్ పాయింట్ ≈25 ppt — అత్యుత్తమ వృద్ధి. 4–10 ppt అంతర్గత చెరువులలో K⁺ &amp; Mg²⁺ లోపం లవణీయతంతో సమానంగా ముఖ్యమైనది.</div><div class="pr-block p-lo"><div class="pr-label">⬇ అకస్మాత్తు లవణీయత తగ్గుదల</div><ul class="rx"><li>ఒకేసారి చాలా మంచినీరు వేయవద్దు — గరిష్టం 3 ppt/రోజు</li><li>సముద్రపు ఉప్పు లేదా బ్రైన్ <span class="dose">≤3 ppt 24 గంటలకు</span></li><li>KCl + MgSO₄ <span class="dose">5–10 కి.గ్రా/ఎకరా చొప్పున</span></li><li>ఆహారం 50% తగ్గించండి</li><li>β-గ్లూకాన్ ఆహారంలో <span class="dose">0.1–0.2%</span></li></ul></div>`
 },
 {id:"alkalinity",icon:"🛡️",color:"c-green",tab:"wq",
- tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-wq",t:"Moulting Support"}],
- title:{en:"Alkalinity — pH Buffer &amp; Shell",bn:"ক্ষারত্ব — pH বাফার ও খোলের স্বাস্থ্য",te:"క్షారత — pH బఫర్ &amp; గుల్ల ఆరోగ్యం"},
- sub:{en:"Target rises with DOC · 150–200 ppm by DOC 90",bn:"DOC-এর সাথে লক্ষ্যমাত্রা বাড়ে",te:"DOC తో లక్ష్యం పెరుగుతుంది"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">DOC 1–30: 100–120 · DOC 30–60: 120–150 · DOC 60–90: 150–200 ppm</span></div>
-<div class="elab-block"><div class="elab-head">Why Alkalinity Must Rise Through the Crop</div>Alkalinity (HCO₃⁻, CO₃²⁻) resists pH change — the buffer system. Below 80 ppm, small CO₂ additions or removals cause dramatic swings. Shrimp absorb calcium carbonate from water during moulting — directly consuming alkalinity. Higher biomass = more moulting = faster alkalinity consumption. Must be replenished throughout crop.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ Low Alkalinity (&lt;80 ppm)</div><div class="pr-symptoms">Wide pH swings. Soft shell that doesn't harden post-moult. Incomplete moults — shrimp trapped in old shell. Cannibalism of soft-shelled shrimp.</div><ul class="rx"><li>Dolomite CaMg(CO₃)₂ — best balanced choice <span class="dose">100–200 kg/ha every 2–3 days</span></li><li>Agricultural lime Ca(OH)₂ <span class="dose">100–150 kg/acre</span></li><li>Sodium bicarbonate NaHCO₃ — gentle, no pH spike <span class="dose">5–10 kg/acre</span><span class="nt">Best for DOC 5–15 juvenile period when lime-driven pH spikes can harm early PL.</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ Very High Alkalinity (&gt;200 ppm)</div><ul class="rx"><li>Gypsum CaSO₄ <span class="dose">50 kg/acre</span></li><li>Dilution with low-alkalinity water <span class="dose">10–15%</span></li></ul></div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">DOC ১–৩০: ১০০–১২০ · ৩০–৬০: ১২০–১৫০ · ৬০–৯০: ১৫০–২০০ পিপিএম</span></div>
-<div class="elab-block"><div class="elab-head">ক্ষারত্ব কেন ফসলের সাথে বাড়াতে হবে</div>ক্ষারত্ব pH পরিবর্তন প্রতিরোধ করে। ৮০ পিপিএম-এর নিচে pH অস্থির। চিংড়ি মোল্টিংয়ে ক্যালসিয়াম কার্বোনেট নেয় — ক্ষারত্ব সরাসরি কমায়।</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ কম ক্ষারত্ব (&lt;৮০ পিপিএম)</div><ul class="rx"><li>ডলোমাইট CaMg(CO₃)₂ <span class="dose">১০০–২০০ কেজি/হেক্টর প্রতি ২–৩ দিন</span></li><li>কৃষি চুন Ca(OH)₂ <span class="dose">১০০–১৫০ কেজি/একর</span></li><li>NaHCO₃ — মৃদু, pH স্পাইক নেই <span class="dose">৫–১০ কেজি/একর</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ অতিরিক্ত ক্ষারত্ব (&gt;২০০ পিপিএম)</div><ul class="rx"><li>জিপসাম CaSO₄ <span class="dose">৫০ কেজি/একর</span></li><li>পাতলা করুন <span class="dose">১০–১৫%</span></li></ul></div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">DOC 1–30: 100–120 · 30–60: 120–150 · 60–90: 150–200 ppm</span></div>
-<div class="elab-block"><div class="elab-head">పంటంతటా క్షారత ఎందుకు పెంచాలి</div>క్షారత pH మార్పు నిరోధిస్తుంది. 80 ppm కంటే తక్కువ వద్ద pH అస్థిరంగా ఉంటుంది. రొయ్యలు వలువ విడవడంలో CaCO₃ శోషిస్తాయి — క్షారత తగ్గిస్తుంది.</div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ తక్కువ క్షారత (&lt;80 ppm)</div><ul class="rx"><li>డోలమైట్ CaMg(CO₃)₂ <span class="dose">100–200 కి.గ్రా/హెక్టార్ 2–3 రోజులకోసారి</span></li><li>వ్యవసాయ సున్నం Ca(OH)₂ <span class="dose">100–150 కి.గ్రా/ఎకరా</span></li><li>NaHCO₃ — సున్నితంగా <span class="dose">5–10 కి.గ్రా/ఎకరా</span></li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ అతి క్షారత (&gt;200 ppm)</div><ul class="rx"><li>జిప్సం CaSO₄ <span class="dose">50 కి.గ్రా/ఎకరా</span></li><li>పలుచన <span class="dose">10–15%</span></li></ul></div>`
+ tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-wq",t:"Moulting"}],
+ title:{en:"Alkalinity — pH Buffer &amp; Shell",bn:"ক্ষারত্ব — pH বাফার ও খোলের স্বাস্থ্য",te:"క్షారత — pH బఫర్ &amp; గుల్ల"},
+ sub:{en:"Target rises with DOC · Moulting support critical",bn:"DOC-এর সাথে লক্ষ্যমাত্রা বাড়ে",te:"DOC తో లక్ష్యం పెరుగుతుంది"},
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">DOC 1–30: 100–120 · DOC 30–60: 120–150 · DOC 60–90: 150–200 ppm</span></div><div class="elab-block"><div class="elab-head">Why Alkalinity Must Rise Through the Crop</div>Alkalinity (HCO₃⁻, CO₃²⁻) resists pH change — the buffer system. Below 80 ppm, small CO₂ changes cause dramatic pH swings. Shrimp absorb calcium carbonate from water during moulting — directly consuming alkalinity. Higher biomass = more moulting = faster consumption. Must be actively replenished.</div><div class="pr-block p-lo"><div class="pr-label">⬇ Low Alkalinity (&lt;80 ppm)</div><div class="pr-symptoms">Wide pH swings. Soft shell not hardening post-moult. Incomplete moults — shrimp trapped in old shell. Cannibalism of soft-shelled shrimp.</div><ul class="rx"><li>Dolomite CaMg(CO₃)₂ — best balanced choice <span class="dose">100–200 kg/ha every 2–3 days</span></li><li>Agricultural lime Ca(OH)₂ <span class="dose">100–150 kg/acre</span></li><li>Sodium bicarbonate NaHCO₃ — gentle, no pH spike <span class="dose">5–10 kg/acre</span></li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ Very High Alkalinity (&gt;200 ppm)</div><ul class="rx"><li>Gypsum CaSO₄ <span class="dose">50 kg/acre</span></li><li>Dilution with low-alkalinity water <span class="dose">10–15%</span></li></ul></div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">DOC ১–৩০: ১০০–১২০ · ৩০–৬০: ১২০–১৫০ · ৬০–৯০: ১৫০–২০০ পিপিএম</span></div><div class="elab-block"><div class="elab-head">ক্ষারত্ব কেন ফসলের সাথে বাড়াতে হবে</div>ক্ষারত্ব pH পরিবর্তন প্রতিরোধ করে। ৮০ পিপিএম-এর নিচে pH অস্থির। চিংড়ি মোল্টিংয়ে ক্যালসিয়াম কার্বোনেট নেয় — ক্ষারত্ব সরাসরি কমায়। বেশি বায়োমাস = দ্রুত ক্ষারত্ব শেষ।</div><div class="pr-block p-lo"><div class="pr-label">⬇ কম ক্ষারত্ব (&lt;৮০ পিপিএম)</div><ul class="rx"><li>ডলোমাইট CaMg(CO₃)₂ <span class="dose">১০০–২০০ কেজি/হেক্টর প্রতি ২–৩ দিন</span></li><li>কৃষি চুন Ca(OH)₂ <span class="dose">১০০–১৫০ কেজি/একর</span></li><li>NaHCO₃ — মৃদু <span class="dose">৫–১০ কেজি/একর</span></li></ul></div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">DOC 1–30: 100–120 · 30–60: 120–150 · 60–90: 150–200 ppm</span></div><div class="elab-block"><div class="elab-head">పంటంతటా క్షారత ఎందుకు పెంచాలి</div>క్షారత pH మార్పు నిరోధిస్తుంది. 80 ppm కంటే తక్కువ వద్ద pH అస్థిరంగా ఉంటుంది. రొయ్యలు వలువ విడవడంలో CaCO₃ శోషిస్తాయి — క్షారత తగ్గిస్తుంది.</div><div class="pr-block p-lo"><div class="pr-label">⬇ తక్కువ క్షారత (&lt;80 ppm)</div><ul class="rx"><li>డోలమైట్ CaMg(CO₃)₂ <span class="dose">100–200 కి.గ్రా/హెక్టార్ 2–3 రోజులకోసారి</span></li><li>వ్యవసాయ సున్నం Ca(OH)₂ <span class="dose">100–150 కి.గ్రా/ఎకరా</span></li><li>NaHCO₃ <span class="dose">5–10 కి.గ్రా/ఎకరా</span></li></ul></div>`
 },
 {id:"plankton",icon:"🌿",color:"c-lime",tab:"wq",
- tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"Bloom Crash Risk"}],
+ tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-crit",t:"Boom-Crash Risk"}],
  title:{en:"Plankton Bloom, Crash &amp; Harmful Algae",bn:"প্ল্যাংকটন ব্লুম, ক্র্যাশ ও ক্ষতিকর শেওলা",te:"ప్లాంక్టన్ బ్లూమ్, క్రాష్ &amp; హానికరమైన ఆల్గే"},
  sub:{en:"Secchi 30–40 cm · Phosphorus drives boom-crash cycle",bn:"সেচি ৩০–৪০ সেমি · ফসফরাস চালিকাশক্তি",te:"సెక్కి 30–40 సెం.మీ · ఫాస్ఫరస్ చోదక శక్తి"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">Secchi 30–40 cm · Diatom-dominant green-brown · Stable TOM</span></div>
-<div class="elab-block"><div class="elab-head">The Phosphorus–Bloom–Crash Cycle</div>72–89% of feed phosphorus is not absorbed by shrimp — it accumulates fuelling continuous plankton growth. Dense algae blooms (Secchi &lt;25 cm) create the classic DO boom-crash cycle. Algae crash simultaneously releases massive ammonia AND depletes all O₂. The 24–48 hours after a bloom crash = most dangerous period in shrimp culture. Preferred: Chaetoceros, Chlorella, Tetraselmis. Avoid: Cyanobacteria (hepatotoxins), Dinoflagellates (red tide).</div>
-<div class="pr-block p-hi"><div class="pr-label">Dense Bloom (&lt;25 cm) — Prevent Imminent Crash</div><ul class="rx"><li>Reduce feed 50% immediately — cut phosphorus input</li><li>Water exchange <span class="dose">15–25%</span></li><li>Probiotic — competes with algae for nutrients <span class="dose">1 kg/acre</span></li><li>Do NOT apply algaecide to a thick bloom — DO crashes to zero, NH₃ spikes</li><li>Run all aerators 24/7 in anticipation of overnight crash</li></ul></div>
-<div class="pr-block p-lo"><div class="pr-label">Plankton Crash (Water Suddenly Clear &gt;50 cm)</div><ul class="rx"><li>Emergency aeration — all aerators ON immediately</li><li>Stop feeding 24–48 hours</li><li>Zeolite — absorb ammonia spike <span class="dose">15–20 kg/acre</span></li><li>Probiotic + molasses — restart nutrient cycling <span class="dose">1 + 5 kg/acre</span></li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ Cyanobacteria Alert</span>Blue-green bloom: dense surface scum, musty odour. Microcystis aeruginosa produces microcystin hepatotoxin — accumulates in shrimp HP. Do NOT apply CuSO₄ without species confirmation — killing bloom in situ crashes DO catastrophically.</div>`,
- bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">সেচি ৩০–৪০ সেমি · ডায়াটম-প্রধান</span></div>
-<div class="elab-block"><div class="elab-head">ফসফরাস-ব্লুম-ক্র্যাশ চক্র</div>খাবারের ৭২–৮৯% ফসফরাস চিংড়ি শোষণ করে না — শেওলার বৃদ্ধি চালায়। ব্লুম ক্র্যাশ একসাথে সর্বোচ্চ NH₃ ও শূন্য O₂ তৈরি করে। ক্র্যাশের পর ২৪–৪৮ ঘণ্টা = চাষের সবচেয়ে বিপজ্জনক সময়।</div>
-<div class="pr-block p-hi"><div class="pr-label">ঘন ব্লুম (&lt;২৫ সেমি) — আসন্ন ক্র্যাশ প্রতিরোধ</div><ul class="rx"><li>খাওয়ানো ৫০% কমান</li><li>পানি বদল <span class="dose">১৫–২৫%</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li><li>ঘন ব্লুমে শেওলানাশক দেবেন না</li><li>সারারাত সব এয়ারেটর চালু রাখুন</li></ul></div>
-<div class="pr-block p-lo"><div class="pr-label">ব্লুম ক্র্যাশ (হঠাৎ পরিষ্কার &gt;৫০ সেমি)</div><ul class="rx"><li>সব এয়ারেটর তক্ষুনি চালু</li><li>২৪–৪৮ ঘণ্টা খাওয়ানো বন্ধ</li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>প্রোবায়োটিক + গুড় <span class="dose">১ + ৫ কেজি/একর</span></li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ সায়ানোব্যাকটেরিয়া সতর্কতা</span>নীলা-সবুজ ব্লুম, মিষ্টি গন্ধ। মাইক্রোসিস্টিন হেপাটোটক্সিন তৈরি হয়। প্রজাতি নিশ্চিত না করে CuSO₄ দেবেন না।</div>`,
- te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">సెక్కి 30–40 సెం.మీ · డయాటమ్ ప్రధానం</span></div>
-<div class="elab-block"><div class="elab-head">ఫాస్ఫరస్–బ్లూమ్–క్రాష్ చక్రం</div>72–89% ఆహారపు ఫాస్ఫరస్ రొయ్యలు శోషించవు — ఆల్గే వృద్ధిని నడిపిస్తుంది. బ్లూమ్ క్రాష్ ఒకేసారి గరిష్ట NH₃ &amp; సున్నం O₂ కలిగిస్తుంది. క్రాష్ తర్వాత 24–48 గంటలు = అత్యంత ప్రమాదకర కాలం.</div>
-<div class="pr-block p-hi"><div class="pr-label">దట్టమైన బ్లూమ్ (&lt;25 సెం.మీ) — క్రాష్ నివారణ</div><ul class="rx"><li>ఆహారం 50% వెంటనే తగ్గించండి</li><li>నీటి మార్పు <span class="dose">15–25%</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li><li>దట్టమైన బ్లూమ్ పై ఆల్గేనాశిని వేయవద్దు</li><li>రాత్రంతా అన్ని ఏరేటర్లు ఆన్ చేయండి</li></ul></div>
-<div class="pr-block p-lo"><div class="pr-label">బ్లూమ్ క్రాష్ (అకస్మాత్తు &gt;50 సెం.మీ)</div><ul class="rx"><li>అన్ని ఏరేటర్లు వెంటనే ఆన్</li><li>24–48 గంటలు ఆహారం ఆపండి</li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ + మొలాసెస్ <span class="dose">1 + 5 కి.గ్రా/ఎకరా</span></li></ul></div>
-<div class="inl-w"><span class="bxh">⚠ సైనోబాక్టీరియా హెచ్చరిక</span>నీలం-ఆకుపచ్చ బ్లూమ్, కస్తురి వాసన. మైక్రోసిస్టిన్ హెపటోటాక్సిన్ తయారవుతుంది. జాతి నిర్ధారణ లేకుండా CuSO₄ వేయవద్దు.</div>`
+ en:`<div class="opt-row"><span class="opt-key">Target</span><span class="opt-val">Secchi 30–40 cm · Diatom-dominant · Stable TOM</span></div><div class="elab-block"><div class="elab-head">The Phosphorus–Bloom–Crash Cycle</div>72–89% of feed phosphorus is not absorbed by shrimp — it fuels continuous plankton growth. Dense blooms (Secchi &lt;25 cm) create DO boom-crash cycles. Algae crash simultaneously releases massive ammonia AND depletes all O₂. The 24–48 hours after a bloom crash = most dangerous period in shrimp culture.</div><div class="pr-block p-hi"><div class="pr-label">Dense Bloom (&lt;25 cm) — Prevent Crash</div><ul class="rx"><li>Reduce feed 50% immediately</li><li>Water exchange <span class="dose">15–25%</span></li><li>Probiotic — competes with algae for nutrients <span class="dose">1 kg/acre</span></li><li>Do NOT apply algaecide to thick bloom — DO crashes to zero</li><li>Run aerators 24/7 in anticipation of overnight crash</li></ul></div><div class="pr-block p-lo"><div class="pr-label">Crash (Suddenly Clear &gt;50 cm) — Emergency</div><ul class="rx"><li>Emergency aeration — all aerators ON</li><li>Stop feeding 24–48 hours</li><li>Zeolite — absorb ammonia spike <span class="dose">15–20 kg/acre</span></li><li>Probiotic + molasses <span class="dose">1 + 5 kg/acre</span></li></ul></div><div class="inl-w"><span class="bxh">⚠ Cyanobacteria Alert</span>Blue-green bloom: surface scum, musty odour. Microcystis aeruginosa produces microcystin hepatotoxin. Do NOT apply CuSO₄ without species confirmation.</div>`,
+ bn:`<div class="opt-row"><span class="opt-key">লক্ষ্যমাত্রা</span><span class="opt-val">সেচি ৩০–৪০ সেমি · ডায়াটম-প্রধান</span></div><div class="elab-block"><div class="elab-head">ফসফরাস-ব্লুম-ক্র্যাশ চক্র</div>খাবারের ৭২–৮৯% ফসফরাস চিংড়ি শোষণ করে না — শেওলার বৃদ্ধি চালায়। ব্লুম ক্র্যাশ একসাথে সর্বোচ্চ NH₃ ও শূন্য O₂ তৈরি করে।</div><div class="pr-block p-hi"><div class="pr-label">ঘন ব্লুম (&lt;২৫ সেমি) — ক্র্যাশ প্রতিরোধ</div><ul class="rx"><li>খাওয়ানো ৫০% কমান</li><li>পানি বদল <span class="dose">১৫–২৫%</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর</span></li><li>ঘন ব্লুমে শেওলানাশক দেবেন না</li><li>সারারাত সব এয়ারেটর চালু রাখুন</li></ul></div><div class="pr-block p-lo"><div class="pr-label">ব্লুম ক্র্যাশ (হঠাৎ পরিষ্কার &gt;৫০ সেমি)</div><ul class="rx"><li>সব এয়ারেটর তক্ষুনি চালু</li><li>২৪–৪৮ ঘণ্টা খাওয়ানো বন্ধ</li><li>জিওলাইট <span class="dose">১৫–২০ কেজি/একর</span></li><li>প্রোবায়োটিক + গুড় <span class="dose">১ + ৫ কেজি/একর</span></li></ul></div>`,
+ te:`<div class="opt-row"><span class="opt-key">లక్ష్యం</span><span class="opt-val">సెక్కి 30–40 సెం.మీ · డయాటమ్ ప్రధానం</span></div><div class="elab-block"><div class="elab-head">ఫాస్ఫరస్–బ్లూమ్–క్రాష్ చక్రం</div>72–89% ఆహారపు ఫాస్ఫరస్ రొయ్యలు శోషించవు — ఆల్గే వృద్ధిని నడిపిస్తుంది. బ్లూమ్ క్రాష్ ఒకేసారి గరిష్ట NH₃ &amp; సున్నం O₂ కలిగిస్తుంది.</div><div class="pr-block p-hi"><div class="pr-label">దట్టమైన బ్లూమ్ (&lt;25 సెం.మీ)</div><ul class="rx"><li>ఆహారం 50% వెంటనే తగ్గించండి</li><li>నీటి మార్పు <span class="dose">15–25%</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా</span></li><li>దట్టమైన బ్లూమ్ పై ఆల్గేనాశిని వేయవద్దు</li></ul></div><div class="pr-block p-lo"><div class="pr-label">బ్లూమ్ క్రాష్ (అకస్మాత్తు &gt;50 సెం.మీ)</div><ul class="rx"><li>అన్ని ఏరేటర్లు వెంటనే ఆన్</li><li>24–48 గంటలు ఆహారం ఆపండి</li><li>జియోలైట్ <span class="dose">15–20 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ + మొలాసెస్ <span class="dose">1 + 5 కి.గ్రా/ఎకరా</span></li></ul></div>`
 },
 {id:"temperature",icon:"🌡️",color:"c-pink",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-enviro",t:"Vibrio Risk"}],
  title:{en:"Temperature Stress",bn:"তাপমাত্রার চাপ",te:"ఉష్ణోగ్రత ఒత్తిడి"},
  sub:{en:"Optimal 28–30°C · Cold stops feeding · Heat boosts Vibrio",bn:"আদর্শ ২৮–৩০°C · ঠান্ডায় খাওয়া বন্ধ",te:"అనుకూలం 28–30°C · చలి ఆహారం ఆపుతుంది"},
- badges:[],
- en:`<div class="opt-row"><span class="opt-key">Optimal</span><span class="opt-val">28–30°C · vannamei: 15–33°C · monodon: 23–32°C</span></div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ Cold Stress (&lt;24°C) — Winter / Monsoon</div><div class="pr-symptoms">Feeding stops at 22°C. Metabolism slows. Immunity reduced below 24°C. Vibrio more virulent at lower temperatures (cold-tolerant strains). Moult intervals extend 40–60% below 24°C.</div><ul class="rx"><li>Reduce feed 50% below 24°C. Stop completely below 20°C.</li><li>Raise water depth to 1.5–1.8 m — thermal mass buffering</li><li>Vitamin C + E immune support in feed <span class="dose">1–2 g/kg feed</span></li><li>Probiotic — maintain gut microbiome <span class="dose">0.5 kg/acre fortnightly</span></li><li>Consider early harvest if &lt;22°C expected for &gt;2 weeks</li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ Heat Stress (&gt;33°C) — Summer Peak</div><div class="pr-symptoms">High metabolic O₂ demand + reduced DO solubility = crisis. Vibrio growth rate doubles every 4°C above 25°C. Shrimp at surface in afternoon.</div><ul class="rx"><li>Water exchange with cooler reservoir water <span class="dose">10–15%</span></li><li>Maximise aeration 10 AM–4 PM peak heat window</li><li>Increase water depth ≥1.5 m</li><li>Partial harvest if heat persists &gt;5 days — reduce biomass and O₂ demand</li><li>Feed only morning and evening — skip midday entirely</li></ul></div>`,
- bn:`<div class="opt-row"><span class="opt-key">আদর্শ</span><span class="opt-val">২৮–৩০°C · ভ্যানামেই: ১৫–৩৩°C · মোনোডন: ২৩–৩২°C</span></div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ ঠান্ডার চাপ (&lt;২৪°C)</div><ul class="rx"><li>২৪°C-এর নিচে খাওয়ানো ৫০% কমান। ২০°C-এ সম্পূর্ণ বন্ধ।</li><li>পানির গভীরতা ১.৫–১.৮ মিটার বাড়ান</li><li>ভিটামিন C + E <span class="dose">১–২ গ্রা/কেজি</span></li><li>প্রোবায়োটিক <span class="dose">০.৫ কেজি/একর পক্ষকালে</span></li><li>২ সপ্তাহের বেশি &lt;২২°C থাকলে আগাম ধরুন</li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ গরমের চাপ (&gt;৩৩°C)</div><ul class="rx"><li>ঠান্ডা পানি দিয়ে পানি বদল <span class="dose">১০–১৫%</span></li><li>সকাল ১০ – বিকেল ৪টা সর্বোচ্চ বায়ু সঞ্চালন</li><li>পানির গভীরতা ≥১.৫ মিটার</li><li>৫ দিনের বেশি গরম থাকলে আংশিক ধরুন</li></ul></div>`,
- te:`<div class="opt-row"><span class="opt-key">అనుకూలం</span><span class="opt-val">28–30°C · వనమే: 15–33°C · మోనోడన్: 23–32°C</span></div>
-<div class="pr-block p-lo"><div class="pr-label">⬇ చలి ఒత్తిడి (&lt;24°C)</div><ul class="rx"><li>24°C కంటే తక్కువ వద్ద 50% తగ్గించండి. 20°C వద్ద పూర్తిగా ఆపండి.</li><li>నీటి లోతు 1.5–1.8 మీ. కి పెంచండి</li><li>విటమిన్ C + E <span class="dose">1–2 గ్రా/కి.గ్రా</span></li><li>ప్రొబయోటిక్ <span class="dose">0.5 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li><li>2 వారాలకంటే ఎక్కువ &lt;22°C ఉండే అవకాశం ఉంటే త్వరగా పట్టుకోండి</li></ul></div>
-<div class="pr-block p-hi"><div class="pr-label">⬆ వేడి ఒత్తిడి (&gt;33°C)</div><ul class="rx"><li>చల్లని నిల్వ నీటితో నీటి మార్పు <span class="dose">10–15%</span></li><li>ఉదయం 10 AM – 4 PM గరిష్ట గాలి సంచలనం</li><li>నీటి లోతు ≥1.5 మీ.</li><li>5 రోజులకంటే ఎక్కువ వేడి ఉంటే పాక్షిక వేట</li></ul></div>`
+ en:`<div class="opt-row"><span class="opt-key">Optimal</span><span class="opt-val">28–30°C · vannamei: 15–33°C · monodon: 23–32°C</span></div><div class="pr-block p-lo"><div class="pr-label">⬇ Cold Stress (&lt;24°C)</div><div class="pr-symptoms">Feeding stops at 22°C. Metabolism slows. Immunity reduced. Vibrio more virulent. Moult intervals extend 40–60%.</div><ul class="rx"><li>Reduce feed 50% below 24°C. Stop completely below 20°C.</li><li>Raise water depth to 1.5–1.8 m — thermal buffering</li><li>Vitamin C + E in feed <span class="dose">1–2 g/kg</span></li><li>Probiotic <span class="dose">0.5 kg/acre fortnightly</span></li><li>Consider early harvest if &lt;22°C expected for &gt;2 weeks</li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ Heat Stress (&gt;33°C)</div><div class="pr-symptoms">High metabolic O₂ demand + reduced DO solubility = crisis. Vibrio growth doubles every 4°C above 25°C.</div><ul class="rx"><li>Water exchange with cooler reservoir water <span class="dose">10–15%</span></li><li>Maximise aeration 10 AM–4 PM</li><li>Increase water depth ≥1.5 m</li><li>Partial harvest if heat persists &gt;5 days</li><li>Feed only morning and evening — skip midday</li></ul></div>`,
+ bn:`<div class="opt-row"><span class="opt-key">আদর্শ</span><span class="opt-val">২৮–৩০°C · ভ্যানামেই: ১৫–৩৩°C · মোনোডন: ২৩–৩২°C</span></div><div class="pr-block p-lo"><div class="pr-label">⬇ ঠান্ডার চাপ (&lt;২৪°C)</div><ul class="rx"><li>২৪°C-এর নিচে খাওয়ানো ৫০% কমান। ২০°C-এ সম্পূর্ণ বন্ধ।</li><li>পানির গভীরতা ১.৫–১.৮ মিটার বাড়ান</li><li>ভিটামিন C + E <span class="dose">১–২ গ্রা/কেজি</span></li><li>প্রোবায়োটিক <span class="dose">০.৫ কেজি/একর পক্ষকালে</span></li><li>২ সপ্তাহের বেশি &lt;২২°C থাকলে আগাম ধরুন</li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ গরমের চাপ (&gt;৩৩°C)</div><ul class="rx"><li>ঠান্ডা পানি দিয়ে পানি বদল <span class="dose">১০–১৫%</span></li><li>সকাল ১০ – বিকেল ৪টা সর্বোচ্চ বায়ু সঞ্চালন</li><li>পানির গভীরতা ≥১.৫ মিটার</li><li>৫ দিনের বেশি গরম থাকলে আংশিক ধরুন</li></ul></div>`,
+ te:`<div class="opt-row"><span class="opt-key">అనుకూలం</span><span class="opt-val">28–30°C · వనమే: 15–33°C · మోనోడన్: 23–32°C</span></div><div class="pr-block p-lo"><div class="pr-label">⬇ చలి ఒత్తిడి (&lt;24°C)</div><ul class="rx"><li>24°C కంటే తక్కువ వద్ద 50% తగ్గించండి. 20°C వద్ద పూర్తిగా ఆపండి.</li><li>నీటి లోతు 1.5–1.8 మీ. కి పెంచండి</li><li>విటమిన్ C + E <span class="dose">1–2 గ్రా/కి.గ్రా</span></li><li>ప్రొబయోటిక్ <span class="dose">0.5 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li><li>2 వారాలకంటే ఎక్కువ &lt;22°C ఉంటే త్వరగా పట్టుకోండి</li></ul></div><div class="pr-block p-hi"><div class="pr-label">⬆ వేడి ఒత్తిడి (&gt;33°C)</div><ul class="rx"><li>చల్లని నిల్వ నీటితో నీటి మార్పు <span class="dose">10–15%</span></li><li>ఉదయం 10 AM – 4 PM గరిష్ట గాలి సంచలనం</li><li>నీటి లోతు ≥1.5 మీ.</li><li>5 రోజులకంటే ఎక్కువ వేడి ఉంటే పాక్షిక వేట</li></ul></div>`
 },
 {id:"organic",icon:"🧱",color:"c-teal",tab:"wq",
  tags:[{c:"tag-wq",t:"Water Quality"},{c:"tag-enviro",t:"DOC 30+ Daily"}],
  title:{en:"Organic Load &amp; Black Water",bn:"জৈব ভার ও কালো পানি",te:"సేంద్రియ భారం &amp; నల్ల నీరు"},
  sub:{en:"Sludge + H₂S + high TOM — daily management from DOC 30+",bn:"কাদা + H₂S + TOM — DOC ৩০+ থেকে দৈনিক",te:"నేల + H₂S + TOM — DOC 30+ నుండి నిత్యం"},
- badges:[],
- en:`<div class="pr-block p-hi"><div class="pr-label">Black Water (H₂S + Organic Overload)</div><ul class="rx"><li>MgSO₄ <span class="dose">5 kg/acre</span></li><li>Agricultural lime Ca(OH)₂ <span class="dose">50 kg/acre</span></li><li>Groundnut cake soaked 4 hrs — flocculation <span class="dose">5–10 kg/acre at 10 AM</span></li><li>Cut feeding 50%. Aerate immediately.</li></ul></div>
-<div class="pr-block p-wn"><div class="pr-label">Dense Green / Brown Water</div><ul class="rx"><li>Aquafloc / PAC (poly-aluminium chloride) <span class="dose">1 kg/acre</span></li><li>Probiotic cycle <span class="dose">1 kg/acre fortnightly</span></li><li>Zeolite — TAN control <span class="dose">15 kg/acre</span></li></ul></div>
-<div class="pr-block p-wn"><div class="pr-label">Sludge Buildup (DOC 45+ Intensive)</div><ul class="rx"><li>Bottom siphoning — daily after DOC 30<span class="nt">Slow, targeted. Never agitate entire bottom at once — H₂S pulse risk. Siphon feed zones and pond edges only.</span></li><li>TCCA spot treatment <span class="dose">0.5 kg/acre targeted</span></li><li>Probiotics (B. subtilis + B. licheniformis) — enzymatic sludge digestion <span class="dose">1–2 kg/acre biweekly</span></li><li>Reduce feeding 15% when sludge visible — stop overload cycle</li></ul></div>`,
- bn:`<div class="pr-block p-hi"><div class="pr-label">কালো পানি (H₂S + জৈব ভার)</div><ul class="rx"><li>MgSO₄ <span class="dose">৫ কেজি/একর</span></li><li>কৃষি চুন Ca(OH)₂ <span class="dose">৫০ কেজি/একর</span></li><li>চিনাবাদামের খৈল (৪ ঘণ্টা ভিজিয়ে) <span class="dose">৫–১০ কেজি/একর সকাল ১০টায়</span></li><li>খাওয়ানো ৫০% কমান। বায়ু সঞ্চালন শুরু।</li></ul></div>
-<div class="pr-block p-wn"><div class="pr-label">তলার কাদা (DOC ৪৫+ নিবিড়)</div><ul class="rx"><li>DOC ৩০+ থেকে প্রতিদিন সিফোনিং<span class="nt">ধীরে ধীরে, লক্ষ্যভিত্তিক। পুরো তল একসাথে নাড়াবেন না।</span></li><li>TCCA লক্ষ্যভিত্তিক <span class="dose">০.৫ কেজি/একর</span></li><li>প্রোবায়োটিক <span class="dose">১–২ কেজি/একর পক্ষকালে</span></li><li>কাদা দেখা গেলে খাওয়ানো ১৫% কমান</li></ul></div>`,
- te:`<div class="pr-block p-hi"><div class="pr-label">నల్ల నీరు (H₂S + సేంద్రియ అధిక భారం)</div><ul class="rx"><li>MgSO₄ <span class="dose">5 కి.గ్రా/ఎకరా</span></li><li>వ్యవసాయ సున్నం Ca(OH)₂ <span class="dose">50 కి.గ్రా/ఎకరా</span></li><li>వేరుశెనగ పిండి (4 గంటలు నానించి) <span class="dose">5–10 కి.గ్రా/ఎకరా 10 AM కి</span></li><li>ఆహారం 50% తగ్గించండి. గాలి సరఫరా చేయండి.</li></ul></div>
-<div class="pr-block p-wn"><div class="pr-label">నేల నేల పేరుకుపోవడం (DOC 45+ నిబిడ)</div><ul class="rx"><li>DOC 30+ నుండి నిత్యం సైఫోనింగ్<span class="nt">నెమ్మదిగా, లక్ష్యంగా. మొత్తం అడుగు ఒకేసారి కదలించకండి.</span></li><li>TCCA లక్ష్యంగా <span class="dose">0.5 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ <span class="dose">1–2 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li><li>నేల నేల కనిపిస్తే ఆహారం 15% తగ్గించండి</li></ul></div>`
+ en:`<div class="pr-block p-hi"><div class="pr-label">Black Water (H₂S + Organic Overload)</div><ul class="rx"><li>MgSO₄ <span class="dose">5 kg/acre</span></li><li>Agricultural lime Ca(OH)₂ <span class="dose">50 kg/acre</span></li><li>Groundnut cake soaked 4 hrs — flocculation <span class="dose">5–10 kg/acre at 10 AM</span></li><li>Cut feeding 50%. Aerate immediately.</li></ul></div><div class="pr-block p-wn"><div class="pr-label">Dense Green / Brown Water</div><ul class="rx"><li>Aquafloc / PAC <span class="dose">1 kg/acre</span></li><li>Probiotic cycle <span class="dose">1 kg/acre fortnightly</span></li><li>Zeolite <span class="dose">15 kg/acre</span></li></ul></div><div class="pr-block p-wn"><div class="pr-label">Sludge Buildup (DOC 45+ Intensive)</div><ul class="rx"><li>Bottom siphoning daily after DOC 30<span class="nt">Slow, targeted. Never agitate entire bottom at once — H₂S pulse risk.</span></li><li>TCCA spot treatment <span class="dose">0.5 kg/acre targeted</span></li><li>Probiotics (B. subtilis + B. licheniformis) <span class="dose">1–2 kg/acre biweekly</span></li><li>Reduce feeding 15% when sludge visible</li></ul></div>`,
+ bn:`<div class="pr-block p-hi"><div class="pr-label">কালো পানি (H₂S + জৈব ভার)</div><ul class="rx"><li>MgSO₄ <span class="dose">৫ কেজি/একর</span></li><li>কৃষি চুন Ca(OH)₂ <span class="dose">৫০ কেজি/একর</span></li><li>চিনাবাদামের খৈল (৪ ঘণ্টা ভিজিয়ে) <span class="dose">৫–১০ কেজি/একর সকাল ১০টায়</span></li><li>খাওয়ানো ৫০% কমান। বায়ু সঞ্চালন শুরু।</li></ul></div><div class="pr-block p-wn"><div class="pr-label">তলার কাদা (DOC ৪৫+ নিবিড়)</div><ul class="rx"><li>DOC ৩০+ থেকে প্রতিদিন সিফোনিং</li><li>TCCA লক্ষ্যভিত্তিক <span class="dose">০.৫ কেজি/একর</span></li><li>প্রোবায়োটিক <span class="dose">১–২ কেজি/একর পক্ষকালে</span></li><li>কাদা দেখা গেলে খাওয়ানো ১৫% কমান</li></ul></div>`,
+ te:`<div class="pr-block p-hi"><div class="pr-label">నల్ల నీరు (H₂S + సేంద్రియ అధిక భారం)</div><ul class="rx"><li>MgSO₄ <span class="dose">5 కి.గ్రా/ఎకరా</span></li><li>వ్యవసాయ సున్నం Ca(OH)₂ <span class="dose">50 కి.గ్రా/ఎకరా</span></li><li>వేరుశెనగ పిండి (4 గంటలు నానించి) <span class="dose">5–10 కి.గ్రా/ఎకరా 10 AM కి</span></li><li>ఆహారం 50% తగ్గించండి. గాలి సరఫరా చేయండి.</li></ul></div><div class="pr-block p-wn"><div class="pr-label">నేల నేల పేరుకుపోవడం (DOC 45+)</div><ul class="rx"><li>DOC 30+ నుండి నిత్యం సైఫోనింగ్</li><li>TCCA లక్ష్యంగా <span class="dose">0.5 కి.గ్రా/ఎకరా</span></li><li>ప్రొబయోటిక్ <span class="dose">1–2 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li><li>నేల నేల కనిపిస్తే ఆహారం 15% తగ్గించండి</li></ul></div>`
 }
 ],
 dis:[
@@ -398,288 +383,227 @@ dis:[
  tags:[{c:"tag-viral",t:"Viral · dsDNA"},{c:"tag-crit",t:"No Cure"},{c:"tag-crit",t:"Mass Mortality"}],
  title:{en:"WSSV — White Spot Syndrome Virus",bn:"WSSV — হোয়াইট স্পট সিন্ড্রোম ভাইরাস",te:"WSSV — తెల్ల మచ్చ సిండ్రోమ్ వైరస్"},
  sub:{en:"$90M India annual loss · Prevention only · No antiviral",bn:"ভারতে বার্ষিক $৯০M ক্ষতি · প্রতিরোধই একমাত্র পথ",te:"భారత్ వార్షిక $90M నష్టం · నివారణ మాత్రమే"},
- badges:[{c:"tag-viral",t:"78+ Crustacean Hosts"},{c:"tag-crit",t:"No Antiviral Exists"}],
- en:`<div class="econ"><div class="econ-n">$90M</div><div><div class="econ-l">India Annual Loss (Patil et al. 2025)</div></div></div>
-<div class="elab-block"><div class="elab-head">Agent &amp; Spread</div>White Spot Syndrome Virus — largest shrimp virus (300 nm), infects 78+ crustacean species including crabs (primary wild reservoir — asymptomatic carriers) and birds (mechanical vectors). Spreads via contaminated water, infected broodstock, wild crabs entering pond, shared equipment. Peak: rainy season — sudden temperature drop triggers virulence. India east coast prevalence: 6.48% (down from 25% — improved biosecurity awareness).</div>
-<div class="symp-h">Field Identification — Timeline</div>
-<div class="symp-t">Day 1–2: Sudden dramatic feeding drop — check trays twice daily. Day 2–4: Shrimp at pond edges, erratic swimming. White calcified spots 0.5–2.0 mm visible under carapace (press carapace, spots remain). Body turns pink-reddish. Loose wrinkled shells. Empty gut. Day 5–10: Mass mortality 30–80%. Entire pond possible in 10 days.</div>
-<div class="two-col">
-<div><div class="step-label">Mandatory Prevention</div><ul class="rx"><li>SPF PCR-certified seed only</li><li>Chlorinate all incoming water <span class="dose">30 ppm TCCA · 24 hrs</span></li><li>Bird netting over entire pond — herons are major vectors</li><li>60-mesh filter on all inlet gates — exclude wild crabs</li><li>PCR test at DOC 15, 30, 45</li><li>Pond dry + CaO between crops <span class="dose">300–400 kg/acre · 2 wks dry</span></li></ul></div>
-<div><div class="step-label">Outbreak Management</div><ul class="rx"><li>No antiviral treatment exists</li><li>Emergency partial harvest — &gt;15g shrimp immediately</li><li>Stop feeding completely</li><li>β-Glucan — may slow progression <span class="dose">0.2% of feed</span></li><li>Notify MPEDA / State Fisheries — legally required</li><li>Disinfect all discharge water <span class="dose">TCCA 30 ppm · 24 hrs</span></li><li>Pond rest minimum 30 days before restocking</li></ul></div>
-</div>
-<div class="inl-b"><span class="bxh">✖ Biosecurity Non-Negotiables</span>Never share WSSV-positive pond water with other ponds. Never share nets/aerators/feed equipment without disinfection. WSSV survives 3–5 days in pond water. Zero-tolerance biosecurity is the only protection.</div>`,
- bn:`<div class="econ"><div class="econ-n">$৯০M</div><div><div class="econ-l">ভারতের বার্ষিক ক্ষতি (Patil et al. 2025)</div></div></div>
-<div class="elab-block"><div class="elab-head">কারক ও বিস্তার</div>৭৮+ ক্রাস্টেসিয়ান প্রজাতি আক্রান্ত করে। বন্য কাঁকড়া (উপসর্গহীন বাহক) ও পাখি (যান্ত্রিক বাহক) প্রধান ছড়ানোর পথ। বর্ষায় তাপমাত্রা পতনে সংক্রমণ শিখরে। ভারত পূর্ব উপকূলে প্রকোপ ৬.৪৮%।</div>
-<div class="symp-h">মাঠ পরিচিতি</div>
-<div class="symp-t">দিন ১–২: খাবার হঠাৎ কমে। দিন ২–৪: পুকুর পাড়ে, অস্থির সাঁতার। খোলের নিচে সাদা স্পট ০.৫–২.০ মিমি। গোলাপী-লালচে শরীর। দিন ৫–১০: ৩০–৮০% মৃত্যু।</div>
-<div class="two-col">
-<div><div class="step-label">বাধ্যতামূলক প্রতিরোধ</div><ul class="rx"><li>PCR-পরীক্ষিত SPF বীজ কেবল</li><li>আগত পানি ক্লোরিনেশন <span class="dose">৩০ পিপিএম TCCA</span></li><li>পুরো পুকুরে পাখি জাল</li><li>সব প্রবেশপথে ৬০ মেশ জাল</li><li>DOC ১৫, ৩০, ৪৫-এ PCR</li><li>পুকুর শুকনো + CaO <span class="dose">৩০০–৪০০ কেজি/একর</span></li></ul></div>
-<div><div class="step-label">প্রাদুর্ভাব ব্যবস্থাপনা</div><ul class="rx"><li>কোনো ভাইরাসনাশক নেই</li><li>জরুরি আংশিক ধরা (&gt;১৫ গ্রা)</li><li>খাওয়ানো সম্পূর্ণ বন্ধ</li><li>β-গ্লুকান <span class="dose">০.২% খাবার</span></li><li>MPEDA/রাজ্য মৎস্য বিভাগকে জানান</li><li>নির্গমন পানি জীবাণুমুক্ত <span class="dose">TCCA ৩০ পিপিএম</span></li></ul></div>
-</div>
-<div class="inl-b"><span class="bxh">✖ জৈব নিরাপত্তা</span>WSSV-পজিটিভ পুকুরের পানি অন্য পুকুরে নয়। সরঞ্জাম জীবাণুমুক্ত না করে ভাগ করবেন না। পানিতে WSSV ৩–৫ দিন বেঁচে থাকে।</div>`,
- te:`<div class="econ"><div class="econ-n">$90M</div><div><div class="econ-l">భారత్ వార్షిక నష్టం (Patil et al. 2025)</div></div></div>
-<div class="elab-block"><div class="elab-head">కారకం &amp; వ్యాప్తి</div>78+ క్రస్టేసియన్ జాతులను సంక్రమిస్తుంది. అడవి పీతలు (లక్షణాలు లేని వాహకాలు) &amp; పక్షులు (యాంత్రిక వాహకాలు) ప్రధాన వ్యాప్తి మార్గాలు. వర్షాకాలంలో ఉష్ణోగ్రత అకస్మాత్తు పతనం వైరస్ ప్రేరేపిస్తుంది. తూర్పు తీరం వ్యాప్తి 6.48%.</div>
-<div class="symp-h">క్షేత్ర గుర్తింపు</div>
-<div class="symp-t">రోజు 1–2: ఆహారం అకస్మాత్తు తగ్గడం. రోజు 2–4: చెరువు అంచులకు, అస్తవ్యస్తంగా ఈదడం. గుల్ల కింద తెల్లని మచ్చలు 0.5–2.0 mm. శరీరం గులాబీ-ఎరుపు. రోజు 5–10: 30–80% మరణం.</div>
-<div class="two-col">
-<div><div class="step-label">తప్పనిసరి నివారణ</div><ul class="rx"><li>PCR ధృవీకరించిన SPF విత్తనాలు మాత్రమే</li><li>వచ్చే నీటిని క్లోరినేషన్ <span class="dose">30 ppm TCCA</span></li><li>మొత్తం చెరువుపై పక్షి వలలు</li><li>అన్ని ద్వారాలలో 60 మెష జాలీ</li><li>DOC 15, 30, 45 లో PCR</li><li>చెరువు ఆరబెట్టడం + CaO <span class="dose">300–400 కి.గ్రా/ఎకరా</span></li></ul></div>
-<div><div class="step-label">వ్యాప్తి నిర్వహణ</div><ul class="rx"><li>యాంటీవైరల్ ఔషధం లేదు</li><li>అత్యవసర పాక్షిక వేట (&gt;15 గ్రా)</li><li>ఆహారం పూర్తిగా ఆపండి</li><li>β-గ్లూకాన్ <span class="dose">0.2% ఆహారం</span></li><li>MPEDA / రాష్ట్ర మత్స్య శాఖకు తెలియజేయండి</li><li>నీటి విడుదల ముందు జీవాణురహితం <span class="dose">TCCA 30 ppm</span></li></ul></div>
-</div>
-<div class="inl-b"><span class="bxh">✖ జీవ సురక్ష</span>WSSV-పాజిటివ్ చెరువు నీటిని ఇతర చెరువులకు ఉపయోగించవద్దు. పరికరాలు జీవాణురహితం చేయకుండా పంచుకోవద్దు. నీటిలో WSSV 3–5 రోజులు జీవించగలదు.</div>`
+ en:`<div class="econ"><div class="econ-n">$90M</div><div><div class="econ-l">India Annual Loss — Patil et al. 2025</div></div></div><div class="elab-block"><div class="elab-head">Agent &amp; Spread</div>White Spot Syndrome Virus — 300 nm, infects 78+ crustacean species. Spreads via contaminated water, infected broodstock, wild crabs (asymptomatic carriers), birds (mechanical vectors). Peak: rainy season — sudden temperature drop triggers virulence. India east coast prevalence: 6.48% (down from 25%).</div><div class="symp-h">Field Timeline</div><div class="symp-t">Day 1–2: Sudden dramatic feeding drop. Day 2–4: Shrimp at pond edges, white calcified spots 0.5–2.0 mm under carapace, body turns pink-reddish, loose shells. Day 5–10: Mass mortality 30–80%. Entire pond possible in 10 days.</div><div class="two-col"><div><div class="step-label">Mandatory Prevention</div><ul class="rx"><li>SPF PCR-certified seed only</li><li>Chlorinate all incoming water <span class="dose">30 ppm TCCA · 24 hrs</span></li><li>Bird netting over entire pond</li><li>60-mesh filter on all inlet gates — exclude wild crabs</li><li>PCR test at DOC 15, 30, 45</li><li>Pond dry + CaO between crops <span class="dose">300–400 kg/acre · 2 wks dry</span></li></ul></div><div><div class="step-label">Outbreak Management</div><ul class="rx"><li>No antiviral treatment exists</li><li>Emergency partial harvest — &gt;15g immediately</li><li>Stop feeding completely</li><li>β-Glucan <span class="dose">0.2% of feed</span></li><li>Notify MPEDA / State Fisheries — legally required</li><li>Disinfect all discharge water <span class="dose">TCCA 30 ppm</span></li><li>Pond rest minimum 30 days</li></ul></div></div><div class="inl-b"><span class="bxh">✖ Biosecurity</span>Never share WSSV-positive pond water with other ponds. WSSV survives 3–5 days in pond water. Zero-tolerance biosecurity is the only protection.</div>`,
+ bn:`<div class="econ"><div class="econ-n">$৯০M</div><div><div class="econ-l">ভারতের বার্ষিক ক্ষতি</div></div></div><div class="elab-block"><div class="elab-head">কারক ও বিস্তার</div>৭৮+ ক্রাস্টেসিয়ান প্রজাতি আক্রান্ত করে। বন্য কাঁকড়া ও পাখি বাহক। বর্ষায় তাপমাত্রা পতনে সংক্রমণ শিখরে। ভারত পূর্ব উপকূলে প্রকোপ ৬.৪৮%।</div><div class="symp-h">মাঠ পরিচিতি</div><div class="symp-t">দিন ১–২: খাবার হঠাৎ কমে। দিন ২–৪: পুকুর পাড়ে, সাদা স্পট ০.৫–২.০ মিমি, গোলাপী-লালচে শরীর। দিন ৫–১০: ৩০–৮০% মৃত্যু।</div><div class="two-col"><div><div class="step-label">বাধ্যতামূলক প্রতিরোধ</div><ul class="rx"><li>PCR-পরীক্ষিত SPF বীজ কেবল</li><li>আগত পানি ক্লোরিনেশন <span class="dose">৩০ পিপিএম TCCA</span></li><li>পুরো পুকুরে পাখি জাল</li><li>সব প্রবেশপথে ৬০ মেশ জাল</li><li>DOC ১৫, ৩০, ৪৫-এ PCR</li><li>পুকুর শুকনো + CaO <span class="dose">৩০০–৪০০ কেজি/একর</span></li></ul></div><div><div class="step-label">প্রাদুর্ভাব ব্যবস্থাপনা</div><ul class="rx"><li>কোনো ভাইরাসনাশক নেই</li><li>জরুরি আংশিক ধরা (&gt;১৫ গ্রা)</li><li>খাওয়ানো বন্ধ</li><li>β-গ্লুকান <span class="dose">০.২% খাবার</span></li><li>MPEDA/রাজ্য মৎস্য বিভাগকে জানান</li><li>নির্গমন পানি জীবাণুমুক্ত</li></ul></div></div>`,
+ te:`<div class="econ"><div class="econ-n">$90M</div><div><div class="econ-l">భారత్ వార్షిక నష్టం</div></div></div><div class="elab-block"><div class="elab-head">కారకం &amp; వ్యాప్తి</div>78+ క్రస్టేసియన్ జాతులను సంక్రమిస్తుంది. అడవి పీతలు &amp; పక్షులు వాహకాలు. వర్షాకాలంలో ఉష్ణ పతనం వైరస్ ప్రేరేపిస్తుంది. తూర్పు తీరం వ్యాప్తి 6.48%.</div><div class="symp-h">క్షేత్ర గుర్తింపు</div><div class="symp-t">రోజు 1–2: ఆహారం అకస్మాత్తు తగ్గడం. రోజు 2–4: చెరువు అంచులకు, తెల్లని మచ్చలు, గులాబీ-ఎరుపు శరీరం. రోజు 5–10: 30–80% మరణం.</div><div class="two-col"><div><div class="step-label">తప్పనిసరి నివారణ</div><ul class="rx"><li>PCR ధృవీకరించిన SPF విత్తనాలు మాత్రమే</li><li>వచ్చే నీటిని క్లోరినేషన్ <span class="dose">30 ppm TCCA</span></li><li>మొత్తం చెరువుపై పక్షి వలలు</li><li>అన్ని ద్వారాలలో 60 మెష జాలీ</li><li>DOC 15, 30, 45 లో PCR</li><li>చెరువు ఆరబెట్టడం + CaO <span class="dose">300–400 కి.గ్రా/ఎకరా</span></li></ul></div><div><div class="step-label">వ్యాప్తి నిర్వహణ</div><ul class="rx"><li>యాంటీవైరల్ ఔషధం లేదు</li><li>అత్యవసర పాక్షిక వేట (&gt;15 గ్రా)</li><li>ఆహారం పూర్తిగా ఆపండి</li><li>β-గ్లూకాన్ <span class="dose">0.2% ఆహారం</span></li><li>MPEDA తెలియజేయండి</li><li>నీటి విడుదల ముందు జీవాణురహితం</li></ul></div></div>`
 },
 {id:"ehp",icon:"🦠",color:"c-purple",tab:"dis",
  tags:[{c:"tag-para",t:"Microsporidian"},{c:"tag-crit",t:"#1 India Loss"},{c:"tag-crit",t:"No Cure"}],
  title:{en:"EHP — Enterocytozoon hepatopenaei",bn:"EHP — এন্টেরোসাইটোজুন হেপাটোপেনাই",te:"EHP — ఎంటెరోసైటోజూన్ హెపటోపెనాయి"},
- sub:{en:"$571M #1 India loss · 78% of total shrimp losses",bn:"ভারতে #১ ক্ষতি $৫৭১M · মোটের ৭৮%",te:"$571M భారత్ #1 నష్టం · మొత్తంలో 78%"},
- badges:[{c:"tag-para",t:"Spore Soil-Hardy"},{c:"tag-crit",t:"No Treatment"}],
- en:`<div class="econ"><div class="econ-n">$571M</div><div><div class="econ-l">India #1 Loss · 78% of total (Patil et al. 2025)</div></div></div>
-<div class="elab-block"><div class="elab-head">Why EHP is the Biggest Economic Threat</div>EHP spores infect hepatopancreatic tubule cells — destroying the shrimp's primary nutrient absorption organ. Spores are extremely hardy, surviving in pond soil for months, resistant to drying, UV, and most disinfectants. India east coast prevalence: 32.4%. Co-infection with WSSV causes combined loss of 1.89 t/ha/crop.</div>
-<div class="symp-h">Key Diagnostic Sign — What to Look For</div>
-<div class="symp-t">Extreme growth variation within same pond by DOC 35–40 — shrimp of same age showing 30–50% size variation ("giants" and "dwarfs" coexist). Hepatopancreas pale, whitish, shrunken. White/opaque stringy feces in feed trays. No mass die-off — chronic insidious productivity loss. Definitive diagnosis: PCR of hepatopancreas tissue ONLY.</div>
-<div class="step-label">Prevention — The Only Effective Intervention</div>
-<ul class="rx"><li>PCR test PL seed before stocking — reject EHP-positive lots absolutely <span class="dose">NACA PL15 PCR</span><span class="nt">Most critical single intervention. EHP-negative seed in contaminated pond still gets re-infected from soil.</span></li><li>Aggressive inter-crop drying + CaO — destroys soil spore reservoir <span class="dose">300 kg/acre · 2+ weeks full dry</span><span class="nt">Skipping this step guarantees re-infection next crop.</span></li><li>HDPE pond liner — eliminates soil spore reservoir permanently</li><li>Chlorinate all incoming water <span class="dose">30 ppm TCCA · 48 hrs</span></li><li>Reduce stocking density <span class="dose">60–80 PL/m² max for EHP-endemic farms</span></li></ul>
-<div class="step-label">Active EHP Pond Management</div>
-<ul class="rx"><li>Organic acids in feed — inhibit spore germination <span class="dose">3–5 g/kg · 10–15 days</span></li><li>Probiotics — competitive exclusion in gut <span class="dose">1 kg/acre biweekly</span></li><li>Water exchange — dilute spore load <span class="dose">15–20% daily from DOC 40</span></li><li>Partial harvest at DOC 60 if ABW deviation &gt;25% — cut losses early</li></ul>`,
- bn:`<div class="econ"><div class="econ-n">$৫৭১M</div><div><div class="econ-l">ভারতে #১ ক্ষতি · মোটের ৭৮%</div></div></div>
-<div class="elab-block"><div class="elab-head">EHP কেন সবচেয়ে বড় হুমকি</div>EHP রেণু হেপাটোপ্যাংক্রেটিক নলকোষ আক্রান্ত করে। রেণু মাটিতে মাসের পর মাস বেঁচে থাকে। পূর্ব উপকূলে প্রকোপ ৩২.৪%। WSSV-এর সাথে মিশ্র সংক্রমণে সম্মিলিত ক্ষতি ১.৮৯ টন/হেক্টর/ফসল।</div>
-<div class="symp-h">মূল লক্ষণ</div>
-<div class="symp-t">DOC ৩৫–৪০-এ চরম বৃদ্ধির তারতম্য — একই বয়সে ৩০–৫০% আকার বৈচিত্র্য। HP ফ্যাকাশে, সংকুচিত। সাদা পাতলা মল। গণমৃত্যু নেই — ধীরে ধীরে উৎপাদন ক্ষতি। নিশ্চিত নির্ণয় শুধু PCR-এ।</div>
-<div class="step-label">প্রতিরোধ — একমাত্র কার্যকর হস্তক্ষেপ</div>
-<ul class="rx"><li>মজুদের আগে PL-এর PCR পরীক্ষা <span class="dose">NACA PL15 PCR</span></li><li>আক্রমণাত্মক শুকনো + CaO <span class="dose">৩০০ কেজি/একর · ২+ সপ্তাহ পূর্ণ শুকনো</span></li><li>HDPE পুকুর লাইনার — মাটির রেণু স্থায়ীভাবে দূর করে</li><li>আগত পানি ক্লোরিনেশন <span class="dose">৩০ পিপিএম · ৪৮ ঘণ্টা</span></li><li>মজুদ ঘনত্ব কমান <span class="dose">৬০–৮০ PL/m²</span></li></ul>
-<div class="step-label">সক্রিয় EHP ব্যবস্থাপনা</div>
-<ul class="rx"><li>জৈব অ্যাসিড খাবারে <span class="dose">৩–৫ গ্রা/কেজি · ১০–১৫ দিন</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর পক্ষকালে</span></li><li>পানি বদল <span class="dose">DOC ৪০+ থেকে প্রতিদিন ১৫–২০%</span></li><li>DOC ৬০-এ আংশিক ধরা যদি ওজন তারতম্য &gt;২৫%</li></ul>`,
- te:`<div class="econ"><div class="econ-n">$571M</div><div><div class="econ-l">భారత్ #1 నష్టం · మొత్తంలో 78%</div></div></div>
-<div class="elab-block"><div class="elab-head">EHP ఎందుకు అతి పెద్ద ఆర్థిక ముప్పు</div>EHP స్పోర్లు హెపటోప్యాంక్రియాటిక్ నాళ కణాలను సంక్రమిస్తాయి. స్పోర్లు నేలలో నెలల తరబడి జీవించగలవు. తూర్పు తీరం వ్యాప్తి 32.4%. WSSV తో మిశ్రమ సంక్రమణ 1.89 టన్నులు/హెక్టార్/పంట నష్టం.</div>
-<div class="symp-h">కీలక సంకేతం</div>
-<div class="symp-t">DOC 35–40 నాటికి తీవ్ర పెరుగుదల వ్యత్యాసం — ఒకే వయసులో 30–50% పరిమాణ వ్యత్యాసం. HP లేత, సంకోచిత. తెల్లని తంతు వంటి మలం. గణ మరణం లేదు — నెమ్మదిగా ఉత్పత్తి నష్టం. నిర్ణయాత్మక నిర్ధారణ PCR మాత్రమే.</div>
-<div class="step-label">నివారణ — ఏకైక ప్రభావవంతమైన జోక్యం</div>
-<ul class="rx"><li>నిల్వకు ముందు PL PCR పరీక్ష <span class="dose">NACA PL15 PCR</span></li><li>తీవ్రంగా ఆరబెట్టడం + CaO <span class="dose">300 కి.గ్రా/ఎకరా · 2+ వారాలు పూర్తి ఆరబెట్టడం</span></li><li>HDPE చెరువు లైనర్ — నేల స్పోర్ నిల్వను శాశ్వతంగా తొలగిస్తుంది</li><li>నీటి క్లోరినేషన్ <span class="dose">30 ppm TCCA · 48 గంటలు</span></li><li>నిల్వ సాంద్రత <span class="dose">గరిష్టం 60–80 PL/m²</span></li></ul>
-<div class="step-label">చురుకైన EHP నిర్వహణ</div>
-<ul class="rx"><li>సేంద్రియ ఆమ్లాలు ఆహారంలో <span class="dose">3–5 గ్రా/కి.గ్రా · 10–15 రోజులు</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li><li>నీటి మార్పు <span class="dose">DOC 40+ నుండి రోజూ 15–20%</span></li><li>DOC 60 నాటికి పాక్షిక వేట — బరువు వ్యత్యాసం &gt;25% అయితే</li></ul>`
+ sub:{en:"$571M #1 India loss · 78% of total · Growth variation key sign",bn:"ভারতে #১ ক্ষতি $৫৭১M · বৃদ্ধির তারতম্য মূল লক্ষণ",te:"$571M భారత్ #1 నష్టం · పెరుగుదల వ్యత్యాసం కీలక సంకేతం"},
+ en:`<div class="econ"><div class="econ-n">$571M</div><div><div class="econ-l">India #1 Loss · 78% of total — Patil et al. 2025</div></div></div><div class="elab-block"><div class="elab-head">Why EHP is the Biggest Economic Threat</div>EHP spores infect hepatopancreatic tubule cells — destroying the nutrient absorption organ. Spores survive in pond soil for months, resistant to drying, UV, and most disinfectants. India east coast prevalence: 32.4%. Co-infection with WSSV = combined loss 1.89 t/ha/crop.</div><div class="symp-h">Key Diagnostic Sign</div><div class="symp-t">Extreme growth variation by DOC 35–40 — shrimp of same age showing 30–50% size variation ("giants" and "dwarfs"). HP pale, whitish, shrunken. White stringy feces in feed trays. No mass die-off — chronic productivity loss. Definitive diagnosis: PCR of HP tissue ONLY.</div><div class="step-label">Prevention — The Only Effective Intervention</div><ul class="rx"><li>PCR test PL seed before stocking — reject EHP-positive lots absolutely <span class="dose">NACA PL15 PCR</span></li><li>Aggressive inter-crop drying + CaO — destroys soil spore reservoir <span class="dose">300 kg/acre · 2+ weeks full dry</span></li><li>HDPE pond liner — eliminates soil spore reservoir permanently</li><li>Chlorinate all incoming water <span class="dose">30 ppm TCCA · 48 hrs</span></li><li>Reduce stocking density <span class="dose">60–80 PL/m² max for EHP-endemic farms</span></li></ul><div class="step-label">Active EHP Management</div><ul class="rx"><li>Organic acids in feed — inhibit spore germination <span class="dose">3–5 g/kg · 10–15 days</span></li><li>Probiotics — competitive exclusion <span class="dose">1 kg/acre biweekly</span></li><li>Water exchange <span class="dose">15–20% daily from DOC 40</span></li><li>Partial harvest at DOC 60 if ABW deviation &gt;25%</li></ul>`,
+ bn:`<div class="econ"><div class="econ-n">$৫৭১M</div><div><div class="econ-l">ভারতে #১ ক্ষতি · মোটের ৭৮%</div></div></div><div class="elab-block"><div class="elab-head">EHP কেন সবচেয়ে বড় হুমকি</div>EHP রেণু হেপাটোপ্যাংক্রেটিক নলকোষ আক্রান্ত করে। রেণু মাটিতে মাসের পর মাস বেঁচে থাকে। পূর্ব উপকূলে প্রকোপ ৩২.৪%।</div><div class="symp-h">মূল লক্ষণ</div><div class="symp-t">DOC ৩৫–৪০-এ চরম বৃদ্ধির তারতম্য — একই বয়সে ৩০–৫০% আকার বৈচিত্র্য। HP ফ্যাকাশে, সংকুচিত। সাদা পাতলা মল। গণমৃত্যু নেই — ধীরে ধীরে উৎপাদন ক্ষতি।</div><div class="step-label">প্রতিরোধ — একমাত্র কার্যকর হস্তক্ষেপ</div><ul class="rx"><li>মজুদের আগে PL-এর PCR পরীক্ষা <span class="dose">NACA PL15 PCR</span></li><li>আক্রমণাত্মক শুকনো + CaO <span class="dose">৩০০ কেজি/একর · ২+ সপ্তাহ পূর্ণ শুকনো</span></li><li>HDPE পুকুর লাইনার — মাটির রেণু স্থায়ীভাবে দূর করে</li><li>আগত পানি ক্লোরিনেশন <span class="dose">৩০ পিপিএম · ৪৮ ঘণ্টা</span></li><li>মজুদ ঘনত্ব কমান <span class="dose">৬০–৮০ PL/m²</span></li></ul><div class="step-label">সক্রিয় EHP ব্যবস্থাপনা</div><ul class="rx"><li>জৈব অ্যাসিড খাবারে <span class="dose">৩–৫ গ্রা/কেজি · ১০–১৫ দিন</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর পক্ষকালে</span></li><li>পানি বদল <span class="dose">DOC ৪০+ থেকে প্রতিদিন ১৫–২০%</span></li><li>DOC ৬০-এ আংশিক ধরা যদি ওজন তারতম্য &gt;২৫%</li></ul>`,
+ te:`<div class="econ"><div class="econ-n">$571M</div><div><div class="econ-l">భారత్ #1 నష్టం · మొత్తంలో 78%</div></div></div><div class="elab-block"><div class="elab-head">EHP ఎందుకు అతి పెద్ద ఆర్థిక ముప్పు</div>EHP స్పోర్లు హెపటోప్యాంక్రియాటిక్ నాళ కణాలను సంక్రమిస్తాయి. స్పోర్లు నేలలో నెలల తరబడి జీవించగలవు. తూర్పు తీరం వ్యాప్తి 32.4%.</div><div class="symp-h">కీలక సంకేతం</div><div class="symp-t">DOC 35–40 నాటికి తీవ్ర పెరుగుదల వ్యత్యాసం — ఒకే వయసులో 30–50% పరిమాణ వ్యత్యాసం. HP లేత, సంకోచిత. తెల్లని మలం. గణ మరణం లేదు.</div><div class="step-label">నివారణ — ఏకైక ప్రభావవంతమైన జోక్యం</div><ul class="rx"><li>నిల్వకు ముందు PL PCR పరీక్ష <span class="dose">NACA PL15 PCR</span></li><li>తీవ్రంగా ఆరబెట్టడం + CaO <span class="dose">300 కి.గ్రా/ఎకరా · 2+ వారాలు</span></li><li>HDPE చెరువు లైనర్</li><li>నీటి క్లోరినేషన్ <span class="dose">30 ppm TCCA · 48 గంటలు</span></li><li>నిల్వ సాంద్రత <span class="dose">గరిష్టం 60–80 PL/m²</span></li></ul><div class="step-label">చురుకైన EHP నిర్వహణ</div><ul class="rx"><li>సేంద్రియ ఆమ్లాలు ఆహారంలో <span class="dose">3–5 గ్రా/కి.గ్రా · 10–15 రోజులు</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా పక్షానికోసారి</span></li><li>నీటి మార్పు <span class="dose">DOC 40+ నుండి రోజూ 15–20%</span></li><li>DOC 60 నాటికి పాక్షిక వేట — బరువు వ్యత్యాసం &gt;25%</li></ul>`
 },
 {id:"ahpnd",icon:"⚡",color:"c-orange",tab:"dis",
  tags:[{c:"tag-bact",t:"Bacterial · Vibrio"},{c:"tag-crit",t:"Mass Mortality &lt;DOC 30"}],
  title:{en:"AHPND / EMS — Vibriosis",bn:"AHPND/EMS — ভিব্রিওসিস",te:"AHPND/EMS — విబ్రియోసిస్"},
- sub:{en:"V. parahaemolyticus · $40M India · No antibiotic",bn:"V. parahaemolyticus · ভারতে $৪০M ক্ষতি",te:"V. parahaemolyticus · $40M భారత్ నష్టం"},
- badges:[{c:"tag-bact",t:"PirA/PirB Toxin"},{c:"tag-crit",t:"MDR Resistance"}],
- en:`<div class="elab-block"><div class="elab-head">Agent &amp; Mechanism</div>V. parahaemolyticus strains carrying pVA1 plasmid produce PirA/PirB binary toxins causing acute HP tubule epithelium destruction. Also: V. harveyi (luminescent — infected shrimp/larvae glow green under UV at night), V. alginolyticus. India east coast: V. parahaemolyticus 27.7%, V. alginolyticus 16.1%, V. harveyi 13.1%.</div>
-<div class="symp-h">Field Identification</div>
-<div class="symp-t">AHPND: Mass mortality within first 20–30 DOC (up to 80%). HP pale, white, mushy on dissection. Empty gut. Shrimp spiral-swim then sink and die — hallmark behaviour. General Vibriosis: shrimp/larvae glow green-blue under UV flashlight at night (V. harveyi). Opaque white muscles. Necrotic appendages. Black gills.</div>
-<div class="step-label">Prevention</div>
-<ul class="rx"><li>TCCA reservoir treatment before pond fill <span class="dose">1 ppm · 24 hrs</span></li><li>BKC 80% — routine Vibrio TVC control <span class="dose">500 mL/acre monthly</span></li><li>Probiotics — competitive exclusion in water and gut <span class="dose">1 kg/acre every 10 days</span></li><li>Organic acids in feed — gut acidification inhibits Vibrio <span class="dose">3–5 g/kg</span></li><li>Monitor Vibrio TVC weekly from DOC 30 — target &lt;10³ CFU/mL</li><li>Maintain pH 7.8–8.2 — Vibrio grows optimally at pH 7.0–7.5</li></ul>
-<div class="step-label">Active Vibriosis Management</div>
-<ul class="rx"><li>TCCA pond treatment <span class="dose">0.5 ppm · evening · all aerators ON</span><span class="nt">Do not repeat within 5 days. Withdraw feed 24 hrs post-treatment.</span></li><li>BKC 80% <span class="dose">250 mL/acre — alternate with TCCA</span></li><li>Probiotic surge dose <span class="dose">2 kg/acre</span></li><li>NO antibiotics without confirmed sensitivity testing + registered veterinarian prescription</li></ul>
-<div class="inl-b"><span class="bxh">✖ MDR Warning</span>Multidrug-resistant V. parahaemolyticus dominates India east coast farms. Antibiotic residues cause export rejection. FSSAI and EU regulations prohibit treated shrimp exports. Only use antibiotics with confirmed antibiogram from accredited laboratory.</div>`,
- bn:`<div class="elab-block"><div class="elab-head">কারক ও প্রক্রিয়া</div>pVA1 প্লাজমিড-বহনকারী V. parahaemolyticus PirA/PirB টক্সিন তৈরি করে। V. harveyi (জ্বলজ্বলে) — সংক্রমিত চিংড়ি রাতে UV আলোয় সবুজ জ্বলে। ভারত পূর্ব উপকূলে V. parahaemolyticus ২৭.৭%।</div>
-<div class="symp-h">মাঠ পরিচিতি</div>
-<div class="symp-t">AHPND: DOC ২০–৩০-এ ৮০% পর্যন্ত গণমৃত্যু। HP ফ্যাকাশে, নরম। সর্পিলাকার সাঁতার তারপর মৃত্যু। ভিব্রিওসিস: UV আলোয় চিংড়ি জ্বলে। সাদাটে পেশি। কালো ফুলকা।</div>
-<div class="step-label">প্রতিরোধ</div>
-<ul class="rx"><li>ভান্ডার TCCA চিকিৎসা <span class="dose">১ পিপিএম · ২৪ ঘণ্টা</span></li><li>BKC 80% <span class="dose">৫০০ মিলি/একর মাসিক</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর প্রতি ১০ দিন</span></li><li>জৈব অ্যাসিড খাবারে <span class="dose">৩–৫ গ্রা/কেজি</span></li><li>DOC ৩০ থেকে সাপ্তাহিক Vibrio TVC পর্যবেক্ষণ</li></ul>
-<div class="step-label">সক্রিয় ভিব্রিওসিস ব্যবস্থাপনা</div>
-<ul class="rx"><li>TCCA পুকুর চিকিৎসা <span class="dose">০.৫ পিপিএম · সন্ধ্যায় · সব এয়ারেটর চালু</span></li><li>BKC 80% <span class="dose">২৫০ মিলি/একর</span></li><li>প্রোবায়োটিক বাড়তি মাত্রা <span class="dose">২ কেজি/একর</span></li><li>অ্যান্টিবায়োটিক নয় — নিবন্ধিত পশু চিকিৎসকের প্রেসক্রিপশন ছাড়া</li></ul>
-<div class="inl-b"><span class="bxh">✖ MDR সতর্কতা</span>MDR V. parahaemolyticus পূর্ব উপকূলে প্রভাবশালী। অ্যান্টিবায়োটিক অবশিষ্টাংশে রপ্তানি বাতিল।</div>`,
- te:`<div class="elab-block"><div class="elab-head">కారకం &amp; విధానం</div>pVA1 ప్లాస్మిడ్ బేరిరిన V. parahaemolyticus PirA/PirB టాక్సిన్లు తయారుచేస్తాయి. V. harveyi — సోకిన రొయ్యలు రాత్రి UV లో ఆకుపచ్చగా మెరుస్తాయి. తూర్పు తీరం V. parahaemolyticus 27.7%.</div>
-<div class="symp-h">క్షేత్ర గుర్తింపు</div>
-<div class="symp-t">AHPND: DOC 20–30 లో 80% వరకు గణ మరణం. HP లేత, మెత్తని. చుట్టు తిరిగి ఈదిన తర్వాత చనిపోతాయి. విబ్రియోసిస్: UV లో రొయ్యలు మెరుస్తాయి. కండరాలు తెలుపు. నల్లని గిల్స్.</div>
-<div class="step-label">నివారణ</div>
-<ul class="rx"><li>నిల్వలో TCCA <span class="dose">1 ppm · 24 గంటలు</span></li><li>BKC 80% <span class="dose">500 మి.లీ/ఎకరా నెలవారీ</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా 10 రోజులకోసారి</span></li><li>సేంద్రియ ఆమ్లాలు ఆహారంలో <span class="dose">3–5 గ్రా/కి.గ్రా</span></li><li>DOC 30 నుండి వారంవారీ Vibrio TVC పర్యవేక్షణ</li></ul>
-<div class="step-label">చురుకైన విబ్రియోసిస్ నిర్వహణ</div>
-<ul class="rx"><li>TCCA చెరువు చికిత్స <span class="dose">0.5 ppm · సాయంత్రం · అన్ని ఏరేటర్లు ఆన్</span></li><li>BKC 80% <span class="dose">250 మి.లీ/ఎకరా</span></li><li>ప్రొబయోటిక్ అదనపు మోతాదు <span class="dose">2 కి.గ్రా/ఎకరా</span></li><li>యాంటీబయోటిక్‌లు వద్దు — నమోదిత జంతువైద్యుని ప్రిస్క్రిప్షన్ లేకుండా</li></ul>
-<div class="inl-b"><span class="bxh">✖ MDR హెచ్చరిక</span>MDR V. parahaemolyticus భారత్ తూర్పు తీరంలో ప్రబలంగా ఉంది. యాంటీబయోటిక్ అవశేషాలు = ఎగుమతి తిరస్కరణ.</div>`
+ sub:{en:"V. parahaemolyticus · $40M India · No antibiotic",bn:"V. parahaemolyticus · ভারতে $৪০M ক্ষতি",te:"V. parahaemolyticus · $40M భారత్"},
+ en:`<div class="elab-block"><div class="elab-head">Agent &amp; Mechanism</div>V. parahaemolyticus strains carrying pVA1 plasmid produce PirA/PirB binary toxins causing acute HP tubule epithelium destruction. V. harveyi (luminescent) — infected shrimp glow green under UV at night. India east coast: V. parahaemolyticus 27.7%, V. alginolyticus 16.1%, V. harveyi 13.1%.</div><div class="symp-h">Field Identification</div><div class="symp-t">AHPND: Mass mortality within first 20–30 DOC. HP pale, white, mushy. Shrimp spiral-swim then sink and die. Vibriosis: shrimp glow green-blue under UV flashlight at night (V. harveyi). Opaque white muscles. Necrotic appendages. Black gills.</div><div class="step-label">Prevention</div><ul class="rx"><li>TCCA reservoir treatment <span class="dose">1 ppm · 24 hrs</span></li><li>BKC 80% — routine Vibrio TVC control <span class="dose">500 mL/acre monthly</span></li><li>Probiotics — competitive exclusion in water and gut <span class="dose">1 kg/acre every 10 days</span></li><li>Organic acids in feed — gut acidification <span class="dose">3–5 g/kg</span></li><li>Monitor Vibrio TVC weekly from DOC 30 — target &lt;10³ CFU/mL</li><li>Maintain pH 7.8–8.2 — Vibrio grows best at 7.0–7.5</li></ul><div class="step-label">Active Vibriosis Management</div><ul class="rx"><li>TCCA pond treatment <span class="dose">0.5 ppm · evening · all aerators ON</span></li><li>BKC 80% <span class="dose">250 mL/acre — alternate with TCCA</span></li><li>Probiotic surge dose <span class="dose">2 kg/acre</span></li><li>NO antibiotics without confirmed sensitivity testing + registered vet prescription</li></ul><div class="inl-b"><span class="bxh">✖ MDR Warning</span>Multidrug-resistant V. parahaemolyticus dominates India east coast. Antibiotic residues = export rejection under FSSAI and EU regulations.</div>`,
+ bn:`<div class="elab-block"><div class="elab-head">কারক ও প্রক্রিয়া</div>pVA1 প্লাজমিড-বহনকারী V. parahaemolyticus PirA/PirB টক্সিন তৈরি করে। V. harveyi (জ্বলজ্বলে) সংক্রমিত চিংড়ি রাতে UV আলোয় সবুজ জ্বলে।</div><div class="symp-h">মাঠ পরিচিতি</div><div class="symp-t">AHPND: DOC ২০–৩০-এ ৮০% পর্যন্ত গণমৃত্যু। HP ফ্যাকাশে, নরম। সর্পিলাকার সাঁতার তারপর মৃত্যু। UV আলোয় চিংড়ি জ্বলে (V. harveyi)।</div><div class="step-label">প্রতিরোধ</div><ul class="rx"><li>ভান্ডার TCCA চিকিৎসা <span class="dose">১ পিপিএম · ২৪ ঘণ্টা</span></li><li>BKC 80% <span class="dose">৫০০ মিলি/একর মাসিক</span></li><li>প্রোবায়োটিক <span class="dose">১ কেজি/একর প্রতি ১০ দিন</span></li><li>জৈব অ্যাসিড খাবারে <span class="dose">৩–৫ গ্রা/কেজি</span></li><li>DOC ৩০ থেকে সাপ্তাহিক Vibrio TVC পর্যবেক্ষণ</li></ul><div class="step-label">সক্রিয় ভিব্রিওসিস ব্যবস্থাপনা</div><ul class="rx"><li>TCCA পুকুর চিকিৎসা <span class="dose">০.৫ পিপিএম · সন্ধ্যায়</span></li><li>BKC 80% <span class="dose">২৫০ মিলি/একর</span></li><li>প্রোবায়োটিক বাড়তি মাত্রা <span class="dose">২ কেজি/একর</span></li><li>অ্যান্টিবায়োটিক নয় — ভেটেরিনারি প্রেসক্রিপশন ছাড়া</li></ul>`,
+ te:`<div class="elab-block"><div class="elab-head">కారకం &amp; విధానం</div>pVA1 ప్లాస్మిడ్ బేరిరిన V. parahaemolyticus PirA/PirB టాక్సిన్లు తయారుచేస్తాయి. V. harveyi — సోకిన రొయ్యలు రాత్రి UV లో ఆకుపచ్చగా మెరుస్తాయి.</div><div class="symp-h">క్షేత్ర గుర్తింపు</div><div class="symp-t">AHPND: DOC 20–30 లో 80% వరకు గణ మరణం. HP లేత, మెత్తని. చుట్టు తిరిగి ఈదిన తర్వాత చనిపోతాయి. UV లో రొయ్యలు మెరుస్తాయి.</div><div class="step-label">నివారణ</div><ul class="rx"><li>నిల్వలో TCCA <span class="dose">1 ppm · 24 గంటలు</span></li><li>BKC 80% <span class="dose">500 మి.లీ/ఎకరా నెలవారీ</span></li><li>ప్రొబయోటిక్ <span class="dose">1 కి.గ్రా/ఎకరా 10 రోజులకోసారి</span></li><li>సేంద్రియ ఆమ్లాలు ఆహారంలో <span class="dose">3–5 గ్రా/కి.గ్రా</span></li><li>DOC 30 నుండి వారంవారీ Vibrio TVC పర్యవేక్షణ</li></ul><div class="step-label">చురుకైన విబ్రియోసిస్ నిర్వహణ</div><ul class="rx"><li>TCCA చెరువు చికిత్స <span class="dose">0.5 ppm · సాయంత్రం · అన్ని ఏరేటర్లు ఆన్</span></li><li>BKC 80% <span class="dose">250 మి.లీ/ఎకరా</span></li><li>ప్రొబయోటిక్ అదనపు మోతాదు <span class="dose">2 కి.గ్రా/ఎకరా</span></li><li>యాంటీబయోటిక్‌లు వద్దు — నమోదిత జంతువైద్యుని ప్రిస్క్రిప్షన్ లేకుండా</li></ul>`
 },
 {id:"rms",icon:"💔",color:"c-sky",tab:"dis",
  tags:[{c:"tag-enviro",t:"Multi-factorial"},{c:"tag-crit",t:"Chronic DOC 30–100"}],
  title:{en:"RMS — Running Mortality Syndrome",bn:"RMS — রানিং মর্টালিটি সিন্ড্রোম",te:"RMS — పరిగెత్తే మరణం సిండ్రోమ్"},
- sub:{en:"Daily losses · Survival 40–60% · Not one pathogen",bn:"প্রতিদিন মৃত্যু · বেঁচে থাকা ৪০–৬০%",te:"నిత్యం మరణాలు · మనుగడ 40–60%"},
- badges:[{c:"tag-enviro",t:"Multi-Cause"}],
- en:`<div class="elab-block"><div class="elab-head">Not a Single Disease — A Failure Cascade</div>RMS = combination of poor seed quality (hatchery-stressed PL), high Vibrio load, shallow ponds (&lt;1.2 m), high organic load, water quality stress, and opportunistic bacterial infections. India survey: production loss 1.1 t/ha/crop. Diagnose only AFTER ruling out WSSV, EHP, AHPND by PCR.</div>
-<div class="symp-h">Symptoms</div>
-<div class="symp-t">Continuous daily mortality — 0.01–0.05% of stock dying on pond edges every morning. No single dramatic event. Shrimp lethargic with dark gill coloration. FCR deteriorating week by week. Survival at harvest 40–60% (expected 70–80%).</div>
-<ul class="rx"><li>24/7 intensive aeration — minimum 1 HP per 1000 kg biomass</li><li>Reduce stocking density — partial harvest if &gt;DOC 50 <span class="dose">Target &lt;100/m²</span></li><li>Probiotic 10-day cycle throughout entire crop <span class="dose">1 kg/acre</span></li><li>Molasses when Vibrio TVC high <span class="dose">5 kg/acre dissolved</span></li><li>Daily water exchange DOC 40+ <span class="dose">10–15%</span></li><li>Vitamin C + immunostimulants continuously <span class="dose">1–2 g/kg feed</span></li><li>Increase depth ≥1.5 m — thermal and DO stability</li></ul>`,
- bn:`<div class="elab-block"><div class="elab-head">একক রোগ নয় — ব্যর্থতার শৃঙ্খল</div>দুর্বল বীজ মান + উচ্চ ভিব্রিও + অগভীর পুকুর + উচ্চ জৈব ভার + পানি মানের চাপের সংমিশ্রণ। ভারত সর্বেক্ষণ: ১.১ টন/হেক্টর/ফসল ক্ষতি। WSSV, EHP, AHPND PCR-এ বাদ দেওয়ার পরেই RMS নির্ণয়।</div>
-<div class="symp-h">লক্ষণ</div>
-<div class="symp-t">মজুদের ০.০১–০.০৫% প্রতিদিন পুকুর পাড়ে মরে। FCR ধীরে খারাপ হয়। বেঁচে থাকা ৪০–৬০%।</div>
-<ul class="rx"><li>২৪/৭ নিবিড় বায়ু সঞ্চালন — প্রতি ১০০০ কেজিতে ১ HP</li><li>মজুদ ঘনত্ব কমান <span class="dose">সর্বোচ্চ ১০০/m²</span></li><li>প্রোবায়োটিক ১০ দিনের চক্র <span class="dose">১ কেজি/একর</span></li><li>গুড় (Vibrio বেশি হলে) <span class="dose">৫ কেজি/একর গুলিয়ে</span></li><li>DOC ৪০+ থেকে দৈনিক পানি বদল <span class="dose">১০–১৫%</span></li><li>ভিটামিন C + ইমিউনোস্টিমুল্যান্ট <span class="dose">১–২ গ্রা/কেজি খাবার</span></li></ul>`,
- te:`<div class="elab-block"><div class="elab-head">ఏకైక వ్యాధి కాదు — వైఫల్యాల శ్రేణి</div>పేలవమైన విత్తన నాణ్యత + అధిక విబ్రియో + నిస్సారమైన చెరువులు + అధిక సేంద్రియ భారం కలయిక. భారత్ సర్వే: 1.1 టన్నులు/హెక్టార్/పంట నష్టం. WSSV, EHP, AHPND PCR లో తోసిపుచ్చిన తర్వాతే RMS నిర్ధారణ.</div>
-<div class="symp-h">లక్షణాలు</div>
-<div class="symp-t">నిల్వలో 0.01–0.05% రోజూ చనిపోతాయి. ఒకే నాటకీయ సంఘటన లేదు. FCR క్రమంగా దెబ్బతింటుంది. మనుగడ 40–60%.</div>
-<ul class="rx"><li>24/7 నిబిడ గాలి సంచలనం — 1000 కి.గ్రా జీవభారానికి కనిష్టం 1 HP</li><li>నిల్వ సాంద్రత తగ్గించండి <span class="dose">గరిష్టం 100/m²</span></li><li>ప్రొబయోటిక్ 10-రోజు చక్రం <span class="dose">1 కి.గ్రా/ఎకరా</span></li><li>మొలాసెస్ <span class="dose">5 కి.గ్రా/ఎకరా</span></li><li>DOC 40+ నుండి నిత్యం నీటి మార్పు <span class="dose">10–15%</span></li><li>విటమిన్ C + ఇమ్యూనోస్టిమ్యులెంట్లు <span class="dose">1–2 గ్రా/కి.గ్రా ఆహారం</span></li></ul>`
+ sub:{en:"Daily losses · Survival 40–60% · Diagnose by exclusion",bn:"প্রতিদিন মৃত্যু · বেঁচে থাকা ৪০–৬০%",te:"నిత్యం మరణాలు · మనుగడ 40–60%"},
+ en:`<div class="elab-block"><div class="elab-head">Not a Single Disease — A Failure Cascade</div>RMS = combination of poor seed quality (hatchery-stressed PL), high Vibrio load, shallow ponds (&lt;1.2 m), high organic load, water quality stress, and opportunistic bacterial infections. India survey: production loss 1.1 t/ha/crop. Diagnose only AFTER ruling out WSSV, EHP, AHPND by PCR.</div><div class="symp-h">Symptoms</div><div class="symp-t">Continuous daily mortality — 0.01–0.05% of stock dying on pond edges every morning. No single dramatic event. Shrimp lethargic with dark gill coloration. FCR deteriorating week by week. Survival at harvest 40–60% (expected 70–80%).</div><ul class="rx"><li>24/7 intensive aeration — minimum 1 HP per 1000 kg biomass</li><li>Reduce stocking density — partial harvest if &gt;DOC 50 <span class="dose">Target &lt;100/m²</span></li><li>Probiotic 10-day cycle throughout crop <span class="dose">1 kg/acre</span></li><li>Molasses when Vibrio TVC high <span class="dose">5 kg/acre dissolved</span></li><li>Daily water exchange DOC 40+ <span class="dose">10–15%</span></li><li>Vitamin C + immunostimulants <span class="dose">1–2 g/kg feed continuously</span></li><li>Increase depth ≥1.5 m — thermal and DO stability</li></ul>`,
+ bn:`<div class="elab-block"><div class="elab-head">একক রোগ নয় — ব্যর্থতার শৃঙ্খল</div>দুর্বল বীজ মান + উচ্চ ভিব্রিও + অগভীর পুকুর + উচ্চ জৈব ভার + পানি মানের চাপের সংমিশ্রণ। ভারত সর্বেক্ষণ: ১.১ টন/হেক্টর/ফসল ক্ষতি। WSSV, EHP, AHPND PCR-এ বাদ দেওয়ার পরেই RMS নির্ণয়।</div><div class="symp-h">লক্ষণ</div><div class="symp-t">প্রতিদিন মজুদের ০.০১–০.০৫% পুকুর পাড়ে মরে। FCR ধীরে খারাপ হয়। বেঁচে থাকা ৪০–৬০%।</div><ul class="rx"><li>২৪/৭ নিবিড় বায়ু সঞ্চালন — প্রতি ১০০০ কেজিতে ১ HP</li><li>মজুদ ঘনত্ব কমান <span class="dose">সর্বোচ্চ ১০০/m²</span></li><li>প্রোবায়োটিক ১০ দিনের চক্র <span class="dose">১ কেজি/একর</span></li><li>গুড় (Vibrio বেশি হলে) <span class="dose">৫ কেজি/একর গুলিয়ে</span></li><li>DOC ৪০+ থেকে দৈনিক পানি বদল <span class="dose">১০–১৫%</span></li><li>ভিটামিন C + ইমিউনোস্টিমুল্যান্ট <span class="dose">১–২ গ্রা/কেজি খাবার</span></li></ul>`,
+ te:`<div class="elab-block"><div class="elab-head">ఏకైక వ్యాధి కాదు — వైఫల్యాల శ్రేణి</div>పేలవమైన విత్తన నాణ్యత + అధిక విబ్రియో + నిస్సారమైన చెరువులు + అధిక సేంద్రియ భారం కలయిక. భారత్ సర్వే: 1.1 టన్నులు/హెక్టార్/పంట నష్టం. WSSV, EHP, AHPND PCR లో తోసిపుచ్చిన తర్వాతే నిర్ధారణ.</div><div class="symp-h">లక్షణాలు</div><div class="symp-t">నిల్వలో 0.01–0.05% రోజూ చనిపోతాయి. FCR క్రమంగా దెబ్బతింటుంది. మనుగడ 40–60%.</div><ul class="rx"><li>24/7 నిబిడ గాలి సంచలనం — 1000 కి.గ్రా జీవభారానికి కనిష్టం 1 HP</li><li>నిల్వ సాంద్రత తగ్గించండి <span class="dose">గరిష్టం 100/m²</span></li><li>ప్రొబయోటిక్ 10-రోజు చక్రం <span class="dose">1 కి.గ్రా/ఎకరా</span></li><li>మొలాసెస్ <span class="dose">5 కి.గ్రా/ఎకరా</span></li><li>DOC 40+ నుండి నిత్యం నీటి మార్పు <span class="dose">10–15%</span></li><li>విటమిన్ C + ఇమ్యూనోస్టిమ్యులెంట్లు <span class="dose">1–2 గ్రా/కి.గ్రా ఆహారం</span></li></ul>`
 },
 {id:"wfs",icon:"⬜",color:"c-gold",tab:"dis",
- tags:[{c:"tag-para",t:"EHP + Vibrio + Gregarine"},{c:"tag-enviro",t:"Gut & Shell Failure"}],
+ tags:[{c:"tag-para",t:"EHP + Vibrio"},{c:"tag-enviro",t:"Gut &amp; Shell"}],
  title:{en:"WFS — White Feces &amp; Loose Shell",bn:"WFS — সাদা মল ও ঢিলা খোল",te:"WFS — తెల్ల మలం &amp; వదులైన గుల్ల"},
- sub:{en:"EHP + Vibrio + mineral deficiency combined",bn:"EHP + ভিব্রিও + খনিজ ঘাটতির সংমিশ্রণ",te:"EHP + విబ్రియో + ఖనిజ లోపం కలయిక"},
- badges:[],
- en:`<div class="elab-block"><div class="elab-head">Two Linked Problems</div>White feces = EHP-damaged hepatopancreas + Vibrio gut infection + Gregarine (Nematopsis spp.) intestinal parasite + overfeeding. Loose shell = Ca/Mg/alkalinity deficiency + moulting disruption + EHP damage affecting cuticle biosynthesis. Both commonly occur together in stressed ponds.</div>
-<div class="symp-h">Symptoms</div>
-<div class="symp-t">White/pale stringy feces floating on pond surface and collecting in feed trays. HP pale, shrunken. Shell separates from body — soft even days after moulting. Reduced feeding and slow growth despite apparently normal behaviour.</div>
-<div class="step-label">White Feces Protocol</div>
-<ul class="rx"><li>Reduce feeding 30–50% immediately</li><li>Probiotic pond + feed <span class="dose">Pond: 2 kg/acre · Feed: 3 g/kg</span></li><li>Organic acids in feed <span class="dose">3–5 g/kg · 15 days</span></li><li>Hepatoprotective supplement — liver tonic <span class="dose">1–2 kg/ton feed</span></li><li>Water exchange <span class="dose">15–20% daily</span></li></ul>
-<div class="step-label">Loose Shell Protocol</div>
-<ul class="rx"><li>Dolomite — Ca + Mg for cuticle biosynthesis <span class="dose">100 kg/acre</span></li><li>Ca + Mg mineral in feed <span class="dose">5 g/kg feed</span></li><li>Raise alkalinity to 150–180 ppm</li><li>Vitamin C + K — cuticle integrity <span class="dose">2 g/kg feed</span></li></ul>`,
- bn:`<div class="elab-block"><div class="elab-head">দুটি সম্পর্কিত সমস্যা</div>সাদা মল = EHP-ক্ষতিগ্রস্ত HP + ভিব্রিও অন্ত্র সংক্রমণ + গ্রেগারিন পরজীবী + অতিরিক্ত খাওয়ানো। ঢিলা খোল = Ca, Mg, ক্ষারত্বের ঘাটতি + মোল্টিং ব্যাঘাত।</div>
-<div class="step-label">সাদা মল প্রোটোকল</div>
-<ul class="rx"><li>খাওয়ানো ৩০–৫০% তক্ষুনি কমান</li><li>প্রোবায়োটিক <span class="dose">পুকুরে ২ কেজি/একর · খাবারে ৩ গ্রা/কেজি</span></li><li>জৈব অ্যাসিড <span class="dose">৩–৫ গ্রা/কেজি · ১৫ দিন</span></li><li>হেপাটোপ্রোটেক্টিভ সাপ্লিমেন্ট <span class="dose">১–২ কেজি/টন</span></li><li>পানি বদল <span class="dose">১৫–২০% প্রতিদিন</span></li></ul>
-<div class="step-label">ঢিলা খোল প্রোটোকল</div>
-<ul class="rx"><li>ডলোমাইট <span class="dose">১০০ কেজি/একর</span></li><li>Ca + Mg খাবারে <span class="dose">৫ গ্রা/কেজি</span></li><li>ক্ষারত্ব ১৫০–১৮০ পিপিএম</li><li>ভিটামিন C + K <span class="dose">২ গ্রা/কেজি</span></li></ul>`,
- te:`<div class="elab-block"><div class="elab-head">రెండు అనుసంధానించబడిన సమస్యలు</div>తెల్ల మలం = EHP-దెబ్బతిన్న HP + విబ్రియో పేగు సంక్రమణ + గ్రిగరైన్ పరాన్నజీవి + అతి ఆహారం. వదులైన గుల్ల = Ca, Mg, క్షారత లోపం + వలువ విడవడం అంతరాయం.</div>
-<div class="step-label">తెల్ల మలం ప్రోటోకాల్</div>
-<ul class="rx"><li>ఆహారం 30–50% వెంటనే తగ్గించండి</li><li>ప్రొబయోటిక్ <span class="dose">చెరువులో 2 కి.గ్రా/ఎకరా · ఆహారంలో 3 గ్రా/కి.గ్రా</span></li><li>సేంద్రియ ఆమ్లాలు <span class="dose">3–5 గ్రా/కి.గ్రా · 15 రోజులు</span></li><li>హెపటోప్రొటెక్టివ్ సప్లిమెంట్ <span class="dose">1–2 కి.గ్రా/టన్</span></li><li>నీటి మార్పు <span class="dose">15–20% నిత్యం</span></li></ul>
-<div class="step-label">వదులైన గుల్ల ప్రోటోకాల్</div>
-<ul class="rx"><li>డోలమైట్ <span class="dose">100 కి.గ్రా/ఎకరా</span></li><li>Ca + Mg ఆహారంలో <span class="dose">5 గ్రా/కి.గ్రా</span></li><li>క్షారత 150–180 ppm</li><li>విటమిన్ C + K <span class="dose">2 గ్రా/కి.గ్రా</span></li></ul>`
+ sub:{en:"EHP + Vibrio + mineral deficiency combined",bn:"EHP + ভিব্রিও + খনিজ ঘাটতির সংমিশ্রণ",te:"EHP + విబ్రియో + ఖనిజ లోపం"},
+ en:`<div class="elab-block"><div class="elab-head">Two Linked Problems</div>White feces = EHP-damaged HP + Vibrio gut infection + Gregarine intestinal parasite + overfeeding. Loose shell = Ca/Mg/alkalinity deficiency + moulting disruption. Both commonly occur together in stressed ponds.</div><div class="symp-h">Symptoms</div><div class="symp-t">White/pale stringy feces floating on pond surface and collecting in feed trays. HP pale, shrunken. Shell separates from body — soft even days after moulting. Reduced feeding and slow growth.</div><div class="step-label">White Feces Protocol</div><ul class="rx"><li>Reduce feeding 30–50% immediately</li><li>Probiotic pond + feed <span class="dose">Pond: 2 kg/acre · Feed: 3 g/kg</span></li><li>Organic acids in feed <span class="dose">3–5 g/kg · 15 days</span></li><li>Hepatoprotective supplement — liver tonic <span class="dose">1–2 kg/ton feed</span></li><li>Water exchange <span class="dose">15–20% daily</span></li></ul><div class="step-label">Loose Shell Protocol</div><ul class="rx"><li>Dolomite — Ca + Mg for cuticle biosynthesis <span class="dose">100 kg/acre</span></li><li>Ca + Mg mineral in feed <span class="dose">5 g/kg</span></li><li>Raise alkalinity to 150–180 ppm</li><li>Vitamin C + K <span class="dose">2 g/kg feed</span></li></ul>`,
+ bn:`<div class="elab-block"><div class="elab-head">দুটি সম্পর্কিত সমস্যা</div>সাদা মল = EHP-ক্ষতিগ্রস্ত HP + ভিব্রিও অন্ত্র সংক্রমণ + গ্রেগারিন পরজীবী + অতিরিক্ত খাওয়ানো। ঢিলা খোল = Ca, Mg, ক্ষারত্বের ঘাটতি + মোল্টিং ব্যাঘাত।</div><div class="step-label">সাদা মল প্রোটোকল</div><ul class="rx"><li>খাওয়ানো ৩০–৫০% তক্ষুনি কমান</li><li>প্রোবায়োটিক <span class="dose">পুকুরে ২ কেজি/একর · খাবারে ৩ গ্রা/কেজি</span></li><li>জৈব অ্যাসিড <span class="dose">৩–৫ গ্রা/কেজি · ১৫ দিন</span></li><li>হেপাটোপ্রোটেক্টিভ সাপ্লিমেন্ট <span class="dose">১–২ কেজি/টন</span></li><li>পানি বদল <span class="dose">১৫–২০% প্রতিদিন</span></li></ul><div class="step-label">ঢিলা খোল প্রোটোকল</div><ul class="rx"><li>ডলোমাইট <span class="dose">১০০ কেজি/একর</span></li><li>Ca + Mg খাবারে <span class="dose">৫ গ্রা/কেজি</span></li><li>ক্ষারত্ব ১৫০–১৮০ পিপিএম</li><li>ভিটামিন C + K <span class="dose">২ গ্রা/কেজি</span></li></ul>`,
+ te:`<div class="elab-block"><div class="elab-head">రెండు అనుసంధానించబడిన సమస్యలు</div>తెల్ల మలం = EHP-దెబ్బతిన్న HP + విబ్రియో పేగు సంక్రమణ + గ్రిగరైన్ పరాన్నజీవి + అతి ఆహారం. వదులైన గుల్ల = Ca, Mg, క్షారత లోపం + వలువ విడవడం అంతరాయం.</div><div class="step-label">తెల్ల మలం ప్రోటోకాల్</div><ul class="rx"><li>ఆహారం 30–50% వెంటనే తగ్గించండి</li><li>ప్రొబయోటిక్ <span class="dose">చెరువులో 2 కి.గ్రా/ఎకరా · ఆహారంలో 3 గ్రా/కి.గ్రా</span></li><li>సేంద్రియ ఆమ్లాలు <span class="dose">3–5 గ్రా/కి.గ్రా · 15 రోజులు</span></li><li>హెపటోప్రొటెక్టివ్ సప్లిమెంట్ <span class="dose">1–2 కి.గ్రా/టన్</span></li><li>నీటి మార్పు <span class="dose">15–20% నిత్యం</span></li></ul><div class="step-label">వదులైన గుల్ల ప్రోటోకాల్</div><ul class="rx"><li>డోలమైట్ <span class="dose">100 కి.గ్రా/ఎకరా</span></li><li>Ca + Mg ఆహారంలో <span class="dose">5 గ్రా/కి.గ్రా</span></li><li>క్షారత 150–180 ppm</li><li>విటమిన్ C + K <span class="dose">2 గ్రా/కి.గ్రా</span></li></ul>`
 },
 {id:"blackgill",icon:"🖤",color:"c-teal",tab:"dis",
  tags:[{c:"tag-para",t:"Ciliate + Fusarium"},{c:"tag-enviro",t:"Low DO Trigger"}],
  title:{en:"Black Gill Disease",bn:"কালো ফুলকা রোগ",te:"నల్ల గిల్ వ్యాధి"},
- sub:{en:"Ciliate + fungal fouling · Immunity is the real defence",bn:"সিলিয়েট + ছত্রাক · রোগ প্রতিরোধ শক্তিই আসল রক্ষা",te:"సిలియేట్ + శిలీంధ్రం · రోగనిరోధకత నిజమైన రక్షణ"},
- badges:[],
- en:`<div class="elab-block"><div class="elab-head">Host Immunity Is the Real Defence</div>Zoothamnium, Epistylis, Vorticella (ciliates) + Fusarium + bacteria colonise gill surfaces only when host immunity is compromised by low DO, high organic load, or H₂S. These organisms are always present in pond water — they exploit weakened shrimp. 22% of east India coastal farms showed darkened gills in suboptimal ponds.</div>
-<div class="symp-h">Symptoms</div>
-<div class="symp-t">Gills turn grey, brown, or black (normal: pale pink-white). Fluffy/slimy fouling material on gill surface under magnification. Shrimp surface-gasping to increase O₂. FCR worsens despite adequate feeding. Severe cases: gill necrosis — irreversible tissue loss.</div>
-<ul class="rx"><li>Emergency aeration — all aerators ON immediately</li><li>Water exchange <span class="dose">20–25%</span></li><li>BKC 80% — protozoan + bacterial control <span class="dose">500 mL/acre · evening</span></li><li>TCCA <span class="dose">0.5 ppm · evening · alternate with BKC</span></li><li>Zeolite — TAN + H₂S bottom management <span class="dose">15 kg/acre</span></li><li>Dolomite — raise pH, suppress ciliate growth environment <span class="dose">100 kg/acre</span></li></ul>
-<div class="inl-t"><span class="bxh">Prevention</span>Fortnightly BKC + probiotic alternation dramatically reduces incidence. Maintain DO &gt;5 mg/L at all times — healthy shrimp with strong immunity resist ciliate colonisation even in contaminated water.</div>`,
- bn:`<div class="elab-block"><div class="elab-head">পোষক রোগ প্রতিরোধ শক্তিই আসল রক্ষা</div>কম DO, উচ্চ জৈব ভার বা H₂S-এ দুর্বল চিংড়ির ফুলকায় জুথ্যামনিয়াম, এপিস্টিলিস, ফিউসারিয়াম আক্রমণ করে। ২২% পূর্ব ভারত উপকূলীয় পুকুরে ফুলকা কালোকরণ।</div>
-<div class="symp-h">লক্ষণ</div>
-<div class="symp-t">ফুলকা ধূসর, বাদামী বা কালো। চিংড়ি উপরে O₂ নিতে যায়। FCR খারাপ হয়।</div>
-<ul class="rx"><li>সব এয়ারেটর তক্ষুনি চালু</li><li>পানি বদল <span class="dose">২০–২৫%</span></li><li>BKC 80% <span class="dose">৫০০ মিলি/একর · সন্ধ্যায়</span></li><li>TCCA <span class="dose">০.৫ পিপিএম · সন্ধ্যায়</span></li><li>জিওলাইট <span class="dose">১৫ কেজি/একর</span></li><li>ডলোমাইট <span class="dose">১০০ কেজি/একর</span></li></ul>
-<div class="inl-t"><span class="bxh">প্রতিরোধ</span>পক্ষকালে BKC + প্রোবায়োটিক পর্যায়ক্রমে দিন। DO &gt;৫ বজায় রাখুন।</div>`,
- te:`<div class="elab-block"><div class="elab-head">అతిథి రోగనిరోధకత నిజమైన రక్షణ</div>తక్కువ DO, అధిక సేంద్రియ భారం లేదా H₂S లో బలహీనపడిన రొయ్యల గిల్‌లపై జూథ్యాంమ్నియమ్, ఎపిస్టిలిస్, ఫ్యుసారియమ్ వలసపోతాయి. 22% తూర్పు భారత్ తీర చెరువులలో నల్లని గిల్స్.</div>
-<div class="symp-h">లక్షణాలు</div>
-<div class="symp-t">గిల్స్ బూడిద, గోధుమ, లేదా నల్లగా మారుతాయి. రొయ్యలు O₂ కోసం పైకి వస్తాయి. FCR దెబ్బతింటుంది.</div>
-<ul class="rx"><li>అన్ని ఏరేటర్లు వెంటనే ఆన్</li><li>నీటి మార్పు <span class="dose">20–25%</span></li><li>BKC 80% <span class="dose">500 మి.లీ/ఎకరా · సాయంత్రం</span></li><li>TCCA <span class="dose">0.5 ppm · సాయంత్రం</span></li><li>జియోలైట్ <span class="dose">15 కి.గ్రా/ఎకరా</span></li><li>డోలమైట్ <span class="dose">100 కి.గ్రా/ఎకరా</span></li></ul>
-<div class="inl-t"><span class="bxh">నివారణ</span>పక్షానికోసారి BKC + ప్రొబయోటిక్ పర్యాయంగా. DO &gt;5 నిర్వహించండి.</div>`
+ sub:{en:"Ciliate + fungal fouling · Immunity is the real defence",bn:"সিলিয়েট + ছত্রাক · রোগ প্রতিরোধ শক্তিই রক্ষা",te:"సిలియేట్ + శిలీంధ్రం · రోగనిరోధకత నిజమైన రక్షణ"},
+ en:`<div class="elab-block"><div class="elab-head">Host Immunity Is the Real Defence</div>Zoothamnium, Epistylis, Vorticella (ciliates) + Fusarium + bacteria colonise gills only when host immunity is compromised by low DO, high organic load, or H₂S. 22% of east India coastal farms showed darkened gills in suboptimal ponds.</div><div class="symp-h">Symptoms</div><div class="symp-t">Gills turn grey, brown, or black (normal: pale pink-white). Fluffy/slimy fouling material on gill surface. Shrimp surface-gasping to increase O₂. FCR worsens despite adequate feeding.</div><ul class="rx"><li>Emergency aeration — all aerators ON immediately</li><li>Water exchange <span class="dose">20–25%</span></li><li>BKC 80% <span class="dose">500 mL/acre · evening</span></li><li>TCCA <span class="dose">0.5 ppm · evening · alternate with BKC</span></li><li>Zeolite <span class="dose">15 kg/acre</span></li><li>Dolomite — raise pH, suppress ciliate environment <span class="dose">100 kg/acre</span></li></ul><div class="inl-t"><span class="bxh">Prevention</span>Fortnightly BKC + probiotic alternation dramatically reduces incidence. Maintain DO &gt;5 mg/L — healthy shrimp resist ciliate colonisation even in contaminated water.</div>`,
+ bn:`<div class="elab-block"><div class="elab-head">পোষক রোগ প্রতিরোধ শক্তিই আসল রক্ষা</div>কম DO, উচ্চ জৈব ভার বা H₂S-এ দুর্বল চিংড়ির ফুলকায় জুথ্যামনিয়াম, এপিস্টিলিস, ফিউসারিয়াম আক্রমণ করে। ২২% পূর্ব ভারত উপকূলীয় পুকুরে ফুলকা কালোকরণ।</div><div class="symp-h">লক্ষণ</div><div class="symp-t">ফুলকা ধূসর, বাদামী বা কালো। চিংড়ি উপরে O₂ নিতে যায়। FCR খারাপ হয়।</div><ul class="rx"><li>সব এয়ারেটর তক্ষুনি চালু</li><li>পানি বদল <span class="dose">২০–২৫%</span></li><li>BKC 80% <span class="dose">৫০০ মিলি/একর · সন্ধ্যায়</span></li><li>TCCA <span class="dose">০.৫ পিপিএম · সন্ধ্যায়</span></li><li>জিওলাইট <span class="dose">১৫ কেজি/একর</span></li><li>ডলোমাইট <span class="dose">১০০ কেজি/একর</span></li></ul><div class="inl-t"><span class="bxh">প্রতিরোধ</span>পক্ষকালে BKC + প্রোবায়োটিক পর্যায়ক্রমে দিন। DO &gt;৫ বজায় রাখুন।</div>`,
+ te:`<div class="elab-block"><div class="elab-head">అతిథి రోగనిరోధకత నిజమైన రక్షణ</div>తక్కువ DO, అధిక సేంద్రియ భారం లేదా H₂S లో బలహీనపడిన రొయ్యల గిల్‌లపై జూథ్యాంమ్నియమ్, ఎపిస్టిలిస్, ఫ్యుసారియమ్ వలసపోతాయి. 22% తూర్పు భారత్ తీర చెరువులలో నల్లని గిల్స్.</div><div class="symp-h">లక్షణాలు</div><div class="symp-t">గిల్స్ బూడిద, గోధుమ, లేదా నల్లగా మారుతాయి. రొయ్యలు O₂ కోసం పైకి వస్తాయి. FCR దెబ్బతింటుంది.</div><ul class="rx"><li>అన్ని ఏరేటర్లు వెంటనే ఆన్</li><li>నీటి మార్పు <span class="dose">20–25%</span></li><li>BKC 80% <span class="dose">500 మి.లీ/ఎకరా · సాయంత్రం</span></li><li>TCCA <span class="dose">0.5 ppm · సాయంత్రం</span></li><li>జియోలైట్ <span class="dose">15 కి.గ్రా/ఎకరా</span></li><li>డోలమైట్ <span class="dose">100 కి.గ్రా/ఎకరా</span></li></ul><div class="inl-t"><span class="bxh">నివారణ</span>పక్షానికోసారి BKC + ప్రొబయోటిక్ పర్యాయంగా. DO &gt;5 నిర్వహించండి.</div>`
 },
+
 {id:"whitemuscle",icon:"⚪",color:"c-green",tab:"dis",
- tags:[{c:"tag-enviro",t:"Mg²⁺ Zn K⁺ Deficiency"},{c:"tag-enviro",t:"Osmotic Stress"}],
+ tags:[{c:"tag-enviro",t:"Mg Zn K Deficiency"},{c:"tag-enviro",t:"Osmotic Stress"}],
  title:{en:"White Muscle, Gut &amp; Cramp",bn:"সাদা পেশি, পেট ও পেশি টান",te:"తెల్ల కండరం, ప్రేగు &amp; తిమ్మిర్లు"},
  sub:{en:"Mineral deficiency · Osmotic shock · Ionic imbalance",bn:"খনিজ ঘাটতি · অসমোটিক শক",te:"ఖనిజ లోపం · ఆస్మోటిక్ షాక్"},
- badges:[],
- en:`<div class="elab-block"><div class="elab-head">Cause Matrix</div>White gut = gut cleared of microbiome (starvation, Vibrio, EHP HP failure — gut appears white/empty on dissection). White muscle = Mg and Zn deficiency + temperature stress (summer shallow ponds — opaque white patches on abdominal segments). Muscle cramp = osmotic shock, low Mg²⁺, low K⁺, abrupt salinity change &gt;5 ppt (bent/curled body at tail — cannot swim straight). Inland low-salinity (4–10 ppt) ponds highest risk — K⁺ and Mg²⁺ proportionally even lower than NaCl.</div>
-<ul class="rx"><li>Mg supplement (MgSO₄) in feed <span class="dose">3–5 g/kg · 10 days</span></li><li>Zinc + manganese mineral supplement <span class="dose">1–2 g/kg feed</span></li><li>KCl inland ponds — K⁺ restoration <span class="dose">10 kg/acre</span></li><li>Raise salinity slowly if &lt;8 ppt <span class="dose">≤3 ppt/day</span></li><li>Probiotic + prebiotic — gut microbiome restoration <span class="dose">3–5 g + 2 g/kg feed</span></li><li>Vitamin E + C — antioxidant muscle support <span class="dose">2 g/kg feed</span></li></ul>`,
- bn:`<div class="elab-block"><div class="elab-head">কারণ ম্যাট্রিক্স</div>সাদা পেট = পেটের মাইক্রোবায়োম শূন্য। সাদা পেশি = Mg ও Zn ঘাটতি + তাপমাত্রার চাপ। পেশি টান = অসমোটিক শক, কম Mg²⁺, K⁺, হঠাৎ লবণাক্ততা পরিবর্তন।</div>
-<ul class="rx"><li>MgSO₄ খাবারে <span class="dose">৩–৫ গ্রা/কেজি · ১০ দিন</span></li><li>জিংক + ম্যাঙ্গানিজ <span class="dose">১–২ গ্রা/কেজি</span></li><li>KCl <span class="dose">১০ কেজি/একর</span></li><li>লবণাক্ততা ধীরে বাড়ান <span class="dose">≤৩ ppt/দিন</span></li><li>প্রোবায়োটিক + প্রিবায়োটিক <span class="dose">৩–৫ + ২ গ্রা/কেজি</span></li><li>ভিটামিন E + C <span class="dose">২ গ্রা/কেজি</span></li></ul>`,
- te:`<div class="elab-block"><div class="elab-head">కారణాల మ్యాట్రిక్స్</div>తెల్ల ప్రేగు = ప్రేగు మైక్రోబయోమ్ ఖాళీ. తెల్ల కండరం = Mg &amp; Zn లోపం + ఉష్ణ ఒత్తిడి. కండర తిమ్మిర్లు = ఆస్మోటిక్ షాక్, తక్కువ Mg²⁺, K⁺, అకస్మాత్తు లవణీయత మార్పు.</div>
-<ul class="rx"><li>MgSO₄ ఆహారంలో <span class="dose">3–5 గ్రా/కి.గ్రా · 10 రోజులు</span></li><li>జింక్ + మాంగనీస్ <span class="dose">1–2 గ్రా/కి.గ్రా</span></li><li>KCl <span class="dose">10 కి.గ్రా/ఎకరా</span></li><li>లవణీయత నెమ్మదిగా పెంచండి <span class="dose">≤3 ppt/రోజు</span></li><li>ప్రొబయోటిక్ + ప్రీబయోటిక్ <span class="dose">3–5 + 2 గ్రా/కి.గ్రా</span></li><li>విటమిన్ E + C <span class="dose">2 గ్రా/కి.గ్రా</span></li></ul>`
+ en:`<div class="elab-block"><div class="elab-head">Cause Matrix</div>White gut = gut cleared of microbiome (starvation, Vibrio, EHP HP failure — midgut appears white/empty on dissection). White muscle = Mg and Zn deficiency + temperature stress — opaque white patches on abdominal segments. Muscle cramp = osmotic shock, low Mg, low K, abrupt salinity change &gt;5 ppt — bent/curled body at tail, cannot swim straight. Inland 4–10 ppt ponds at highest risk — K and Mg proportionally even lower than NaCl.</div><ul class="rx"><li>Mg supplement (MgSO4) in feed <span class="dose">3–5 g/kg · 10 days</span></li><li>Zinc + manganese mineral supplement <span class="dose">1–2 g/kg feed</span></li><li>KCl inland ponds — K restoration <span class="dose">10 kg/acre</span></li><li>Raise salinity slowly if &lt;8 ppt <span class="dose">max 3 ppt/day</span></li><li>Probiotic + prebiotic — gut microbiome restoration <span class="dose">3–5 g + 2 g/kg feed</span></li><li>Vitamin E + C — antioxidant muscle support <span class="dose">2 g/kg feed</span></li></ul>`,
+ bn:`<div class="elab-block"><div class="elab-head">কারণ ম্যাট্রিক্স</div>সাদা পেট = পেটের মাইক্রোবায়োম শূন্য। সাদা পেশি = Mg ও Zn ঘাটতি + তাপমাত্রার চাপ। পেশি টান = অসমোটিক শক, কম Mg, K, হঠাৎ লবণাক্ততা পরিবর্তন।</div><ul class="rx"><li>MgSO4 খাবারে <span class="dose">৩–৫ গ্রা/কেজি · ১০ দিন</span></li><li>জিংক + ম্যাঙ্গানিজ <span class="dose">১–২ গ্রা/কেজি</span></li><li>KCl <span class="dose">১০ কেজি/একর</span></li><li>লবণাক্ততা ধীরে বাড়ান <span class="dose">সর্বোচ্চ ৩ ppt/দিন</span></li><li>প্রোবায়োটিক + প্রিবায়োটিক <span class="dose">৩–৫ + ২ গ্রা/কেজি</span></li><li>ভিটামিন E + C <span class="dose">২ গ্রা/কেজি</span></li></ul>`,
+ te:`<div class="elab-block"><div class="elab-head">కారణాల మ్యాట్రిక్స్</div>తెల్ల ప్రేగు = ప్రేగు మైక్రోబయోమ్ ఖాళీ. తెల్ల కండరం = Mg &amp; Zn లోపం + ఉష్ణ ఒత్తిడి. కండర తిమ్మిర్లు = ఆస్మోటిక్ షాక్, తక్కువ Mg, K, అకస్మాత్తు లవణీయత మార్పు.</div><ul class="rx"><li>MgSO4 ఆహారంలో <span class="dose">3–5 గ్రా/కి.గ్రా · 10 రోజులు</span></li><li>జింక్ + మాంగనీస్ <span class="dose">1–2 గ్రా/కి.గ్రా</span></li><li>KCl <span class="dose">10 కి.గ్రా/ఎకరా</span></li><li>లవణీయత నెమ్మదిగా పెంచండి <span class="dose">గరిష్టం 3 ppt/రోజు</span></li><li>ప్రొబయోటిక్ + ప్రీబయోటిక్ <span class="dose">3–5 + 2 గ్రా/కి.గ్రా</span></li><li>విటమిన్ E + C <span class="dose">2 గ్రా/కి.గ్రా</span></li></ul>`
 },
 {id:"moult",icon:"🦀",color:"c-pink",tab:"dis",
- tags:[{c:"tag-enviro",t:"Ca Mg Alkalinity"},{c:"tag-enviro",t:"Lunar Cycle Trigger"}],
- title:{en:"Moulting Failure — Soft Shell",bn:"মোল্টিং ব্যর্থতা — নরম খোল",te:"వలువ విడవడం వైఫల్యం — మెత్తని గుల్ల"},
- sub:{en:"Incomplete moult + lunar clustering + cannibalism",bn:"অসম্পূর্ণ মোল্ট + চাঁদের চক্র + নরখাদকতা",te:"అసంపూర్ణ వలువ + చంద్ర చక్రం + నరమాంస భక్షణ"},
- badges:[],
- en:`<div class="elab-block"><div class="elab-head">Why Moults Fail</div>Moulting requires Ca uptake from water + alkalinity buffering for cuticle calcification. Below 80 ppm alkalinity, Ca uptake fails. Low Mg²⁺ impairs neuromuscular coordination during ecdysis sequence. Abrupt pH, salinity, or temperature change during moult cycle causes fatal "locked moult" — shrimp trapped between old and new cuticle. Cannibalism of soft-shelled shrimp escalates at high stocking density.</div>
-<div class="symp-h">Symptoms</div>
-<div class="symp-t">Soft shell not hardening within 6–12 hours post-moult. Empty shells found with shrimp body still partially inside (fatal incomplete moult). Increased dawn mortality — post-moult shrimp most vulnerable for 4–6 hours. Cannibalism marks on soft-shelled shrimp. Reduced weight gain despite adequate feeding.</div>
-<ul class="rx"><li>Maintain alkalinity DOC-appropriate at all times <span class="dose">120–180 ppm CaCO₃</span></li><li>Dolomite maintenance — fortnightly minimum <span class="dose">100 kg/ha</span></li><li>Ca + Mg + P mineral supplement in feed <span class="dose">5 g/kg</span></li><li>Vitamin C — chitin synthesis cofactor <span class="dose">2 g/kg feed</span></li><li>Stable salinity during moult windows — avoid changes &gt;2 ppt</li><li>Maximum night aeration — post-moult shrimp need highest DO</li><li>Reduce stocking density — reduce cannibalism opportunity</li></ul>
-<div class="inl-t"><span class="bxh">Lunar Moult Tip</span>Shrimp in a pond moult on similar lunar cycles — clustering around new and full moon. Expect elevated vulnerability 48–72 hrs around these periods. Do NOT apply disinfectants or take stressful samples in this window.</div>`,
- bn:`<div class="elab-block"><div class="elab-head">মোল্টিং ব্যর্থ কেন হয়</div>মোল্টিংয়ে পানি থেকে Ca + ক্ষারত্ব বাফারিং দরকার। ৮০ পিপিএম-এর নিচে Ca শোষণ ব্যর্থ। কম Mg²⁺ মোল্টিং সমন্বয় নষ্ট করে। হঠাৎ pH/লবণাক্ততা/তাপমাত্রা পরিবর্তনে "আটকে যাওয়া মোল্ট"।</div>
-<ul class="rx"><li>সর্বদা DOC-অনুযায়ী ক্ষারত্ব <span class="dose">১২০–১৮০ পিপিএম CaCO₃</span></li><li>ডলোমাইট রক্ষণাবেক্ষণ <span class="dose">১০০ কেজি/হেক্টর পক্ষকালে</span></li><li>Ca + Mg + P খাবারে <span class="dose">৫ গ্রা/কেজি</span></li><li>ভিটামিন C <span class="dose">২ গ্রা/কেজি</span></li><li>মোল্টিং সময়ে লবণাক্ততা স্থিতিশীল রাখুন</li><li>রাতে সর্বোচ্চ বায়ু সঞ্চালন</li></ul>
-<div class="inl-t"><span class="bxh">চাঁদের চক্রের টিপস</span>অমাবস্যা ও পূর্ণিমার কাছাকাছি ৪৮–৭২ ঘণ্টা বিশেষ সতর্কতা। এই সময়ে জীবাণুনাশক বা চাপমূলক নমুনা এড়ান।</div>`,
- te:`<div class="elab-block"><div class="elab-head">వలువ విడవడం ఎందుకు విఫలమవుతుంది</div>వలువ విడవడానికి నీటి నుండి Ca + క్షారత బఫరింగ్ అవసరం. 80 ppm కంటే తక్కువ క్షారత వద్ద Ca శోషణ విఫలం. తక్కువ Mg²⁺ నాడీకండర సమన్వయం దెబ్బతీస్తుంది. అకస్మాత్తు pH/లవణీయత/ఉష్ణ మార్పు "లాక్డ్ మోల్ట్" కలిగిస్తుంది.</div>
-<ul class="rx"><li>DOC ప్రకారం క్షారత నిర్వహించండి <span class="dose">120–180 ppm CaCO₃</span></li><li>డోలమైట్ నిర్వహణ <span class="dose">100 కి.గ్రా/హెక్టార్ పక్షానికోసారి</span></li><li>Ca + Mg + P ఆహారంలో <span class="dose">5 గ్రా/కి.గ్రా</span></li><li>విటమిన్ C <span class="dose">2 గ్రా/కి.గ్రా</span></li><li>వలువ విడవడం సమయంలో లవణీయత స్థిరంగా ఉంచండి</li><li>రాత్రి గరిష్ట గాలి సంచలనం</li></ul>
-<div class="inl-t"><span class="bxh">చంద్ర వలువ చిట్కా</span>అమావాస్య &amp; పౌర్ణమి సమయంలో 48–72 గంటలు జాగ్రత్తగా ఉండండి. ఈ కాలంలో జీవాణురహిత ఔషధాలు వేయవద్దు.</div>`
+ tags:[{c:"tag-enviro",t:"Ca Mg Alkalinity"},{c:"tag-enviro",t:"Lunar Cycle"}],
+ title:{en:"Moulting Failure — Soft Shell",bn:"মোল্টিং ব্যর্থতা — নরম খোল",te:"వలువ విడవడం వైఫల్యం"},
+ sub:{en:"Incomplete moult + lunar clustering + cannibalism",bn:"অসম্পূর্ণ মোল্ট + চাঁদের চক্র + নরখাদকতা",te:"అసంపూర్ణ వలువ + చంద్ర చక్రం"},
+ en:`<div class="elab-block"><div class="elab-head">Why Moults Fail</div>Moulting requires Ca uptake from water + alkalinity buffering for cuticle calcification. Below 80 ppm alkalinity, Ca uptake fails. Low Mg²⁺ impairs neuromuscular coordination during ecdysis. Abrupt pH, salinity, or temperature change during moult causes fatal "locked moult" — shrimp trapped between old and new cuticle.</div><div class="symp-h">Symptoms</div><div class="symp-t">Soft shell not hardening within 6–12 hours post-moult. Empty shells found with shrimp body still partially inside (fatal incomplete moult). Increased dawn mortality. Cannibalism marks on soft-shelled shrimp.</div><ul class="rx"><li>Maintain alkalinity DOC-appropriate at all times <span class="dose">120–180 ppm CaCO₃</span></li><li>Dolomite maintenance — fortnightly minimum <span class="dose">100 kg/ha</span></li><li>Ca + Mg + P mineral supplement in feed <span class="dose">5 g/kg</span></li><li>Vitamin C — chitin synthesis cofactor <span class="dose">2 g/kg feed</span></li><li>Stable salinity during moult windows — avoid changes &gt;2 ppt</li><li>Maximum night aeration — post-moult shrimp need highest DO</li><li>Reduce stocking density — reduce cannibalism opportunity</li></ul><div class="inl-t"><span class="bxh">Lunar Moult Tip</span>Shrimp moult on similar lunar cycles — clustering around new and full moon. Expect elevated vulnerability 48–72 hrs around these periods. Do NOT apply disinfectants in this window.</div>`,
+ bn:`<div class="elab-block"><div class="elab-head">মোল্টিং ব্যর্থ কেন হয়</div>মোল্টিংয়ে পানি থেকে Ca + ক্ষারত্ব বাফারিং দরকার। ৮০ পিপিএম-এর নিচে Ca শোষণ ব্যর্থ। কম Mg²⁺ মোল্টিং সমন্বয় নষ্ট করে। হঠাৎ pH/লবণাক্ততা/তাপমাত্রা পরিবর্তনে "আটকে যাওয়া মোল্ট"।</div><div class="symp-h">লক্ষণ</div><div class="symp-t">মোল্টিংয়ের ৬–১২ ঘণ্টার মধ্যেও খোল শক্ত হয় না। অসম্পূর্ণ মোল্ট। ভোরে বেশি মৃত্যু। নরম চিংড়ির উপর নরখাদকতার দাগ।</div><ul class="rx"><li>সর্বদা DOC-অনুযায়ী ক্ষারত্ব <span class="dose">১২০–১৮০ পিপিএম CaCO₃</span></li><li>ডলোমাইট রক্ষণাবেক্ষণ <span class="dose">১০০ কেজি/হেক্টর পক্ষকালে</span></li><li>Ca + Mg + P খাবারে <span class="dose">৫ গ্রা/কেজি</span></li><li>ভিটামিন C <span class="dose">২ গ্রা/কেজি</span></li><li>মোল্টিং সময়ে লবণাক্ততা স্থিতিশীল রাখুন</li><li>রাতে সর্বোচ্চ বায়ু সঞ্চালন</li></ul><div class="inl-t"><span class="bxh">চাঁদের চক্রের টিপস</span>অমাবস্যা ও পূর্ণিমার কাছাকাছি ৪৮–৭২ ঘণ্টা বিশেষ সতর্কতা। এই সময়ে জীবাণুনাশক বা চাপমূলক নমুনা এড়ান।</div>`,
+ te:`<div class="elab-block"><div class="elab-head">వలువ విడవడం ఎందుకు విఫలమవుతుంది</div>వలువ విడవడానికి నీటి నుండి Ca + క్షారత బఫరింగ్ అవసరం. 80 ppm కంటే తక్కువ క్షారత వద్ద Ca శోషణ విఫలం. తక్కువ Mg²⁺ నాడీకండర సమన్వయం దెబ్బతీస్తుంది.</div><div class="symp-h">లక్షణాలు</div><div class="symp-t">వలువ విడిచిన 6–12 గంటల్లోనూ గుల్ల గట్టిపడదు. అసంపూర్ణ వలువ. తెల్లవారు ఎక్కువ మరణాలు. మెత్తని రొయ్యలపై నరమాంస భక్షణ.</div><ul class="rx"><li>DOC ప్రకారం క్షారత నిర్వహించండి <span class="dose">120–180 ppm CaCO₃</span></li><li>డోలమైట్ నిర్వహణ <span class="dose">100 కి.గ్రా/హెక్టార్ పక్షానికోసారి</span></li><li>Ca + Mg + P ఆహారంలో <span class="dose">5 గ్రా/కి.గ్రా</span></li><li>విటమిన్ C <span class="dose">2 గ్రా/కి.గ్రా</span></li><li>వలువ విడవడం సమయంలో లవణీయత స్థిరంగా ఉంచండి</li><li>రాత్రి గరిష్ట గాలి సంచలనం</li></ul><div class="inl-t"><span class="bxh">చంద్ర వలువ చిట్కా</span>అమావాస్య &amp; పౌర్ణమి సమయంలో 48–72 గంటలు జాగ్రత్తగా ఉండండి. ఈ కాలంలో జీవాణురహిత ఔషధాలు వేయవద్దు.</div>`
 }
 ]};
 
 // ═══════════════════════════════════
-// APP STATE & LOGIC
+// APP STATE
 // ═══════════════════════════════════
-let tab=“wq”,lang=“en”,openId=null,touchX=0;
+let currentTab = 'wq';
+let currentLang = 'en';
+let currentId = null;
+let touchStartX = 0;
+const ALL = [...C.wq, ...C.dis].reduce((m, c) => (m[c.id] = c, m), {});
 
-// All cards flat lookup
-const ALL = […C.wq,…C.dis].reduce((m,c)=>(m[c.id]=c,m),{});
-
-function setLang(l){
-lang=l;
-document.documentElement.setAttribute(“data-lang”,l);
-document.querySelectorAll(”.ls-btn”).forEach(b=>b.classList.toggle(“active”,b.dataset.l===l));
-try{localStorage.setItem(“aqfl”,l);}catch(e){}
-if(openId) openDetail(openId);
-}
-
-function setTab(t){
-tab=t;
-document.querySelectorAll(”.tab-btn”).forEach(b=>b.classList.toggle(“active”,b.dataset.tab===t));
-renderList(””);
-}
-
-function renderList(q){
-const list=document.getElementById(“card-list”);
-const cards=C[tab];
-const sq=(q||””).toLowerCase().trim();
-list.innerHTML=””;
-let n=0;
-cards.forEach(c=>{
-const match=!sq||c.title.en.toLowerCase().includes(sq)||c.sub.en.toLowerCase().includes(sq)||c.title.bn.includes(sq)||c.title.te.includes(sq)||c.id.includes(sq);
-if(!match)return;
-n++;
-const el=document.createElement(“div”);
-el.className=“pcard “+c.color;
-el.dataset.id=c.id;
-const tags=c.tags.map(t=>`<span class="pc-tag ${t.c}">${t.t}</span>`).join(””);
-el.innerHTML=`<div class="pc-icon">${c.icon}</div>
-
-<div class="pc-body">
-  <div class="pc-title t-en">${c.title.en}</div>
-  <div class="pc-title t-bn">${c.title.bn}</div>
-  <div class="pc-title t-te">${c.title.te}</div>
-  <div class="pc-sub t-en">${c.sub.en}</div>
-  <div class="pc-sub t-bn">${c.sub.bn}</div>
-  <div class="pc-sub t-te">${c.sub.te}</div>
-  <div class="pc-tags">${tags}</div>
-</div><div class="pc-arr">›</div>`;
-    list.appendChild(el);
+// ═══════════════════════════════════
+// LANGUAGE
+// ═══════════════════════════════════
+function setLang(l) {
+  currentLang = l;
+  document.documentElement.setAttribute('data-lang', l);
+  document.querySelectorAll('.ls-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-l') === l);
   });
-  const emp=document.getElementById("empty");
-  emp.className=n?"":"show";
-}
-
-function openDetail(id){
-const c=ALL[id]; if(!c)return;
-openId=id;
-document.getElementById(“dicon”).textContent=c.icon;
-document.getElementById(“dtitle”).innerHTML=`<span class="t-en">${c.title.en}</span><span class="t-bn">${c.title.bn}</span><span class="t-te">${c.title.te}</span>`;
-document.getElementById(“dsub”).innerHTML=`<span class="t-en">${c.sub.en}</span><span class="t-bn">${c.sub.bn}</span><span class="t-te">${c.sub.te}</span>`;
-document.getElementById(“dbadges”).innerHTML=(c.badges||[]).map(b=>`<span class="dbadge ${b.c}">${b.t}</span>`).join(””);
-document.getElementById(“den”).innerHTML=c.en;
-document.getElementById(“dbn”).innerHTML=c.bn;
-document.getElementById(“dte”).innerHTML=c.te;
-document.getElementById(“dscroll”).scrollTop=0;
-document.getElementById(“detail”).classList.add(“open”);
-document.getElementById(“scroll-area”).style.overflowY=“hidden”;
-}
-
-function closeDetail(){
-document.getElementById(“detail”).classList.remove(“open”);
-document.getElementById(“scroll-area”).style.overflowY=“auto”;
-openId=null;
+  try { localStorage.setItem('aqgl', l); } catch(e) {}
 }
 
 // ═══════════════════════════════════
-// EVENTS — zero inline handlers
+// TAB
 // ═══════════════════════════════════
-document.querySelectorAll(”.ls-btn”).forEach(b=>b.addEventListener(“click”,()=>setLang(b.dataset.l)));
-document.querySelectorAll(”.tab-btn”).forEach(b=>b.addEventListener(“click”,()=>setTab(b.dataset.tab)));
-document.getElementById(“card-list”).addEventListener(“click”,e=>{
-const c=e.target.closest(”.pcard”); if(c)openDetail(c.dataset.id);
+function setTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-tab') === t);
+  });
+  renderList('');
+  document.getElementById('search-box').value = '';
+}
+
+// ═══════════════════════════════════
+// RENDER CARD LIST
+// ═══════════════════════════════════
+function renderList(q) {
+  const list = document.getElementById('card-list');
+  const cards = C[currentTab];
+  const sq = (q || '').toLowerCase().trim();
+  let html = '';
+  let n = 0;
+
+  cards.forEach(function(card) {
+    const titleLower = card.title.en.toLowerCase();
+    const subLower = card.sub.en.toLowerCase();
+    const match = !sq || titleLower.includes(sq) || subLower.includes(sq)
+      || card.title.bn.includes(sq) || card.title.te.includes(sq) || card.id.includes(sq);
+    if (!match) return;
+    n++;
+
+    const tags = card.tags.map(function(t) {
+      return '<span class="pc-tag ' + t.c + '">' + t.t + '</span>';
+    }).join('');
+
+    html += '<div class="pcard ' + card.color + '" data-id="' + card.id + '">'
+      + '<div class="pc-icon">' + card.icon + '</div>'
+      + '<div class="pc-body">'
+        + '<div class="pc-title t-en">' + card.title.en + '</div>'
+        + '<div class="pc-title t-bn">' + card.title.bn + '</div>'
+        + '<div class="pc-title t-te">' + card.title.te + '</div>'
+        + '<div class="pc-sub t-en">' + card.sub.en + '</div>'
+        + '<div class="pc-sub t-bn">' + card.sub.bn + '</div>'
+        + '<div class="pc-sub t-te">' + card.sub.te + '</div>'
+        + '<div class="pc-tags">' + tags + '</div>'
+      + '</div>'
+      + '<div class="pc-arr">›</div>'
+    + '</div>';
+  });
+
+  list.innerHTML = html;
+
+  const empty = document.getElementById('empty-msg');
+  empty.className = n ? '' : 'show';
+}
+
+// ═══════════════════════════════════
+// DETAIL VIEW
+// ═══════════════════════════════════
+function openDetail(id) {
+  const card = ALL[id];
+  if (!card) return;
+  currentId = id;
+
+  document.getElementById('d-icon').textContent = card.icon;
+  document.getElementById('d-title').innerHTML =
+    '<span class="t-en">' + card.title.en + '</span>' +
+    '<span class="t-bn">' + card.title.bn + '</span>' +
+    '<span class="t-te">' + card.title.te + '</span>';
+  document.getElementById('d-sub').innerHTML =
+    '<span class="t-en">' + card.sub.en + '</span>' +
+    '<span class="t-bn">' + card.sub.bn + '</span>' +
+    '<span class="t-te">' + card.sub.te + '</span>';
+
+  const badgeHTML = (card.badges || []).map(function(b) {
+    return '<span class="dbadge ' + b.c + '">' + b.t + '</span>';
+  }).join('');
+  document.getElementById('d-badges').innerHTML = badgeHTML;
+
+  document.getElementById('den').innerHTML = card.en;
+  document.getElementById('dbn').innerHTML = card.bn;
+  document.getElementById('dte').innerHTML = card.te;
+  document.getElementById('dscroll').scrollTop = 0;
+  document.getElementById('detail').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('detail').classList.remove('open');
+  currentId = null;
+}
+
+// ═══════════════════════════════════
+// EVENT LISTENERS — zero inline handlers
+// ═══════════════════════════════════
+document.querySelectorAll('.ls-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { setLang(btn.getAttribute('data-l')); });
 });
-document.getElementById(“back”).addEventListener(“click”,closeDetail);
-document.getElementById(“search-input”).addEventListener(“input”,e=>renderList(e.target.value));
 
-// Swipe-right to close detail
-const dv=document.getElementById(“detail”);
-dv.addEventListener(“touchstart”,e=>{touchX=e.touches[0].clientX;},{passive:true});
-dv.addEventListener(“touchend”,e=>{if(e.changedTouches[0].clientX-touchX>70&&touchX<50)closeDetail();},{passive:true});
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { setTab(btn.getAttribute('data-tab')); });
+});
+
+document.getElementById('card-list').addEventListener('click', function(e) {
+  var el = e.target;
+  while (el && el !== this) {
+    if (el.classList && el.classList.contains('pcard')) {
+      openDetail(el.getAttribute('data-id'));
+      return;
+    }
+    el = el.parentElement;
+  }
+});
+
+document.getElementById('back-btn').addEventListener('click', closeDetail);
+
+document.getElementById('search-box').addEventListener('input', function(e) {
+  renderList(e.target.value);
+});
+
+// Swipe right to close detail
+var dv = document.getElementById('detail');
+dv.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+}, { passive: true });
+dv.addEventListener('touchend', function(e) {
+  var dx = e.changedTouches[0].clientX - touchStartX;
+  if (dx > 70 && touchStartX < 50) closeDetail();
+}, { passive: true });
 
 // ═══════════════════════════════════
 // INIT
 // ═══════════════════════════════════
-function init(){
-let saved=“en”;
-try{saved=localStorage.getItem(“aqfl”)||“en”;}catch(e){}
-setLang(saved);
-renderList(””);
-}
-if(document.readyState===“loading”){document.addEventListener(“DOMContentLoaded”,init);}else{init();}
+(function() {
+  var saved = 'en';
+  try { saved = localStorage.getItem('aqgl') || 'en'; } catch(e) {}
+  setLang(saved);
+  renderList('');
+})();
 </script>
 
 </body>
