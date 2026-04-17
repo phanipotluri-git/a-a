@@ -21,6 +21,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
   font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+@supports(height:100dvh){html,body{height:100dvh}}
 
 /* ── LANGUAGE — set entirely on <html data-lang> ── */
 .t-en,.t-bn,.t-te{display:none}
@@ -31,7 +32,7 @@ html[data-lang=“te”] .t-te{display:block}
 .t-te{font-family:‘Noto Sans Telugu’,sans-serif;font-size:13px;line-height:1.75}
 
 /* ── LAYOUT ── */
-#app{display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative}
+#app{display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative;-webkit-overflow-scrolling:touch}
 
 /* TOP BAR */
 #topbar{flex-shrink:0;background:var(–panel);border-bottom:1px solid var(–border);padding:10px 14px 8px;position:relative}
@@ -68,7 +69,7 @@ border-radius:8px;padding:1px 5px}
 .tab-btn.dis.active .tc{background:rgba(240,96,96,.2);color:var(–red)}
 
 /* LIST */
-#scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:10px 12px 60px}
+#scroll-area{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:10px 12px 80px}
 .pcard{background:var(–panel);border:1px solid var(–border);border-left:3px solid;
 border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:10px;
 padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s}
@@ -95,7 +96,7 @@ padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s}
 #empty.show{display:block}
 
 /* DETAIL PANEL */
-#detail{position:absolute;inset:0;background:var(–bg);
+#detail{position:fixed;inset:0;background:var(–bg);
 transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);
 display:flex;flex-direction:column;z-index:20;pointer-events:none}
 #detail.open{transform:translateX(0);pointer-events:all}
@@ -672,12 +673,13 @@ dv.addEventListener(“touchend”,e=>{if(e.changedTouches[0].clientX-touchX>70&
 // ═══════════════════════════════════
 // INIT
 // ═══════════════════════════════════
-(function(){
+function init(){
 let saved=“en”;
 try{saved=localStorage.getItem(“aqfl”)||“en”;}catch(e){}
 setLang(saved);
 renderList(””);
-})();
+}
+if(document.readyState===“loading”){document.addEventListener(“DOMContentLoaded”,init);}else{init();}
 </script>
 
 </body>
