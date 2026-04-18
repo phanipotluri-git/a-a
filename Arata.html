@@ -71,8 +71,8 @@ html,body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Sans',sans
 #nores.show{display:block}
 
 /* ── DETAIL PANEL ── */
-#det{position:fixed;top:0;left:0;right:-100%;bottom:0;z-index:9999;background:var(–bg);transition:right .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
-#det.open{right:0}
+#det{position:fixed;top:0;left:100%;width:100%;height:100%;z-index:9999;background:var(–bg);transition:left .28s ease-out;display:flex;flex-direction:column;overflow:hidden}
+#det.open{left:0}
 #dh{background:var(–panel);border-bottom:2px solid var(–teal);padding:12px 14px 10px;flex-shrink:0}
 #back{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(–teal);font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:8px;font-family:‘IBM Plex Sans’,sans-serif}
 #dico{font-size:26px;margin-bottom:3px}
@@ -355,18 +355,10 @@ function openDetail(id) {
   document.getElementById('dte').innerHTML = '';
   document.getElementById('dscr').scrollTop = 0;
   document.getElementById('det').classList.add('open');
-  document.getElementById('list').style.visibility = 'hidden';
-  document.getElementById('bar').style.visibility = 'hidden';
-  document.getElementById('tabs').style.visibility = 'hidden';
-  document.body.style.overflow = 'hidden';
 }
 
 function closeDetail() {
   document.getElementById('det').classList.remove('open');
-  document.getElementById('list').style.visibility = 'visible';
-  document.getElementById('bar').style.visibility = 'visible';
-  document.getElementById('tabs').style.visibility = 'visible';
-  document.body.style.overflow = '';
   curId = null;
 }
 
