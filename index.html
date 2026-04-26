@@ -2,23 +2,26 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Tool Hub</title>
+  <title>Phani · Tool Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 ```
 :root {
-  --bg: #0c0c0f;
-  --surface: #13131a;
-  --border: #1e1e2e;
+  --bg: #0b0b0e;
+  --surface: #111116;
+  --border: #1c1c28;
   --accent: #f0c040;
   --accent2: #5cf0b0;
-  --text: #e8e8f0;
-  --muted: #6a6a88;
-  --hover-bg: #1a1a28;
+  --accent3: #60b0ff;
+  --accent4: #f07880;
+  --accent5: #c080ff;
+  --text: #e4e4f0;
+  --muted: #58586a;
+  --hover-bg: #18181f;
 }
 
 body {
@@ -26,239 +29,194 @@ body {
   color: var(--text);
   font-family: 'Syne', sans-serif;
   min-height: 100vh;
-  padding: 0;
   overflow-x: hidden;
 }
 
-/* ── Background grid ── */
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background-image:
-    linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
+    linear-gradient(rgba(240,192,64,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,192,64,0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none; z-index: 0;
 }
 
 .container {
-  position: relative;
-  z-index: 1;
-  max-width: 860px;
+  position: relative; z-index: 1;
+  max-width: 980px;
   margin: 0 auto;
-  padding: 60px 24px 80px;
+  padding: 56px 24px 90px;
 }
 
-/* ── Header ── */
-header {
-  margin-bottom: 56px;
-}
+/* Header */
+header { margin-bottom: 52px; }
 
 .badge {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 4px 10px;
-  border-radius: 2px;
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeUp 0.5s ease 0.1s forwards;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: 4px 10px; border-radius: 2px; margin-bottom: 18px;
+  opacity: 0; animation: fadeUp .5s ease .1s forwards;
 }
 
 h1 {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  opacity: 0;
-  animation: fadeUp 0.5s ease 0.2s forwards;
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 800; line-height: 1.06; letter-spacing: -0.02em;
+  opacity: 0; animation: fadeUp .5s ease .2s forwards;
 }
-
-h1 span {
-  color: var(--accent);
-}
+h1 span { color: var(--accent); }
 
 .subtitle {
-  margin-top: 14px;
+  margin-top: 12px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  color: var(--muted);
-  opacity: 0;
-  animation: fadeUp 0.5s ease 0.3s forwards;
+  font-size: 12px; color: var(--muted);
+  opacity: 0; animation: fadeUp .5s ease .3s forwards;
 }
 
 .divider {
   height: 1px;
   background: linear-gradient(90deg, var(--accent), transparent);
-  margin: 32px 0;
-  opacity: 0;
-  animation: fadeUp 0.5s ease 0.4s forwards;
+  margin: 28px 0 32px;
+  opacity: 0; animation: fadeUp .5s ease .35s forwards;
 }
 
-/* ── Search ── */
+/* Search */
 .search-wrap {
-  margin-bottom: 36px;
-  opacity: 0;
-  animation: fadeUp 0.5s ease 0.45s forwards;
+  margin-bottom: 44px;
+  opacity: 0; animation: fadeUp .5s ease .4s forwards;
 }
-
 #search {
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  padding: 12px 16px;
-  border-radius: 4px;
-  outline: none;
-  transition: border-color 0.2s;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; padding: 13px 18px; border-radius: 4px; outline: none;
+  transition: border-color .2s;
 }
-
 #search::placeholder { color: var(--muted); }
 #search:focus { border-color: var(--accent); }
 
-/* ── Category label ── */
-.category-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 12px;
-  padding-left: 2px;
+/* Section */
+.section { margin-bottom: 48px; }
+
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+  opacity: 0; animation: fadeUp .5s ease forwards;
 }
 
-/* ── Grid ── */
+.repo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.repo-name { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
+
+.repo-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  text-decoration: none; letter-spacing: 0.06em;
+  border: 1px solid var(--border); padding: 2px 8px; border-radius: 2px;
+  transition: border-color .2s, color .2s;
+}
+.repo-link:hover { color: var(--accent); border-color: var(--accent); }
+
+.folder-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin: 20px 0 10px 2px;
+}
+
+/* Grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
 }
 
-/* ── Card ── */
+/* Card */
 .card {
-  display: flex;
-  flex-direction: column;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 20px;
-  text-decoration: none;
-  color: var(--text);
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  animation: fadeUp 0.4s ease forwards;
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 18px;
+  text-decoration: none; color: var(--text);
+  transition: border-color .2s, background .2s, transform .15s;
+  position: relative; overflow: hidden;
+  opacity: 0; animation: fadeUp .4s ease forwards;
 }
 
 .card::after {
   content: '';
-  position: absolute;
-  top: 0; left: 0;
+  position: absolute; top: 0; left: 0;
   width: 3px; height: 0;
-  background: var(--accent);
-  transition: height 0.25s ease;
+  transition: height .25s ease;
 }
 
-.card:hover {
-  border-color: var(--accent);
-  background: var(--hover-bg);
-  transform: translateY(-2px);
-}
-
+.card:hover { background: var(--hover-bg); transform: translateY(-2px); }
 .card:hover::after { height: 100%; }
 
-.card-icon {
-  font-size: 22px;
-  margin-bottom: 14px;
-}
-
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-bottom: 6px;
-}
-
-.card-desc {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.6;
-  flex: 1;
-}
+.card-icon { font-size: 20px; margin-bottom: 12px; }
+.card-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 5px; }
+.card-file { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+.card-desc { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); line-height: 1.6; flex: 1; }
 
 .card-arrow {
-  margin-top: 16px;
-  font-size: 18px;
-  color: var(--accent2);
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.2s, transform 0.2s;
+  margin-top: 14px; font-size: 16px;
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity .2s, transform .2s;
 }
+.card:hover .card-arrow { opacity: 1; transform: translateX(0); }
 
-.card:hover .card-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
+/* Repo accent colours */
+.aqua    .card::after { background: var(--accent2); }
+.aqua    .card:hover  { border-color: var(--accent2); }
+.aqua    .card-arrow  { color: var(--accent2); }
 
-/* ── No results ── */
+.finance .card::after { background: var(--accent3); }
+.finance .card:hover  { border-color: var(--accent3); }
+.finance .card-arrow  { color: var(--accent3); }
+
+.phani-repo .card::after { background: var(--accent); }
+.phani-repo .card:hover  { border-color: var(--accent); }
+.phani-repo .card-arrow  { color: var(--accent); }
+
+.arata  .card::after { background: var(--accent5); }
+.arata  .card:hover  { border-color: var(--accent5); }
+.arata  .card-arrow  { color: var(--accent5); }
+
+.kids   .card::after { background: var(--accent4); }
+.kids   .card:hover  { border-color: var(--accent4); }
+.kids   .card-arrow  { color: var(--accent4); }
+
+.dot-aqua    { background: var(--accent2); }
+.dot-finance { background: var(--accent3); }
+.dot-phani   { background: var(--accent); }
+.dot-arata   { background: var(--accent5); }
+.dot-kids    { background: var(--accent4); }
+
+.placeholder { border-style: dashed; opacity: 0.35 !important; pointer-events: none; }
+
 #no-results {
   display: none;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  color: var(--muted);
-  padding: 32px 0;
-  text-align: center;
+  font-size: 13px; color: var(--muted);
+  padding: 40px 0; text-align: center;
 }
 
-/* ── Footer ── */
 footer {
-  margin-top: 64px;
-  padding-top: 24px;
+  margin-top: 60px; padding-top: 22px;
   border-top: 1px solid var(--border);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  font-size: 11px; color: var(--muted);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
 }
-
 footer a { color: var(--accent); text-decoration: none; }
 
-/* ── Animations ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Stagger cards */
-.card:nth-child(1)  { animation-delay: 0.50s; }
-.card:nth-child(2)  { animation-delay: 0.56s; }
-.card:nth-child(3)  { animation-delay: 0.62s; }
-.card:nth-child(4)  { animation-delay: 0.68s; }
-.card:nth-child(5)  { animation-delay: 0.74s; }
-.card:nth-child(6)  { animation-delay: 0.80s; }
-.card:nth-child(7)  { animation-delay: 0.86s; }
-.card:nth-child(8)  { animation-delay: 0.92s; }
-.card:nth-child(9)  { animation-delay: 0.98s; }
-.card:nth-child(10) { animation-delay: 1.04s; }
-
-@media (max-width: 500px) {
-  .grid { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; }
-}
+@media (max-width: 500px) { .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 360px) { .grid { grid-template-columns: 1fr; } }
 ```
 
   </style>
@@ -267,122 +225,226 @@ footer a { color: var(--accent); text-decoration: none; }
 <div class="container">
 
   <header>
-    <div class="badge">⚡ Tool Hub</div>
-    <h1>My <span>HTML</span><br>Workspace</h1>
-    <p class="subtitle">// All tools, one place — click to open</p>
+    <div class="badge">⚡ phanipotluri-git</div>
+    <h1>My <span>GitHub</span><br>Tool Hub</h1>
+    <p class="subtitle">// 5 repos · all HTML tools in one place</p>
     <div class="divider"></div>
   </header>
 
   <div class="search-wrap">
-    <input id="search" type="text" placeholder="Search tools..." autocomplete="off" />
+    <input id="search" type="text" placeholder="Search files across all repos…" autocomplete="off"/>
   </div>
 
-  <div class="category-label">── All Files ──────────────</div>
+  <!-- ══════════ AQUA ══════════ -->
 
-  <div class="grid" id="grid">
-    <!-- ============================================================
-         ✏️  EDIT THIS SECTION — add/remove cards as needed
-         Each card:
-           href  = relative path to your HTML file
-           icon  = any emoji
-           title = display name
-           desc  = short description
-         ============================================================ -->
+  <div class="section aqua" data-section>
+    <div class="section-header" style="animation-delay:.45s">
+      <div class="repo-dot dot-aqua"></div>
+      <span class="repo-name">Aqua</span>
+      <a class="repo-link" href="https://github.com/phanipotluri-git/Aqua" target="_blank">↗ github</a>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://phanipotluri-git.github.io/Aqua/lmcl.html" target="_blank" data-title="LMCL" style="animation-delay:.50s">
+        <div class="card-icon">🦠</div>
+        <div class="card-title">LMCL</div>
+        <div class="card-file">lmcl.html</div>
+        <div class="card-desc">Aquaculture tool</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="card" href="https://phanipotluri-git.github.io/Aqua/Phage.html" target="_blank" data-title="Phage" style="animation-delay:.55s">
+        <div class="card-icon">🧫</div>
+        <div class="card-title">Phage</div>
+        <div class="card-file">Phage.html</div>
+        <div class="card-desc">Bacteriophage product label</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="card" href="https://phanipotluri-git.github.io/Aqua/Report.html" target="_blank" data-title="Report" style="animation-delay:.60s">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Report</div>
+        <div class="card-file">Report.html</div>
+        <div class="card-desc">Aqua report view</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="card" href="https://phanipotluri-git.github.io/Aqua/Shrimp.html" target="_blank" data-title="Shrimp" style="animation-delay:.65s">
+        <div class="card-icon">🦐</div>
+        <div class="card-title">Shrimp</div>
+        <div class="card-file">Shrimp.html</div>
+        <div class="card-desc">Shrimp aquaculture tool</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="card" href="https://phanipotluri-git.github.io/Aqua/microlremedies.html" target="_blank" data-title="Microl Remedies" style="animation-delay:.70s">
+        <div class="card-icon">🌊</div>
+        <div class="card-title">Microl Remedies</div>
+        <div class="card-file">microlremedies.html</div>
+        <div class="card-desc">Microl Remedies website</div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════ FINANCE ══════════ -->
+
+  <div class="section finance" data-section>
+    <div class="section-header" style="animation-delay:.75s">
+      <div class="repo-dot dot-finance"></div>
+      <span class="repo-name">Finance</span>
+      <a class="repo-link" href="https://github.com/phanipotluri-git/Finance" target="_blank">↗ github</a>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://phanipotluri-git.github.io/Finance/index.html" target="_blank" data-title="Finance Index" style="animation-delay:.79s">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Finance Index</div>
+        <div class="card-file">index.html</div>
+        <div class="card-desc">Finance repo home</div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="card" href="https://phanipotluri-git.github.io/Finance/test.html" target="_blank" data-title="Finance Test" style="animation-delay:.83s">
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Finance Test</div>
+        <div class="card-file">test.html</div>
+        <div class="card-desc">Test page</div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
 
 ```
-<a class="card" href="microl.html" data-title="microl website">
-  <div class="card-icon">WWW</div>
-  <div class="card-title">microl website</div>
-  <div class="card-desc">microl website backup updated</div>
-  <div class="card-arrow">→</div>
-</a>
-    
-<a class="card" href="scanner.html" data-title="NSE Scanner">
-  <div class="card-icon">📡</div>
-  <div class="card-title">NSE Scanner</div>
-  <div class="card-desc">Weekly stock scanner with multi-proxy CORS fallback</div>
-  <div class="card-arrow">→</div>
-</a>
-
-<a class="card" href="label-microl-phage.html" data-title="Microl Phage Label">
-  <div class="card-icon">🧫</div>
-  <div class="card-title">Microl Phage Label</div>
-  <div class="card-desc">Print-ready product label for bacteriophage formulation</div>
-  <div class="card-arrow">→</div>
-</a>
-
-<a class="card" href="microl-remedies.html" data-title="Microl Remedies Site">
-  <div class="card-icon">🌊</div>
-  <div class="card-title">Microl Remedies Site</div>
-  <div class="card-desc">Full SPA — dark ocean aesthetic, product catalogue</div>
-  <div class="card-arrow">→</div>
-</a>
-
-<a class="card" href="alliance-aquaculture.html" data-title="Alliance Aquaculture">
-  <div class="card-icon">🐟</div>
-  <div class="card-title">Alliance Aquaculture</div>
-  <div class="card-desc">Animated multi-page site for Alliance Aquaculture</div>
-  <div class="card-arrow">→</div>
-</a>
-
-<a class="card" href="arata-letterhead.html" data-title="Arata Letterhead">
-  <div class="card-icon">📄</div>
-  <div class="card-title">Arata Letterhead</div>
-  <div class="card-desc">Branded letterhead for Arata Nutraceuticals</div>
-  <div class="card-arrow">→</div>
-</a>
-
-<a class="card" href="options-dashboard.html" data-title="Options Dashboard">
-  <div class="card-icon">📊</div>
-  <div class="card-title">Options Dashboard</div>
-  <div class="card-desc">Premium selling system — short put / call / iron condor</div>
-  <div class="card-arrow">→</div>
-</a>
-
-<!-- ── Add more cards below this line ── -->
-
-<!--
-<a class="card" href="your-file.html" data-title="Your Tool Name">
-  <div class="card-icon">🔧</div>
-  <div class="card-title">Your Tool Name</div>
-  <div class="card-desc">Short description of what this file does</div>
-  <div class="card-arrow">→</div>
-</a>
--->
+<div class="folder-label">📁 phani /</div>
+<div class="grid">
+  <a class="card" href="https://phanipotluri-git.github.io/Finance/phani/Backtest.html" target="_blank" data-title="Backtest" style="animation-delay:.87s">
+    <div class="card-icon">🔁</div>
+    <div class="card-title">Backtest</div>
+    <div class="card-file">phani/Backtest.html</div>
+    <div class="card-desc">Strategy backtesting tool</div>
+    <div class="card-arrow">→</div>
+  </a>
+  <a class="card" href="https://phanipotluri-git.github.io/Finance/phani/Ca.html" target="_blank" data-title="CA" style="animation-delay:.91s">
+    <div class="card-icon">📐</div>
+    <div class="card-title">CA</div>
+    <div class="card-file">phani/Ca.html</div>
+    <div class="card-desc">Capital analysis</div>
+    <div class="card-arrow">→</div>
+  </a>
+  <a class="card" href="https://phanipotluri-git.github.io/Finance/phani/Dashscanner.html" target="_blank" data-title="Dash Scanner" style="animation-delay:.95s">
+    <div class="card-icon">📡</div>
+    <div class="card-title">Dash Scanner</div>
+    <div class="card-file">phani/Dashscanner.html</div>
+    <div class="card-desc">NSE multi-signal scanner</div>
+    <div class="card-arrow">→</div>
+  </a>
+  <a class="card" href="https://phanipotluri-git.github.io/Finance/phani/Fut.html" target="_blank" data-title="Futures" style="animation-delay:.99s">
+    <div class="card-icon">📈</div>
+    <div class="card-title">Futures</div>
+    <div class="card-file">phani/Fut.html</div>
+    <div class="card-desc">F&O / futures tool</div>
+    <div class="card-arrow">→</div>
+  </a>
+</div>
 ```
 
+  </div>
+
+  <!-- ══════════ PHANI ══════════ -->
+
+  <div class="section phani-repo" data-section>
+    <div class="section-header" style="animation-delay:1.03s">
+      <div class="repo-dot dot-phani"></div>
+      <span class="repo-name">Phani</span>
+      <a class="repo-link" href="https://github.com/phanipotluri-git/Phani" target="_blank">↗ github</a>
+    </div>
+    <div class="grid">
+      <!-- ✏️ Add cards for each file in Phani repo. Example below: -->
+      <!--
+      <a class="card" href="https://phanipotluri-git.github.io/Phani/your-file.html" target="_blank" data-title="Your Title" style="animation-delay:1.07s">
+        <div class="card-icon">📄</div>
+        <div class="card-title">Your Title</div>
+        <div class="card-file">your-file.html</div>
+        <div class="card-desc">Description</div>
+        <div class="card-arrow">→</div>
+      </a>
+      -->
+      <div class="card placeholder">
+        <div class="card-icon">📄</div>
+        <div class="card-title">Add files</div>
+        <div class="card-file">— see comment in code —</div>
+        <div class="card-desc">Paste file names from Phani repo here</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ ARATA NUTRA ══════════ -->
+
+  <div class="section arata" data-section>
+    <div class="section-header" style="animation-delay:1.10s">
+      <div class="repo-dot dot-arata"></div>
+      <span class="repo-name">ArataNutra</span>
+      <a class="repo-link" href="https://github.com/phanipotluri-git/ArataNutra" target="_blank">↗ github</a>
+    </div>
+    <div class="grid">
+      <!-- ✏️ Add cards for each file in ArataNutra repo -->
+      <div class="card placeholder">
+        <div class="card-icon">💊</div>
+        <div class="card-title">Add files</div>
+        <div class="card-file">— see comment in code —</div>
+        <div class="card-desc">Paste file names from ArataNutra repo here</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ KIDS ══════════ -->
+
+  <div class="section kids" data-section>
+    <div class="section-header" style="animation-delay:1.13s">
+      <div class="repo-dot dot-kids"></div>
+      <span class="repo-name">Kids</span>
+      <a class="repo-link" href="https://github.com/phanipotluri-git/Kids" target="_blank">↗ github</a>
+    </div>
+    <div class="grid">
+      <!-- ✏️ Add cards for each file in Kids repo -->
+      <div class="card placeholder">
+        <div class="card-icon">🎨</div>
+        <div class="card-title">Add files</div>
+        <div class="card-file">— see comment in code —</div>
+        <div class="card-desc">Paste file names from Kids repo here</div>
+      </div>
+    </div>
   </div>
 
   <div id="no-results">No files match your search.</div>
 
   <footer>
-    <span>// My GitHub Tool Hub</span>
-    <span>Updated <span id="date"></span></span>
+    <span>// phanipotluri-git · GitHub Hub</span>
+    <span>Updated <span id="date"></span> · <a href="https://github.com/phanipotluri-git" target="_blank">↗ All repos</a></span>
   </footer>
 
 </div>
 
 <script>
-  // Live date
   document.getElementById('date').textContent =
     new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
 
-  // Search filter
-  const input = document.getElementById('search');
-  const cards = document.querySelectorAll('.card');
-  const noResults = document.getElementById('no-results');
+  const input    = document.getElementById('search');
+  const sections = document.querySelectorAll('[data-section]');
+  const noResult = document.getElementById('no-results');
 
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
-    let visible = 0;
-    cards.forEach(card => {
-      const title = card.dataset.title.toLowerCase();
-      const desc  = card.querySelector('.card-desc').textContent.toLowerCase();
-      const match = !q || title.includes(q) || desc.includes(q);
-      card.style.display = match ? '' : 'none';
-      if (match) visible++;
+    let total = 0;
+
+    sections.forEach(sec => {
+      const cards = sec.querySelectorAll('.card:not(.placeholder)');
+      let vis = 0;
+      cards.forEach(card => {
+        const t = (card.dataset.title || '').toLowerCase();
+        const f = (card.querySelector('.card-file')?.textContent || '').toLowerCase();
+        const d = (card.querySelector('.card-desc')?.textContent || '').toLowerCase();
+        const ok = !q || t.includes(q) || f.includes(q) || d.includes(q);
+        card.style.display = ok ? '' : 'none';
+        if (ok) { vis++; total++; }
+      });
+      sec.style.display = (q && vis === 0 && cards.length > 0) ? 'none' : '';
     });
-    noResults.style.display = visible === 0 ? 'block' : 'none';
+
+    noResult.style.display = (q && total === 0) ? 'block' : 'none';
   });
 </script>
 
