@@ -1153,7 +1153,15 @@ function toast(msg) {
 /* ── UTILS ────────────────────────────────────────── */
 function strip(h){ return (h||"").replace(/<[^>]*>/g,"").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&#\d+;/g,"").trim(); }
 function esc(s)  { return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function enc(s)  { try{return btoa(unescape(encodeURIComponent(s||""))).replace(/[^a-zA-Z0-9]/g,"").slice(0,24);}catch{return Math.random().toString(36).slice(2,14);} }
+function enc(s) {
+  // djb2 hash — unique per URL, no collision from shared URL prefixes
+  if (!s) return "x" + Math.random().toString(36).slice(2,10);
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) {
+    h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+  }
+  return "id" + Math.abs(h).toString(36).padStart(8, "0");
+}
 function fmtDate(s){ try{ return new Date(s).toLocaleDateString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",hour12:true}); }catch{return "";} }
 
 /* ── KEYBOARD ─────────────────────────────────────── */
