@@ -4,693 +4,910 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <title>The Brief · Indian News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
 <style>
-/* ═══════════════ TOKENS ═══════════════ */
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════ */
 :root {
-  --bg:       #f5efe0; --bg2:#ede5cc; --surface:#ffffff;
-  --ink:      #1a1410; --ink2:#3d3428; --ink3:#7a6e5c;
-  --border:   #d8ccb0; --border2:#c8b99a;
-  --accent:   #c8291a; --accent2:#e04030;
-  --ap:       #8a6c00; --tg:#1a4a8a; --ai:#6b21a8;
-  --green:    #166534; --muted:#9ca3af;
-  --tab-h:    56px;    --hdr-h:56px;
-  --shadow:   0 1px 3px rgba(0,0,0,.1);
-  --shadow2:  0 4px 16px rgba(0,0,0,.12);
-  --radius:   10px;
-  --font-body:'Georgia',serif;
-  --font-ui:  -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --font-mono:'Fira Code','Courier New',monospace;
+  /* Surfaces */
+  --bg:       #f0ebe0;
+  --bg2:      #e8e2d4;
+  --surface:  #ffffff;
+  --surface2: #faf8f4;
+
+  /* Ink */
+  --ink:      #111827;
+  --ink2:     #374151;
+  --ink3:     #6b7280;
+  --muted:    #9ca3af;
+
+  /* Borders */
+  --border:   #e5e0d5;
+  --border2:  #d1cdc4;
+
+  /* Brand */
+  --red:      #dc2626;
+  --red2:     #ef4444;
+
+  /* Category palette */
+  --c-world:  #7c3aed; --c-world-bg:  #f5f3ff;
+  --c-india:  #c2410c; --c-india-bg:  #fff7ed;
+  --c-ap:     #065f46; --c-ap-bg:     #ecfdf5;
+  --c-tg:     #1e40af; --c-tg-bg:     #eff6ff;
+  --c-sport:  #991b1b; --c-sport-bg:  #fef2f2;
+  --c-biz:    #14532d; --c-biz-bg:    #f0fdf4;
+  --c-health: #581c87; --c-health-bg: #faf5ff;
+  --c-ai:     #0c4a6e; --c-ai-bg:     #f0f9ff;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow:    0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+
+  --radius:   12px;
+  --radius-sm:8px;
+
+  --font-head:'Playfair Display', Georgia, serif;
+  --font-ui:  'Inter', -apple-system, sans-serif;
+  --font-mono:'JetBrains Mono', monospace;
+
+  --hdr-h: 60px;
+  --tab-h: 48px;
 }
+
 [data-theme="dark"] {
-  --bg:#0f0f0f; --bg2:#1a1a1a; --surface:#1e1e1e;
-  --ink:#e8e0d0; --ink2:#c0b8a8; --ink3:#7a7268;
+  --bg:#0d0d0d; --bg2:#161616; --surface:#1c1c1e; --surface2:#242424;
+  --ink:#f2f0ec; --ink2:#d1cdc6; --ink3:#9ca3af; --muted:#6b7280;
   --border:#2a2a2a; --border2:#333;
-  --shadow:0 1px 3px rgba(0,0,0,.4); --shadow2:0 4px 16px rgba(0,0,0,.5);
+  --c-world-bg:#1e1b4b; --c-india-bg:#431407; --c-ap-bg:#052e16;
+  --c-tg-bg:#0c1a3a; --c-sport-bg:#3b0000; --c-biz-bg:#052e16;
+  --c-health-bg:#2e1065; --c-ai-bg:#0c1e36;
 }
 
-/* ═══════════════ RESET ═══════════════ */
+/* ══════════════════════════════════════════════
+   RESET
+══════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;-webkit-text-size-adjust:100%}
-body{background:var(–bg);color:var(–ink);font-family:var(–font-body);line-height:1.5;min-height:100vh;overflow-x:hidden}
-button{cursor:pointer;font-family:inherit;border:none;background:none}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);min-height:100vh;overflow-x:hidden;line-height:1.6}
+button{cursor:pointer;font-family:inherit;border:none;background:none;color:inherit}
 a{color:inherit;text-decoration:none}
-input{font-family:var(–font-ui)}
-img{max-width:100%;display:block}
+::selection{background:#dc2626;color:#fff}
 
-/* ═══════════════ APP SHELL ═══════════════ */
-#app{display:flex;flex-direction:column;min-height:100vh;max-width:1440px;margin:0 auto}
+/* ══════════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════════ */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink3)}
 
-/* ─── TOP HEADER ─── */
-#hdr{
-position:sticky;top:0;z-index:200;
-background:var(–surface);border-bottom:1px solid var(–border);
-box-shadow:var(–shadow);
-height:var(–hdr-h);
-display:flex;align-items:center;gap:10px;
-padding:0 14px;
-}
-.brand{
-font-family:‘Georgia’,serif;font-size:1.4rem;font-weight:700;
-letter-spacing:-1px;white-space:nowrap;
-}
-.brand span{color:var(–accent)}
-
-.hdr-search{
-flex:1;display:flex;align-items:center;gap:8px;
-background:var(–bg2);border:1px solid var(–border);
-border-radius:20px;padding:6px 12px;
-}
-.hdr-search input{
-flex:1;border:none;background:transparent;outline:none;
-font-size:.85rem;color:var(–ink);
-}
-.hdr-search input::placeholder{color:var(–ink3)}
-.hdr-search svg{width:16px;height:16px;stroke:var(–ink3);flex-shrink:0}
-
-.hdr-btns{display:flex;gap:6px;align-items:center}
-.icon-btn{
-width:36px;height:36px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-background:var(–bg2);border:1px solid var(–border);
-transition:background .15s;position:relative;
-}
-.icon-btn:hover{background:var(–border)}
-.icon-btn svg{width:18px;height:18px;stroke:var(–ink);fill:none}
-
-#bm-badge{
-position:absolute;top:-2px;right:-2px;
-background:var(–accent);color:#fff;
-font-size:.55rem;font-family:var(–font-ui);
-width:16px;height:16px;border-radius:50%;
-display:none;align-items:center;justify-content:center;
+/* ══════════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════════ */
+#hdr {
+  position:sticky;top:0;z-index:300;height:var(--hdr-h);
+  background:var(--ink);
+  display:flex;align-items:center;gap:12px;padding:0 16px;
+  box-shadow:0 2px 20px rgba(0,0,0,.35);
 }
 
-/* ─── KEY BANNER ─── */
+.brand {
+  font-family:var(--font-head);font-size:1.5rem;font-weight:900;
+  color:#fff;letter-spacing:-1px;white-space:nowrap;flex-shrink:0;
+}
+.brand-dot{color:var(--red2)}
+.brand-sub{
+  font-family:var(--font-mono);font-size:.5rem;font-weight:400;
+  color:#9ca3af;letter-spacing:.12em;text-transform:uppercase;
+  display:block;margin-top:-4px;
+}
+
+/* Search */
+.search-wrap {
+  flex:1;display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  border-radius:24px;padding:8px 14px;
+  transition:background .2s,border-color .2s;
+}
+.search-wrap:focus-within{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35)}
+.search-wrap svg{width:15px;height:15px;stroke:#9ca3af;flex-shrink:0}
+#search-input{
+  flex:1;background:none;border:none;outline:none;
+  font-size:.85rem;color:#fff;min-width:0;
+}
+#search-input::placeholder{color:#9ca3af}
+
+/* Header buttons */
+.hdr-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.hbtn{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  transition:background .15s;position:relative;flex-shrink:0;
+}
+.hbtn:hover{background:rgba(255,255,255,.2)}
+.hbtn svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2}
+#bm-count{
+  position:absolute;top:-3px;right:-3px;
+  background:var(--red);color:#fff;font-size:.52rem;
+  width:16px;height:16px;border-radius:50%;
+  display:none;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-weight:600;
+  border:2px solid var(--ink);
+}
+
+/* Key status dot */
+#key-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#6b7280;flex-shrink:0;
+  border:2px solid rgba(255,255,255,.3);
+  transition:background .3s;
+}
+#key-dot.active{background:#22c55e}
+
+/* ══════════════════════════════════════════════
+   KEY BANNER
+══════════════════════════════════════════════ */
 #key-banner{
-background:#fef3c7;border-bottom:1px solid #fde68a;
-padding:8px 14px;display:flex;align-items:center;gap:10px;
-font-family:var(–font-ui);font-size:.78rem;color:#92400e;
+  background:linear-gradient(135deg,#fef3c7,#fde68a);
+  border-bottom:1px solid #fcd34d;
+  padding:8px 16px;display:flex;align-items:center;gap:8px;
+  font-size:.78rem;color:#78350f;font-family:var(--font-ui);
 }
-[data-theme=“dark”] #key-banner{background:#2a1f00;border-color:#3a2e00;color:#fbbf24}
-#key-banner a{text-decoration:underline;cursor:pointer;font-weight:600}
+[data-theme="dark"] #key-banner{background:linear-gradient(135deg,#2a1a00,#3a2500);border-color:#4a3000;color:#fbbf24}
 #key-banner.hidden{display:none}
+#key-banner a{font-weight:600;text-decoration:underline;cursor:pointer}
+.banner-close{margin-left:auto;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;font-size:.7rem}
 
-/* ─── KEY DRAWER ─── */
-#key-drawer{
-background:var(–bg2);border-bottom:1px solid var(–border);
-overflow:hidden;max-height:0;transition:max-height .3s ease;
-}
-#key-drawer.open{max-height:80px}
-.key-row{padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.key-row label{font-family:var(–font-ui);font-size:.75rem;color:var(–ink2);white-space:nowrap}
-#groq-input{
-flex:1;min-width:200px;max-width:400px;
-background:var(–surface);border:1px solid var(–border2);
-color:var(–ink);font-family:var(–font-mono);font-size:.72rem;
-padding:7px 10px;border-radius:6px;outline:none;transition:border-color .2s;
-}
-#groq-input:focus{border-color:var(–accent)}
-#groq-input::placeholder{color:var(–muted)}
-.btn-save{padding:7px 14px;background:var(–accent);color:#fff;border-radius:6px;font-family:var(–font-ui);font-size:.75rem;font-weight:600;transition:background .15s}
-.btn-save:hover{background:var(–accent2)}
-.btn-clr{padding:7px 10px;color:var(–accent);border:1px solid var(–accent);border-radius:6px;font-family:var(–font-ui);font-size:.75rem;transition:all .15s}
-.btn-clr:hover{background:var(–accent);color:#fff}
-
-/* ─── TAB STRIP ─── */
-#tab-strip{
-position:sticky;top:var(–hdr-h);z-index:150;
-background:var(–surface);border-bottom:2px solid var(–border);
-display:flex;overflow-x:auto;scrollbar-width:none;
--webkit-overflow-scrolling:touch;
+/* ══════════════════════════════════════════════
+   TAB STRIP
+══════════════════════════════════════════════ */
+#tab-strip {
+  position:sticky;top:var(--hdr-h);z-index:200;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  box-shadow:var(--shadow-sm);
 }
 #tab-strip::-webkit-scrollbar{display:none}
-.tab{
-padding:0 16px;height:44px;display:flex;align-items:center;gap:6px;
-font-family:var(–font-ui);font-size:.75rem;font-weight:500;
-color:var(–ink3);white-space:nowrap;
-border-bottom:2px solid transparent;margin-bottom:-2px;
-transition:color .15s,border-color .15s;flex-shrink:0;
+
+.tab {
+  padding:0 18px;height:var(--tab-h);
+  display:flex;align-items:center;gap:7px;
+  font-size:.78rem;font-weight:500;color:var(--ink3);
+  white-space:nowrap;flex-shrink:0;
+  border-bottom:3px solid transparent;
+  margin-bottom:-1px;transition:color .2s,border-color .2s;
+  position:relative;
 }
-.tab:hover{color:var(–ink)}
-.tab.active{color:var(–accent);border-bottom-color:var(–accent)}
-.tab[data-r=ap].active{color:var(–ap);border-bottom-color:var(–ap)}
-.tab[data-r=tg].active{color:var(–tg);border-bottom-color:var(–tg)}
-.tab[data-r=ai].active{color:var(–ai);border-bottom-color:var(–ai)}
-.tab-dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:none}
-.tab.loading .tab-dot{display:block;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
-.tab-count{
-font-size:.6rem;background:var(–bg2);
-padding:1px 5px;border-radius:10px;min-width:18px;text-align:center;
-font-family:var(–font-ui);
+.tab:hover{color:var(--ink2)}
+.tab.active{color:var(--ink);border-bottom-color:var(--red);font-weight:600}
+
+/* Category-coloured active underlines */
+.tab[data-r=world].active{border-bottom-color:var(--c-world)}
+.tab[data-r=ap].active{border-bottom-color:var(--c-ap)}
+.tab[data-r=tg].active{border-bottom-color:var(--c-tg)}
+.tab[data-r=sport].active{border-bottom-color:var(--c-sport)}
+.tab[data-r=biz].active{border-bottom-color:var(--c-biz)}
+.tab[data-r=health].active{border-bottom-color:var(--c-health)}
+.tab[data-r=ai].active{border-bottom-color:var(--c-ai)}
+
+.tab-icon{font-size:.95rem}
+.tab-loader{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--muted);display:none;
+  animation:pulse .8s ease infinite;
+}
+.tab.loading .tab-loader{display:block}
+@keyframes pulse{0%,100%{opacity:.2}50%{opacity:1}}
+.tab-n{
+  font-size:.6rem;font-family:var(--font-mono);
+  background:var(--bg2);color:var(--ink3);
+  padding:1px 5px;border-radius:8px;
+  display:none;
+}
+.tab-n.show{display:block}
+
+/* ══════════════════════════════════════════════
+   SECTION HEADER
+══════════════════════════════════════════════ */
+.sec-bar {
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px 10px;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:calc(var(--hdr-h) + var(--tab-h));
+  background:var(--bg);z-index:100;
+}
+.sec-label {
+  display:flex;align-items:center;gap:8px;
+}
+.sec-stripe{
+  width:4px;height:20px;border-radius:2px;
+  background:var(--red);flex-shrink:0;
+}
+.sec-name{
+  font-family:var(--font-head);font-size:1.05rem;
+  font-weight:700;color:var(--ink);
+}
+.sec-count{
+  font-family:var(--font-mono);font-size:.62rem;
+  color:var(--muted);background:var(--bg2);
+  padding:2px 8px;border-radius:10px;
+}
+.sec-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.sec-src{
+  font-family:var(--font-mono);font-size:.58rem;
+  color:var(--muted);display:none;
+}
+@media(min-width:640px){.sec-src{display:block}}
+.btn-ref{
+  padding:5px 12px;border-radius:20px;
+  font-size:.72rem;font-weight:500;
+  background:var(--surface);border:1px solid var(--border2);
+  color:var(--ink2);transition:all .15s;
+  display:flex;align-items:center;gap:4px;
+}
+.btn-ref:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ══════════════════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════════════════ */
+#main {padding:0 0 40px}
+
+/* ── HERO ── */
+.hero-wrap{padding:14px 14px 0}
+.hero-card {
+  background:var(--surface);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);overflow:hidden;
+  border:1px solid var(--border);
+  display:grid;grid-template-columns:1fr;
+}
+@media(min-width:768px){
+  .hero-card{grid-template-columns:3fr 2fr}
 }
 
-/* ─── MAIN CONTENT ─── */
-#content-wrap{flex:1;padding-bottom:20px}
+.hero-accent-bar{height:4px;width:100%;background:var(--cat-color,var(--red))}
+@media(min-width:768px){
+  .hero-accent-bar{display:none}
+  .hero-card{position:relative}
+  .hero-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+    background:var(--cat-color,var(--red));
+  }
+}
 
-/* Section header */
-.sec-hdr{
-display:flex;align-items:center;gap:10px;
-padding:16px 14px 10px;border-bottom:1px solid var(–border);
-}
-.sec-title{
-font-family:‘Georgia’,serif;font-size:1.1rem;font-weight:700;
-font-style:italic;color:var(–ink2);
-}
-.sec-meta{font-family:var(–font-ui);font-size:.7rem;color:var(–muted);margin-left:auto}
-.sec-src{font-family:var(–font-mono);font-size:.6rem;color:var(–muted);display:none}
-@media(min-width:600px){.sec-src{display:block}}
-.btn-refresh{
-padding:5px 10px;border-radius:6px;
-font-family:var(–font-ui);font-size:.72rem;
-background:var(–bg2);border:1px solid var(–border);
-color:var(–ink2);transition:all .15s;
-}
-.btn-refresh:hover{background:var(–border);color:var(–ink)}
+.hero-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+@media(min-width:768px){.hero-body{padding:26px 28px 26px 32px}}
 
-/* ─── HERO CARD ─── */
-.hero-card{
-margin:12px;border-radius:var(–radius);
-background:var(–surface);box-shadow:var(–shadow2);
-overflow:hidden;border:1px solid var(–border);
-}
-.hero-body{padding:16px}
-.hero-cat{
-display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-margin-bottom:10px;
-}
+.hero-top-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .hero-headline{
-font-family:‘Georgia’,serif;font-size:1.35rem;font-weight:700;
-line-height:1.28;color:var(–ink);margin-bottom:10px;
+  font-family:var(--font-head);font-size:1.5rem;font-weight:900;
+  line-height:1.22;color:var(--ink);
 }
-.hero-desc{
-font-size:.88rem;line-height:1.72;color:var(–ink2);
-margin-bottom:14px;
-}
-@media(min-width:768px){.hero-headline{font-size:1.7rem}}
+@media(min-width:640px){.hero-headline{font-size:1.9rem}}
+@media(min-width:900px){.hero-headline{font-size:2.2rem}}
 
-/* ─── ARTICLE GRID ─── */
-.art-grid{
-display:grid;
-grid-template-columns:1fr;
-gap:1px;background:var(–border);
-margin:0 12px;
-border:1px solid var(–border);border-radius:var(–radius);
-overflow:hidden;
+.hero-desc{
+  font-size:.9rem;line-height:1.78;color:var(--ink2);
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
 }
-@media(min-width:600px){.art-grid{grid-template-columns:repeat(2,1fr)}}
+.hero-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:4px}
+
+/* Hero sidebar (desktop) */
+.hero-sidebar{
+  border-left:1px solid var(--border);
+  display:none;flex-direction:column;
+}
+@media(min-width:768px){.hero-sidebar{display:flex}}
+.hs-item{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  flex:1;display:flex;flex-direction:column;gap:6px;
+  transition:background .15s;
+}
+.hs-item:last-child{border-bottom:none}
+.hs-item:hover{background:var(--surface2)}
+.hs-meta{display:flex;align-items:center;gap:6px}
+.hs-headline{
+  font-family:var(--font-head);font-size:.88rem;font-weight:700;
+  line-height:1.35;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.hs-actions{display:flex;gap:6px;margin-top:auto;padding-top:8px}
+
+/* ── ARTICLE GRID ── */
+.grid-wrap{padding:12px 14px}
+.art-grid{
+  display:grid;grid-template-columns:1fr;gap:10px;
+}
+@media(min-width:520px){.art-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:900px){.art-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1200px){.art-grid{grid-template-columns:repeat(4,1fr)}}
 
-.art-card{
-background:var(–surface);padding:14px;
-display:flex;flex-direction:column;gap:8px;
-animation:fadeUp .3s ease backwards;
+/* ── ARTICLE CARD ── */
+.art-card {
+  background:var(--surface);border-radius:var(--radius);
+  border:1px solid var(--border);box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;gap:0;overflow:hidden;
+  animation:cardIn .3s ease backwards;
+  transition:box-shadow .2s,transform .2s;
+  position:relative;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.art-card:hover{background:var(–bg2);transition:background .15s}
+.art-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-.art-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.art-headline{
-font-family:‘Georgia’,serif;font-size:.95rem;font-weight:700;
-line-height:1.35;color:var(–ink);flex:1;
-}
-.art-desc{
-font-size:.78rem;line-height:1.62;color:var(–ink3);
-display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+/* Coloured top stripe per category */
+.card-stripe{
+  height:3px;width:100%;
+  background:var(--cat-color,var(--red));
+  flex-shrink:0;
 }
 
-/* ─── ACTIONS ─── */
-.art-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:10px;border-top:1px solid var(–border)}
-.btn-ai{
-padding:6px 12px;border-radius:6px;
-font-family:var(–font-ui);font-size:.7rem;font-weight:600;
-background:var(–ink);color:var(–bg);
-display:inline-flex;align-items:center;gap:5px;
-transition:all .15s;
+.card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.card-headline{
+  font-family:var(--font-head);font-size:.98rem;font-weight:700;
+  line-height:1.35;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
 }
-.btn-ai:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.2)}
-.btn-ai:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-ai.r-ap{background:var(–ap)}
-.btn-ai.r-tg{background:var(–tg)}
-.btn-ai.r-ai{background:var(–ai)}
+.card-desc{
+  font-size:.76rem;line-height:1.65;color:var(--ink3);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  flex:1;
+}
+.card-footer{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  padding-top:10px;border-top:1px solid var(--border);margin-top:auto;
+}
+
+/* ══════════════════════════════════════════════
+   BADGES & TAGS
+══════════════════════════════════════════════ */
+.lang-te,.lang-en{
+  display:inline-flex;align-items:center;
+  font-family:var(--font-mono);font-size:.56rem;font-weight:500;
+  padding:2px 6px;border-radius:4px;border:1px solid;
+  white-space:nowrap;flex-shrink:0;
+}
+.lang-te{color:#92400e;background:#fef3c7;border-color:#f59e0b}
+.lang-en{color:#065f46;background:#d1fae5;border-color:#6ee7b7}
+[data-theme="dark"] .lang-te{background:#2a1a00;color:#fbbf24;border-color:#92400e}
+[data-theme="dark"] .lang-en{background:#052e16;color:#6ee7b7;border-color:#065f46}
+
+.src-tag{
+  font-family:var(--font-mono);font-size:.58rem;
+  color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  max-width:110px;
+}
+.date-tag{
+  font-family:var(--font-mono);font-size:.56rem;color:var(--muted);
+  margin-left:auto;white-space:nowrap;flex-shrink:0;
+}
+.cat-pill {
+  display:inline-flex;align-items:center;
+  font-size:.62rem;font-weight:600;letter-spacing:.04em;
+  padding:3px 8px;border-radius:20px;
+  text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+
+/* ══════════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════════ */
+.btn-ai {
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 13px;border-radius:20px;
+  font-size:.72rem;font-weight:600;
+  color:#fff;background:var(--ink);
+  transition:all .2s;border:none;cursor:pointer;
+  flex-shrink:0;
+}
+.btn-ai:hover:not(:disabled){filter:brightness(1.2);transform:translateY(-1px)}
+.btn-ai:active:not(:disabled){transform:translateY(0)}
+.btn-ai:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
 .btn-read{
-padding:6px 12px;border-radius:6px;
-font-family:var(–font-ui);font-size:.7rem;font-weight:500;
-background:var(–bg2);border:1px solid var(–border);color:var(–ink2);
-display:inline-flex;align-items:center;gap:5px;transition:all .15s;
+  display:inline-flex;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:20px;
+  font-size:.72rem;font-weight:500;
+  background:var(--bg2);border:1px solid var(--border2);
+  color:var(--ink2);transition:all .15s;text-decoration:none;
+  flex-shrink:0;
 }
-.btn-read:hover{background:var(–border)}
+.btn-read:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
 .btn-bm{
-padding:6px 10px;border-radius:6px;
-font-family:var(–font-ui);font-size:.7rem;
-background:transparent;border:1px solid var(–border);color:var(–ink3);
-transition:all .15s;margin-left:auto;
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg2);border:1px solid var(--border);
+  font-size:.85rem;transition:all .15s;margin-left:auto;flex-shrink:0;
 }
-.btn-bm:hover{border-color:var(–ap);color:var(–ap)}
-.btn-bm.saved{background:#fef3c7;border-color:#d97706;color:#92400e}
-[data-theme=“dark”] .btn-bm.saved{background:#2a1f00;border-color:#d97706;color:#fbbf24}
+.btn-bm:hover{background:var(--bg);border-color:var(--red);color:var(--red)}
+.btn-bm.saved{background:#fef3c7;border-color:#f59e0b}
+[data-theme="dark"] .btn-bm.saved{background:#2a1a00;border-color:#d97706}
 
-/* ─── BADGES ─── */
-.lang-badge{
-display:inline-flex;align-items:center;
-font-family:var(–font-mono);font-size:.55rem;font-weight:500;
-padding:2px 7px;border-radius:4px;border:1px solid;white-space:nowrap;
+/* ══════════════════════════════════════════════
+   AI PANEL
+══════════════════════════════════════════════ */
+.ai-panel {
+  margin-top:8px;padding:12px 14px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--surface2),var(--bg2));
+  border:1px solid var(--border2);
+  border-left:4px solid var(--ink);
+  animation:slideIn .25s ease;
 }
-.lb-te{color:#7a5c00;background:#fef9c3;border-color:#ca8a04}
-.lb-en{color:#166534;background:#f0fdf4;border-color:#86efac}
-[data-theme=“dark”] .lb-te{background:#2a1f00;color:#fbbf24}
-[data-theme=“dark”] .lb-en{background:#052e16;color:#86efac}
+.ai-panel[data-r=ap]{border-left-color:var(--c-ap)}
+.ai-panel[data-r=tg]{border-left-color:var(--c-tg)}
+.ai-panel[data-r=world]{border-left-color:var(--c-world)}
+.ai-panel[data-r=ai]{border-left-color:var(--c-ai)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.ai-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;
+}
+.ai-label{
+  display:flex;align-items:center;gap:5px;
+  font-size:.62rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink2);font-family:var(--font-ui);
+}
+.ai-label::before{content:"";display:inline-block;width:12px;height:2px;background:currentColor;border-radius:1px}
+.ai-model{font-family:var(--font-mono);font-size:.52rem;color:var(--muted)}
+.ai-body{
+  font-family:'Playfair Display',serif;font-size:.82rem;
+  font-style:italic;line-height:1.75;color:var(--ink2);
+}
 
-.cat-badge{
-display:inline-flex;align-items:center;
-font-family:var(–font-ui);font-size:.6rem;font-weight:600;
-padding:2px 7px;border-radius:4px;
-letter-spacing:.04em;text-transform:uppercase;
-}
-.cat-world{background:#ede9fe;color:#5b21b6}
-.cat-india{background:#fff7ed;color:#c2410c}
-.cat-ap   {background:#fefce8;color:#a16207}
-.cat-tg   {background:#eff6ff;color:#1d4ed8}
-.cat-sport{background:#fef2f2;color:#b91c1c}
-.cat-biz  {background:#f0fdf4;color:#166534}
-.cat-health{background:#fdf4ff;color:#7e22ce}
-.cat-ai   {background:#f5f3ff;color:#5b21b6}
-[data-theme=“dark”] .cat-world{background:#1e1b4b;color:#a5b4fc}
-[data-theme=“dark”] .cat-india{background:#431407;color:#fdba74}
-[data-theme=“dark”] .cat-ap   {background:#1c1400;color:#fde047}
-[data-theme=“dark”] .cat-tg   {background:#0c1a3a;color:#93c5fd}
-[data-theme=“dark”] .cat-sport{background:#3b0000;color:#fca5a5}
-[data-theme=“dark”] .cat-biz  {background:#052e16;color:#86efac}
-[data-theme=“dark”] .cat-health{background:#2e1065;color:#d8b4fe}
-[data-theme=“dark”] .cat-ai   {background:#2e1065;color:#d8b4fe}
-
-.src-badge{
-font-family:var(–font-mono);font-size:.58rem;color:var(–muted);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;
-}
-.date-badge{font-family:var(–font-mono);font-size:.58rem;color:var(–muted)}
-
-/* ─── AI PANEL ─── */
-.ai-panel{
-background:var(–bg2);border:1px solid var(–border2);
-border-left:3px solid var(–ink);border-radius:0 6px 6px 0;
-padding:10px 12px;animation:fadeIn .25s ease;
-}
-.ai-panel.r-ap{border-left-color:var(–ap)}
-.ai-panel.r-tg{border-left-color:var(–tg)}
-.ai-panel.r-ai{border-left-color:var(–ai)}
-@keyframes fadeIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
-.ai-hdr{
-display:flex;align-items:center;justify-content:space-between;
-margin-bottom:7px;
-}
-.ai-tag{font-family:var(–font-ui);font-size:.62rem;font-weight:700;color:var(–ink2);text-transform:uppercase;letter-spacing:.06em}
-.ai-model{font-family:var(–font-mono);font-size:.55rem;color:var(–muted)}
-.ai-text{font-family:‘Georgia’,serif;font-size:.82rem;line-height:1.72;color:var(–ink2);font-style:italic}
-
-/* ─── SKELETON ─── */
-.skeleton-wrap{padding:12px;display:flex;flex-direction:column;gap:12px}
-.skel-hero{border-radius:var(–radius);height:220px;overflow:hidden}
-.skel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;border-radius:var(–radius);overflow:hidden}
-@media(min-width:600px){.skel-grid{grid-template-columns:repeat(3,1fr)}}
-.skel-card{height:160px}
+/* ══════════════════════════════════════════════
+   SKELETON
+══════════════════════════════════════════════ */
+.skel-wrap{padding:14px}
 .skel{
-background:linear-gradient(90deg,var(–bg2) 25%,var(–border) 50%,var(–bg2) 75%);
-background-size:200% 100%;animation:shimmer 1.5s infinite;
+  background:linear-gradient(90deg,var(--bg2) 25%,var(--border) 50%,var(--bg2) 75%);
+  background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px;
 }
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-hero-card{height:240px;margin-bottom:14px;border-radius:var(--radius)}
+.skel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:640px){.skel-grid{grid-template-columns:repeat(3,1fr)}}
+.skel-card{height:180px;border-radius:var(--radius)}
 
-/* ─── ERROR / EMPTY ─── */
+/* ══════════════════════════════════════════════
+   ERROR / EMPTY
+══════════════════════════════════════════════ */
 .state-box{
-padding:60px 24px;text-align:center;
-display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:72px 24px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
 }
-.state-icon{font-size:2.5rem}
-.state-title{font-family:‘Georgia’,serif;font-size:1.1rem;font-weight:700;color:var(–ink)}
-.state-msg{font-family:var(–font-ui);font-size:.82rem;color:var(–ink3);line-height:1.7}
+.state-icon{font-size:3rem;line-height:1}
+.state-title{font-family:var(--font-head);font-size:1.15rem;font-weight:700}
+.state-msg{font-size:.84rem;color:var(--ink3);line-height:1.7;max-width:320px}
 .state-btn{
-padding:8px 18px;border-radius:20px;
-background:var(–accent);color:#fff;
-font-family:var(–font-ui);font-size:.82rem;font-weight:600;
-margin-top:6px;transition:background .15s;
+  padding:10px 24px;border-radius:24px;background:var(--ink);color:#fff;
+  font-size:.84rem;font-weight:600;margin-top:4px;transition:opacity .15s;
 }
-.state-btn:hover{background:var(–accent2)}
+.state-btn:hover{opacity:.85}
 
-/* ─── BOOKMARKS DRAWER ─── */
-#bm-drawer{
-position:fixed;inset:0;z-index:500;display:none;
+/* ══════════════════════════════════════════════
+   BOOKMARKS PANEL
+══════════════════════════════════════════════ */
+#bm-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .25s;
 }
-#bm-drawer.open{display:flex}
-.bm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
-.bm-panel{
-position:absolute;right:0;top:0;bottom:0;width:min(360px,100vw);
-background:var(–surface);display:flex;flex-direction:column;
-box-shadow:-4px 0 20px rgba(0,0,0,.2);overflow:hidden;
+#bm-overlay.open{opacity:1;pointer-events:auto}
+#bm-panel{
+  position:fixed;top:0;right:0;bottom:0;
+  width:min(380px,100vw);background:var(--surface);
+  box-shadow:-8px 0 32px rgba(0,0,0,.2);
+  display:flex;flex-direction:column;z-index:501;
+  transform:translateX(100%);transition:transform .3s ease;
 }
-.bm-hdr{
-padding:16px;border-bottom:1px solid var(–border);
-display:flex;align-items:center;justify-content:space-between;
+#bm-overlay.open #bm-panel{transform:translateX(0)}
+.bm-head{
+  padding:20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--ink);color:#fff;
 }
-.bm-title{font-family:‘Georgia’,serif;font-size:1rem;font-weight:700}
-.bm-close{font-size:1.2rem;width:32px;height:32px;border-radius:50%;background:var(–bg2);display:flex;align-items:center;justify-content:center}
-.bm-list{flex:1;overflow-y:auto;padding:8px}
+.bm-head-title{font-family:var(--font-head);font-size:1.05rem;font-weight:700}
+.bm-head-close{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;color:#fff;
+}
+.bm-body{flex:1;overflow-y:auto;padding:12px}
 .bm-item{
-padding:12px;border-radius:8px;margin-bottom:6px;
-background:var(–bg2);border:1px solid var(–border);
-display:flex;flex-direction:column;gap:6px;
+  padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border);
+  background:var(--surface2);margin-bottom:8px;
+  display:flex;flex-direction:column;gap:7px;
 }
-.bm-item-title{font-family:‘Georgia’,serif;font-size:.88rem;font-weight:700;color:var(–ink);line-height:1.35}
-.bm-item-meta{font-family:var(–font-ui);font-size:.7rem;color:var(–muted);display:flex;gap:8px;align-items:center}
-.bm-item-actions{display:flex;gap:6px}
-.bm-empty{padding:40px;text-align:center;color:var(–muted);font-family:var(–font-ui);font-size:.85rem}
+.bm-title{font-family:var(--font-head);font-size:.9rem;font-weight:700;line-height:1.35}
+.bm-meta{display:flex;gap:8px;font-family:var(--font-mono);font-size:.6rem;color:var(--muted)}
+.bm-btns{display:flex;gap:6px}
+.bm-empty{padding:48px 24px;text-align:center;color:var(--muted);font-size:.85rem;line-height:1.7}
 
-/* ─── KEY MODAL ─── */
+/* ══════════════════════════════════════════════
+   KEY MODAL
+══════════════════════════════════════════════ */
 #key-modal{
-position:fixed;inset:0;z-index:600;display:none;
-align-items:flex-end;justify-content:center;
-background:rgba(0,0,0,.5);
+  position:fixed;inset:0;z-index:600;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
 }
-#key-modal.open{display:flex}
+#key-modal.open{opacity:1;pointer-events:auto}
+@media(min-width:540px){#key-modal{align-items:center}}
 .key-sheet{
-width:100%;max-width:480px;background:var(–surface);
-border-radius:16px 16px 0 0;padding:20px;
-display:flex;flex-direction:column;gap:12px;
+  width:100%;max-width:460px;background:var(--surface);
+  border-radius:20px 20px 0 0;padding:24px;
+  display:flex;flex-direction:column;gap:14px;
+  transform:translateY(30px);transition:transform .3s ease;
 }
-@media(min-width:520px){
-#key-modal{align-items:center}
-.key-sheet{border-radius:16px}
+@media(min-width:540px){.key-sheet{border-radius:20px}}
+#key-modal.open .key-sheet{transform:translateY(0)}
+.ks-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto -6px}
+.ks-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700}
+.ks-desc{font-size:.82rem;color:var(--ink3);line-height:1.65}
+.ks-desc a{color:var(--red);font-weight:600}
+.ks-input{
+  width:100%;padding:12px 14px;border-radius:var(--radius-sm);
+  background:var(--bg2);border:2px solid var(--border2);
+  color:var(--ink);font-family:var(--font-mono);font-size:.82rem;
+  outline:none;transition:border-color .2s;
 }
-.key-sheet h3{font-family:‘Georgia’,serif;font-size:1rem;font-weight:700}
-.key-sheet p{font-family:var(–font-ui);font-size:.8rem;color:var(–ink3);line-height:1.6}
-.key-sheet input{
-width:100%;background:var(–bg2);border:1px solid var(–border2);
-color:var(–ink);font-family:var(–font-mono);font-size:.8rem;
-padding:10px 12px;border-radius:8px;outline:none;
+.ks-input:focus{border-color:var(--red)}
+.ks-input::placeholder{color:var(--muted)}
+.ks-btns{display:flex;gap:8px}
+.ks-save{
+  flex:1;padding:12px;border-radius:24px;
+  background:var(--ink);color:#fff;
+  font-weight:600;font-size:.85rem;transition:opacity .15s;
 }
-.key-sheet input:focus{border-color:var(–accent)}
-.key-sheet-btns{display:flex;gap:8px}
-.key-sheet-btns .btn-save{flex:1;padding:10px}
-.key-close{
-position:absolute;top:14px;right:14px;
-width:28px;height:28px;border-radius:50%;
-background:var(–bg2);display:flex;align-items:center;justify-content:center;
-font-size:.9rem;
+.ks-save:hover{opacity:.85}
+.ks-clear{
+  padding:12px 16px;border-radius:24px;
+  border:1px solid var(--red);color:var(--red);
+  font-size:.82rem;transition:all .15s;display:none;
 }
+.ks-clear:hover{background:var(--red);color:#fff}
 
-/* ─── SEARCH RESULTS MODE ─── */
-#search-results{padding:12px;display:none}
-#search-results.show{display:block}
-.search-hdr{padding:0 0 10px;font-family:var(–font-ui);font-size:.8rem;color:var(–muted)}
-
-/* ─── TOAST ─── */
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
 #toast{
-position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
-background:var(–ink);color:var(–bg);
-font-family:var(–font-ui);font-size:.8rem;
-padding:10px 18px;border-radius:20px;
-opacity:0;transition:all .25s;z-index:800;white-space:nowrap;
-pointer-events:none;
+  position:fixed;bottom:28px;left:50%;z-index:800;
+  background:var(--ink);color:#fff;
+  font-size:.8rem;font-weight:500;
+  padding:10px 20px;border-radius:24px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ─── SPINNER ─── */
+/* ══════════════════════════════════════════════
+   SEARCH RESULTS
+══════════════════════════════════════════════ */
+#search-panel{display:none;padding:0 0 32px}
+#search-panel.show{display:block}
+.search-label{
+  padding:14px 16px 8px;
+  font-size:.82rem;color:var(--muted);
+  border-bottom:1px solid var(--border);margin-bottom:0;
+}
+
+/* ══════════════════════════════════════════════
+   SPINNER
+══════════════════════════════════════════════ */
 .spin{display:inline-block;animation:rot .7s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
-
-/* ─── SCROLLBAR ─── */
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(–border2);border-radius:2px}
-
-/* ─── DESKTOP LAYOUT ─── */
-@media(min-width:768px){
-#content-wrap{display:grid;grid-template-columns:1fr}
-}
 </style>
 
 </head>
 <body>
-<div id="app">
 
-<!-- ═══ HEADER ═══ -->
+<!-- ══ HEADER ══ -->
 
 <header id="hdr">
-  <div class="brand">BRIEF<span>.</span></div>
-
-  <div class="hdr-search">
-    <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="search" id="search-input" placeholder="Search articles…" autocomplete="off"/>
+  <div class="brand">
+    BRIEF<span class="brand-dot">.</span>
+    <span class="brand-sub">Indian News</span>
   </div>
 
-  <div class="hdr-btns">
-    <button class="icon-btn" id="bm-btn" title="Bookmarks" onclick="openBM()">
-      <svg viewBox="0 0 24 24" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      <span id="bm-badge"></span>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" stroke-width="2.5" fill="none">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input id="search-input" type="search" placeholder="Search loaded articles…" autocomplete="off"/>
+  </div>
+
+  <div class="hdr-actions">
+    <span id="key-dot" title="API Key status"></span>
+    <button class="hbtn" onclick="openBM()" title="Saved articles">
+      <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span id="bm-count"></span>
     </button>
-    <button class="icon-btn" id="key-btn" title="Groq API Key" onclick="openKeyModal()">
-      <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+    <button class="hbtn" onclick="openKey()" title="Groq API Key">
+      <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
     </button>
-    <button class="icon-btn" id="theme-btn" title="Toggle theme" onclick="toggleTheme()">
-      <svg id="theme-icon" viewBox="0 0 24 24" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <button class="hbtn" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">
+      <svg id="theme-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
   </div>
 </header>
 
-<!-- ═══ KEY BANNER ═══ -->
+<!-- ══ KEY BANNER ══ -->
 
 <div id="key-banner">
-  ⚡ Add your free <a onclick="openKeyModal()">Groq API key</a> to enable AI briefs on every article. Get one free at <a href="https://console.groq.com" target="_blank">console.groq.com</a>
+  ⚡ Enable AI Briefs — add your free <a onclick="openKey()">Groq API key</a>.
+  Get one at <a href="https://console.groq.com" target="_blank">console.groq.com</a>
+  <button class="banner-close" onclick="this.parentElement.classList.add('hidden')">✕</button>
 </div>
 
-<!-- ═══ TAB STRIP ═══ -->
+<!-- ══ TABS ══ -->
 
 <div id="tab-strip"></div>
 
-<!-- ═══ CONTENT ═══ -->
+<!-- ══ SECTION BAR ══ -->
 
-<div id="content-wrap">
-  <!-- Section header -->
-  <div class="sec-hdr">
-    <span class="sec-title" id="sec-title"></span>
+<div class="sec-bar" id="sec-bar">
+  <div class="sec-label">
+    <div class="sec-stripe" id="sec-stripe"></div>
+    <div class="sec-name" id="sec-name">Loading…</div>
+    <div class="sec-count" id="sec-count" style="display:none"></div>
+  </div>
+  <div class="sec-right">
     <span class="sec-src" id="sec-src"></span>
-    <span class="sec-meta" id="sec-meta"></span>
-    <button class="btn-refresh" onclick="refreshCat()">↻ Refresh</button>
+    <button class="btn-ref" onclick="refreshCat()">↻ Refresh</button>
   </div>
-
-  <!-- Search results (shown when searching) -->
-
-  <div id="search-results"></div>
-
-  <!-- Main content area -->
-
-  <div id="content"></div>
 </div>
 
-</div><!-- #app -->
+<!-- ══ CONTENT ══ -->
 
-<!-- ═══ BOOKMARKS DRAWER ═══ -->
+<div id="search-panel"></div>
+<main id="main"></main>
 
-<div id="bm-drawer">
-  <div class="bm-backdrop" onclick="closeBM()"></div>
-  <div class="bm-panel">
-    <div class="bm-hdr">
-      <div class="bm-title">📌 Saved Articles</div>
-      <button class="bm-close" onclick="closeBM()">✕</button>
+<!-- ══ BOOKMARKS ══ -->
+
+<div id="bm-overlay" onclick="closeBM()">
+  <div id="bm-panel" onclick="e=>e.stopPropagation()">
+    <div class="bm-head">
+      <div class="bm-head-title">📌 Saved Articles</div>
+      <button class="bm-head-close" onclick="closeBM()">✕</button>
     </div>
-    <div class="bm-list" id="bm-list"></div>
+    <div class="bm-body" id="bm-body"></div>
   </div>
 </div>
 
-<!-- ═══ KEY MODAL ═══ -->
+<!-- ══ KEY MODAL ══ -->
 
 <div id="key-modal">
-  <div class="key-sheet" style="position:relative">
-    <button class="key-close" onclick="closeKeyModal()">✕</button>
-    <h3>⚡ Groq API Key</h3>
-    <p>Get a <strong>free</strong> API key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent);text-decoration:underline">console.groq.com</a> — no credit card needed. Powers ultra-fast AI briefs using Llama 3.3 70B.</p>
-    <input type="password" id="key-modal-input" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false"/>
-    <div class="key-sheet-btns">
-      <button class="btn-save" onclick="saveKeyFromModal()">Save Key</button>
-      <button class="btn-clr" onclick="clearKey()" id="clear-btn" style="display:none">Clear</button>
+  <div class="key-sheet">
+    <div class="ks-handle"></div>
+    <div class="ks-title">⚡ Groq API Key</div>
+    <div class="ks-desc">
+      Get a <strong>free</strong> API key at
+      <a href="https://console.groq.com" target="_blank">console.groq.com</a> — no credit card needed.
+      Enables one-tap AI analysis on every article using Llama 3.3 70B.
+    </div>
+    <input class="ks-input" id="ks-input" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off"/>
+    <div class="ks-btns">
+      <button class="ks-save" onclick="saveKey()">Save & Enable AI</button>
+      <button class="ks-clear" id="ks-clear" onclick="clearKey()">Clear</button>
     </div>
   </div>
 </div>
-
-<!-- ═══ TOAST ═══ -->
 
 <div id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════════
-   CATEGORIES — 9 sections, rich source pool
-   Telugu: ABN + BBC Telugu + TV9 + Mana TG
-           + Telugu360 + Visala Andhra
-           + Prajatantra + OneIndia Telugu
-   English: TOI, NDTV, The Hindu, IE,
-            HT, DC, Firstpost, Reuters,
-            LiveMint, BS, ET, CNBC etc.
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   CATEGORY CONFIG
+   trusted:true  → use all articles from feed
+   trusted:false → filter by category keywords
+══════════════════════════════════════════════ */
 const CATS = [
   {
-    id:"world", label:"🌍 World", region:"world", cc:"cat-world", mixed:true,
+    id:"world", label:"World", icon:"🌍", region:"world",
+    color:"#7c3aed", bg:"#f5f3ff",
+    pill:{text:"World",cls:"cat-world"},
+    mixed:true,
+    keywords:["world","international","global","foreign","war","peace","nato","united nations","europe","america","china","pakistan","russia","ukraine","israel","gaza","iran","turkey","japan","australia","usa","uk","france","germany","g20","g7","imf","who ","un ","biden","trump","elections abroad","విదేశీ","అంతర్జాతీయ","ప్రపంచ"],
     feeds:[
-      {url:"https://feeds.feedburner.com/ndtvnews-world-news",                              name:"NDTV World",       lang:"en"},
-      {url:"https://feeds.bbci.co.uk/news/world/rss.xml",                                  name:"BBC World",        lang:"en"},
-      {url:"https://indianexpress.com/section/world/feed/",                                 name:"Indian Express",   lang:"en"},
-      {url:"https://www.firstpost.com/commonfeeds/v1/eng/pageview/world/rss.xml",          name:"Firstpost",        lang:"en"},
-      {url:"https://timesofindia.indiatimes.com/rss/2647163.cms",                          name:"TOI World",        lang:"en"},
-      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te"},
-      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te"},
+      {url:"https://feeds.feedburner.com/ndtvnews-world-news",                              name:"NDTV World",       lang:"en",trusted:true},
+      {url:"https://feeds.bbci.co.uk/news/world/rss.xml",                                  name:"BBC World",        lang:"en",trusted:true},
+      {url:"https://indianexpress.com/section/world/feed/",                                 name:"Indian Express",   lang:"en",trusted:true},
+      {url:"https://timesofindia.indiatimes.com/rss/2647163.cms",                          name:"TOI World",        lang:"en",trusted:true},
+      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te",trusted:false},
+      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te",trusted:false},
     ]
   },
   {
-    id:"india", label:"🇮🇳 India", region:"india", cc:"cat-india", mixed:true,
+    id:"india", label:"India", icon:"🇮🇳", region:"india",
+    color:"#c2410c", bg:"#fff7ed",
+    pill:{text:"India",cls:"cat-india"},
+    mixed:true,
+    keywords:["india","modi","parliament","delhi","supreme court","national","lok sabha","rajya sabha","election","gujarat","maharashtra","bjp","congress","aap","nda","india news","centre","central govt","rss ","भारत","రాష్ట్రీయ","భారత","జాతీయ","కేంద్ర","ఢిల్లీ","మోదీ"],
     feeds:[
-      {url:"https://timesofindia.indiatimes.com/rssfeedstopstories.cms",                   name:"Times of India",   lang:"en"},
-      {url:"https://feeds.feedburner.com/ndtvnews-top-stories",                            name:"NDTV",             lang:"en"},
-      {url:"https://www.thehindu.com/feeder/default.rss",                                  name:"The Hindu",        lang:"en"},
-      {url:"https://indianexpress.com/section/india/feed/",                                name:"Indian Express",   lang:"en"},
-      {url:"https://hindustantimes.com/feeds/rss/india/rssfeed.xml",                      name:"Hindustan Times",  lang:"en"},
-      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en"},
-      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te"},
-      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te"},
-      {url:"https://telugu.oneindia.com/rss/telugu-news.xml",                              name:"OneIndia Telugu",  lang:"te"},
+      {url:"https://timesofindia.indiatimes.com/rssfeedstopstories.cms",                   name:"Times of India",   lang:"en",trusted:true},
+      {url:"https://feeds.feedburner.com/ndtvnews-top-stories",                            name:"NDTV",             lang:"en",trusted:true},
+      {url:"https://www.thehindu.com/feeder/default.rss",                                  name:"The Hindu",        lang:"en",trusted:true},
+      {url:"https://indianexpress.com/section/india/feed/",                                name:"Indian Express",   lang:"en",trusted:true},
+      {url:"https://hindustantimes.com/feeds/rss/india/rssfeed.xml",                      name:"Hindustan Times",  lang:"en",trusted:true},
+      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en",trusted:false},
+      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te",trusted:false},
+      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te",trusted:false},
+      {url:"https://telugu.oneindia.com/rss/telugu-news.xml",                              name:"OneIndia Telugu",  lang:"te",trusted:false},
     ]
   },
   {
-    id:"regional", label:"📍 Regional", region:"ap", cc:"cat-ap", mixed:true,
+    id:"regional", label:"Regional", icon:"📍", region:"ap",
+    color:"#065f46", bg:"#ecfdf5",
+    pill:{text:"AP·TG",cls:"cat-ap"},
+    mixed:true,
+    keywords:["andhra pradesh","andhra","telangana","ap ","amaravati","chandrababu","naidu","revanth","reddy","kcr","brs","tdp","ysrcp","ycp","jagan","vizag","visakhapatnam","warangal","karimnagar","nellore","guntur","krishna","godavari","pawan kalyan","ఆంధ్రప్రదేశ్","తెలంగాణ","చంద్రబాబు","జగన్","రేవంత్","కేసీఆర్","అమరావతి","వైజాగ్"],
     feeds:[
-      {url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss",     name:"The Hindu AP",     lang:"en"},
-      {url:"https://www.thehindu.com/news/national/telangana/feeder/default.rss",          name:"The Hindu TG",     lang:"en"},
-      {url:"https://telanganatoday.com/feed",                                               name:"Telangana Today",  lang:"en"},
-      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te"},
-      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te"},
-      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te"},
-      {url:"https://manatelangana.news/feed",                                               name:"Mana Telangana",   lang:"te"},
-      {url:"https://telugu360.com/feed",                                                    name:"Telugu360",        lang:"te"},
-      {url:"https://visalaandhra.com/feed",                                                 name:"Visala Andhra",    lang:"te"},
-      {url:"https://prajatantranews.com/feed",                                              name:"Prajatantra",      lang:"te"},
-      {url:"https://telugu.oneindia.com/rss/telugu-news.xml",                              name:"OneIndia Telugu",  lang:"te"},
+      {url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss",     name:"The Hindu AP",     lang:"en",trusted:true},
+      {url:"https://www.thehindu.com/news/national/telangana/feeder/default.rss",          name:"The Hindu TG",     lang:"en",trusted:true},
+      {url:"https://telanganatoday.com/feed",                                               name:"Telangana Today",  lang:"en",trusted:true},
+      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te",trusted:false},
+      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te",trusted:false},
+      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te",trusted:false},
+      {url:"https://manatelangana.news/feed",                                               name:"Mana Telangana",   lang:"te",trusted:true},
+      {url:"https://telugu360.com/feed",                                                    name:"Telugu360",        lang:"te",trusted:false},
+      {url:"https://visalaandhra.com/feed",                                                 name:"Visala Andhra",    lang:"te",trusted:true},
+      {url:"https://prajatantranews.com/feed",                                              name:"Prajatantra",      lang:"te",trusted:true},
+      {url:"https://telugu.oneindia.com/rss/telugu-news.xml",                              name:"OneIndia Telugu",  lang:"te",trusted:false},
     ]
   },
   {
-    id:"hyd", label:"🕌 Hyderabad", region:"tg", cc:"cat-tg", mixed:true,
+    id:"hyd", label:"Hyderabad", icon:"🕌", region:"tg",
+    color:"#1e40af", bg:"#eff6ff",
+    pill:{text:"Hyderabad",cls:"cat-tg"},
+    mixed:true,
+    keywords:["hyderabad","secunderabad","cyberabad","jubilee hills","banjara hills","hitech city","gachibowli","madhapur","lcma","ghmc","hmda","metro","హైదరాబాద్","సికింద్రాబాద్","సైబరాబాద్"],
     feeds:[
-      {url:"https://timesofindia.indiatimes.com/rss/4719148.cms",                         name:"TOI Hyderabad",    lang:"en"},
-      {url:"https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss",           name:"The Hindu HYD",    lang:"en"},
-      {url:"https://telanganatoday.com/hyderabad/feed",                                    name:"Telangana Today",  lang:"en"},
-      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te"},
-      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te"},
-      {url:"https://manatelangana.news/feed",                                               name:"Mana Telangana",   lang:"te"},
-      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te"},
+      {url:"https://timesofindia.indiatimes.com/rss/4719148.cms",                         name:"TOI Hyderabad",    lang:"en",trusted:true},
+      {url:"https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss",           name:"The Hindu HYD",    lang:"en",trusted:true},
+      {url:"https://telanganatoday.com/hyderabad/feed",                                    name:"Telangana Today",  lang:"en",trusted:true},
+      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te",trusted:false},
+      {url:"https://tv9telugu.com/feed",                                                    name:"TV9 Telugu",       lang:"te",trusted:false},
+      {url:"https://manatelangana.news/feed",                                               name:"Mana Telangana",   lang:"te",trusted:false},
+      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                      name:"BBC Telugu",       lang:"te",trusted:false},
     ]
   },
   {
-    id:"vja", label:"🏙 Vijayawada", region:"ap", cc:"cat-ap", mixed:true,
+    id:"vja", label:"Vijayawada", icon:"🏙", region:"ap",
+    color:"#0891b2", bg:"#ecfeff",
+    pill:{text:"VJA·AMV",cls:"cat-ap"},
+    mixed:true,
+    keywords:["vijayawada","amaravati","krishna district","guntur","andhra capital","ap capital","machilipatnam","eluru","bhimavaram","విజయవాడ","అమరావతి","కృష్ణా","గుంటూరు"],
     feeds:[
-      {url:"https://www.thehindu.com/news/cities/Vijayawada/feeder/default.rss",          name:"The Hindu VJA",    lang:"en"},
-      {url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss",    name:"The Hindu AP",     lang:"en"},
-      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te"},
-      {url:"https://visalaandhra.com/feed",                                                name:"Visala Andhra",    lang:"te"},
-      {url:"https://telugu360.com/feed",                                                   name:"Telugu360",        lang:"te"},
-      {url:"https://tv9telugu.com/feed",                                                   name:"TV9 Telugu",       lang:"te"},
+      {url:"https://www.thehindu.com/news/cities/Vijayawada/feeder/default.rss",          name:"The Hindu VJA",    lang:"en",trusted:true},
+      {url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss",    name:"The Hindu AP",     lang:"en",trusted:false},
+      {url:"https://www.deccanchronicle.com/rss_feed/",                                   name:"Deccan Chronicle", lang:"en",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                        name:"ABN AndhraJyothi", lang:"te",trusted:false},
+      {url:"https://visalaandhra.com/feed",                                                name:"Visala Andhra",    lang:"te",trusted:false},
+      {url:"https://telugu360.com/feed",                                                   name:"Telugu360",        lang:"te",trusted:false},
+      {url:"https://tv9telugu.com/feed",                                                   name:"TV9 Telugu",       lang:"te",trusted:false},
     ]
   },
   {
-    id:"sports", label:"🏏 Sports", region:"india", cc:"cat-sport", mixed:true,
+    id:"sports", label:"Sports", icon:"🏏", region:"sport",
+    color:"#991b1b", bg:"#fef2f2",
+    pill:{text:"Sports",cls:"cat-sport"},
+    mixed:true,
+    keywords:["cricket","ipl","t20","test match","odi","football","sports","match","player","team","tournament","batting","bowling","wicket","runs","score","champion","cup","league","athlete","stadium","bcci","fifa","football","badminton","kabaddi","hockey","formula","tennis","psl","wpl","క్రికెట్","ఐపీఎల్","స్పోర్ట్స్","ఆట","టోర్నమెంట్"],
     feeds:[
-      {url:"https://feeds.feedburner.com/ndtvnews-sports",                                name:"NDTV Sports",      lang:"en"},
-      {url:"https://timesofindia.indiatimes.com/rss/4719161.cms",                         name:"TOI Sports",       lang:"en"},
-      {url:"https://feeds.bbci.co.uk/sport/cricket/rss.xml",                             name:"BBC Cricket",      lang:"en"},
-      {url:"https://indianexpress.com/section/sports/feed/",                              name:"Indian Express",   lang:"en"},
-      {url:"https://www.firstpost.com/commonfeeds/v1/eng/pageview/sports/rss.xml",       name:"Firstpost",        lang:"en"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                       name:"ABN AndhraJyothi", lang:"te"},
-      {url:"https://tv9telugu.com/feed",                                                   name:"TV9 Telugu",       lang:"te"},
+      {url:"https://feeds.feedburner.com/ndtvnews-sports",                                name:"NDTV Sports",      lang:"en",trusted:true},
+      {url:"https://timesofindia.indiatimes.com/rss/4719161.cms",                         name:"TOI Sports",       lang:"en",trusted:true},
+      {url:"https://feeds.bbci.co.uk/sport/cricket/rss.xml",                             name:"BBC Cricket",      lang:"en",trusted:true},
+      {url:"https://indianexpress.com/section/sports/feed/",                              name:"Indian Express",   lang:"en",trusted:true},
+      {url:"https://www.firstpost.com/commonfeeds/v1/eng/pageview/sports/rss.xml",       name:"Firstpost",        lang:"en",trusted:true},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                       name:"ABN AndhraJyothi", lang:"te",trusted:false},
+      {url:"https://tv9telugu.com/feed",                                                   name:"TV9 Telugu",       lang:"te",trusted:false},
     ]
   },
   {
-    id:"finance", label:"📈 Finance", region:"india", cc:"cat-biz", mixed:true,
+    id:"finance", label:"Finance", icon:"📈", region:"biz",
+    color:"#14532d", bg:"#f0fdf4",
+    pill:{text:"Finance",cls:"cat-biz"},
+    mixed:true,
+    keywords:["stock","market","share","sensex","nifty","rupee","economy","budget","bank","invest","finance","crore","lakh","inflation","gdp","rbi","sebi","ipo","mutual fund","trading","currency","gold price","oil price","crude","interest rate","repo rate","fiscal","revenue","profit","loss","earnings","quarterly","bse","nse","mcx","commodity","bond","debt","equity","dividend","portfolio","insurance","real estate","realty","పెట్టుబడి","మార్కెట్","స్టాక్","ఆర్థిక","బడ్జెట్","బ్యాంక్"],
     feeds:[
-      {url:"https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",        name:"ET Markets",       lang:"en"},
-      {url:"https://economictimes.indiatimes.com/rssfeedstopstories.cms",                 name:"Economic Times",   lang:"en"},
-      {url:"https://www.thehindubusinessline.com/feeder/default.rss",                    name:"Business Line",    lang:"en"},
-      {url:"https://livemint.com/rss/markets",                                            name:"LiveMint Markets", lang:"en"},
-      {url:"https://livemint.com/rss/money",                                              name:"LiveMint Money",   lang:"en"},
-      {url:"https://livemint.com/rss/industry",                                           name:"LiveMint Industry",lang:"en"},
-      {url:"https://www.business-standard.com/rss/home_page_top_stories.rss",            name:"Business Standard",lang:"en"},
-      {url:"https://cnbctv18.com/commonfeeds/v1/eng/pageview/market/rss.xml",            name:"CNBC TV18",        lang:"en"},
-      {url:"https://syndication.financialexpress.com/rss/latest-news.xml",               name:"Financial Express",lang:"en"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                       name:"ABN AndhraJyothi", lang:"te"},
+      {url:"https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",        name:"ET Markets",       lang:"en",trusted:true},
+      {url:"https://economictimes.indiatimes.com/rssfeedstopstories.cms",                 name:"Economic Times",   lang:"en",trusted:false},
+      {url:"https://www.thehindubusinessline.com/feeder/default.rss",                    name:"Business Line",    lang:"en",trusted:true},
+      {url:"https://livemint.com/rss/markets",                                            name:"LiveMint Markets", lang:"en",trusted:true},
+      {url:"https://livemint.com/rss/money",                                              name:"LiveMint Money",   lang:"en",trusted:true},
+      {url:"https://livemint.com/rss/industry",                                           name:"LiveMint Industry",lang:"en",trusted:true},
+      {url:"https://www.business-standard.com/rss/home_page_top_stories.rss",            name:"Business Standard",lang:"en",trusted:false},
+      {url:"https://cnbctv18.com/commonfeeds/v1/eng/pageview/market/rss.xml",            name:"CNBC TV18",        lang:"en",trusted:true},
+      {url:"https://syndication.financialexpress.com/rss/latest-news.xml",               name:"Financial Express",lang:"en",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                       name:"ABN AndhraJyothi", lang:"te",trusted:false},
     ]
   },
   {
-    id:"health", label:"🏥 Health", region:"india", cc:"cat-health", mixed:true,
+    id:"health", label:"Health", icon:"🏥", region:"health",
+    color:"#581c87", bg:"#faf5ff",
+    pill:{text:"Health",cls:"cat-health"},
+    mixed:true,
+    keywords:["health","hospital","doctor","disease","medicine","treatment","vaccine","virus","cancer","diabetes","covid","mental health","nutrition","diet","exercise","fitness","drug","surgery","patient","clinical","ayurveda","yoga","wellness","obesity","heart","blood pressure","research","medical","pharma","drug","fda","icmr","aiims","ఆరోగ్య","వైద్య","ఆసుపత్రి","వ్యాధి","మందు"],
     feeds:[
-      {url:"https://feeds.feedburner.com/ndtvnews-health",                                name:"NDTV Health",      lang:"en"},
-      {url:"https://feeds.bbci.co.uk/news/health/rss.xml",                               name:"BBC Health",       lang:"en"},
-      {url:"https://livemint.com/rss/science",                                            name:"LiveMint Science", lang:"en"},
-      {url:"https://www.firstpost.com/commonfeeds/v1/eng/pageview/health/rss.xml",       name:"Firstpost Health", lang:"en"},
-      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                     name:"BBC Telugu",       lang:"te"},
-      {url:"https://andhrajyothy.com/rss/feed.xml",                                       name:"ABN AndhraJyothi", lang:"te"},
+      {url:"https://feeds.feedburner.com/ndtvnews-health",                                name:"NDTV Health",      lang:"en",trusted:true},
+      {url:"https://feeds.bbci.co.uk/news/health/rss.xml",                               name:"BBC Health",       lang:"en",trusted:true},
+      {url:"https://livemint.com/rss/science",                                            name:"LiveMint Science", lang:"en",trusted:true},
+      {url:"https://www.firstpost.com/commonfeeds/v1/eng/pageview/health/rss.xml",       name:"Firstpost Health", lang:"en",trusted:true},
+      {url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                     name:"BBC Telugu",       lang:"te",trusted:false},
+      {url:"https://andhrajyothy.com/rss/feed.xml",                                       name:"ABN AndhraJyothi", lang:"te",trusted:false},
     ]
   },
   {
-    id:"ai", label:"🤖 AI & Tech", region:"ai", cc:"cat-ai", mixed:false,
+    id:"ai", label:"AI & Tech", icon:"🤖", region:"ai",
+    color:"#0c4a6e", bg:"#f0f9ff",
+    pill:{text:"AI·Tech",cls:"cat-ai"},
+    mixed:false,
+    keywords:null, // All trusted
     feeds:[
-      {url:"https://techcrunch.com/category/artificial-intelligence/feed/",               name:"TechCrunch AI",    lang:"en"},
-      {url:"https://www.technologyreview.com/feed/",                                       name:"MIT Tech Review",  lang:"en"},
-      {url:"https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",          name:"The Verge AI",     lang:"en"},
-      {url:"https://www.wired.com/feed/category/artificial-intelligence/latest/rss",     name:"Wired AI",         lang:"en"},
-      {url:"https://feeds.feedburner.com/ndtvnews-gadgets-news",                         name:"NDTV Gadgets",     lang:"en"},
-      {url:"https://indianexpress.com/section/technology/feed/",                          name:"Indian Express Tech",lang:"en"},
+      {url:"https://techcrunch.com/category/artificial-intelligence/feed/",               name:"TechCrunch AI",    lang:"en",trusted:true},
+      {url:"https://www.technologyreview.com/feed/",                                       name:"MIT Tech Review",  lang:"en",trusted:true},
+      {url:"https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",          name:"The Verge AI",     lang:"en",trusted:true},
+      {url:"https://www.wired.com/feed/category/artificial-intelligence/latest/rss",     name:"Wired AI",         lang:"en",trusted:true},
+      {url:"https://feeds.feedburner.com/ndtvnews-gadgets-news",                         name:"NDTV Gadgets",     lang:"en",trusted:true},
+      {url:"https://indianexpress.com/section/technology/feed/",                          name:"Indian Express Tech",lang:"en",trusted:true},
     ]
   },
 ];
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
+   KEYWORD FILTER
+   Checks title + description against category keywords
+══════════════════════════════════════════════ */
+function matchesCategory(item, cat) {
+  if (!cat.keywords) return true;
+  const hay = ((item.title||"")+" "+(item.description||"")).toLowerCase();
+  return cat.keywords.some(kw => hay.includes(kw.toLowerCase()));
+}
+
+/* ══════════════════════════════════════════════
    3-PROXY CHAIN
-═══════════════════════════════════════════ */
-const PROXIES = [
+══════════════════════════════════════════════ */
+const PX = [
   {
-    name:"AllOrigins",
-    fetch: async u=>{
-      const r=await tFetch(`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,9000);
-      const d=await r.json();
+    n:"AllOrigins",
+    f: async u => {
+      const r = await tF(`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,9000);
+      const d = await r.json();
       if(!d.contents) throw new Error("empty");
       return parseXML(d.contents);
     }
   },
   {
-    name:"RSS2JSON",
-    fetch: async u=>{
-      const r=await tFetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}&count=15`,9000);
-      const d=await r.json();
+    n:"RSS2JSON",
+    f: async u => {
+      const r = await tF(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(u)}&count=18`,9000);
+      const d = await r.json();
       if(d.status!=="ok"||!d.items?.length) throw new Error("bad");
-      return d.items.map(i=>({
-        title:i.title||"",link:i.link||"",description:i.description||i.content||"",
-        pubDate:i.pubDate||"",author:i.author||"",guid:i.guid||i.link||""
-      }));
+      return d.items.map(i=>({title:i.title||"",link:i.link||"",description:i.description||i.content||"",pubDate:i.pubDate||"",author:i.author||"",guid:i.guid||i.link||""}));
     }
   },
   {
-    name:"CORSProxy",
-    fetch: async u=>{
-      const r=await tFetch(`https://corsproxy.io/?${encodeURIComponent(u)}`,9000);
+    n:"CORSProxy",
+    f: async u => {
+      const r = await tF(`https://corsproxy.io/?${encodeURIComponent(u)}`,9000);
       return parseXML(await r.text());
     }
-  },
+  }
 ];
 
-async function tFetch(url,ms){
+async function tF(url,ms){
   const c=new AbortController();
   const t=setTimeout(()=>c.abort(),ms);
   try{const r=await fetch(url,{signal:c.signal});clearTimeout(t);return r;}
@@ -701,108 +918,109 @@ function parseXML(xml){
   const doc=new DOMParser().parseFromString(xml,"text/xml");
   const items=Array.from(doc.querySelectorAll("item"));
   if(!items.length) throw new Error("no items");
-  return items.slice(0,16).map(item=>{
+  return items.slice(0,18).map(item=>{
     function g(tag){
       let el;try{el=item.querySelector(tag)}catch{}
       if(!el)el=item.getElementsByTagName(tag)[0];
       if(!el&&tag.includes(":"))el=item.getElementsByTagName(tag.split(":")[1])[0];
       return el?el.textContent.trim():"";
     }
-    let link=g("link");
-    if(!link){const l=item.getElementsByTagName("link")[0];if(l)link=l.getAttribute("href")||l.textContent.trim();}
-    return{
-      title:g("title"),link,
-      description:g("description")||g("summary")||g("encoded")||g("content"),
-      pubDate:g("pubDate")||g("published")||g("updated")||g("date"),
-      author:g("author")||g("creator"),guid:g("guid")||link
-    };
+    let lnk=g("link");
+    if(!lnk){const l=item.getElementsByTagName("link")[0];if(l)lnk=l.getAttribute("href")||l.textContent.trim();}
+    return{title:g("title"),link:lnk,description:g("description")||g("summary")||g("encoded")||g("content"),pubDate:g("pubDate")||g("published")||g("updated"),author:g("author")||g("creator"),guid:g("guid")||lnk};
   }).filter(i=>i.title&&i.link);
 }
 
-async function loadOne(feed){
-  for(const px of PROXIES){
+async function fetchOne(feed, cat) {
+  for(const px of PX){
     try{
-      const items=await px.fetch(feed.url);
-      if(items.length){
-        items.forEach(i=>{i._src=feed.name;i._lang=feed.lang||"en";});
-        return{items:items.slice(0,8),source:feed.name,proxy:px.name};
+      const items = await px.f(feed.url);
+      if(!items.length) continue;
+
+      const tagged = items.map(i=>({...i,_src:feed.name,_lang:feed.lang||"en"}));
+
+      // Apply keyword filter for non-trusted feeds
+      const filtered = feed.trusted ? tagged : tagged.filter(i=>matchesCategory(i, cat));
+
+      if(filtered.length > 0) {
+        return {items:filtered.slice(0,9), source:feed.name};
       }
-    }catch(e){console.warn(`[${px.name}] ${feed.name}:`,e.message);}
+    }catch(e){console.warn(`[${px.n}] ${feed.name}:`,e.message);}
   }
   return null;
 }
 
 async function loadCat(catId){
-  const cat=CATS.find(c=>c.id===catId);
+  const cat = CATS.find(c=>c.id===catId);
+
   if(cat.mixed){
-    const results=await Promise.allSettled(cat.feeds.map(f=>loadOne(f)));
-    let all=[];const srcs=new Set();
+    const results = await Promise.allSettled(cat.feeds.map(f=>fetchOne(f, cat)));
+    let all=[]; const srcs=new Set();
     for(const r of results){
       if(r.status==="fulfilled"&&r.value){
-        all.push(...r.value.items);srcs.add(r.value.source);
+        all.push(...r.value.items); srcs.add(r.value.source);
       }
     }
     if(!all.length) throw new Error("all failed");
+
+    // Sort by date
     all.sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0));
+
+    // Deduplicate
     const seen=new Set();
     all=all.filter(i=>{
-      const k=(i.title||"").slice(0,42).toLowerCase().replace(/\s+/g,"");
-      if(seen.has(k))return false;seen.add(k);return true;
+      const k=(i.title||"").slice(0,45).toLowerCase().replace(/[^a-z0-9\u0c00-\u0c7f]/g,"");
+      if(seen.has(k))return false; seen.add(k); return true;
     });
-    return{items:all.slice(0,16),source:[...srcs].join(" · "),proxy:"mixed"};
+
+    return{items:all.slice(0,18), source:[...srcs].join(" · "), proxy:"parallel"};
   }
+
+  // Sequential for non-mixed
   for(const feed of cat.feeds){
-    const r=await loadOne(feed);
-    if(r)return{items:r.items.slice(0,14),source:r.source,proxy:r.proxy};
+    const r = await fetchOne(feed, cat);
+    if(r) return{items:r.items.slice(0,16), source:r.source, proxy:"seq"};
   }
   throw new Error("all failed");
 }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    STATE
-═══════════════════════════════════════════ */
-let activeId="world";
-const cache={};
-const summaries={};
-const busy=new Set();
-let bookmarks=JSON.parse(localStorage.getItem("brief_bm")||"[]");
-const SKEY="brief_groq_key";
-let keyModalOpen=false;
+══════════════════════════════════════════════ */
+let activeId = "world";
+const cache = {}, summaries = {}, busy = new Set();
+let bookmarks = JSON.parse(localStorage.getItem("brief_bm")||"[]");
+const GKEY = "brief_gkey";
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    INIT
-═══════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded",()=>{
-  buildTabs();
   loadTheme();
-  checkKey();
-  setInterval(()=>document.getElementById("datestamp")?.remove(),0);
-  selectCat("world");
+  buildTabs();
+  checkKeyUI();
   updateBMBadge();
+  selectCat("world");
 
-  // Search
-  document.getElementById("search-input").addEventListener("input",e=>{
-    const q=e.target.value.trim();
-    if(q.length>1) doSearch(q);
-    else clearSearch();
-  });
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape"&&keyModalOpen) closeKeyModal();
+  document.getElementById("search-input").addEventListener("input", e=>{
+    const q = e.target.value.trim();
+    q.length > 1 ? runSearch(q) : clearSearch();
   });
 });
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    TABS
-═══════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function buildTabs(){
-  document.getElementById("tab-strip").innerHTML=CATS.map(c=>
-    `<button class="tab${c.id===activeId?" active":""}" id="tab-${c.id}"
-             data-r="${c.region}" onclick="selectCat('${c.id}')">
-       ${c.label}
-       <span class="tab-dot"></span>
-       <span class="tab-count" id="cnt-${c.id}" style="display:none"></span>
-     </button>`
-  ).join("");
+  document.getElementById("tab-strip").innerHTML = CATS.map(c=>`
+    <button class="tab${c.id===activeId?" active":""}"
+            id="tab-${c.id}" data-r="${c.region}"
+            onclick="selectCat('${c.id}')">
+      <span class="tab-icon">${c.icon}</span>
+      ${c.label}
+      <span class="tab-loader"></span>
+      <span class="tab-n" id="tn-${c.id}"></span>
+    </button>`).join("");
 }
 
 function hlTab(id){
@@ -810,283 +1028,318 @@ function hlTab(id){
   const t=document.getElementById("tab-"+id);
   if(t){t.classList.add("active");t.scrollIntoView({inline:"nearest",block:"nearest"});}
 }
-
-function setTabLoading(id,on){
-  document.getElementById("tab-"+id)?.classList.toggle("loading",on);
+function setTabLoad(id,on){ document.getElementById("tab-"+id)?.classList.toggle("loading",on); }
+function setTabN(id,n){
+  const el=document.getElementById("tn-"+id);
+  if(!el) return;
+  el.textContent=n; el.classList.toggle("show",n>0);
 }
 
-function setTabCount(id,n){
-  const el=document.getElementById("cnt-"+id);
-  if(el){el.textContent=n;el.style.display=n?"":"none";}
-}
-
-/* ═══════════════════════════════════════════
-   CATEGORY SELECT
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   SELECT / REFRESH
+══════════════════════════════════════════════ */
 function selectCat(id){
   clearSearch();
   document.getElementById("search-input").value="";
   activeId=id;
   const cat=CATS.find(c=>c.id===id);
-  document.getElementById("sec-title").textContent=cat.label;
+
+  // Sec bar
+  document.getElementById("sec-name").textContent=cat.icon+" "+cat.label;
+  document.getElementById("sec-stripe").style.background=cat.color;
+  document.getElementById("sec-count").style.display="none";
+
   hlTab(id);
-  if(cache[id]){render(cache[id]);}
-  else fetchAndRender(id);
+  cache[id] ? render(cache[id]) : fetchAndRender(id);
 }
 
-function refreshCat(){delete cache[activeId];fetchAndRender(activeId);}
+function refreshCat(){ delete cache[activeId]; fetchAndRender(activeId); }
 
 async function fetchAndRender(catId){
   showSkeleton();
-  setTabLoading(catId,true);
-  document.getElementById("sec-src").textContent="Loading…";
-  document.getElementById("sec-meta").textContent="";
+  setTabLoad(catId,true);
+  document.getElementById("sec-src").textContent="Loading feeds…";
   try{
-    const result=await loadCat(catId);
-    cache[catId]=result;
-    setTabCount(catId,result.items.length);
-    if(catId===activeId) render(result);
+    const res = await loadCat(catId);
+    cache[catId]=res;
+    setTabN(catId,res.items.length);
+    if(catId===activeId) render(res);
   }catch{
     if(catId===activeId) showError();
-  }finally{setTabLoading(catId,false);}
+  }finally{ setTabLoad(catId,false); }
 }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    RENDER
-═══════════════════════════════════════════ */
-function render({items,source,proxy}){
-  document.getElementById("sec-src").textContent="Sources: "+source.split(" · ").length+" feeds";
-  document.getElementById("sec-meta").textContent=items.length+" stories";
+══════════════════════════════════════════════ */
+function catStyle(cat){ return `--cat-color:${cat.color}`; }
 
-  if(!items.length){showError();return;}
+function langBadge(item){
+  const te = /[\u0C00-\u0C7F]/.test(item.title||"") || item._lang==="te";
+  return te ? `<span class="lang-te">తె</span>` : `<span class="lang-en">EN</span>`;
+}
 
-  const cat=CATS.find(c=>c.id===activeId);
-  const [hero,...rest]=items;
-  const lowers=rest;
-  const reg=cat.region;
+function pillHTML(cat){
+  return `<span class="cat-pill" style="background:${cat.bg};color:${cat.color};border:1px solid ${cat.color}33">${cat.icon} ${cat.label}</span>`;
+}
 
-  const heroId=enc(hero.guid||hero.link);
-  const heroSum=summaries[heroId];
-  const heroBz=busy.has(heroId);
+function aiHTML(sum, reg, cat){
+  return `<div class="ai-panel" data-r="${reg}">
+    <div class="ai-head">
+      <span class="ai-label">AI Brief</span>
+      <span class="ai-model">Groq · llama-3.3-70b</span>
+    </div>
+    <div class="ai-body">${esc(sum)}</div>
+  </div>`;
+}
 
-  const heroHTML=`
-    <div class="hero-card">
-      <div class="hero-body">
-        <div class="hero-cat">
-          ${lbadge(hero)}
-          <span class="cat-badge ${cat.cc}">${cat.label.replace(/^[^ ]+ /,"")}</span>
-          <span class="src-badge">${esc(hero._src||"")}</span>
-          <span class="date-badge" style="margin-left:auto">${fmtDate(hero.pubDate)}</span>
+function actionsHTML(id, sum, bz, reg, link, compact){
+  const aiLbl = bz ? `<span class="spin">◌</span>` : sum ? "↻" : "⚡ AI";
+  const aiStyle = `background:${CATS.find(c=>c.id===activeId)?.color||"#111"}`;
+  return `
+    <button class="btn-ai" style="${aiStyle}" id="btn-${id}" ${bz?"disabled":""} onclick="doAI('${id}')">
+      ${aiLbl}${bz?" Analysing…":sum?" Re-Analyse":" Brief"}
+    </button>
+    <a class="btn-read" href="${esc(link)}" target="_blank" rel="noopener">Read ${compact?"→":"Full →"}</a>
+    <button class="btn-bm${isBM(id)?" saved":""}" onclick="toggleBM('${id}')" title="${isBM(id)?"Remove bookmark":"Save article"}">${isBM(id)?"📌":"🔖"}</button>`;
+}
+
+function render({items, source}){
+  const cat = CATS.find(c=>c.id===activeId);
+  const cnt = document.getElementById("sec-count");
+  cnt.textContent = items.length+" stories"; cnt.style.display="";
+  document.getElementById("sec-src").textContent = `${source.split(" · ").length} sources`;
+
+  if(!items.length){ showError(); return; }
+
+  const [hero, ...rest] = items;
+  const sidebar = rest.slice(0,3);
+  const lowers  = rest.slice(3);
+  const reg     = cat.region;
+  const hid     = enc(hero.guid||hero.link);
+  const hsum    = summaries[hid];
+  const hbz     = busy.has(hid);
+
+  const heroCard = `
+    <div class="hero-wrap">
+      <div class="hero-card" style="${catStyle(cat)}">
+        <div style="display:flex;flex-direction:column">
+          <div class="hero-accent-bar"></div>
+          <div class="hero-body">
+            <div class="hero-top-meta">
+              ${langBadge(hero)}
+              ${pillHTML(cat)}
+              <span style="font-family:var(--font-mono);font-size:.58rem;color:var(--muted)">${hero._src||""}</span>
+              <span class="date-tag">${fmtDate(hero.pubDate)}</span>
+            </div>
+            <div class="hero-headline">${esc(hero.title)}</div>
+            <div class="hero-desc">${esc(strip(hero.description))}</div>
+            ${hsum ? aiHTML(hsum,reg,cat) : ""}
+            <div class="hero-footer">
+              ${actionsHTML(hid,hsum,hbz,reg,hero.link,false)}
+            </div>
+          </div>
         </div>
-        <div class="hero-headline">${esc(hero.title)}</div>
-        <div class="hero-desc">${esc(strip(hero.description)).slice(0,320)}${strip(hero.description).length>320?"…":""}</div>
-        ${heroSum?aiPanel(heroSum,reg):""}
-        <div class="art-actions" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
-          <button class="btn-ai r-${reg}" id="btn-${heroId}" ${heroBz?"disabled":""} onclick="doAI('${heroId}')">
-            ${heroBz?`<span class="spin">◌</span> Analysing…`:heroSum?"↻ Re-Analyse":"⚡ AI Brief"}
-          </button>
-          <a class="btn-read" href="${esc(hero.link)}" target="_blank" rel="noopener">Read Full →</a>
-          <button class="btn-bm${isBookmarked(heroId)?" saved":""}" onclick="toggleBM('${heroId}')" title="Bookmark">
-            ${isBookmarked(heroId)?"📌":"🔖"}
-          </button>
+
+        <div class="hero-sidebar">
+          ${sidebar.map(a=>{
+            const id=enc(a.guid||a.link),sum=summaries[id],bz=busy.has(id);
+            return `
+              <div class="hs-item">
+                <div class="hs-meta">
+                  ${langBadge(a)}
+                  <span style="font-family:var(--font-mono);font-size:.58rem;color:var(--muted)">${a._src||""}</span>
+                  <span class="date-tag">${fmtDate(a.pubDate)}</span>
+                </div>
+                <div class="hs-headline">${esc(a.title)}</div>
+                ${sum ? aiHTML(sum,reg,cat) : ""}
+                <div class="hs-actions">
+                  ${actionsHTML(id,sum,bz,reg,a.link,true)}
+                </div>
+              </div>`;
+          }).join("")}
         </div>
       </div>
     </div>`;
 
-  const lowHTML=lowers.map((a,i)=>{
-    const id=enc(a.guid||a.link);
-    const sum=summaries[id],bz=busy.has(id);
-    const lbl=bz?`<span class="spin">◌</span>`:sum?"↻":"⚡";
+  const lowerCards = lowers.map((a,i)=>{
+    const id=enc(a.guid||a.link),sum=summaries[id],bz=busy.has(id);
     return `
-      <div class="art-card" style="animation-delay:${i*.04}s">
-        <div class="art-meta">
-          ${lbadge(a)}
-          <span class="src-badge">${esc(a._src||"")}</span>
-          <span class="date-badge" style="margin-left:auto">${fmtDate(a.pubDate)}</span>
-        </div>
-        <div class="art-headline">${esc(a.title)}</div>
-        <div class="art-desc">${esc(strip(a.description))}</div>
-        ${sum?aiPanel(sum,reg):""}
-        <div class="art-actions">
-          <button class="btn-ai r-${reg}" id="btn-${id}" ${bz?"disabled":""} onclick="doAI('${id}')">${lbl} AI</button>
-          <a class="btn-read" href="${esc(a.link)}" target="_blank" rel="noopener">Read →</a>
-          <button class="btn-bm${isBookmarked(id)?" saved":""}" onclick="toggleBM('${id}')" title="Bookmark">${isBookmarked(id)?"📌":"🔖"}</button>
+      <div class="art-card" style="${catStyle(cat)};animation-delay:${i*.04}s">
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-meta">
+            ${langBadge(a)}
+            <span class="src-tag">${a._src||""}</span>
+            <span class="date-tag">${fmtDate(a.pubDate)}</span>
+          </div>
+          <div class="card-headline">${esc(a.title)}</div>
+          <div class="card-desc">${esc(strip(a.description))}</div>
+          ${sum ? aiHTML(sum,reg,cat) : ""}
+          <div class="card-footer">
+            ${actionsHTML(id,sum,bz,reg,a.link,true)}
+          </div>
         </div>
       </div>`;
   }).join("");
 
-  document.getElementById("content").innerHTML=`
-    ${heroHTML}
-    <div class="art-grid" style="margin-top:12px">${lowHTML}</div>`;
+  document.getElementById("main").innerHTML =
+    heroCard +
+    (lowerCards ? `<div class="grid-wrap"><div class="art-grid">${lowerCards}</div></div>` : "");
 }
 
-function aiPanel(sum,reg){
-  return `
-    <div class="ai-panel r-${reg}" style="margin-top:10px">
-      <div class="ai-hdr">
-        <span class="ai-tag">⚡ AI Brief</span>
-        <span class="ai-model">llama-3.3-70b · Groq</span>
-      </div>
-      <div class="ai-text">${esc(sum)}</div>
-    </div>`;
-}
-
-/* ═══════════════════════════════════════════
-   GROQ AI BRIEF
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   GROQ AI
+══════════════════════════════════════════════ */
 async function doAI(eid){
-  const key=getKey();
-  if(!key){toast("⚠ Add your Groq API key first");openKeyModal();return;}
+  const key = localStorage.getItem(GKEY)||"";
+  if(!key){ toast("⚠ Add your Groq API key first"); openKey(); return; }
 
-  const cat=CATS.find(c=>c.id===activeId);
-  const items=cache[activeId]?.items||[];
-  const article=items.find(a=>enc(a.guid||a.link)===eid);
-  if(!article)return;
+  const cat = CATS.find(c=>c.id===activeId);
+  const article = (cache[activeId]?.items||[]).find(a=>enc(a.guid||a.link)===eid);
+  if(!article) return;
 
   busy.add(eid);
-  const btn=document.getElementById("btn-"+eid);
-  if(btn){btn.disabled=true;btn.innerHTML=`<span class="spin">◌</span> Analysing…`;}
+  const btn = document.getElementById("btn-"+eid);
+  if(btn){ btn.disabled=true; btn.innerHTML=`<span class="spin">◌</span> Analysing…`; }
 
-  const ctxMap={world:"international",india:"national Indian",ap:"Andhra Pradesh regional",tg:"Telangana regional",ai:"global AI & technology"};
-  const ctx=ctxMap[cat.region]||"Indian";
-  const teArt=isTe(article.title)||article._lang==="te";
-  const langNote=teArt?" The article is in Telugu — read it and write your entire analysis in clear English.":"";
-  const body=strip(article.description||"").slice(0,900);
+  const ctxMap={world:"international",india:"national Indian",ap:"Andhra Pradesh regional",tg:"Telangana regional",sport:"Indian sports",biz:"Indian finance & business",health:"Indian health",ai:"AI & technology"};
+  const ctx = ctxMap[cat.region]||"Indian";
+  const isTE = /[\u0C00-\u0C7F]/.test(article.title||"")||article._lang==="te";
+  const lnNote = isTE ? " This article is in Telugu — read it carefully and respond entirely in English." : "";
 
-  const prompt=`You are a sharp ${ctx} news analyst.${langNote}
+  const prompt = `You are a sharp ${ctx} news analyst writing for a well-informed Indian reader.${lnNote}
 
-Write exactly 3 crisp sentences — no labels, no bullet points:
-1. Core fact: what happened?
-2. Significance: why does it matter?
-3. Watch next: what should readers follow?
+Write exactly 3 punchy sentences — no labels, no bullet points, no preamble:
+• Sentence 1: The core fact — what happened?
+• Sentence 2: The significance — why does it matter?
+• Sentence 3: The forward look — what should readers watch next?
 
 TITLE: ${article.title}
-CONTENT: ${body}`;
+CONTENT: ${strip(article.description||"").slice(0,900)}`;
 
   try{
-    const r=await fetch("https://api.groq.com/openai/v1/chat/completions",{
+    const r = await fetch("https://api.groq.com/openai/v1/chat/completions",{
       method:"POST",
       headers:{"Content-Type":"application/json","Authorization":`Bearer ${key}`},
-      body:JSON.stringify({model:"llama-3.3-70b-versatile",messages:[{role:"user",content:prompt}],max_tokens:280,temperature:.65})
+      body:JSON.stringify({model:"llama-3.3-70b-versatile",messages:[{role:"user",content:prompt}],max_tokens:280,temperature:.6})
     });
-    if(r.status===401)throw new Error("Invalid Groq key — check your key");
-    if(!r.ok)throw new Error("Groq error "+r.status);
-    const d=await r.json();
-    summaries[eid]=d.choices?.[0]?.message?.content?.trim()||"Summary unavailable.";
-    toast("✓ AI brief ready");
+    if(r.status===401) throw new Error("Invalid Groq API key");
+    if(!r.ok) throw new Error("Groq error "+r.status);
+    const d = await r.json();
+    summaries[eid] = d.choices?.[0]?.message?.content?.trim()||"Analysis unavailable.";
+    toast("✓ AI Brief ready");
   }catch(e){
-    summaries[eid]=null;toast("✗ "+e.message);
-    if(e.message.includes("Invalid"))checkKey();
+    summaries[eid]=null; toast("✗ "+e.message);
+    if(e.message.includes("Invalid")) checkKeyUI();
   }finally{
     busy.delete(eid);
-    if(cache[activeId])render(cache[activeId]);
+    if(cache[activeId]) render(cache[activeId]);
   }
 }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    SEARCH
-═══════════════════════════════════════════ */
-function doSearch(q){
+══════════════════════════════════════════════ */
+function runSearch(q){
   const ql=q.toLowerCase();
-  let all=[];
+  let hits=[];
   for(const id in cache){
     const cat=CATS.find(c=>c.id===id);
-    cache[id].items.forEach(a=>{
-      if((a.title||"").toLowerCase().includes(ql)||(a._src||"").toLowerCase().includes(ql)){
-        all.push({...a,_catLabel:cat.label,_catCc:cat.cc,_catRegion:cat.region});
-      }
+    (cache[id].items||[]).forEach(a=>{
+      if(((a.title||"")+(a._src||"")).toLowerCase().includes(ql))
+        hits.push({...a,_catId:id,_cat:cat});
     });
   }
 
-  const sr=document.getElementById("search-results");
-  const content=document.getElementById("content");
-  sr.classList.add("show");content.style.display="none";
-  document.querySelector(".sec-hdr").style.display="none";
+  const sp=document.getElementById("search-panel");
+  document.getElementById("main").style.display="none";
+  document.getElementById("sec-bar").style.display="none";
+  sp.classList.add("show");
 
-  if(!all.length){
-    sr.innerHTML=`<div class="state-box"><div class="state-icon">🔍</div><div class="state-msg">No results for "<strong>${esc(q)}</strong>" in loaded articles.<br>Try switching tabs to load more categories.</div></div>`;
+  if(!hits.length){
+    sp.innerHTML=`<div class="state-box"><div class="state-icon">🔍</div><div class="state-title">No Results</div><div class="state-msg">No articles matching "<strong>${esc(q)}</strong>" in loaded tabs. Switch to more tabs to load more articles.</div></div>`;
     return;
   }
 
-  sr.innerHTML=`
-    <div class="search-hdr" style="padding:12px 14px 0">${all.length} results for "<strong>${esc(q)}</strong>"</div>
-    <div class="art-grid" style="margin:10px 12px">
-      ${all.map((a,i)=>{
-        const id=enc(a.guid||a.link);
-        const sum=summaries[id],bz=busy.has(id);
-        return `
-          <div class="art-card" style="animation-delay:${i*.03}s">
-            <div class="art-meta">
-              ${lbadge(a)}
-              <span class="cat-badge ${a._catCc}">${a._catLabel.replace(/^[^ ]+ /,"")}</span>
-              <span class="date-badge" style="margin-left:auto">${fmtDate(a.pubDate)}</span>
-            </div>
-            <div class="art-headline">${esc(a.title)}</div>
-            <div class="art-desc">${esc(strip(a.description))}</div>
-            ${sum?aiPanel(sum,a._catRegion):""}
-            <div class="art-actions">
-              <button class="btn-ai r-${a._catRegion}" id="btn-${id}" ${bz?"disabled":""} onclick="activeId='${a._catId||activeId}';doAI('${id}')">${bz?`<span class="spin">◌</span>`:sum?"↻":"⚡"} AI</button>
-              <a class="btn-read" href="${esc(a.link)}" target="_blank" rel="noopener">Read →</a>
-            </div>
-          </div>`;
-      }).join("")}
+  sp.innerHTML=`
+    <div class="search-label">${hits.length} results for "<strong>${esc(q)}</strong>"</div>
+    <div class="grid-wrap">
+      <div class="art-grid">
+        ${hits.map((a,i)=>{
+          const id=enc(a.guid||a.link),sum=summaries[id],bz=busy.has(id);
+          const cat=a._cat;
+          return `
+            <div class="art-card" style="${catStyle(cat)};animation-delay:${i*.03}s">
+              <div class="card-stripe"></div>
+              <div class="card-body">
+                <div class="card-meta">
+                  ${langBadge(a)}
+                  ${pillHTML(cat)}
+                  <span class="date-tag">${fmtDate(a.pubDate)}</span>
+                </div>
+                <div class="card-headline">${esc(a.title)}</div>
+                <div class="card-desc">${esc(strip(a.description))}</div>
+                ${sum?aiHTML(sum,cat.region,cat):""}
+                <div class="card-footer">
+                  ${actionsHTML(id,sum,bz,cat.region,a.link,true)}
+                </div>
+              </div>
+            </div>`;
+        }).join("")}
+      </div>
     </div>`;
 }
 
 function clearSearch(){
-  document.getElementById("search-results").classList.remove("show");
-  document.getElementById("content").style.display="";
-  const sh=document.querySelector(".sec-hdr");if(sh)sh.style.display="";
+  document.getElementById("search-panel").classList.remove("show");
+  document.getElementById("main").style.display="";
+  document.getElementById("sec-bar").style.display="";
 }
 
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    BOOKMARKS
-═══════════════════════════════════════════ */
-function isBookmarked(id){return bookmarks.some(b=>b.id===id)}
+══════════════════════════════════════════════ */
+function isBM(id){ return bookmarks.some(b=>b.id===id); }
 
 function toggleBM(id){
-  const items=cache[activeId]?.items||[];
-  const article=items.find(a=>enc(a.guid||a.link)===id);
-  if(!article)return;
-
-  if(isBookmarked(id)){
+  const art = (cache[activeId]?.items||[]).find(a=>enc(a.guid||a.link)===id);
+  if(!art) return;
+  if(isBM(id)){
     bookmarks=bookmarks.filter(b=>b.id!==id);
     toast("Bookmark removed");
   }else{
-    bookmarks.unshift({id,title:article.title,link:article.link,src:article._src||"",date:article.pubDate,saved:Date.now()});
-    if(bookmarks.length>50)bookmarks=bookmarks.slice(0,50);
-    toast("📌 Bookmarked!");
+    bookmarks.unshift({id,title:art.title,link:art.link,src:art._src||"",date:art.pubDate});
+    if(bookmarks.length>60) bookmarks=bookmarks.slice(0,60);
+    toast("📌 Article saved!");
   }
   localStorage.setItem("brief_bm",JSON.stringify(bookmarks));
   updateBMBadge();
-  if(cache[activeId])render(cache[activeId]);
+  if(cache[activeId]) render(cache[activeId]);
 }
 
 function updateBMBadge(){
-  const badge=document.getElementById("bm-badge");
-  badge.textContent=bookmarks.length;
-  badge.style.display=bookmarks.length?"flex":"none";
+  const el=document.getElementById("bm-count");
+  el.textContent=bookmarks.length;
+  el.style.display=bookmarks.length?"flex":"none";
 }
 
 function openBM(){
-  const drawer=document.getElementById("bm-drawer");
-  const list=document.getElementById("bm-list");
-  if(!bookmarks.length){list.innerHTML=`<div class="bm-empty">No saved articles yet.<br>Tap 🔖 on any article to save it.</div>`;}
-  else{
-    list.innerHTML=bookmarks.map(b=>`
+  const body=document.getElementById("bm-body");
+  if(!bookmarks.length){
+    body.innerHTML=`<div class="bm-empty">No saved articles yet.<br>Tap 🔖 on any article to save it here.</div>`;
+  }else{
+    body.innerHTML=bookmarks.map(b=>`
       <div class="bm-item">
-        <div class="bm-item-title">${esc(b.title)}</div>
-        <div class="bm-item-meta">
-          <span>${esc(b.src)}</span>
-          <span>${fmtDate(b.date)}</span>
-        </div>
-        <div class="bm-item-actions">
+        <div class="bm-title">${esc(b.title)}</div>
+        <div class="bm-meta"><span>${esc(b.src)}</span><span>${fmtDate(b.date)}</span></div>
+        <div class="bm-btns">
           <a class="btn-read" style="font-size:.68rem;padding:5px 10px" href="${esc(b.link)}" target="_blank" rel="noopener">Read →</a>
-          <button class="btn-clr" style="font-size:.68rem;padding:5px 10px" onclick="removeBM('${b.id}')">Remove</button>
+          <button class="btn-read" style="font-size:.68rem;padding:5px 10px" onclick="removeBM('${b.id}')">Remove</button>
         </div>
       </div>`).join("");
   }
-  drawer.classList.add("open");
+  document.getElementById("bm-overlay").classList.add("open");
 }
 
 function removeBM(id){
@@ -1094,18 +1347,17 @@ function removeBM(id){
   localStorage.setItem("brief_bm",JSON.stringify(bookmarks));
   updateBMBadge();
   openBM();
-  if(cache[activeId])render(cache[activeId]);
+  if(cache[activeId]) render(cache[activeId]);
 }
+function closeBM(){ document.getElementById("bm-overlay").classList.remove("open"); }
 
-function closeBM(){document.getElementById("bm-drawer").classList.remove("open")}
-
-/* ═══════════════════════════════════════════
-   LOADING / ERROR STATES
-═══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   LOADING / ERROR
+══════════════════════════════════════════════ */
 function showSkeleton(){
-  document.getElementById("content").innerHTML=`
-    <div class="skeleton-wrap">
-      <div class="skel skel-hero"></div>
+  document.getElementById("main").innerHTML=`
+    <div class="skel-wrap">
+      <div class="skel skel-hero-card"></div>
       <div class="skel-grid">
         ${Array(6).fill(`<div class="skel skel-card"></div>`).join("")}
       </div>
@@ -1114,115 +1366,108 @@ function showSkeleton(){
 
 function showError(){
   document.getElementById("sec-src").textContent="";
-  document.getElementById("content").innerHTML=`
+  document.getElementById("main").innerHTML=`
     <div class="state-box">
       <div class="state-icon">📡</div>
-      <div class="state-title">Could Not Load Feeds</div>
-      <div class="state-msg">All RSS sources and proxies were tried.<br>Check your internet and tap Refresh.</div>
+      <div class="state-title">Feeds Unavailable</div>
+      <div class="state-msg">All sources and proxies were tried for this section. Check your connection and try again.</div>
       <button class="state-btn" onclick="refreshCat()">↻ Try Again</button>
     </div>`;
 }
 
-/* ═══════════════════════════════════════════
-   API KEY
-═══════════════════════════════════════════ */
-function getKey(){return localStorage.getItem(SKEY)||""}
-
-function checkKey(){
-  const has=!!getKey();
+/* ══════════════════════════════════════════════
+   KEY MANAGEMENT
+══════════════════════════════════════════════ */
+function checkKeyUI(){
+  const has=!!localStorage.getItem(GKEY);
   document.getElementById("key-banner").classList.toggle("hidden",has);
-  document.getElementById("clear-btn").style.display=has?"":"none";
+  document.getElementById("key-dot").classList.toggle("active",has);
+  document.getElementById("ks-clear").style.display=has?"block":"none";
 }
 
-function openKeyModal(){
-  document.getElementById("key-modal-input").value=getKey();
+function openKey(){
+  document.getElementById("ks-input").value=localStorage.getItem(GKEY)||"";
   document.getElementById("key-modal").classList.add("open");
-  keyModalOpen=true;
-  setTimeout(()=>document.getElementById("key-modal-input").focus(),100);
+  setTimeout(()=>document.getElementById("ks-input").focus(),200);
 }
 
-function closeKeyModal(){
-  document.getElementById("key-modal").classList.remove("open");
-  keyModalOpen=false;
-}
-
-function saveKeyFromModal(){
-  const v=document.getElementById("key-modal-input").value.trim();
+function saveKey(){
+  const v=document.getElementById("ks-input").value.trim();
   if(!v){toast("Please enter your Groq API key");return;}
-  localStorage.setItem(SKEY,v);
-  checkKey();closeKeyModal();toast("✓ Groq key saved — AI briefs enabled!");
+  localStorage.setItem(GKEY,v);
+  checkKeyUI();
+  document.getElementById("key-modal").classList.remove("open");
+  toast("✓ Key saved — AI Briefs enabled!");
 }
 
 function clearKey(){
-  localStorage.removeItem(SKEY);
-  document.getElementById("key-modal-input").value="";
-  checkKey();closeKeyModal();toast("Key cleared");
+  localStorage.removeItem(GKEY);
+  document.getElementById("ks-input").value="";
+  checkKeyUI();
+  document.getElementById("key-modal").classList.remove("open");
+  toast("Key cleared");
 }
 
-/* ═══════════════════════════════════════════
-   DARK MODE
-═══════════════════════════════════════════ */
+document.getElementById("key-modal").addEventListener("click",e=>{
+  if(e.target===e.currentTarget) e.currentTarget.classList.remove("open");
+});
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&document.getElementById("key-modal").classList.contains("open")) saveKey();
+  if(e.key==="Escape") document.getElementById("key-modal").classList.remove("open");
+});
+
+/* ══════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════ */
 function loadTheme(){
-  const saved=localStorage.getItem("brief_theme")||"light";
-  document.documentElement.setAttribute("data-theme",saved);
-  updateThemeIcon(saved);
+  const t=localStorage.getItem("brief_theme")||"light";
+  document.documentElement.setAttribute("data-theme",t);
+  updateThemeIcon(t);
 }
-
 function toggleTheme(){
-  const current=document.documentElement.getAttribute("data-theme");
-  const next=current==="dark"?"light":"dark";
-  document.documentElement.setAttribute("data-theme",next);
-  localStorage.setItem("brief_theme",next);
-  updateThemeIcon(next);
+  const cur=document.documentElement.getAttribute("data-theme");
+  const nxt=cur==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",nxt);
+  localStorage.setItem("brief_theme",nxt);
+  updateThemeIcon(nxt);
+}
+function updateThemeIcon(t){
+  document.getElementById("theme-svg").innerHTML = t==="dark"
+    ? `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`
+    : `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
 }
 
-function updateThemeIcon(theme){
-  const icon=document.getElementById("theme-icon");
-  icon.innerHTML=theme==="dark"
-    ?`<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`
-    :`<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
-}
-
-/* ═══════════════════════════════════════════
+/* ══════════════════════════════════════════════
    TOAST
-═══════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 let toastT;
 function toast(msg){
   const el=document.getElementById("toast");
-  el.textContent=msg;el.classList.add("show");
-  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove("show"),3000);
+  el.textContent=msg; el.classList.add("show");
+  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove("show"),3000);
 }
 
-/* ═══════════════════════════════════════════
-   UTILITIES
-═══════════════════════════════════════════ */
-function isTe(s){return /[\u0C00-\u0C7F]/.test(s||"")}
-function lbadge(item){
-  const te=isTe(item.title)||item._lang==="te";
-  return te?`<span class="lang-badge lb-te">తె</span>`:`<span class="lang-badge lb-en">EN</span>`;
-}
+/* ══════════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════════ */
 function strip(h){return(h||"").replace(/<[^>]*>/g,"").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&#\d+;/g,"").replace(/\s+/g," ").trim()}
 function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function enc(s){
-  if(!s)return"x"+Math.random().toString(36).slice(2,10);
-  let h=5381;for(let i=0;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;
+  if(!s)return"x"+Math.random().toString(36).slice(2,8);
+  let h=5381; for(let i=0;i<s.length;i++) h=Math.imul(31,h)+s.charCodeAt(i)|0;
   return"id"+Math.abs(h).toString(36).padStart(8,"0");
 }
 function fmtDate(s){
   try{
-    const d=new Date(s);
-    const now=new Date();
-    const diff=now-d;
-    if(diff<3600000)return Math.floor(diff/60000)+"m ago";
-    if(diff<86400000)return Math.floor(diff/3600000)+"h ago";
+    const d=new Date(s), now=new Date(), diff=now-d;
+    if(isNaN(d.getTime()))return"";
+    if(diff<3600000) return Math.max(1,Math.floor(diff/60000))+"m ago";
+    if(diff<86400000) return Math.floor(diff/3600000)+"h ago";
+    if(diff<604800000) return Math.floor(diff/86400000)+"d ago";
     return d.toLocaleDateString("en-IN",{day:"numeric",month:"short"});
   }catch{return""}
 }
-
-// Keyboard shortcut for key modal
-document.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&keyModalOpen) saveKeyFromModal();
-});
 </script>
 
 </body>
