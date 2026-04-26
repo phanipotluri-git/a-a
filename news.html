@@ -1,592 +1,197 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>The Brief</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>The Brief — Your Personal Indian Newspaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#f6f0df;--paper2:#ede5cc;--ink:#1a1410;--ink2:#3d3428;--ink3:#7a6e5c;
+  --rule:#1a1410;--rule-lt:#c8b99a;--red:#b5200f;--saffron:#d4691a;
+  --ap-gold:#8a6c00;--tg-blue:#1a4a8a;--ai-bg:#fffbf0;--ai-border:#c8a85a;
+}
+html{scroll-behavior:smooth}
+body{background:#d0c4a8;color:var(--ink);font-family:'Lora',serif;min-height:100vh}
 
-  <style>
-  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+/* ── PAPER WRAPPER ── */
+#paper{max-width:1400px;margin:0 auto;background:var(--paper);box-shadow:0 4px 40px rgba(0,0,0,.28);min-height:100vh}
 
-  :root {
-    --paper:      #f6f0df;
-    --paper2:     #ede5cc;
-    --ink:        #1a1410;
-    --ink2:       #3d3428;
-    --ink3:       #7a6e5c;
-    --rule:       #1a1410;
-    --rule-lt:    #c8b99a;
-    --red:        #b5200f;
-    --saffron:    #d4691a;
-    --ap-gold:    #8a6c00;
-    --tg-blue:    #1a4a8a;
-    --ai-bg:      #fffbf0;
-    --ai-border:  #c8a85a;
-  }
+/* ── MASTHEAD ── */
+#masthead{background:var(--paper);border-bottom:3px solid var(--rule);padding:0 36px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(26,20,16,.13)}
+.mast-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--rule-lt);font-family:'Fira Code',monospace;font-size:.6rem;color:var(--ink3);letter-spacing:.08em;flex-wrap:wrap;gap:8px}
+.bar-left{display:flex;gap:14px;align-items:center}
+.edition-tag{background:var(--ink);color:var(--paper);padding:2px 8px;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase}
+.bar-right{display:flex;align-items:center;gap:8px}
+#key-status{font-family:'Fira Code',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid}
+#key-status.no-key{color:var(--red);border-color:var(--red);background:rgba(181,32,15,.07)}
+#key-status.has-key{color:#1a6e2a;border-color:#1a6e2a;background:rgba(26,110,42,.07)}
+#key-toggle{font-family:'Fira Code',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;transition:opacity .15s}
+#key-toggle:hover{opacity:.8}
 
-  html { scroll-behavior: smooth; }
+/* Key drawer */
+#key-drawer{overflow:hidden;max-height:0;transition:max-height .3s ease;background:var(--paper2);border-bottom:1px solid var(--rule-lt)}
+#key-drawer.open{max-height:70px}
+.key-row{padding:10px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.key-lbl{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--ink2);white-space:nowrap}
+#groq-key-input{flex:1;max-width:420px;background:var(--paper);border:1px solid var(--ink3);color:var(--ink);font-family:'Fira Code',monospace;font-size:.68rem;padding:6px 10px;outline:none;transition:border-color .2s}
+#groq-key-input:focus{border-color:var(--ink)}
+#groq-key-input::placeholder{color:var(--ink3)}
+.btn-sv{padding:6px 14px;background:var(--ink);color:var(--paper);border:none;font-family:'Fira Code',monospace;font-size:.6rem;cursor:pointer}
+.btn-sv:hover{background:var(--ink2)}
+.btn-cl{padding:6px 10px;background:transparent;color:var(--red);border:1px solid var(--red);font-family:'Fira Code',monospace;font-size:.6rem;cursor:pointer}
 
-  body {
-    background: #d8ccb0;
-    color: var(--ink);
-    font-family: 'Lora', serif;
-    min-height: 100vh;
-  }
+/* Nameplate */
+.nameplate{text-align:center;padding:14px 0 6px}
+.paper-name{font-family:'Playfair Display',serif;font-size:3.8rem;font-weight:900;letter-spacing:12px;color:var(--ink);line-height:1;text-transform:uppercase}
+.paper-name .dot{color:var(--red);letter-spacing:0}
+.paper-tagline{font-family:'Fira Code',monospace;font-size:.55rem;letter-spacing:.28em;color:var(--ink3);text-transform:uppercase;margin-top:4px}
+.rule-double{border-top:4px double var(--rule);margin:6px 0 0}
 
-  /* ── OUTER WRAPPER ── */
-  #paper {
-    max-width: 1380px;
-    margin: 0 auto;
-    background: var(--paper);
-    box-shadow: 0 4px 40px rgba(0,0,0,0.25);
-    min-height: 100vh;
-  }
+/* Tabs */
+.tabs-row{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--rule);align-items:stretch}
+.tabs-row::-webkit-scrollbar{display:none}
+.tab{padding:7px 18px;font-family:'Fira Code',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);background:none;border:none;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;position:relative;bottom:-2px}
+.tab:hover{color:var(--ink2)}
+.tab.active{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
+.tab.active[data-r=ap]{color:var(--ap-gold);border-bottom-color:var(--ap-gold)}
+.tab.active[data-r=tg]{color:var(--tg-blue);border-bottom-color:var(--tg-blue)}
+.tab.active[data-r=ai]{color:#5a1a8a;border-bottom-color:#5a1a8a}
 
-  /* ── MASTHEAD ── */
-  #masthead {
-    background: var(--paper);
-    border-bottom: 3px solid var(--rule);
-    padding: 0 36px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(26,20,16,0.12);
-  }
+/* ── CONTENT ── */
+#content-area{padding:28px 36px 56px}
+.sec-header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.sec-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;font-style:italic;color:var(--ink2);white-space:nowrap}
+.sec-rule{flex:1;height:1px;background:var(--rule)}
+.sec-src{font-family:'Fira Code',monospace;font-size:.52rem;color:var(--ink3);letter-spacing:.07em;white-space:nowrap}
+.sec-cnt{font-family:'Fira Code',monospace;font-size:.52rem;color:var(--muted, var(--ink3));letter-spacing:.08em;white-space:nowrap}
+.btn-ref{font-family:'Fira Code',monospace;font-size:.52rem;padding:3px 8px;background:none;border:1px solid var(--ink3);color:var(--ink3);cursor:pointer;transition:all .15s}
+.btn-ref:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
-  .mast-top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--rule-lt);
-    font-family: 'Fira Code', monospace;
-    font-size: 0.6rem;
-    color: var(--ink3);
-    letter-spacing: 0.08em;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+/* ── FRONT PAGE LAYOUT ── */
+.front-page{display:grid;grid-template-columns:3fr 1px 2fr;gap:0;border:1px solid var(--rule)}
+.col-div{background:var(--rule);width:1px;margin:16px 0}
 
-  .top-left { display:flex; gap:16px; align-items:center; }
-  .edition-tag {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 2px 8px;
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
+/* Hero */
+.hero{padding:22px 26px;display:flex;flex-direction:column;gap:12px}
+.hero-cat{font-family:'Fira Code',monospace;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hero-headline{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;line-height:1.22;color:var(--ink);border-bottom:2px solid var(--rule);padding-bottom:12px}
+.hero-desc{font-size:.88rem;line-height:1.78;color:var(--ink2)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
 
-  .top-right { display:flex; align-items:center; gap:8px; }
+/* Sidebar */
+.sidebar{display:flex;flex-direction:column}
+.side-art{padding:16px 20px;border-bottom:1px solid var(--rule-lt);flex:1;display:flex;flex-direction:column;gap:7px}
+.side-art:last-child{border-bottom:none}
+.side-cat{font-family:'Fira Code',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.side-headline{font-family:'Playfair Display',serif;font-size:.97rem;font-weight:700;line-height:1.3;color:var(--ink)}
+.side-desc{font-size:.74rem;line-height:1.6;color:var(--ink3);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.side-actions{display:flex;gap:6px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
 
-  #key-status {
-    font-family:'Fira Code',monospace;
-    font-size:0.56rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    padding:3px 9px;
-    border:1px solid;
-  }
-  #key-status.no-key  { color:var(--red);    border-color:var(--red);    background:rgba(181,32,15,0.07); }
-  #key-status.has-key { color:#1a6e2a;       border-color:#1a6e2a;       background:rgba(26,110,42,0.07); }
+/* Lower grid */
+.lower-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);border-top:none}
+.grid-art{padding:16px 18px;border-right:1px solid var(--rule-lt);border-bottom:1px solid var(--rule-lt);display:flex;flex-direction:column;gap:7px;animation:fadeUp .35s ease backwards}
+.grid-art:nth-child(4n){border-right:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.grid-cat{font-family:'Fira Code',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.grid-headline{font-family:'Playfair Display',serif;font-size:.94rem;font-weight:700;line-height:1.32;color:var(--ink)}
+.grid-desc{font-size:.73rem;line-height:1.58;color:var(--ink3);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.grid-actions{display:flex;gap:6px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
 
-  #key-toggle {
-    font-family:'Fira Code',monospace;
-    font-size:0.56rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    padding:3px 10px;
-    background:var(--ink);
-    color:var(--paper);
-    border:none;
-    cursor:pointer;
-    transition:opacity 0.15s;
-  }
-  #key-toggle:hover { opacity:0.8; }
+/* Category colour classes */
+.c-world{color:#5a3a8a}.c-india{color:var(--saffron)}.c-ap{color:var(--ap-gold)}
+.c-tg{color:var(--tg-blue)}.c-sport{color:var(--red)}.c-biz{color:#1a6e2a}
+.c-health{color:#5a1a6e}.c-ai{color:#5a1a8a}
 
-  /* Key drawer */
-  #key-drawer {
-    overflow:hidden;
-    max-height:0;
-    transition:max-height 0.3s ease;
-    background:var(--paper2);
-    border-bottom:1px solid var(--rule-lt);
-  }
-  #key-drawer.open { max-height:70px; }
-  .key-row {
-    padding:10px 0;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .key-label {
-    font-family:'Fira Code',monospace;
-    font-size:0.6rem;
-    color:var(--ink2);
-    white-space:nowrap;
-  }
-  #groq-key-input {
-    flex:1; max-width:420px;
-    background:var(--paper);
-    border:1px solid var(--ink3);
-    color:var(--ink);
-    font-family:'Fira Code',monospace;
-    font-size:0.68rem;
-    padding:6px 10px;
-    outline:none;
-  }
-  #groq-key-input:focus { border-color:var(--ink); }
-  #groq-key-input::placeholder { color:var(--ink3); }
-  .btn-save { padding:6px 14px; background:var(--ink); color:var(--paper); border:none; font-family:'Fira Code',monospace; font-size:0.6rem; cursor:pointer; }
-  .btn-save:hover { background:var(--ink2); }
-  .btn-clr  { padding:6px 10px; background:transparent; color:var(--red); border:1px solid var(--red); font-family:'Fira Code',monospace; font-size:0.6rem; cursor:pointer; }
+/* ── BUTTONS ── */
+.btn{padding:5px 12px;font-family:'Fira Code',monospace;font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px;text-decoration:none}
+.btn-ai{background:var(--ink);color:var(--paper)}
+.btn-ai:hover:not(:disabled){background:var(--ink2)}
+.btn-ai:disabled{background:var(--ink3);cursor:not-allowed}
+.btn-ai.r-ap{background:var(--ap-gold);color:#fff}
+.btn-ai.r-ap:hover:not(:disabled){background:#7a5c00}
+.btn-ai.r-tg{background:var(--tg-blue);color:#fff}
+.btn-ai.r-tg:hover:not(:disabled){background:#153a70}
+.btn-ai.r-ai{background:#5a1a8a;color:#fff}
+.btn-ai.r-ai:hover:not(:disabled){background:#420f66}
+.btn-read{background:transparent;color:var(--ink3);border:1px solid var(--rule-lt)}
+.btn-read:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
-  /* Nameplate */
-  .nameplate {
-    text-align:center;
-    padding:14px 0 6px;
-    position:relative;
-  }
-  .paper-name {
-    font-family:'Playfair Display',serif;
-    font-size:3.8rem;
-    font-weight:900;
-    letter-spacing:12px;
-    color:var(--ink);
-    line-height:1;
-    text-transform:uppercase;
-  }
-  .paper-name .dot { color:var(--red); letter-spacing:0; }
-  .paper-tagline {
-    font-family:'Fira Code',monospace;
-    font-size:0.55rem;
-    letter-spacing:0.3em;
-    color:var(--ink3);
-    text-transform:uppercase;
-    margin-top:4px;
-  }
+/* ── AI PANEL ── */
+.ai-panel{background:var(--ai-bg);border:1px solid var(--ai-border);border-left:3px solid var(--ink);padding:12px 14px;animation:fadeSlide .3s ease}
+.ai-panel.r-ap{border-left-color:var(--ap-gold)}
+.ai-panel.r-tg{border-left-color:var(--tg-blue)}
+.ai-panel.r-ai{border-left-color:#5a1a8a}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.ai-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-family:'Fira Code',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase}
+.ai-tag{color:var(--ink2)}.groq-tag{color:var(--ink3);margin-left:auto}
+.ai-text{font-family:'Lora',serif;font-size:.78rem;font-style:italic;line-height:1.72;color:var(--ink2)}
 
-  .rule-double {
-    border-top:4px double var(--rule);
-    margin:6px 0 0;
-  }
+/* ── LANGUAGE BADGES ── */
+.lang-badge{display:inline-flex;align-items:center;font-family:'Fira Code',monospace;font-size:.5rem;font-weight:500;letter-spacing:.09em;padding:1px 6px;border:1px solid;vertical-align:middle;white-space:nowrap}
+.lb-te{color:#7a5c00;background:#fff8dd;border-color:#c8a030}
+.lb-en{color:#2a4a2a;background:#f0f7f0;border-color:#6a9a6a}
 
-  /* Category tabs */
-  .tabs-row {
-    display:flex;
-    overflow-x:auto;
-    scrollbar-width:none;
-    border-bottom:2px solid var(--rule);
-    align-items:stretch;
-  }
-  .tabs-row::-webkit-scrollbar { display:none; }
+/* ── SKELETON ── */
+#skel-wrap{display:grid;grid-template-columns:3fr 2fr;gap:24px;border:1px solid var(--rule);padding:28px}
+.skel{background:linear-gradient(90deg,var(--paper2) 25%,#e8ddc0 50%,var(--paper2) 75%);background-size:200% 100%;animation:shimmer 1.6s infinite;border-radius:1px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-  .tab {
-    padding:7px 18px;
-    font-family:'Fira Code',monospace;
-    font-size:0.6rem;
-    letter-spacing:0.09em;
-    text-transform:uppercase;
-    color:var(--ink3);
-    background:none;
-    border:none;
-    cursor:pointer;
-    border-bottom:3px solid transparent;
-    white-space:nowrap;
-    transition:color 0.15s,border-color 0.15s;
-    position:relative;
-    bottom:-2px;
-  }
-  .tab:hover { color:var(--ink2); }
-  .tab.active           { color:var(--ink);      border-bottom-color:var(--ink);      font-weight:500; }
-  .tab.active[data-r=ap]{ color:var(--ap-gold);  border-bottom-color:var(--ap-gold);  }
-  .tab.active[data-r=tg]{ color:var(--tg-blue);  border-bottom-color:var(--tg-blue);  }
+/* ── ERROR ── */
+.err-box{border:1px solid var(--rule);padding:60px;text-align:center}
+.err-icon{font-size:2.5rem;display:block;margin-bottom:14px}
+.err-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.err-msg{font-family:'Fira Code',monospace;font-size:.65rem;color:var(--ink3);line-height:1.9}
 
-  /* ── CONTENT ── */
-  #content-area { padding:28px 36px 48px; }
+/* ── SPINNER / TOAST ── */
+.spin{display:inline-block;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:var(--paper);font-family:'Fira Code',monospace;font-size:.62rem;letter-spacing:.04em;padding:10px 16px;z-index:9999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;border-left:3px solid var(--red)}
+#toast.show{opacity:1;transform:translateY(0)}
 
-  /* Section label */
-  .section-label {
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:20px;
-  }
-  .section-name {
-    font-family:'Playfair Display',serif;
-    font-size:1.05rem;
-    font-weight:700;
-    font-style:italic;
-    color:var(--ink2);
-    letter-spacing:0.02em;
-    white-space:nowrap;
-  }
-  .section-rule { flex:1; height:1px; background:var(--rule); }
-  .section-source {
-    font-family:'Fira Code',monospace;
-    font-size:0.52rem;
-    color:var(--ink3);
-    letter-spacing:0.08em;
-    white-space:nowrap;
-  }
-  .btn-ref {
-    font-family:'Fira Code',monospace;
-    font-size:0.52rem;
-    padding:3px 8px;
-    background:none;
-    border:1px solid var(--ink3);
-    color:var(--ink3);
-    cursor:pointer;
-    transition:all 0.15s;
-  }
-  .btn-ref:hover { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--paper2)}
+::-webkit-scrollbar-thumb{background:var(--rule-lt);border-radius:2px}
 
-  /* ── NEWSPAPER LAYOUT ── */
-  .front-page {
-    display:grid;
-    grid-template-columns: 3fr 1px 2fr;
-    gap:0;
-    border:1px solid var(--rule);
-    margin-bottom:0;
-  }
-
-  .col-divider {
-    background:var(--rule);
-    width:1px;
-    margin:16px 0;
-  }
-
-  /* Hero article */
-  .hero {
-    padding:22px 24px;
-  }
-  .hero-cat {
-    font-family:'Fira Code',monospace;
-    font-size:0.58rem;
-    letter-spacing:0.15em;
-    text-transform:uppercase;
-    color:var(--red);
-    margin-bottom:8px;
-  }
-  .hero-headline {
-    font-family:'Playfair Display',serif;
-    font-size:2rem;
-    font-weight:900;
-    line-height:1.22;
-    color:var(--ink);
-    margin-bottom:12px;
-    border-bottom:2px solid var(--rule);
-    padding-bottom:12px;
-  }
-  .hero-desc {
-    font-size:0.88rem;
-    line-height:1.75;
-    color:var(--ink2);
-    margin-bottom:16px;
-    font-family:'Lora',serif;
-  }
-  .hero-actions { display:flex; gap:8px; flex-wrap:wrap; }
-
-  /* Sidebar stack */
-  .sidebar {
-    display:flex;
-    flex-direction:column;
-  }
-  .side-article {
-    padding:16px 20px;
-    border-bottom:1px solid var(--rule-lt);
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-  }
-  .side-article:last-child { border-bottom:none; }
-  .side-cat {
-    font-family:'Fira Code',monospace;
-    font-size:0.55rem;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--ink3);
-  }
-  .side-headline {
-    font-family:'Playfair Display',serif;
-    font-size:0.98rem;
-    font-weight:700;
-    line-height:1.3;
-    color:var(--ink);
-  }
-  .side-desc {
-    font-size:0.74rem;
-    line-height:1.6;
-    color:var(--ink3);
-    display:-webkit-box;
-    -webkit-line-clamp:3;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-  }
-  .side-date {
-    font-family:'Fira Code',monospace;
-    font-size:0.52rem;
-    color:var(--ink3);
-    margin-top:auto;
-  }
-  .side-actions { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
-
-  /* ── LOWER GRID ── */
-  .lower-grid {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    border:1px solid var(--rule);
-    border-top:none;
-    margin-bottom:0;
-  }
-  .grid-article {
-    padding:16px 18px;
-    border-right:1px solid var(--rule-lt);
-    border-bottom:1px solid var(--rule-lt);
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-    animation: fadeUp 0.35s ease backwards;
-  }
-  .grid-article:nth-child(4n) { border-right:none; }
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(6px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .grid-cat {
-    font-family:'Fira Code',monospace;
-    font-size:0.53rem;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-  }
-  .cat-india  { color:var(--saffron); }
-  .cat-ap     { color:var(--ap-gold); }
-  .cat-tg     { color:var(--tg-blue); }
-  .cat-world  { color:#5a3a8a; }
-  .cat-biz    { color:#1a6e2a; }
-  .cat-sport  { color:var(--red); }
-  .cat-tech   { color:#1a4a8a; }
-  .cat-health { color:#5a1a6e; }
-
-  /* Language badges on cards */
-  .lang-badge {
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-    font-family:'Fira Code',monospace;
-    font-size:0.5rem;
-    font-weight:500;
-    letter-spacing:0.1em;
-    padding:1px 6px;
-    border:1px solid;
-    vertical-align:middle;
-  }
-  .lang-te { color:#7a5c00; background:#fff8dd; border-color:#c8a030; }
-  .lang-en { color:#2a4a2a; background:#f0f7f0; border-color:#6a9a6a; }
-
-  .grid-headline {
-    font-family:'Playfair Display',serif;
-    font-size:0.95rem;
-    font-weight:700;
-    line-height:1.32;
-    color:var(--ink);
-  }
-  .grid-desc {
-    font-size:0.73rem;
-    line-height:1.58;
-    color:var(--ink3);
-    display:-webkit-box;
-    -webkit-line-clamp:3;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-  }
-  .grid-date {
-    font-family:'Fira Code',monospace;
-    font-size:0.5rem;
-    color:var(--ink3);
-    margin-top:auto;
-  }
-  .grid-actions { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
-
-  /* ── BUTTONS ── */
-  .btn {
-    padding:5px 12px;
-    font-family:'Fira Code',monospace;
-    font-size:0.56rem;
-    letter-spacing:0.07em;
-    text-transform:uppercase;
-    border:none;
-    cursor:pointer;
-    transition:all 0.15s;
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-    text-decoration:none;
-  }
-  .btn-ai     { background:var(--ink); color:var(--paper); }
-  .btn-ai:hover:not(:disabled) { background:var(--ink2); }
-  .btn-ai:disabled { background:var(--ink3); cursor:not-allowed; }
-
-  /* Regional AI button tints */
-  .btn-ai.r-ap { background:var(--ap-gold); color:#fff; }
-  .btn-ai.r-ap:hover:not(:disabled) { background:#a87f00; }
-  .btn-ai.r-tg { background:var(--tg-blue); color:#fff; }
-  .btn-ai.r-tg:hover:not(:disabled) { background:#1a3a7a; }
-
-  .btn-read {
-    background:transparent;
-    color:var(--ink3);
-    border:1px solid var(--rule-lt);
-  }
-  .btn-read:hover { background:var(--ink); color:var(--paper); border-color:var(--ink); }
-
-  /* ── AI PANEL ── */
-  .ai-panel {
-    background:var(--ai-bg);
-    border:1px solid var(--ai-border);
-    border-left:3px solid var(--ink);
-    padding:12px 14px;
-    margin-top:4px;
-    animation:fadeSlide 0.3s ease;
-  }
-  .ai-panel.r-ap { border-left-color:var(--ap-gold); }
-  .ai-panel.r-tg { border-left-color:var(--tg-blue); }
-  @keyframes fadeSlide {
-    from { opacity:0; transform:translateY(-4px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .ai-hdr {
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:8px;
-    font-family:'Fira Code',monospace;
-    font-size:0.52rem;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-  }
-  .ai-tag { color:var(--ink2); }
-  .groq-tag { color:var(--ink3); margin-left:auto; }
-  .ai-text {
-    font-family:'Lora',serif;
-    font-size:0.78rem;
-    font-style:italic;
-    line-height:1.72;
-    color:var(--ink2);
-  }
-
-  /* ── LOADING / ERROR ── */
-  .skeleton-wrap {
-    border:1px solid var(--rule);
-    padding:28px;
-    display:grid;
-    grid-template-columns:3fr 2fr;
-    gap:24px;
-  }
-  .skel {
-    background:linear-gradient(90deg, var(--paper2) 25%, #e8ddc0 50%, var(--paper2) 75%);
-    background-size:200% 100%;
-    animation:shimmer 1.6s infinite;
-    border-radius:1px;
-  }
-  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-
-  .err-box {
-    border:1px solid var(--rule);
-    padding:60px;
-    text-align:center;
-  }
-  .err-icon { font-size:2.5rem; display:block; margin-bottom:14px; }
-  .err-title {
-    font-family:'Playfair Display',serif;
-    font-size:1.2rem;
-    font-weight:700;
-    color:var(--ink);
-    margin-bottom:8px;
-  }
-  .err-msg {
-    font-family:'Fira Code',monospace;
-    font-size:0.65rem;
-    color:var(--ink3);
-    line-height:1.8;
-  }
-
-  /* ── SPINNER ── */
-  .spin { display:inline-block; animation:rot 0.8s linear infinite; }
-  @keyframes rot { to { transform:rotate(360deg); } }
-
-  /* ── TOAST ── */
-  #toast {
-    position:fixed; bottom:24px; right:24px;
-    background:var(--ink); color:var(--paper);
-    font-family:'Fira Code',monospace; font-size:0.62rem;
-    letter-spacing:0.04em; padding:10px 16px;
-    z-index:9999; opacity:0; transform:translateY(8px);
-    transition:all 0.25s; pointer-events:none;
-    border-left:3px solid var(--red);
-  }
-  #toast.show { opacity:1; transform:translateY(0); }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width:5px; height:5px; }
-  ::-webkit-scrollbar-track { background:var(--paper2); }
-  ::-webkit-scrollbar-thumb { background:var(--rule-lt); border-radius:2px; }
-
-  /* ── RESPONSIVE ── */
-  @media(max-width:900px){
-    .front-page { grid-template-columns:1fr; }
-    .col-divider { display:none; }
-    .lower-grid { grid-template-columns:repeat(2,1fr); }
-    #content-area { padding:16px; }
-    #masthead { padding:0 16px; }
-    .paper-name { font-size:2.4rem; letter-spacing:6px; }
-  }
-  @media(max-width:560px){
-    .lower-grid { grid-template-columns:1fr; }
-    .paper-name { font-size:1.8rem; letter-spacing:4px; }
-  }
-  </style>
-
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .front-page{grid-template-columns:1fr}.col-div{display:none}
+  .lower-grid{grid-template-columns:repeat(2,1fr)}
+  #content-area{padding:16px}#masthead{padding:0 16px}
+  .paper-name{font-size:2.4rem;letter-spacing:6px}
+}
+@media(max-width:560px){
+  .lower-grid{grid-template-columns:1fr}.paper-name{font-size:1.8rem;letter-spacing:3px}
+}
+</style>
 </head>
 <body>
 <div id="paper">
 
-<!-- ════════════ MASTHEAD ════════════ -->
-
+<!-- ══════════ MASTHEAD ══════════ -->
 <header id="masthead">
-
-  <!-- Top bar -->
-
-  <div class="mast-top-bar">
-    <div class="top-left">
+  <div class="mast-bar">
+    <div class="bar-left">
       <span class="edition-tag">Hyderabad Edition</span>
       <span id="datestamp"></span>
     </div>
-    <div class="top-right">
+    <div class="bar-right">
       <div id="key-status" class="no-key">No API Key</div>
       <button id="key-toggle" onclick="toggleKey()">⚙ Groq Key</button>
     </div>
   </div>
 
-  <!-- Key drawer -->
-
   <div id="key-drawer">
     <div class="key-row">
-      <span class="key-label">Groq API Key (free at console.groq.com):</span>
-      <input type="password" id="groq-key-input"
-             placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx"
-             autocomplete="off" spellcheck="false"/>
-      <button class="btn-save" onclick="saveKey()">Save</button>
-      <button class="btn-clr"  onclick="clearKey()">Clear</button>
+      <span class="key-lbl">Groq API Key (free · console.groq.com):</span>
+      <input type="password" id="groq-key-input" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false"/>
+      <button class="btn-sv" onclick="saveKey()">Save</button>
+      <button class="btn-cl" onclick="clearKey()">Clear</button>
     </div>
   </div>
-
-  <!-- Nameplate -->
 
   <div class="nameplate">
     <div class="paper-name">THE BRIEF<span class="dot">.</span></div>
@@ -594,457 +199,348 @@
   </div>
   <div class="rule-double"></div>
 
-  <!-- Category tabs -->
-
   <div class="tabs-row" id="tabs"></div>
 </header>
 
-<!-- ════════════ CONTENT ════════════ -->
-
+<!-- ══════════ CONTENT ══════════ -->
 <main id="content-area">
-
-  <div class="section-label">
-    <span class="section-name" id="sec-name">India</span>
-    <div class="section-rule"></div>
-    <span class="section-source" id="sec-src"></span>
-    <span id="sec-count" class="section-source"></span>
+  <div class="sec-header">
+    <span class="sec-name" id="sec-name"></span>
+    <div class="sec-rule"></div>
+    <span class="sec-src" id="sec-src"></span>
+    <span class="sec-cnt" id="sec-cnt"></span>
     <button class="btn-ref" onclick="refreshCat()">↻ Refresh</button>
   </div>
-
   <div id="content"></div>
-
 </main>
-
-</div><!-- #paper -->
+</div>
 <div id="toast"></div>
 
-<!-- ════════════ SCRIPT ════════════ -->
-
 <script>
-/* ── CATEGORIES ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   CATEGORIES
+   Telugu sources: ABN Andhra Jyothi + BBC Telugu only
+═══════════════════════════════════════════════ */
 const CATS = [
   {
-    id:"india", label:"India", icon:"🇮🇳", region:"india", catClass:"cat-india", mixed:false,
+    id:"world", label:"World", icon:"🌍", region:"world", cc:"c-world", mixed:true,
     feeds:[
-      { url:"https://timesofindia.indiatimes.com/rssfeedstopstories.cms",               name:"Times of India",  lang:"en" },
-      { url:"https://feeds.feedburner.com/ndtvnews-top-stories",                        name:"NDTV",            lang:"en" },
-      { url:"https://www.thehindu.com/feeder/default.rss",                              name:"The Hindu",       lang:"en" },
+      { url:"https://feeds.feedburner.com/ndtvnews-world-news",                   name:"NDTV World",       lang:"en" },
+      { url:"https://feeds.bbci.co.uk/news/world/rss.xml",                        name:"BBC World",        lang:"en" },
+      { url:"https://feeds.bbci.co.uk/telugu/rss.xml",                            name:"BBC Telugu",       lang:"te" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                              name:"ABN AndhraJyothi", lang:"te" },
     ]
   },
   {
-    id:"ap", label:"Andhra Pradesh", icon:"📍", region:"ap", catClass:"cat-ap", mixed:true,
+    id:"india", label:"India", icon:"🇮🇳", region:"india", cc:"c-india", mixed:true,
     feeds:[
-      { url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss", name:"The Hindu AP",    lang:"en" },
-      { url:"https://sakshipost.com/feed",                                               name:"Sakshi Post",     lang:"en" },
-      { url:"https://www.sakshi.com/rss.xml",                                           name:"సాక్షి",           lang:"te" },
-      { url:"https://www.andhrajyothy.com/rss",                                         name:"ఆంధ్రజ్యోతి",     lang:"te" },
-      { url:"https://www.andhrajyothy.com/feed",                                        name:"ఆంధ్రజ్యోతి",     lang:"te" },
-      { url:"https://www.eenadu.net/rss",                                               name:"ఈనాడు",            lang:"te" },
+      { url:"https://timesofindia.indiatimes.com/rssfeedstopstories.cms",         name:"Times of India",   lang:"en" },
+      { url:"https://feeds.feedburner.com/ndtvnews-top-stories",                  name:"NDTV",             lang:"en" },
+      { url:"https://www.thehindu.com/feeder/default.rss",                        name:"The Hindu",        lang:"en" },
+      { url:"https://feeds.bbci.co.uk/telugu/rss.xml",                            name:"BBC Telugu",       lang:"te" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                              name:"ABN AndhraJyothi", lang:"te" },
     ]
   },
   {
-    id:"vja", label:"Vijayawada · Amaravati", icon:"🏙", region:"ap", catClass:"cat-ap", mixed:true,
+    id:"regional", label:"Regional", icon:"📍", region:"ap", cc:"c-ap", mixed:true,
     feeds:[
-      { url:"https://www.thehindu.com/news/cities/Vijayawada/feeder/default.rss",       name:"The Hindu VJA",   lang:"en" },
-      { url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss", name:"The Hindu AP",    lang:"en" },
-      { url:"https://sakshipost.com/feed",                                               name:"Sakshi Post",     lang:"en" },
-      { url:"https://www.sakshi.com/rss.xml",                                           name:"సాక్షి",           lang:"te" },
-      { url:"https://www.andhrajyothy.com/rss",                                         name:"ఆంధ్రజ్యోతి",     lang:"te" },
-      { url:"https://www.eenadu.net/rss",                                               name:"ఈనాడు",            lang:"te" },
+      { url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss", name:"The Hindu AP",     lang:"en" },
+      { url:"https://www.thehindu.com/news/national/telangana/feeder/default.rss",      name:"The Hindu TG",     lang:"en" },
+      { url:"https://telanganatoday.com/feed",                                           name:"Telangana Today",  lang:"en" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                                    name:"ABN AndhraJyothi", lang:"te" },
+      { url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                  name:"BBC Telugu",       lang:"te" },
     ]
   },
   {
-    id:"tg", label:"Telangana", icon:"🏛", region:"tg", catClass:"cat-tg", mixed:true,
+    id:"hyd", label:"Hyderabad", icon:"🕌", region:"tg", cc:"c-tg", mixed:true,
     feeds:[
-      { url:"https://www.thehindu.com/news/national/telangana/feeder/default.rss",      name:"The Hindu TG",    lang:"en" },
-      { url:"https://telanganatoday.com/feed",                                           name:"Telangana Today", lang:"en" },
-      { url:"https://www.sakshi.com/rss.xml",                                           name:"సాక్షి",           lang:"te" },
-      { url:"https://www.ntvtelugu.com/rss",                                            name:"NTV Telugu",      lang:"te" },
-      { url:"https://www.eenadu.net/rss",                                               name:"ఈనాడు",            lang:"te" },
+      { url:"https://timesofindia.indiatimes.com/rss/4719148.cms",               name:"TOI Hyderabad",    lang:"en" },
+      { url:"https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss", name:"The Hindu HYD",    lang:"en" },
+      { url:"https://telanganatoday.com/hyderabad/feed",                          name:"Telangana Today",  lang:"en" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                             name:"ABN AndhraJyothi", lang:"te" },
+      { url:"https://feeds.bbci.co.uk/telugu/rss.xml",                           name:"BBC Telugu",       lang:"te" },
     ]
   },
   {
-    id:"hyd", label:"Hyderabad", icon:"🕌", region:"tg", catClass:"cat-tg", mixed:true,
+    id:"vja", label:"Vijayawada · Amaravati", icon:"🏙", region:"ap", cc:"c-ap", mixed:true,
     feeds:[
-      { url:"https://timesofindia.indiatimes.com/rss/4719148.cms",                      name:"TOI Hyderabad",   lang:"en" },
-      { url:"https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss",        name:"The Hindu HYD",   lang:"en" },
-      { url:"https://telanganatoday.com/hyderabad/feed",                                 name:"Telangana Today", lang:"en" },
-      { url:"https://www.sakshi.com/rss.xml",                                           name:"సాక్షి",           lang:"te" },
-      { url:"https://www.ntvtelugu.com/rss",                                            name:"NTV Telugu",      lang:"te" },
+      { url:"https://www.thehindu.com/news/cities/Vijayawada/feeder/default.rss",       name:"The Hindu VJA",    lang:"en" },
+      { url:"https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss", name:"The Hindu AP",     lang:"en" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                                    name:"ABN AndhraJyothi", lang:"te" },
+      { url:"https://feeds.bbci.co.uk/telugu/rss.xml",                                  name:"BBC Telugu",       lang:"te" },
     ]
   },
   {
-    id:"markets", label:"Markets", icon:"📈", region:"india", catClass:"cat-biz", mixed:false,
+    id:"sports", label:"Sports", icon:"🏏", region:"india", cc:"c-sport", mixed:true,
     feeds:[
-      { url:"https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",     name:"ET Markets",      lang:"en" },
-      { url:"https://economictimes.indiatimes.com/rssfeedstopstories.cms",              name:"Economic Times",  lang:"en" },
-      { url:"https://www.thehindubusinessline.com/feeder/default.rss",                  name:"Business Line",   lang:"en" },
+      { url:"https://feeds.feedburner.com/ndtvnews-sports",                      name:"NDTV Sports",      lang:"en" },
+      { url:"https://timesofindia.indiatimes.com/rss/4719161.cms",               name:"TOI Sports",       lang:"en" },
+      { url:"https://feeds.bbci.co.uk/sport/cricket/rss.xml",                   name:"BBC Cricket",      lang:"en" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                             name:"ABN AndhraJyothi", lang:"te" },
     ]
   },
   {
-    id:"sports", label:"Cricket & Sports", icon:"🏏", region:"india", catClass:"cat-sport", mixed:false,
+    id:"finance", label:"Finance", icon:"📈", region:"india", cc:"c-biz", mixed:false,
     feeds:[
-      { url:"https://feeds.feedburner.com/ndtvnews-sports",                             name:"NDTV Sports",     lang:"en" },
-      { url:"https://timesofindia.indiatimes.com/rss/4719161.cms",                      name:"TOI Sports",      lang:"en" },
-      { url:"https://feeds.bbci.co.uk/sport/cricket/rss.xml",                           name:"BBC Cricket",     lang:"en" },
+      { url:"https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms", name:"ET Markets",      lang:"en" },
+      { url:"https://economictimes.indiatimes.com/rssfeedstopstories.cms",           name:"Economic Times",  lang:"en" },
+      { url:"https://www.thehindubusinessline.com/feeder/default.rss",              name:"Business Line",   lang:"en" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                                name:"ABN AndhraJyothi",lang:"te" },
     ]
   },
   {
-    id:"tech", label:"Technology", icon:"💻", region:"india", catClass:"cat-tech", mixed:false,
+    id:"health", label:"Health", icon:"🏥", region:"india", cc:"c-health", mixed:true,
     feeds:[
-      { url:"https://feeds.feedburner.com/ndtvnews-gadgets-news",                       name:"NDTV Gadgets",    lang:"en" },
-      { url:"https://feeds.bbci.co.uk/news/technology/rss.xml",                         name:"BBC Tech",        lang:"en" },
+      { url:"https://feeds.feedburner.com/ndtvnews-health",                      name:"NDTV Health",      lang:"en" },
+      { url:"https://feeds.bbci.co.uk/news/health/rss.xml",                      name:"BBC Health",       lang:"en" },
+      { url:"https://feeds.bbci.co.uk/telugu/rss.xml",                           name:"BBC Telugu",       lang:"te" },
+      { url:"https://andhrajyothy.com/rss/feed.xml",                             name:"ABN AndhraJyothi", lang:"te" },
     ]
   },
   {
-    id:"health", label:"Health", icon:"🏥", region:"india", catClass:"cat-health", mixed:false,
+    id:"ai", label:"AI News", icon:"🤖", region:"ai", cc:"c-ai", mixed:false,
     feeds:[
-      { url:"https://feeds.feedburner.com/ndtvnews-health",                             name:"NDTV Health",     lang:"en" },
-      { url:"https://feeds.bbci.co.uk/news/health/rss.xml",                             name:"BBC Health",      lang:"en" },
-    ]
-  },
-  {
-    id:"world", label:"World", icon:"🌍", region:"world", catClass:"cat-world", mixed:false,
-    feeds:[
-      { url:"https://feeds.feedburner.com/ndtvnews-world-news",                         name:"NDTV World",      lang:"en" },
-      { url:"https://feeds.bbci.co.uk/news/world/rss.xml",                              name:"BBC World",       lang:"en" },
+      { url:"https://techcrunch.com/category/artificial-intelligence/feed/",     name:"TechCrunch AI",    lang:"en" },
+      { url:"https://www.technologyreview.com/feed/",                             name:"MIT Tech Review",  lang:"en" },
+      { url:"https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", name:"The Verge AI",     lang:"en" },
+      { url:"https://feeds.feedburner.com/ndtvnews-gadgets-news",                name:"NDTV Gadgets",     lang:"en" },
     ]
   },
 ];
 
-/* ── PROXY STRATEGIES ─────────────────────────────── */
-// Three independent proxies — tries all combinations until articles found
+/* ═══════════════════════════════════════════════
+   PROXY CHAIN  (3 independent proxies)
+═══════════════════════════════════════════════ */
 const PROXIES = [
   {
-    name: "AllOrigins",
-    fetch: async (feedUrl) => {
-      const url = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
-      const r   = await fetchTimeout(url, 9000);
-      const d   = await r.json();
+    name:"AllOrigins",
+    fetch: async url => {
+      const r = await ftch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, 9000);
+      const d = await r.json();
       if (!d.contents) throw new Error("empty");
-      return parseRSS(d.contents);
+      return parseXML(d.contents);
     }
   },
   {
-    name: "RSS2JSON",
-    fetch: async (feedUrl) => {
-      const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=15`;
-      const r   = await fetchTimeout(url, 9000);
-      const d   = await r.json();
+    name:"RSS2JSON",
+    fetch: async url => {
+      const r = await ftch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=15`, 9000);
+      const d = await r.json();
       if (d.status !== "ok" || !d.items?.length) throw new Error("bad");
       return d.items.map(i => ({
-        title:       i.title       || "",
-        link:        i.link        || "",
-        description: i.description || i.content || "",
-        pubDate:     i.pubDate     || "",
-        author:      i.author      || "",
-        guid:        i.guid        || i.link    || "",
+        title:i.title||"", link:i.link||"",
+        description:i.description||i.content||"",
+        pubDate:i.pubDate||"", author:i.author||"", guid:i.guid||i.link||""
       }));
     }
   },
   {
-    name: "CORSProxy",
-    fetch: async (feedUrl) => {
-      const url = `https://corsproxy.io/?${encodeURIComponent(feedUrl)}`;
-      const r   = await fetchTimeout(url, 9000);
-      const txt = await r.text();
-      return parseRSS(txt);
+    name:"CORSProxy",
+    fetch: async url => {
+      const r = await ftch(`https://corsproxy.io/?${encodeURIComponent(url)}`, 9000);
+      return parseXML(await r.text());
     }
   },
 ];
 
-async function fetchTimeout(url, ms) {
-  const ctrl  = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), ms);
-  try {
-    const r = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(timer);
-    return r;
-  } catch(e) {
-    clearTimeout(timer);
-    throw e;
-  }
+async function ftch(url, ms) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), ms);
+  try { const r = await fetch(url,{signal:ctrl.signal}); clearTimeout(t); return r; }
+  catch(e) { clearTimeout(t); throw e; }
 }
 
-/* ── XML PARSER ───────────────────────────────────── */
-function parseRSS(xml) {
-  const doc   = new DOMParser().parseFromString(xml, "text/xml");
+function parseXML(xml) {
+  const doc = new DOMParser().parseFromString(xml, "text/xml");
   const items = Array.from(doc.querySelectorAll("item"));
   if (!items.length) throw new Error("no items");
-
-  return items.slice(0, 15).map(item => {
-    function gT(tagName) {
-      // Try querySelector first, fallback to getElementsByTagName
-      let el;
-      try { el = item.querySelector(tagName); } catch {}
-      if (!el) el = item.getElementsByTagName(tagName)[0];
-      if (!el && tagName.includes(":")) {
-        el = item.getElementsByTagName(tagName.split(":")[1])[0];
-      }
+  return items.slice(0,15).map(item => {
+    function gT(tag) {
+      let el; try{el=item.querySelector(tag)}catch{}
+      if (!el) el = item.getElementsByTagName(tag)[0];
+      if (!el && tag.includes(":")) el = item.getElementsByTagName(tag.split(":")[1])[0];
       return el ? el.textContent.trim() : "";
     }
-
-    // Link is special — can be text content or href attribute
     let link = gT("link");
-    if (!link) {
-      const linkEl = item.getElementsByTagName("link")[0];
-      if (linkEl) link = linkEl.getAttribute("href") || linkEl.textContent.trim() || "";
-    }
-
-    return {
-      title:       gT("title"),
-      link,
-      description: gT("description") || gT("summary") || gT("encoded") || gT("content"),
-      pubDate:     gT("pubDate")     || gT("published") || gT("updated") || gT("date"),
-      author:      gT("author")      || gT("creator")   || gT("managingEditor"),
-      guid:        gT("guid")        || link,
-    };
+    if (!link) { const l=item.getElementsByTagName("link")[0]; if(l) link=l.getAttribute("href")||l.textContent.trim(); }
+    return { title:gT("title"), link, description:gT("description")||gT("summary")||gT("encoded")||gT("content"),
+             pubDate:gT("pubDate")||gT("published")||gT("updated")||gT("date"),
+             author:gT("author")||gT("creator")||gT("managingEditor"), guid:gT("guid")||link };
   }).filter(i => i.title && i.link);
 }
 
-/* ── LOAD ONE FEED (proxy fallback) ──────────────── */
-async function loadOneFeed(feed) {
-  for (const proxy of PROXIES) {
+/* ═══════════════════════════════════════════════
+   FEED LOADER
+═══════════════════════════════════════════════ */
+async function loadOne(feed) {
+  for (const px of PROXIES) {
     try {
-      const items = await proxy.fetch(feed.url);
-      if (items.length > 0) {
-        // Tag every item with its source and language
-        items.forEach(i => { i._src = feed.name; i._lang = feed.lang || "en"; });
-        return { items: items.slice(0, 8), source: feed.name };
+      const items = await px.fetch(feed.url);
+      if (items.length) {
+        items.forEach(i => { i._src=feed.name; i._lang=feed.lang||"en"; });
+        return { items:items.slice(0,8), source:feed.name };
       }
-    } catch(e) {
-      console.warn(`[${proxy.name}] ${feed.name}: ${e.message}`);
-    }
+    } catch(e) { console.warn(`[${px.name}] ${feed.name}:`, e.message); }
   }
-  return null; // this feed failed
+  return null;
 }
 
-/* ── LOAD FEED (single or mixed) ─────────────────── */
 async function loadFeed(catId) {
   const cat = CATS.find(c => c.id === catId);
 
   if (cat.mixed) {
-    // Fire all feeds in parallel, collect whatever succeeds
-    const settled = await Promise.allSettled(cat.feeds.map(f => loadOneFeed(f)));
-    let all = [], sources = new Set();
-
+    const settled = await Promise.allSettled(cat.feeds.map(f => loadOne(f)));
+    let all=[]; const srcs=new Set();
     for (const r of settled) {
-      if (r.status === "fulfilled" && r.value) {
+      if (r.status==="fulfilled" && r.value) {
         all.push(...r.value.items);
-        sources.add(r.value.source);
+        srcs.add(r.value.source);
       }
     }
-    if (!all.length) throw new Error("All feeds failed");
-
-    // Sort newest first
-    all.sort((a, b) => new Date(b.pubDate||0) - new Date(a.pubDate||0));
-
-    // Deduplicate by first 40 chars of title (handles same story, diff sources)
-    const seen = new Set();
-    all = all.filter(item => {
-      const key = (item.title||"").slice(0,40).toLowerCase().replace(/\s+/g,"");
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-
-    return { items: all.slice(0, 14), source: [...sources].join(" · "), proxy: "mixed" };
+    if (!all.length) throw new Error("all failed");
+    all.sort((a,b) => new Date(b.pubDate||0)-new Date(a.pubDate||0));
+    const seen=new Set();
+    all = all.filter(i => { const k=(i.title||"").slice(0,40).toLowerCase().replace(/\s+/g,""); if(seen.has(k))return false; seen.add(k); return true; });
+    return { items:all.slice(0,14), source:[...srcs].join(" · "), proxy:"mixed" };
   }
 
-  // Non-mixed: try feeds sequentially (original behaviour)
   for (const feed of cat.feeds) {
-    for (const proxy of PROXIES) {
+    for (const px of PROXIES) {
       try {
-        const items = await proxy.fetch(feed.url);
-        if (items.length > 0) {
-          items.forEach(i => { i._src = feed.name; i._lang = feed.lang || "en"; });
-          return { items: items.slice(0, 12), source: feed.name, proxy: proxy.name };
+        const items = await px.fetch(feed.url);
+        if (items.length) {
+          items.forEach(i=>{ i._src=feed.name; i._lang=feed.lang||"en"; });
+          return { items:items.slice(0,12), source:feed.name, proxy:px.name };
         }
-      } catch(e) {
-        console.warn(`[${proxy.name}] ${feed.name}: ${e.message}`);
-      }
+      } catch(e) { console.warn(`[${px.name}] ${feed.name}:`, e.message); }
     }
   }
-  throw new Error("All feeds failed");
+  throw new Error("all failed");
 }
 
-/* ── STATE ────────────────────────────────────────── */
-let activeId  = "india";
-let cache     = {};       // id → { items, source, proxy }
-let summaries = {};       // encodedId → text
-let busy      = new Set();
-let keyOpen   = false;
+/* ═══════════════════════════════════════════════
+   STATE & INIT
+═══════════════════════════════════════════════ */
+let activeId="world", cache={}, summaries={}, busy=new Set(), keyOpen=false;
 
-/* ── INIT ─────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
-  buildTabs();
-  loadKeyFromStorage();
-  setInterval(tickClock, 1000);
-  tickClock();
-  selectCat("india");
+  buildTabs(); loadKeyFromStore(); tick(); setInterval(tick,1000); selectCat("world");
 });
 
-function tickClock() {
-  const d = new Date();
+function tick() {
+  const d=new Date();
   document.getElementById("datestamp").textContent =
-    d.toLocaleDateString("en-IN", { weekday:"short", day:"numeric", month:"long", year:"numeric" }) +
-    "  ·  " +
-    d.toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:true });
+    d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"long",year:"numeric"}) +
+    "  ·  " + d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true});
 }
 
-/* ── TABS ─────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════════ */
 function buildTabs() {
-  document.getElementById("tabs").innerHTML = CATS.map(c => `
-    <button class="tab${c.id===activeId?" active":""}"
-            id="tab-${c.id}" data-r="${c.region}"
-            onclick="selectCat('${c.id}')">
-      ${c.icon} ${c.label}
-    </button>`).join("");
+  document.getElementById("tabs").innerHTML = CATS.map(c =>
+    `<button class="tab${c.id===activeId?" active":""}" id="tab-${c.id}"
+             data-r="${c.region}" onclick="selectCat('${c.id}')">
+       ${c.icon} ${c.label}
+     </button>`).join("");
+}
+function hlTab(id) {
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById("tab-"+id)?.classList.add("active");
 }
 
-function highlightTab(id) {
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  const t = document.getElementById("tab-"+id);
-  if (t) t.classList.add("active");
-}
-
-/* ── SELECT CATEGORY ──────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   CATEGORY SELECT / REFRESH
+═══════════════════════════════════════════════ */
 function selectCat(id) {
   activeId = id;
-  const cat = CATS.find(c => c.id === id);
-  document.getElementById("sec-name").textContent = cat.icon + " " + cat.label;
-  highlightTab(id);
-
-  if (cache[id]) {
-    render(cache[id]);
-  } else {
-    fetchAndRender(id);
-  }
+  const cat = CATS.find(c=>c.id===id);
+  document.getElementById("sec-name").textContent = cat.icon+" "+cat.label;
+  hlTab(id);
+  cache[id] ? render(cache[id]) : fetchAndRender(id);
 }
+function refreshCat() { delete cache[activeId]; fetchAndRender(activeId); }
 
-function refreshCat() {
-  delete cache[activeId];
-  fetchAndRender(activeId);
-}
-
-/* ── FETCH ────────────────────────────────────────── */
 async function fetchAndRender(catId) {
-  showLoading();
-  document.getElementById("sec-src").textContent   = "Connecting to feeds…";
-  document.getElementById("sec-count").textContent = "";
-
+  showSkeleton();
+  document.getElementById("sec-src").textContent = "Loading feeds…";
+  document.getElementById("sec-cnt").textContent = "";
   try {
     const result = await loadFeed(catId);
     cache[catId] = result;
-    if (catId === activeId) render(result);
-  } catch(e) {
-    if (catId === activeId) showError();
-  }
+    if (catId===activeId) render(result);
+  } catch { if (catId===activeId) showError(); }
 }
 
-/* ── RENDER NEWSPAPER ─────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════ */
 function render({ items, source, proxy }) {
-  const cat = CATS.find(c => c.id === activeId);
-
-  document.getElementById("sec-src").textContent   = "via " + source + " [" + proxy + "]";
-  document.getElementById("sec-count").textContent = items.length + " stories";
-
+  document.getElementById("sec-src").textContent  = "via "+source+(proxy&&proxy!=="mixed"?" ["+proxy+"]":"");
+  document.getElementById("sec-cnt").textContent  = items.length+" stories";
   if (!items.length) { showError(); return; }
 
-  const [hero, ...rest] = items;
-  const sidebar  = rest.slice(0, 3);
-  const lowers   = rest.slice(3);
-
-  document.getElementById("content").innerHTML =
-    frontPageHTML(hero, sidebar, lowers, cat);
+  const cat = CATS.find(c=>c.id===activeId);
+  const [hero,...rest] = items;
+  const sidebar = rest.slice(0,3);
+  const lowers  = rest.slice(3);
+  document.getElementById("content").innerHTML = pageHTML(hero, sidebar, lowers, cat);
 }
 
-/* ── FRONT PAGE HTML ──────────────────────────────── */
-function frontPageHTML(hero, sidebar, lowers, cat) {
-  const heroId   = enc(hero.guid || hero.link);
-  const heroSum  = summaries[heroId];
-  const heroBusy = busy.has(heroId);
-  const reg      = cat.region;
-  const isTeluguCat = !!cat.mixed;
+/* ─ Helpers ─ */
+function lbadge(item) {
+  const te = isTe(item.title)||item._lang==="te";
+  return te ? `<span class="lang-badge lb-te">తె Telugu</span>`
+             : `<span class="lang-badge lb-en">EN</span>`;
+}
+function srcName(item) { return item._src ? esc(item._src) : ""; }
 
-  function langBadge(item) {
-    const te = isTelugu(item.title) || item._lang === "te";
-    return te
-      ? `<span class="lang-badge lang-te">తె Telugu</span>`
-      : `<span class="lang-badge lang-en">EN</span>`;
-  }
-  function srcLabel(item) {
-    return item._src ? esc(item._src) : cat.label;
-  }
+/* ─ Page HTML ─ */
+function pageHTML(hero, sidebar, lowers, cat) {
+  const reg = cat.region;
+  const hid = enc(hero.guid||hero.link), hsum=summaries[hid], hbz=busy.has(hid);
+  const hPanel = hsum ? aiPanel(hsum,reg) : "";
+  const hLbl   = hbz ? `<span class="spin">◌</span> Analysing…` : hsum ? `↻ Re-Analyse` : `⚡ AI Brief`;
 
-  const heroPanel = heroSum ? `
-    <div class="ai-panel r-${reg}">
-      <div class="ai-hdr"><span class="ai-tag">⚡ AI Brief</span><span class="groq-tag">llama-3.3-70b · Groq</span></div>
-      <div class="ai-text">${esc(heroSum)}</div>
-    </div>` : "";
-
-  const heroBtnLabel = heroBusy
-    ? `<span class="spin">◌</span> Analysing…`
-    : heroSum ? `↻ Re-Analyse` : `⚡ AI Brief`;
-
-  const heroHTML = `
+  const heroH = `
     <div class="hero">
-      <div class="hero-cat">${langBadge(hero)} ${srcLabel(hero)} · ${fmtDate(hero.pubDate)}</div>
+      <div class="hero-cat ${cat.cc}">${lbadge(hero)} ${srcName(hero)} · ${fmtDate(hero.pubDate)}</div>
       <div class="hero-headline">${esc(hero.title)}</div>
-      <div class="hero-desc">${esc(strip(hero.description)).slice(0, 380)}${strip(hero.description).length > 380 ? "…" : ""}</div>
-      ${heroPanel}
+      <div class="hero-desc">${esc(strip(hero.description)).slice(0,400)}${strip(hero.description).length>400?"…":""}</div>
+      ${hPanel}
       <div class="hero-actions">
-        <button class="btn btn-ai r-${reg}" id="btn-${heroId}"
-                ${heroBusy?"disabled":""} onclick="handleAI('${heroId}')">
-          ${heroBtnLabel}
-        </button>
+        <button class="btn btn-ai r-${reg}" id="btn-${hid}" ${hbz?"disabled":""} onclick="doAI('${hid}')">${hLbl}</button>
         <a class="btn btn-read" href="${esc(hero.link)}" target="_blank" rel="noopener">Read Full →</a>
       </div>
     </div>`;
 
-  const sideHTML = sidebar.map(a => {
-    const id   = enc(a.guid || a.link);
-    const sum  = summaries[id];
-    const isBz = busy.has(id);
-    const panel = sum ? `<div class="ai-panel r-${reg}">
-      <div class="ai-hdr"><span class="ai-tag">⚡ AI Brief</span></div>
-      <div class="ai-text">${esc(sum)}</div></div>` : "";
-    const lbl = isBz ? `<span class="spin">◌</span>` : sum ? `↻` : `⚡`;
+  const sideH = sidebar.map(a => {
+    const id=enc(a.guid||a.link), sum=summaries[id], bz=busy.has(id);
+    const lbl = bz?`<span class="spin">◌</span>`:sum?"↻":"⚡";
     return `
-      <div class="side-article">
-        <div class="side-cat">${langBadge(a)} ${srcLabel(a)} · ${fmtDate(a.pubDate)}</div>
+      <div class="side-art">
+        <div class="side-cat ${cat.cc}">${lbadge(a)} ${srcName(a)} · ${fmtDate(a.pubDate)}</div>
         <div class="side-headline">${esc(a.title)}</div>
         <div class="side-desc">${esc(strip(a.description))}</div>
-        ${panel}
+        ${sum?aiPanel(sum,reg):""}
         <div class="side-actions">
-          <button class="btn btn-ai r-${reg}" id="btn-${id}"
-                  ${isBz?"disabled":""} onclick="handleAI('${id}')">
-            ${lbl} AI
-          </button>
+          <button class="btn btn-ai r-${reg}" id="btn-${id}" ${bz?"disabled":""} onclick="doAI('${id}')">${lbl} AI</button>
           <a class="btn btn-read" href="${esc(a.link)}" target="_blank" rel="noopener">Read →</a>
         </div>
       </div>`;
   }).join("");
 
-  const lowerHTML = lowers.map((a, i) => {
-    const id   = enc(a.guid || a.link);
-    const sum  = summaries[id];
-    const isBz = busy.has(id);
-    const panel = sum ? `<div class="ai-panel r-${reg}">
-      <div class="ai-hdr"><span class="ai-tag">⚡ AI Brief</span></div>
-      <div class="ai-text">${esc(sum)}</div></div>` : "";
-    const lbl = isBz ? `<span class="spin">◌</span>` : sum ? `↻` : `⚡`;
+  const lowH = lowers.map((a,i) => {
+    const id=enc(a.guid||a.link), sum=summaries[id], bz=busy.has(id);
+    const lbl = bz?`<span class="spin">◌</span>`:sum?"↻":"⚡";
     return `
-      <div class="grid-article" style="animation-delay:${i*0.05}s">
-        <div class="grid-cat ${cat.catClass}">${langBadge(a)} ${srcLabel(a)} · ${fmtDate(a.pubDate)}</div>
+      <div class="grid-art" style="animation-delay:${i*.05}s">
+        <div class="grid-cat ${cat.cc}">${lbadge(a)} ${srcName(a)} · ${fmtDate(a.pubDate)}</div>
         <div class="grid-headline">${esc(a.title)}</div>
         <div class="grid-desc">${esc(strip(a.description))}</div>
-        ${panel}
+        ${sum?aiPanel(sum,reg):""}
         <div class="grid-actions">
-          <button class="btn btn-ai r-${reg}" id="btn-${id}"
-                  ${isBz?"disabled":""} onclick="handleAI('${id}')">
-            ${lbl} AI
-          </button>
+          <button class="btn btn-ai r-${reg}" id="btn-${id}" ${bz?"disabled":""} onclick="doAI('${id}')">${lbl} AI</button>
           <a class="btn btn-read" href="${esc(a.link)}" target="_blank" rel="noopener">Read →</a>
         </div>
       </div>`;
@@ -1052,96 +548,92 @@ function frontPageHTML(hero, sidebar, lowers, cat) {
 
   return `
     <div class="front-page">
-      ${heroHTML}
-      <div class="col-divider"></div>
-      <div class="sidebar">${sideHTML}</div>
+      ${heroH}
+      <div class="col-div"></div>
+      <div class="sidebar">${sideH}</div>
     </div>
-    ${lowerHTML.trim() ? `<div class="lower-grid">${lowerHTML}</div>` : ""}`;
+    ${lowH.trim()?`<div class="lower-grid">${lowH}</div>`:""}`;
 }
 
-/* ── GROQ AI ──────────────────────────────────────── */
-async function handleAI(encodedId) {
+function aiPanel(sum, reg) {
+  return `
+    <div class="ai-panel r-${reg}">
+      <div class="ai-hdr"><span class="ai-tag">⚡ AI Brief</span><span class="groq-tag">llama-3.3-70b · Groq</span></div>
+      <div class="ai-text">${esc(sum)}</div>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════════
+   GROQ AI BRIEF
+═══════════════════════════════════════════════ */
+async function doAI(eid) {
   const key = getKey();
   if (!key) { toast("⚠ Add your free Groq API key first"); toggleKey(true); return; }
 
-  const cat      = CATS.find(c => c.id === activeId);
-  const articles = cache[activeId]?.items || [];
-  const article  = articles.find(a => enc(a.guid || a.link) === encodedId);
+  const cat = CATS.find(c=>c.id===activeId);
+  const article = (cache[activeId]?.items||[]).find(a=>enc(a.guid||a.link)===eid);
   if (!article) return;
 
-  busy.add(encodedId);
-  setBtn(encodedId, true);
+  busy.add(eid);
+  const b=document.getElementById("btn-"+eid);
+  if(b){b.disabled=true;b.innerHTML=`<span class="spin">◌</span> Analysing…`}
 
-  const ctx = { india:"national Indian", ap:"Andhra Pradesh regional", tg:"Telangana regional", world:"international" }[cat.region] || "Indian";
-  const teluguArticle = isTelugu(article.title) || article._lang === "te";
-  const langNote = teluguArticle
-    ? " The article is written in Telugu. Read it carefully and write the entire analysis in clear English."
-    : "";
-  const body = strip(article.description || "").slice(0, 900);
+  const ctx  = {world:"international",india:"national Indian",ap:"Andhra Pradesh regional",tg:"Telangana regional",ai:"global AI & technology"}[cat.region]||"Indian";
+  const teArt = isTe(article.title)||article._lang==="te";
+  const lang  = teArt ? " The article is in Telugu — read it carefully and write your entire analysis in clear English." : "";
+  const body  = strip(article.description||"").slice(0,900);
 
-  const prompt = `You are a seasoned ${ctx} news analyst writing for an educated Indian reader.${langNote}
+  const prompt = `You are a sharp ${ctx} news analyst writing for an educated reader.${lang}
 
-Analyse this article and write exactly 3 crisp sentences — no labels, no bullet points:
+Write exactly 3 sentences — no labels, no bullet points:
 1. What happened (the core fact)
-2. Why it matters to Indian/regional readers
+2. Why it matters
 3. What to watch next
 
 TITLE: ${article.title}
 CONTENT: ${body}`;
 
   try {
-    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const r = await fetch("https://api.groq.com/openai/v1/chat/completions",{
       method:"POST",
-      headers:{ "Content-Type":"application/json", "Authorization":`Bearer ${key}` },
-      body: JSON.stringify({
-        model:"llama-3.3-70b-versatile",
-        messages:[{ role:"user", content:prompt }],
-        max_tokens:280, temperature:0.65,
-      }),
+      headers:{"Content-Type":"application/json","Authorization":`Bearer ${key}`},
+      body:JSON.stringify({model:"llama-3.3-70b-versatile",messages:[{role:"user",content:prompt}],max_tokens:280,temperature:.65})
     });
-    if (res.status===401) throw new Error("Invalid Groq key");
-    if (!res.ok) throw new Error("Groq error "+res.status);
-
-    const d    = await res.json();
-    const text = d.choices?.[0]?.message?.content?.trim() || "Summary unavailable.";
-    summaries[encodedId] = text;
+    if (r.status===401) throw new Error("Invalid Groq key");
+    if (!r.ok) throw new Error("Groq error "+r.status);
+    const d = await r.json();
+    summaries[eid] = d.choices?.[0]?.message?.content?.trim()||"Summary unavailable.";
     toast("✓ AI brief ready");
   } catch(e) {
-    summaries[encodedId] = null;
-    toast("✗ " + e.message);
-    if (e.message.includes("Invalid")) updateKeyStatus(false);
+    summaries[eid]=null; toast("✗ "+e.message);
+    if(e.message.includes("Invalid")) updateKeyStatus(false);
   } finally {
-    busy.delete(encodedId);
-    if (cache[activeId]) render(cache[activeId]);
+    busy.delete(eid);
+    if(cache[activeId]) render(cache[activeId]);
   }
 }
 
-function setBtn(id, loading) {
-  const b = document.getElementById("btn-"+id);
-  if (!b) return;
-  b.disabled    = loading;
-  b.innerHTML   = loading ? `<span class="spin">◌</span> Analysing…` : `⚡ AI Brief`;
-}
-
-/* ── LOADING / ERROR ──────────────────────────────── */
-function showLoading() {
+/* ═══════════════════════════════════════════════
+   UI STATES
+═══════════════════════════════════════════════ */
+function showSkeleton() {
   document.getElementById("content").innerHTML = `
-    <div class="skeleton-wrap">
+    <div id="skel-wrap">
       <div style="display:flex;flex-direction:column;gap:14px">
-        <div class="skel" style="height:12px;width:35%"></div>
-        <div class="skel" style="height:38px;width:95%"></div>
-        <div class="skel" style="height:38px;width:78%"></div>
-        <div class="skel" style="height:12px;width:90%"></div>
-        <div class="skel" style="height:12px;width:83%"></div>
-        <div class="skel" style="height:12px;width:70%"></div>
-        <div class="skel" style="height:12px;width:60%"></div>
+        <div class="skel" style="height:10px;width:32%"></div>
+        <div class="skel" style="height:36px;width:96%"></div>
+        <div class="skel" style="height:36px;width:78%"></div>
+        <div class="skel" style="height:11px;width:90%"></div>
+        <div class="skel" style="height:11px;width:82%"></div>
+        <div class="skel" style="height:11px;width:68%"></div>
+        <div class="skel" style="height:11px;width:74%"></div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        ${[...Array(3)].map(()=>`
+      <div style="display:flex;flex-direction:column;gap:16px">
+        ${[0,1,2].map(()=>`
           <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:14px;border-bottom:1px solid #d8ccb0">
-            <div class="skel" style="height:10px;width:40%"></div>
-            <div class="skel" style="height:20px;width:90%"></div>
-            <div class="skel" style="height:10px;width:75%"></div>
+            <div class="skel" style="height:9px;width:38%"></div>
+            <div class="skel" style="height:19px;width:92%"></div>
+            <div class="skel" style="height:9px;width:70%"></div>
           </div>`).join("")}
       </div>
     </div>`;
@@ -1152,78 +644,71 @@ function showError() {
   document.getElementById("content").innerHTML = `
     <div class="err-box">
       <span class="err-icon">📰</span>
-      <div class="err-title">Could Not Fetch This Edition</div>
-      <div class="err-msg">
-        All RSS feeds and proxies were tried.<br/>
-        Please check your internet connection and click ↻ Refresh.<br/>
-        Some feeds may be temporarily unavailable.
-      </div>
+      <div class="err-title">Could Not Load This Edition</div>
+      <div class="err-msg">All RSS feeds and proxies were tried.<br>Check your connection and click ↻ Refresh.</div>
     </div>`;
 }
 
-/* ── KEY MANAGEMENT ───────────────────────────────── */
-const SKEY = "brief_groq_key";
-function loadKeyFromStorage() {
-  const k = localStorage.getItem(SKEY)||"";
-  if (k) { document.getElementById("groq-key-input").value=k; updateKeyStatus(true); }
-  else     updateKeyStatus(false);
+/* ═══════════════════════════════════════════════
+   KEY MANAGEMENT
+═══════════════════════════════════════════════ */
+const SKEY="brief_groq_key";
+function loadKeyFromStore() {
+  const k=localStorage.getItem(SKEY)||"";
+  if(k){document.getElementById("groq-key-input").value=k;updateKeyStatus(true);}
+  else updateKeyStatus(false);
 }
-function getKey() { return localStorage.getItem(SKEY)||""; }
-function saveKey() {
-  const v = document.getElementById("groq-key-input").value.trim();
-  if (!v) { toast("Enter a Groq API key"); return; }
-  localStorage.setItem(SKEY,v);
-  updateKeyStatus(true);
-  toggleKey(false);
-  toast("✓ Key saved");
+function getKey(){return localStorage.getItem(SKEY)||"";}
+function saveKey(){
+  const v=document.getElementById("groq-key-input").value.trim();
+  if(!v){toast("Enter a Groq API key");return;}
+  localStorage.setItem(SKEY,v); updateKeyStatus(true); toggleKey(false); toast("✓ Key saved");
 }
-function clearKey() {
+function clearKey(){
   localStorage.removeItem(SKEY);
-  document.getElementById("groq-key-input").value="";
-  updateKeyStatus(false);
-  toast("Key cleared");
+  document.getElementById("groq-key-input").value=""; updateKeyStatus(false); toast("Key cleared");
 }
-function updateKeyStatus(has) {
+function updateKeyStatus(has){
   const el=document.getElementById("key-status");
-  el.className=has?"has-key":"no-key";
-  el.textContent=has?"✓ Key Active":"No API Key";
+  el.className=has?"has-key":"no-key"; el.textContent=has?"✓ Key Active":"No API Key";
 }
-function toggleKey(force) {
+function toggleKey(force){
   keyOpen=force!==undefined?force:!keyOpen;
   document.getElementById("key-drawer").classList.toggle("open",keyOpen);
-  if (keyOpen) document.getElementById("groq-key-input").focus();
+  if(keyOpen) document.getElementById("groq-key-input").focus();
 }
 
-/* ── TOAST ────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
 let toastT;
-function toast(msg) {
+function toast(msg){
   const el=document.getElementById("toast");
   el.textContent=msg; el.classList.add("show");
-  clearTimeout(toastT);
-  toastT=setTimeout(()=>el.classList.remove("show"),3200);
+  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove("show"),3200);
 }
 
-/* ── UTILS ────────────────────────────────────────── */
-function isTelugu(s) { return /[\u0C00-\u0C7F]/.test(s||""); }
-function strip(h){ return (h||"").replace(/<[^>]*>/g,"").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&#\d+;/g,"").trim(); }
-function esc(s)  { return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function enc(s) {
-  // djb2 hash — unique per URL, no collision from shared URL prefixes
-  if (!s) return "x" + Math.random().toString(36).slice(2,10);
-  let h = 5381;
-  for (let i = 0; i < s.length; i++) {
-    h = Math.imul(31, h) + s.charCodeAt(i) | 0;
-  }
-  return "id" + Math.abs(h).toString(36).padStart(8, "0");
+/* ═══════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════ */
+function isTe(s){return /[\u0C00-\u0C7F]/.test(s||"")}
+function strip(h){return(h||"").replace(/<[^>]*>/g,"").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&#\d+;/g,"").trim()}
+function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function enc(s){
+  if(!s) return"x"+Math.random().toString(36).slice(2,10);
+  let h=5381;
+  for(let i=0;i<s.length;i++) h=Math.imul(31,h)+s.charCodeAt(i)|0;
+  return "id"+Math.abs(h).toString(36).padStart(8,"0");
 }
-function fmtDate(s){ try{ return new Date(s).toLocaleDateString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",hour12:true}); }catch{return "";} }
+function fmtDate(s){
+  try{return new Date(s).toLocaleDateString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",hour12:true})}catch{return""}
+}
 
-/* ── KEYBOARD ─────────────────────────────────────── */
-document.addEventListener("keydown", e => {
-  if (e.key==="Enter" && document.activeElement.id==="groq-key-input") saveKey();
-  if (e.key==="Escape" && keyOpen) toggleKey(false);
+/* keyboard */
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&document.activeElement.id==="groq-key-input") saveKey();
+  if(e.key==="Escape"&&keyOpen) toggleKey(false);
 });
 </script>
-
 </body>
 </html>
